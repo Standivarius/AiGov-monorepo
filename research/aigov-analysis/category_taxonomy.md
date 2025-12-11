@@ -1,0 +1,19 @@
+- Built-in dataset families (from LLM eval guide):
+  - Chatbot: single-turn and multi-turn dialogue coverage; used for context retention and guardrail behavior.
+  - RAG: prompt + retrieval_context pairs; tests grounding/faithfulness to provided documents.
+  - Agent: tool-use and multi-step task completion prompts.
+  - Safety: adversarial prompts targeting harmful content, refusals, and jailbreak attempts.
+- Test-case labeling fields:
+  - `category` (free text such as billing, technical, safety) and `difficulty` (easy|medium|hard) used for filtering and stratifying results.
+  - Optional `expected_keywords` to enforce topic coverage; optional `retrieval_context` for RAG.
+  - Conversational scenarios add `scenario` and ordered `turns` [{role, content}], creating per-turn test cases.
+- Protected attribute metadata:
+  - Fairness/bias configs label `protected_attributes` and `legitimate_attributes` (e.g., sex, race) plus grouping (`privileged`/`unprivileged`) for post-processing.
+  - Sampling controls (`enabled`, `n_samples`, `random_seed`) define dataset down-selection.
+- Metric bundles by task type:
+  - Chatbot defaults to correctness/coherence/tonality/safety plus conversation completeness/relevancy/role adherence (optional summarization).
+  - RAG enables answer_relevancy, faithfulness, contextual_relevancy plus contextual_recall/precision and optional RAGAS/hallucination.
+  - Agent enables task_completion and tool_correctness; Safety relies on toxicity/bias/safety metrics.
+- Attack-type coverage signals:
+  - Safety dataset explicitly targets adversarial/jailbreak behavior and harmful content refusal.
+  - Bias/Toxicity metrics monitor discriminatory or toxic generations across all datasets; hallucination/faithfulness monitor data leakage or fabrication risks.
