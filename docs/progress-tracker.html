@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIGov Progress Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .phase-card { transition: all 0.3s; }
+        .phase-card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        .status-done { background: #10b981; }
+        .status-active { background: #f59e0b; }
+        .status-pending { background: #6b7280; }
+        .timeline-bar { height: 8px; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 shadow-lg">
+            <div class="container mx-auto">
+                <h1 class="text-3xl font-bold mb-2">AIGov Progress Tracker</h1>
+                <p class="text-blue-100">Visual overview of project status and timeline</p>
+                <div class="mt-4 text-sm">
+                    <span class="bg-blue-700 px-3 py-1 rounded">Last Updated: 2025-12-11</span>
+                    <span class="ml-3 bg-blue-700 px-3 py-1 rounded">Current Phase: 0 - Foundation</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Quick Stats -->
+        <div class="container mx-auto px-6 py-6">
+            <div class="grid grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="text-3xl font-bold text-green-600">2/5</div>
+                    <div class="text-sm text-gray-600">Phase 0 Deliverables Done</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="text-3xl font-bold text-blue-600">40%</div>
+                    <div class="text-sm text-gray-600">Phase 0 Complete</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="text-3xl font-bold text-orange-600">3-4</div>
+                    <div class="text-sm text-gray-600">Weeks to Phase 1</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="text-3xl font-bold text-purple-600">7</div>
+                    <div class="text-sm text-gray-600">Sub-Projects</div>
+                </div>
+            </div>
+
+            <!-- Current Week Focus -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-8 rounded-lg">
+                <h2 class="text-xl font-bold text-yellow-800 mb-2">📍 This Week (Dec 9-13, 2025)</h2>
+                <p class="text-yellow-700 mb-3"><strong>Focus:</strong> Report Template Research & Design</p>
+                <ul class="list-disc list-inside text-yellow-700 space-y-1">
+                    <li>✅ Repository structure initialized</li>
+                    <li>✅ Dashboard mockup complete</li>
+                    <li>🔄 Researching template tools (Jinja2, Docxtpl, Carbone)</li>
+                    <li>⏳ Designing L1/L2/L3 report structures</li>
+                </ul>
+            </div>
+
+            <!-- Phase Overview Timeline -->
+            <div class="bg-white p-6 rounded-lg shadow mb-8">
+                <h2 class="text-2xl font-bold mb-6">Project Timeline</h2>
+                
+                <!-- Phase 0 -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center">
+                            <span class="status-active w-3 h-3 rounded-full mr-3"></span>
+                            <h3 class="text-lg font-semibold">Phase 0: Foundation</h3>
+                        </div>
+                        <span class="text-sm text-gray-600">Dec 9 - Jan 3, 2026 (3-4 weeks)</span>
+                    </div>
+                    <div class="timeline-bar bg-gray-200 mb-2">
+                        <div class="timeline-bar status-active" style="width: 40%"></div>
+                    </div>
+                    <p class="text-sm text-gray-600">Goal: Enable client discovery calls with complete report examples</p>
+                </div>
+
+                <!-- Phase 1 -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center">
+                            <span class="status-pending w-3 h-3 rounded-full mr-3"></span>
+                            <h3 class="text-lg font-semibold">Phase 1: Working Prototype (GDPR + RO Only)</h3>
+                        </div>
+                        <span class="text-sm text-gray-600">Jan 6 - Feb 7, 2026 (4-5 weeks)</span>
+                    </div>
+                    <div class="timeline-bar bg-gray-200 mb-2">
+                        <div class="timeline-bar status-pending" style="width: 0%"></div>
+                    </div>
+                    <p class="text-sm text-gray-600">Goal: Prove end-to-end flow with 10 scenarios</p>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center">
+                            <span class="status-pending w-3 h-3 rounded-full mr-3"></span>
+                            <h3 class="text-lg font-semibold">Phase 2: Evaluation Infrastructure</h3>
+                        </div>
+                        <span class="text-sm text-gray-600">Feb 10 - Mar 7, 2026 (4 weeks)</span>
+                    </div>
+                    <div class="timeline-bar bg-gray-200 mb-2">
+                        <div class="timeline-bar status-pending" style="width: 0%"></div>
+                    </div>
+                    <p class="text-sm text-gray-600">Goal: Build systematic testing before real clients</p>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center">
+                            <span class="status-pending w-3 h-3 rounded-full mr-3"></span>
+                            <h3 class="text-lg font-semibold">Phase 3: Client Discovery & POC</h3>
+                        </div>
+                        <span class="text-sm text-gray-600">Mar 10 - Apr 7, 2026 (4 weeks)</span>
+                    </div>
+                    <div class="timeline-bar bg-gray-200 mb-2">
+                        <div class="timeline-bar status-pending" style="width: 0%"></div>
+                    </div>
+                    <p class="text-sm text-gray-600">Goal: Validate business model with real prospects (€60k or 2+ subscriptions)</p>
+                </div>
+            </div>
+
+            <!-- Phase 0 Deliverables (Detailed) -->
+            <div class="bg-white p-6 rounded-lg shadow mb-8">
+                <h2 class="text-2xl font-bold mb-6">Phase 0 Deliverables (Dec 9 - Jan 3)</h2>
+                
+                <div class="space-y-4">
+                    <!-- Deliverable 0 -->
+                    <div class="border-l-4 border-green-500 pl-4 py-2 bg-green-50">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-green-800">✅ 0. Repository Structure</h3>
+                            <span class="text-sm bg-green-600 text-white px-3 py-1 rounded">DONE</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Time: 0.5 days | Status: Complete (Dec 11)</p>
+                        <div class="flex gap-2 text-sm">
+                            <a href="https://github.com/Standivarius/AiGov-specs" target="_blank" class="text-blue-600 hover:underline">📁 Aigov-specs repo</a>
+                            <a href="https://github.com/Standivarius/Aigov-eval" target="_blank" class="text-blue-600 hover:underline">📁 Aigov-eval repo</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/docs/planning/Master-Plan-v3.md" target="_blank" class="text-blue-600 hover:underline">📄 Master Plan</a>
+                        </div>
+                    </div>
+
+                    <!-- Deliverable 2 (Dashboard done before 1) -->
+                    <div class="border-l-4 border-green-500 pl-4 py-2 bg-green-50">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-green-800">✅ 2. Dashboard Static Mockup</h3>
+                            <span class="text-sm bg-green-600 text-white px-3 py-1 rounded">DONE</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Time: 2-3 days | Priority: P1 | Status: Complete (Dec 11)</p>
+                        <div class="flex gap-2 text-sm">
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/dashboard/static/dashboard-mockup.html" target="_blank" class="text-blue-600 hover:underline">📄 Download dashboard-mockup.html</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/dashboard" target="_blank" class="text-blue-600 hover:underline">📁 Dashboard project</a>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-2">📥 <strong>Action:</strong> Download HTML file, double-click to open in browser</p>
+                    </div>
+
+                    <!-- Deliverable 1 -->
+                    <div class="border-l-4 border-orange-500 pl-4 py-2 bg-orange-50">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-orange-800">🔄 1. Report Template Suite</h3>
+                            <span class="text-sm bg-orange-600 text-white px-3 py-1 rounded">IN PROGRESS</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Time: 3-5 days | Priority: P0 (CRITICAL) | Status: Research phase</p>
+                        <div class="mb-2">
+                            <div class="text-sm text-gray-700 mb-1">Progress: 20% (Research starting)</div>
+                            <div class="timeline-bar bg-gray-200">
+                                <div class="timeline-bar status-active" style="width: 20%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 text-sm mb-2">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/report-gen" target="_blank" class="text-blue-600 hover:underline">📁 ReportGen project</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/report-gen/TASKS.md" target="_blank" class="text-blue-600 hover:underline">✓ TASKS.md</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/docs/planning/Phase-0-Detailed.md#deliverable-1-report-template-suite-p0---next" target="_blank" class="text-blue-600 hover:underline">📄 Detailed plan</a>
+                        </div>
+                        <p class="text-sm text-gray-700"><strong>Scope:</strong> L1/L2/L3 reports + GDPR/ISO annexes + Audit prep docs + GRC exports</p>
+                        <p class="text-sm text-gray-700 mt-1">📅 <strong>This Week:</strong> Research Jinja2, Docxtpl, Carbone.io</p>
+                    </div>
+
+                    <!-- Deliverable 3 -->
+                    <div class="border-l-4 border-gray-400 pl-4 py-2 bg-gray-50">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-gray-800">⏳ 3. IntakeAgent</h3>
+                            <span class="text-sm bg-gray-600 text-white px-3 py-1 rounded">PENDING</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Time: 1 week | Priority: P1 | Status: Not started</p>
+                        <div class="flex gap-2 text-sm">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/intake-agent" target="_blank" class="text-blue-600 hover:underline">📁 IntakeAgent project</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/intake-agent/TASKS.md" target="_blank" class="text-blue-600 hover:underline">✓ TASKS.md</a>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-2"><strong>Approach:</strong> Claude Skill pattern (AI-dynamic questionnaire + doc extraction)</p>
+                    </div>
+
+                    <!-- Deliverable 4 -->
+                    <div class="border-l-4 border-gray-400 pl-4 py-2 bg-gray-50">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-gray-800">⏳ 4. Mock Target LLM</h3>
+                            <span class="text-sm bg-gray-600 text-white px-3 py-1 rounded">PENDING</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Time: 2-3 days | Priority: P2 | Status: Not started</p>
+                        <div class="flex gap-2 text-sm">
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/docs/planning/Phase-0-Detailed.md#deliverable-4-mock-target-llm-p2" target="_blank" class="text-blue-600 hover:underline">📄 Detailed plan</a>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-2"><strong>Approach:</strong> Standard LLM + instructional layer (simulate violations)</p>
+                    </div>
+
+                    <!-- Deliverable 5 -->
+                    <div class="border-l-4 border-gray-400 pl-4 py-2 bg-gray-50">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-gray-800">⏳ 5. OpenRouter Wrapper</h3>
+                            <span class="text-sm bg-gray-600 text-white px-3 py-1 rounded">PENDING</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Time: 2-3 days | Priority: P2 | Status: Not started</p>
+                        <div class="flex gap-2 text-sm">
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/docs/planning/Phase-0-Detailed.md#deliverable-5-openrouter-wrapper-p2" target="_blank" class="text-blue-600 hover:underline">📄 Detailed plan</a>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-2"><strong>Research First:</strong> Check if Inspect AI already provides LLM abstraction</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub-Projects Overview -->
+            <div class="bg-white p-6 rounded-lg shadow mb-8">
+                <h2 class="text-2xl font-bold mb-6">Sub-Projects Status</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    
+                    <div class="phase-card border rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold">IntakeAgent</h3>
+                            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">🔴 Not Started</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">AI-dynamic onboarding questionnaire</p>
+                        <div class="flex gap-2 text-xs">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/intake-agent" target="_blank" class="text-blue-600 hover:underline">📁 Folder</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/intake-agent/TASKS.md" target="_blank" class="text-blue-600 hover:underline">✓ Tasks</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/intake-agent/STATUS.md" target="_blank" class="text-blue-600 hover:underline">📊 Status</a>
+                        </div>
+                    </div>
+
+                    <div class="phase-card border rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold">ReportGen</h3>
+                            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">🟡 In Progress</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">L1/L2/L3 report generation</p>
+                        <div class="flex gap-2 text-xs">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/report-gen" target="_blank" class="text-blue-600 hover:underline">📁 Folder</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/report-gen/TASKS.md" target="_blank" class="text-blue-600 hover:underline">✓ Tasks</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/report-gen/STATUS.md" target="_blank" class="text-blue-600 hover:underline">📊 Status</a>
+                        </div>
+                    </div>
+
+                    <div class="phase-card border rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold">Dashboard</h3>
+                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">🟢 Done (Static)</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Central control panel</p>
+                        <div class="flex gap-2 text-xs">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/dashboard" target="_blank" class="text-blue-600 hover:underline">📁 Folder</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/dashboard/static/dashboard-mockup.html" target="_blank" class="text-blue-600 hover:underline">📥 Download</a>
+                        </div>
+                    </div>
+
+                    <div class="phase-card border rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold">ScenarioForge</h3>
+                            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">🔴 Not Started</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Scenario pipeline creation</p>
+                        <div class="flex gap-2 text-xs">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/scenario-forge" target="_blank" class="text-blue-600 hover:underline">📁 Folder</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/scenario-forge/TASKS.md" target="_blank" class="text-blue-600 hover:underline">✓ Tasks</a>
+                        </div>
+                    </div>
+
+                    <div class="phase-card border rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold">Judge</h3>
+                            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">🔴 Not Started</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Multilingual transcript analysis</p>
+                        <div class="flex gap-2 text-xs">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/judge" target="_blank" class="text-blue-600 hover:underline">📁 Folder</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/judge/TASKS.md" target="_blank" class="text-blue-600 hover:underline">✓ Tasks</a>
+                        </div>
+                    </div>
+
+                    <div class="phase-card border rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold">AKG</h3>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">🔵 Existing</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Knowledge graph (Codex-Petri)</p>
+                        <div class="flex gap-2 text-xs">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/akg" target="_blank" class="text-blue-600 hover:underline">📁 Folder</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/akg/TASKS.md" target="_blank" class="text-blue-600 hover:underline">✓ Tasks</a>
+                        </div>
+                    </div>
+
+                    <div class="phase-card border rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold">RAG</h3>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">🔵 Existing</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Legal corpus (CC-Petri)</p>
+                        <div class="flex gap-2 text-xs">
+                            <a href="https://github.com/Standivarius/AiGov-specs/tree/main/projects/rag" target="_blank" class="text-blue-600 hover:underline">📁 Folder</a>
+                            <a href="https://github.com/Standivarius/AiGov-specs/blob/main/projects/rag/TASKS.md" target="_blank" class="text-blue-600 hover:underline">✓ Tasks</a>
+                        </div>
+                    </div>
+
+                    <div class="phase-card border rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold">Eval-app</h3>
+                            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">🔴 Not Started</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Evaluation & testing system</p>
+                        <div class="flex gap-2 text-xs">
+                            <a href="https://github.com/Standivarius/Aigov-eval" target="_blank" class="text-blue-600 hover:underline">📁 Separate Repo</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-2xl font-bold mb-4">Quick Links</h2>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <h3 class="font-semibold mb-2">Planning Docs</h3>
+                        <ul class="space-y-1 text-sm">
+                            <li><a href="https://github.com/Standivarius/AiGov-specs/blob/main/docs/planning/Master-Plan-v3.md" target="_blank" class="text-blue-600 hover:underline">📄 Master Plan v3</a></li>
+                            <li><a href="https://github.com/Standivarius/AiGov-specs/blob/main/docs/planning/Phase-0-Detailed.md" target="_blank" class="text-blue-600 hover:underline">📄 Phase 0 Details</a></li>
+                            <li><a href="https://github.com/Standivarius/AiGov-specs/blob/main/docs/planning/Decision-Log.md" target="_blank" class="text-blue-600 hover:underline">📄 Decision Log</a></li>
+                            <li><a href="https://github.com/Standivarius/AiGov-specs/blob/main/docs/planning/Conversation-Summary-2025-12-11.md" target="_blank" class="text-blue-600 hover:underline">📄 Conversation Summary</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Repositories</h3>
+                        <ul class="space-y-1 text-sm">
+                            <li><a href="https://github.com/Standivarius/AiGov-specs" target="_blank" class="text-blue-600 hover:underline">📁 Aigov-specs (main)</a></li>
+                            <li><a href="https://github.com/Standivarius/Aigov-eval" target="_blank" class="text-blue-600 hover:underline">📁 Aigov-eval</a></li>
+                            <li><a href="https://github.com/users/Standivarius/projects" target="_blank" class="text-blue-600 hover:underline">📋 GitHub Projects Board</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">External</h3>
+                        <ul class="space-y-1 text-sm">
+                            <li><a href="https://drive.google.com/drive/folders/1CHKXcmgKRpieDUDC2TmKchHCvPgSBgeCc" target="_blank" class="text-blue-600 hover:underline">📁 Google Drive Research</a></li>
+                            <li><a href="https://www.notion.so" target="_blank" class="text-blue-600 hover:underline">📓 Notion (Business Strategy)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white p-4 text-center text-sm mt-8">
+            <p>AIGov Progress Tracker | Auto-updated by Claude</p>
+            <p class="mt-1 text-gray-400">Last Updated: 2025-12-11 | All links open in new tab</p>
+        </footer>
+    </div>
+</body>
+</html>
