@@ -1,38 +1,41 @@
 # Judge - Task Checklist
 
 ## Research Phase
-- [ ] Research: Inspect AI LLM abstraction layer
-- [ ] Design: Platform-agnostic wrapper (OpenRouter + direct APIs)
-- [ ] Test: 5 candidate models (Gemini 2.0, Mistral Large 3, Claude, GPT, Llama)
-  - [ ] Test 1: Translation fidelity (RO→EN→RO)
-  - [ ] Test 2: Pattern detection accuracy (known violations)
-  - [ ] Test 3: Article precision (correct GDPR articles cited)
-  - [ ] Test 4: Cost analysis (tokens per transcript)
-  - [ ] Test 5: Latency measurement (seconds per analysis)
-- [ ] Decision: Select Judge LLM (document in RESEARCH.md)
+- [ ] Research: Inspect AI LLM abstraction (does it exist?)
+- [ ] If not, design: Platform-agnostic wrapper (OpenRouter, Anthropic, OpenAI)
+- [ ] Test: Gemini 2.0 Flash Thinking (RO transcript → EN analysis)
+- [ ] Test: Mistral Large 3 (same transcript)
+- [ ] Test: Claude Sonnet 4.5 (same transcript)
+- [ ] Test: GPT-4.5.1 (same transcript)
+- [ ] Compare: Translation accuracy, pattern detection, cost, latency
+- [ ] Research: LLM Council implementations (Karpathy's llm-council?)
+- [ ] Document: Test results in RESEARCH.md
 
 ## Design Phase
-- [ ] Design: `behaviour_json_v1` schema
-  - Fields: violations, recommendations, ambiguous_flags, metadata
-- [ ] Design: AKG query protocol (Cypher queries)
-- [ ] Design: RAG query protocol (vector search)
-- [ ] Design: Council voting logic (3/4 consensus)
+- [ ] Define: behaviour_json_v1 schema (output format)
+- [ ] Design: Prompt templates (pattern detection, article confirmation)
+- [ ] Design: Council voting logic (3/4 threshold, divergence handling)
+- [ ] Design: Ambiguity flagging (when to escalate to human)
+- [ ] Spec: AKG query format (how Judge asks "Does X violate Y?")
+- [ ] Spec: RAG query format (how Judge requests supporting cases)
 
 ## Implementation Phase
-- [ ] Implement: LLM wrapper (OpenRouter + Anthropic + OpenAI clients)
-- [ ] Implement: Judge prompt (pattern detection instructions)
-- [ ] Implement: AKG integration (query AKG, parse response)
-- [ ] Implement: RAG integration (query RAG, parse citations)
-- [ ] Implement: Council orchestration (parallel queries, vote counting)
-- [ ] Implement: Output formatter (behaviour_json_v1 generation)
+- [ ] Build: LLM wrapper (if Inspect AI doesn't have one)
+- [ ] Build: Judge core (transcript → pattern detection)
+- [ ] Build: AKG integration (query legal knowledge)
+- [ ] Build: RAG integration (retrieve supporting evidence)
+- [ ] Build: Council system (multi-model voting)
+- [ ] Build: Output generator (behaviour_json_v1)
+- [ ] Build: Report translator (EN → RO)
 
 ## Validation Phase
-- [ ] Test: Email leak scenario (known violation)
-- [ ] Test: RTBF scenario (edge case handling)
-- [ ] Test: Ambiguous case (council voting triggers)
-- [ ] Measure: Consistency (5 runs same input)
-- [ ] Iterate: Prompt refinement based on failures
+- [ ] Test: Email leak scenario (5 runs, measure consistency)
+- [ ] Test: RTBF failure scenario (5 runs)
+- [ ] Test: Ambiguous case (council divergence)
+- [ ] Test: Translation fidelity (RO → EN → RO round-trip)
+- [ ] Measure: Latency (target <5s per transcript)
+- [ ] Iterate: Based on accuracy/performance
 
 ---
 **Status**: Not started  
-**Next**: Research LLM abstraction layer
+**Next**: Research Inspect AI LLM abstraction

@@ -1,50 +1,51 @@
-# RAG - Legal Corpus Retrieval
+# RAG - Retrieval-Augmented Generation Corpus
 
 ## Overview
-Vector search system over legal cases, guidelines, and regulatory commentary for supporting evidence retrieval.
+Vector search over legal corpus (EDPB cases, CJEU rulings, ENISA guidance). Based on **CC-Petri** implementation.
 
 ## Purpose
-- Store: EDPB guidelines, CJEU rulings, ENISA reports, national DPA decisions
-- Query: "Find supporting cases for email leak violations"
-- Returns: Relevant citations for report annexes
-- Provides: Real-world evidence and legal precedent
+- Provide supporting evidence for violations
+- Retrieve relevant case law (EDPB enforcement decisions)
+- Find regulatory guidance (ENISA, EDPB guidelines)
+- Support report annexes (citations)
 
 ## Status
-🟢 **Existing** (CC-Petri built locally)
+🟢 **Existing** (CC-Petri deployed locally)
 
 ## Architecture
 
+### Vector Database Options
+- **Pinecone** (managed, fast)
+- **Weaviate** (open source, hybrid search)
+- **Qdrant** (Rust-based, performant)
+
+**Current**: TBD (check CC-Petri)
+
 ### Document Sources
-- **EDPB**: Guidelines, recommendations, enforcement cases
-- **CJEU**: European Court of Justice rulings
-- **ENISA**: European cybersecurity agency reports
-- **National DPAs**: ANSPDCP (Romania), CNIL (France), ICO (UK), etc.
-- **Academic**: Legal journals, compliance frameworks
+- **EDPB Guidelines**: Interpretation guidance
+- **EDPB Enforcement Decisions**: Real violation cases
+- **CJEU Rulings**: EU court precedents
+- **ENISA Reports**: Security best practices
+- **ANSPDCP**: Romanian DPA decisions
 
-### Vector Search
-- Embedding Model: TBD (verify CC-Petri config)
-- Database: Pinecone / Weaviate / Qdrant (verify locally)
-- Top-K: 5 most relevant documents
-- Re-ranking: Optional (LLM-based relevance scoring)
-
-### Example Query
-```python
-query = "GDPR Article 32 security breach email disclosure"
-results = rag.search(query, top_k=5, filters={"source": "EDPB"})
-# Returns: [{doc_id, title, excerpt, url, relevance_score}]
-```
-
-## Current State
-- **Implementation**: CC-Petri (local VPS)
-- **Vector DB**: Unknown (needs verification)
-- **Documents Loaded**: GDPR text, EDPB cases (parse complete), other sources TBD
-- **Verification Needed**: Document counts, search quality, retrieval latency
+### Retrieval Strategy
+- **Top-K**: 5 results (configurable)
+- **Similarity threshold**: 0.7+ (configurable)
+- **Reranking**: Optional (improve precision)
 
 ## Key Decisions
-- **Canonical EN**: All documents stored in EN (or EN + original language)
-- **Dual System**: RAG (corpus) + AKG (graph) = hybrid approach
-- **Judge Uses Both**: AKG for violation confirmation, RAG for supporting evidence
+- **RAG complements AKG**: AKG for article confirmation, RAG for evidence
+- **Canonical English**: All queries in EN (ADR-0001)
+- **Fallback strategy**: If AKG fails, use RAG (vice versa)
+
+## Current Data
+- **EDPB cases**: ~150 parsed (estimate, verify)
+- **CJEU rulings**: TBD
+- **ENISA reports**: TBD
+- **Total documents**: ~500-1000 (estimate, verify)
 
 ## Links
-- [TASKS.md](TASKS.md) - Verification & extension checklist
+- [TASKS.md](TASKS.md) - Validation & expansion tasks
+- [RESEARCH.md](RESEARCH.md) - Retrieval optimization findings
 - [STATUS.md](STATUS.md) - Current state
+- **CC-Petri repo**: [Local path TBD]

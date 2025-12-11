@@ -1,50 +1,73 @@
-# Judge - Transcript Analysis Engine
+# Judge - Transcript Analysis & Violation Mapping
 
 ## Overview
-Multilingual LLM that analyzes Petri transcripts, queries AKG/RAG, and produces structured violation findings.
+Multilingual LLM system that analyzes Petri transcripts, queries AKG/RAG, and generates structured violation findings.
 
 ## Purpose
 - Receive RO/EN transcripts from Petri
-- Think internally in EN (canonical pipeline)
-- Query AKG (graph) + RAG (corpus) for legal validation
-- Output: `behaviour_json_v1` (structured findings)
-- Translate reports to RO if needed
+- Detect violation patterns (email leak, RTBF failure, etc.)
+- Query AKG for article confirmation
+- Query RAG for supporting evidence
+- Generate behaviour_json_v1 output
+- Translate reports to client language
 
 ## Status
 🔴 **Not Started**
 
 ## Architecture
+
+### Translation Layer (ADR-0001)
+**Canonical English Pipeline**:
 ```
-Input: Petri Transcript (RO or EN)
+Input: RO transcript
   ↓
-Judge LLM (multilingual, thinks in EN)
-  ├→ Pattern Detection (LLM behavior analysis)
-  ├→ AKG Query ("Does X violate Art Y?")
-  ├→ RAG Query ("Find supporting cases")
-  └→ Council Validation (if ambiguous)
+Judge (multilingual LLM): Think in EN internally
   ↓
-Output: behaviour_json_v1
-  ├→ violations: [{article, behavior, severity, evidence}]
-  ├→ recommendations: {immediate, short_term, long_term}
-  └→ ambiguous_flags: [{reason, human_review_needed}]
+Query AKG/RAG: EN queries
+  ↓
+Generate findings: EN
+  ↓
+Translate reports: EN → RO
+```
+
+**NO separate translation LLM** (avoid context loss)
+
+### LLM Candidates
+- **Gemini 2.0 Flash Thinking** (1M context, top multilingual benchmark)
+- Mistral Large 3 (256k, EU-focused)
+- Claude Sonnet 4.5 (200k, reasoning depth)
+- GPT-4.5.1 (latest)
+
+**Test Protocol**: Same RO transcript → 5 LLMs → measure accuracy, consistency, cost, latency
+
+### Council Pattern
+**Use for**: Ambiguous cases (e.g., borderline violations)
+**Models**: GPT-4.5.1, Claude Sonnet 4.5, Mistral Large 3, Gemini 2.0
+**Threshold**: 3/4 agreement
+**Output**: Consensus vote + individual reasoning
+
+### Output Format
+**behaviour_json_v1** (schema TBD):
+```json
+{
+  "scenario_id": "scenario-001-email-leak",
+  "violation_detected": true,
+  "gdpr_articles": ["5(1)(f)", "32"],
+  "iso27001_controls": ["A.5.33", "A.8.9"],
+  "confidence": 0.95,
+  "evidence": "...",
+  "supporting_cases": ["EDPB-2023-01"],
+  "ambiguous": false
+}
 ```
 
 ## Key Decisions
-- **Single LLM**: No separate translation service (context preservation)
-- **Canonical EN**: All reasoning in EN, translate at I/O edges only
-- **Model Candidates**: Gemini 2.0 Flash Thinking (1M context, multilingual), Mistral Large 3, Claude Sonnet 4.5, GPT-4.5.1
-- **Council Pattern**: 3/4 consensus for ambiguous cases
-
-## Testing Protocol
-**LLM Selection** (Phase 0):
-- Same RO transcript → 5 candidate models
-- Measure: Translation accuracy, pattern detection, article precision, cost, latency
-- Winner becomes Judge LLM
-
-**Consistency Testing** (Phase 2):
-- 100 runs same input → measure variance (Eval-app TEST-J01)
-- Target: 95%+ stable output
+- **Single LLM** handles translation + context (not separate translator)
+- **Gemini 2.0** likely winner (1M context, multilingual benchmark leader)
+- **Platform-agnostic wrapper** (easy model swapping)
+- **Temperature adjustable** per query type (pattern detection vs report generation)
 
 ## Links
 - [TASKS.md](TASKS.md) - Implementation checklist
+- [RESEARCH.md](RESEARCH.md) - LLM testing results
 - [STATUS.md](STATUS.md) - Current state

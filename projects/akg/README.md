@@ -1,51 +1,66 @@
 # AKG - Autonomous Knowledge Graph
 
 ## Overview
-Structured legal knowledge graph for precise violation validation and article retrieval.
+Structured knowledge graph for legal reasoning and article validation. Based on **Codex-Petri** implementation.
 
 ## Purpose
-- Store: Framework articles, national provisions, violation patterns
-- Query: "Does behavior X violate GDPR Art Y?"
-- Relationships: IMPLEMENTS, SUPPLEMENTS, VIOLATES, REQUIRES
-- Provides: Authoritative compliance validation
+- Store regulatory frameworks as graph nodes
+- Answer: "Does behavior X violate Article Y?"
+- Provide article text + interpretation
+- Support national law overlays (Romanian Law 190/2018)
 
 ## Status
-🟢 **Existing** (Codex-Petri built locally)
+🟢 **Existing** (Codex-Petri deployed locally)
 
 ## Architecture
 
-### Node Types
-- **Framework**: GDPR, ISO_27001, ISO_42001, EU_AI_Act
-- **Article**: GDPR_Article_32, ISO_Control_A_8_1
-- **National_Provision**: RO_Law_190_Art_15
-- **Violation_Pattern**: email_leak, rtbf_failure
-- **Requirement**: technical_measure, organizational_control
-
-### Relationships
-- `(National_Provision)-[:IMPLEMENTS]->(Article)`
-- `(Article)-[:REQUIRES]->(Requirement)`
-- `(Violation_Pattern)-[:VIOLATES]->(Article)`
-- `(Framework)-[:SUPPLEMENTS]->(Framework)`
-
-### Example Query (Cypher)
-```cypher
-MATCH (pattern:Violation_Pattern {name: 'email_leak'})
-      -[:VIOLATES]->(article:Article)
-      -[:PART_OF]->(framework:Framework {name: 'GDPR'})
-RETURN article.number, article.text, article.title
+### Graph Structure
+```
+Framework (GDPR, ISO 27001, etc.)
+  ↓ HAS_ARTICLE
+Article (GDPR Art 5, Art 32, etc.)
+  ↓ IMPLEMENTS
+National_Provision (RO Law 190/2018)
+  ↓ VIOLATES
+ViolationPattern (email leak, RTBF failure, etc.)
 ```
 
-## Current State
-- **Implementation**: Codex-Petri (local VPS)
-- **Database**: Neo4j or FalkorDB (TBD - verify locally)
-- **Nodes Loaded**: GDPR (parse complete), ISO 27001 (parse complete), ISO 42001 (TBD), AI Act (TBD)
-- **Verification Needed**: Actual node counts, query latency, schema validation
+### Node Types
+- **Framework**: GDPR, ISO 27001, ISO 42001, EU AI Act
+- **Article**: Individual articles/sections (with text_en, text_original)
+- **National_Provision**: Country-specific implementations
+- **ViolationPattern**: Common violation types (deterministic mapping)
+
+### Edge Types
+- **HAS_ARTICLE**: Framework → Article
+- **IMPLEMENTS**: Article → National_Provision
+- **SUPPLEMENTS**: National law adds to EU law
+- **VIOLATES**: Behavior pattern → Article
+
+### Database Options
+- **Neo4j Aura** (cloud, managed)
+- **FalkorDB** (Redis-based, fast)
+- **Neo4j Local** (self-hosted)
+
+**Current**: TBD (check Codex-Petri)
 
 ## Key Decisions
-- **Scenarios NOT in AKG** (ADR-0004): Scenarios stored as files, AKG validates only
-- **Canonical EN**: All nodes in EN, national provisions have `text_original` field
-- **Dual System**: AKG (structured) + RAG (corpus) = hybrid approach
+- **Canonical English**: All reasoning in EN (ADR-0001)
+- **National overlays**: Stored with EN summary + original text
+- **No scenarios**: Scenarios in file structure, not graph (ADR-0004)
+- **Violation patterns**: Pre-computed CSV (not runtime reasoning)
+
+## Current Data
+- **GDPR**: 88 articles parsed
+- **ISO 27001**: 93 controls parsed
+- **ISO 42001**: TBD
+- **EU AI Act**: 113 articles parsed
+- **RO Law 190/2018**: TBD
+
+**Total nodes**: ~2000-3000 (from memory, verify)
 
 ## Links
-- [TASKS.md](TASKS.md) - Verification & extension checklist
+- [TASKS.md](TASKS.md) - Validation & expansion tasks
+- [RESEARCH.md](RESEARCH.md) - Query optimization findings
 - [STATUS.md](STATUS.md) - Current state
+- **Codex-Petri repo**: [Local path TBD]

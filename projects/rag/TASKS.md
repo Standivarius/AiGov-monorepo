@@ -1,26 +1,26 @@
 # RAG - Task Checklist
 
-## Verification Phase (CC-Petri)
-- [ ] Access: SSH into VPS, locate CC-Petri
-- [ ] Verify: Vector database running (Pinecone/Weaviate/Qdrant)
-- [ ] Query: Document counts per source (EDPB, CJEU, ENISA, etc.)
-- [ ] Test: Sample queries (email leak → EDPB cases)
-- [ ] Measure: Retrieval latency (target <500ms)
-- [ ] Measure: Top-5 relevance quality (manual review of 10 queries)
-- [ ] Document: Actual architecture (export to `docs/architecture/rag-architecture.md`)
+## Validation Phase (Phase 1)
+- [ ] Install: CC-Petri locally (if not already)
+- [ ] Query: Test case retrieval ("email leak GDPR violation")
+- [ ] Query: Test guidance retrieval ("ENISA LLM security")
+- [ ] Count: Actual document count (EDPB, CJEU, ENISA)
+- [ ] Validate: Retrieval relevance (Top-5 quality)
+- [ ] Measure: Query latency (target <1s)
+- [ ] Document: Findings in existing-systems-report.md
 
-## Extension Phase (Phase 1)
+## Expansion Phase (Phase 2+)
+- [ ] Add: Missing EDPB cases (2024 decisions)
 - [ ] Add: Romanian DPA (ANSPDCP) decisions
-  - [ ] Scrape: Recent enforcement cases (2020-2025)
-  - [ ] Parse: Extract case details, violations, fines
-  - [ ] Ingest: Add to RAG corpus
-- [ ] Validate: 10 test queries (GDPR + RO cases)
+- [ ] Add: AI Act guidance (when available)
+- [ ] Enhance: Reranking (improve Top-5 precision)
 
-## Future Extensions (Phase 4-5)
-- [ ] Add: ISO 27001 audit guidance (BSI, ENISA)
-- [ ] Add: AI Act commentary (legal analysis)
-- [ ] Add: Industry-specific guidance (healthcare, finance)
+## Integration Phase
+- [ ] Connect: Judge → RAG (query interface)
+- [ ] Test: 30 evidence queries (known relevant cases)
+- [ ] Measure: Relevance (target 80%+ in Top-5)
+- [ ] Build: Fallback logic (if RAG fails, note in report)
 
 ---
-**Status**: Verification pending  
-**Next**: Access VPS, verify CC-Petri state
+**Status**: Validation pending  
+**Next**: Install/verify CC-Petri deployment
