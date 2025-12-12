@@ -1,85 +1,179 @@
 # AIGov Decision Log
 
-**Purpose**: Chronological record of major decisions, rationale, and context.
+**Purpose**: Chronological record of all major technical and business decisions
 
 ---
 
-## 2025-12-11
+## ADR-0005: Evaluation Framework Selection
 
-### GitHub Structure Initialization
-**Decision**: Use GitHub as single source of truth for engineering plans, NOT duplicate to Claude Project Knowledge  
-**Rationale**: Avoid dual maintenance, GitHub already version-controlled, Claude can read directly  
-**Impact**: Project Knowledge only for conversation summaries, not plan documents  
+**Date**: 2025-12-12  
+**Status**: Accepted  
+**Deciders**: Marius (technical/business), Claude (research synthesis)
 
-### Aigov-eval Separate Repository
-**Decision**: Create separate `Aigov-eval` repo for evaluation system (not folder in Aigov-specs)  
-**Rationale**: Eval-app is standalone product, can evolve independently, reusable for other compliance tools  
-**Implementation**: https://github.com/Standivarius/Aigov-eval  
-**Impact**: Clean separation of concerns, parallel development possible  
+### Context
+Need evaluation framework for LLM security/compliance testing. Options: Inspect AI (UK AISI), DeepEval (Confident AI), or custom build.
 
-### Dashboard Technology: HTML + Tailwind
-**Decision**: Build dashboard mockup as single HTML file with Tailwind CDN (not Figma)  
-**Rationale**: Least friction (no install, double-click to open), can evolve to functional later, executable immediately  
-**Location**: `projects/dashboard/static/dashboard-mockup.html`  
-**Impact**: Faster iteration, no tool lock-in  
+### Decision
+Use **Inspect AI + Petri** (not DeepEval, not custom).
 
-### IntakeAgent as Claude Skill Pattern
-**Decision**: Build onboarding questionnaire as Claude Skill, NOT deterministic form platform  
-**Rationale**: AI-dynamic branching, minimizes client friction (auto-extracts from docs), flexible adaptation  
-**Alternative Rejected**: Typeform/Fillout/Tally (no LLM integration, rigid branching)  
-**Impact**: More development but better UX, migrate to Agent SDK later if needed  
+### Rationale
+1. **Agent compatibility**: Future market (3-4 years) moving toward agentic systems; Inspect built for agent evaluation
+2. **Petri scenario library**: 111 ready scenarios (GDPR-mapped) = months of work saved
+3. **OpenRouter native**: Multi-provider testing built-in (GPT, Claude, Gemini, Mistral)
+4. **UK AISI backing**: Government support = long-term stability (critical for solo founder)
+5. **Production security**: Docker + gVisor sandboxing essential for red-teaming
 
-### Scenarios NOT Stored in AKG (ADR-0004)
-**Decision**: Store scenarios as file structure (`scenarios/scenario-001-email-leak/`), NOT as AKG nodes  
-**Rationale**: Scenarios = test definitions (what we're testing), AKG = legal knowledge (what law says), separation prevents coupling  
-**From**: ChatGPT File 2 discussion  
-**Impact**: Cleaner architecture, AKG role is validation only ("Does X violate Y?")  
+### Consequences
+✅ **Positive**:
+- Faster Phase 0 (no custom orchestration needed)
+- Production security built-in (sandboxing, retries, logging)
+- Free scenario content (111 scenarios vs building from scratch)
+- Agent-ready (future-proof for market evolution)
 
-### Translation Architecture (ADR-0001)
-**Decision**: Canonical English pipeline, translation at I/O edges only, single multilingual LLM (not separate translator)  
-**Rationale**: Avoid context loss from handoff to separate translation LLM, Judge handles RO→EN→RO internally  
-**Impact**: Simpler architecture, preserved context across translation  
+⚠️ **Neutral**:
+- VerifyWise export requires adapter (Inspect logs → DeepEval format)
+- Learning curve for Inspect async patterns
 
-### Synthetic Target LLM Approach
-**Decision**: Use standard LLM + instructional layer ("You are Target in Petri test") instead of fine-tuned model  
-**Rationale**: Fast iteration, flexible violation simulation, no red flag concerns, reasoning output aids scenario development  
-**Implementation**: Prompt engineering, not training  
-**Impact**: Phase 0 viable without ML infrastructure  
+❌ **Negative**: None significant
 
-### LLM Council: Latest Models Only
-**Decision**: Use GPT-4.5.1 (not 4.0), Gemini 2.0 (not 1.5) for council voting  
-**Rationale**: Latest models = best performance, avoid stale baselines  
-**Impact**: Test harness needs regular model updates  
+### Alternatives Considered
+1. **DeepEval** (Confident AI)
+   - ✅ Pytest-like familiarity
+   - ✅ RAG metrics built-in
+   - ❌ RAG-focused (not our use case)
+   - ❌ No built-in sandboxing
+   - ❌ Weaker agent support
 
-### Framework Taxonomy BEFORE Scenario Pipeline
-**Decision**: Build GDPR infringement taxonomy (groups, subgroups) before automating scenario creation  
-**Rationale**: "Know what we're looking for" prevents scattered scenario development  
-**Impact**: 2-3 days taxonomy work precedes pipeline tooling  
+2. **Custom Build**
+   - ✅ Maximum control
+   - ❌ 6+ months work
+   - ❌ Solo founder risk
+   - ❌ No free scenarios
 
-### Eval-app Naming
-**Decision**: Call evaluation system "Eval-app" (not Verifier, TestSuite, QA, Validator)  
-**Rationale**: Marius preference, consistent with other tool names (-Agent, -Forge, -Gen pattern less applicable here)  
-**Impact**: All docs reference Eval-app  
+### Implementation Impact
+- **Phase 0**: Add "Inspect + Petri Setup" (1-2 days)
+- **Phase 0**: Replace "Mock Target" with Inspect solver pattern
+- **Phase 0**: Replace "OpenRouter Wrapper" with native Inspect support
+- **Phase 1**: Use Petri scenarios directly (select 10 from 111)
+
+### Related Documents
+- Master Plan v3: Section 3.5 (Evaluation Engine)
+- research/inspect-analysis/ (Codex repo analysis)
+- research/petri-analysis/ (111 scenarios catalog)
+- research/deepeval-analysis/ (comparative analysis)
 
 ---
 
-## Template for Future Entries
+## ADR-0004: Scenario Storage Architecture
 
-```markdown
-## YYYY-MM-DD
+**Date**: 2025-12-11  
+**Status**: Accepted
 
-### [Decision Title]
-**Decision**: [What was decided]  
-**Rationale**: [Why this decision]  
-**Alternatives Considered**: [What was rejected and why]  
-**Impact**: [How this affects project]  
-**References**: [Links to ADRs, discussions, etc.]  
+### Decision
+Scenarios stored as **file structure** (NOT in AKG).
+
+### Structure
+```
+scenarios/scenario-001-email-leak/
+├── scenario.json (Inspect dataset format)
+├── scenario_interpretation.md
+├── gdpr-articles.md
+├── iso27001-controls.md
+└── test-transcripts/
 ```
 
+### Rationale
+- Scenarios = test definitions (what we're testing)
+- AKG = legal knowledge (what law says)
+- Separation prevents coupling
+- Enables independent evolution
+
 ---
 
-**Maintenance Notes**:
-- Add entries chronologically (newest at bottom)
-- Link to ADRs for architectural decisions
-- Keep entries concise (2-4 sentences per field)
-- Reference source (ChatGPT discussion, Notion, etc.)
+## ADR-0003: Client Onboarding Architecture
+
+**Date**: 2025-12-11  
+**Status**: Accepted
+
+### Decision
+Single integrated tool: **IntakeAgent** (NOT separate questionnaire + audit prep docs).
+
+### Three-Phase Structure
+1. Initial questions (5-7 only)
+2. Document upload & extraction (Claude Skill → Agent SDK pattern)
+3. Output generation (Inspect config, report data, dashboard params)
+
+### Tool Selection
+AI-enabled dynamic questionnaire (Claude Skill pattern), NOT deterministic branched forms.
+
+---
+
+## ADR-0002: Reporting as Starting Point
+
+**Date**: 2025-12-11  
+**Status**: Accepted
+
+### Decision
+Reports are **client discovery tool**, not just output.
+
+### Complete Report Structure
+- L1 (Board/Executive): 5 pages
+- L2 (Compliance/Legal): 15-20 pages with IMMEDIATE/SHORT-TERM/LONG-TERM recommendations
+- L3 (Technical/CISO): 40-60 pages with code fixes
+- Framework annexes: GDPR article-by-article, ISO control gaps
+- Audit prep docs: Required documents (30-40 items), evidence timeline, interview scripts
+- GRC exports: OneTrust CSV, Vanta JSON, VeriifyWise API
+
+### Recommendations Section
+Each finding includes:
+- What happened (evidence)
+- Why violation (article + interpretation)
+- Severity
+- Root cause (CONFIRMED vs INFERRED)
+- Remediation (IMMEDIATE/SHORT-TERM/LONG-TERM)
+
+---
+
+## ADR-0001: Translation Architecture
+
+**Date**: 2025-12-11  
+**Status**: Accepted
+
+### Decision
+**Canonical English pipeline**: All reasoning in EN, translation at I/O edges only.
+
+### Details
+- AKG nodes: EN only
+- Judge logic: Thinks in EN
+- Translation: RO transcript → EN (Judge internal) → RO reports (output)
+- Single multilingual LLM: No separate translator (context loss risk)
+- Candidate: Gemini 2.0 Flash Thinking
+
+### National Law Storage
+- `National_Provision` nodes: `title_en` + `text_original` + `language_code`
+- Romanian Law 190/2018: EN summary + original RO text
+- Report exports: Reference actual RO law text (avoid double translation)
+
+---
+
+## Pre-ADR Decisions (Informal)
+
+### 2025-12-11: Eval-app as Separate Repo
+- Rationale: Systematic testing priority
+- Repo: https://github.com/Standivarius/Aigov-eval
+
+### 2025-12-11: Dashboard HTML+Tailwind
+- Rationale: Least friction, visual reference
+- Location: projects/dashboard/static/dashboard-mockup.html
+
+### 2025-12-11: GitHub as Truth
+- Master planning location: GitHub (not Notion)
+- Notion: Business strategy only (revenue, partnerships)
+- Google Drive: Deep research (Gemini exports)
+
+---
+
+**Document Conventions**:
+- ADR format: Context, Decision, Rationale, Consequences, Alternatives
+- Status: Proposed, Accepted, Deprecated, Superseded
+- Chronological order (newest first)
