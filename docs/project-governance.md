@@ -2,7 +2,7 @@
 
 **Purpose**: Persistent rules and checklists Claude reads EVERY session  
 **Status**: Living document - Claude updates when governance changes  
-**Last Updated**: 2025-12-15
+**Last Updated**: 2025-12-16
 
 ---
 
@@ -25,40 +25,84 @@
 
 ## Consistency Checks
 
-### Weekly (During Active Development)
+### Every Project Week (End of Week 1, 2, 3, etc.)
+**"Weekly" = Every week of active project work, not calendar weeks**
+
+Run these checks at end of each project week:
 - [ ] Variable-registry vs actual schema usage
-- [ ] File-registry vs actual repo files
+- [ ] File-registry vs actual repo files  
 - [ ] Phase 0 plan vs completed deliverables
+- [ ] Run Codex comprehensive audit (see below)
 
-### Monthly (Or End-of-Phase)
-- [ ] **Codex Analysis**: File structure, naming conventions, orphaned files
-- [ ] **ChatGPT Analysis**: Schema consistency, redundancy detection, documentation gaps
-- [ ] **Manual Review**: Variable registry completeness, cross-schema alignment
+### Monthly or End-of-Phase
+- [ ] Full ChatGPT analysis (comprehensive PM review)
+- [ ] Manual governance review
+- [ ] Evaluate governance effectiveness
 
-### Audit Prompts
+---
 
-**Codex (Claude Code)**:
+## Comprehensive Project Audit
+
+### Codex Analysis (Every Project Week)
+**Technical Health + Business Logic + Documentation Quality**
+
 ```
-Analyze /Aigov-specs repository structure:
-1. Check all YAML files validate against declared schemas
-2. Detect duplicate variable definitions across schemas
-3. Flag inconsistent naming conventions (compare vs file-registry.md)
-4. Report orphaned files (exist in repo but not in file-registry.md)
-5. Check cross-references (scenario_id usage, framework consistency)
+Analyze /Aigov-specs repository from Expert Product Manager perspective:
 
-Generate report: findings + recommendations
+TECHNICAL HEALTH
+1. Schema consistency (variables defined once, used consistently)
+2. File organization (matches file-registry, no orphans)
+3. Naming conventions (violations flagged)
+4. Cross-references (scenario_id usage, framework alignment)
+5. Dependency graph (circular dependencies, broken references)
+
+BUSINESS LOGIC
+6. Feature completeness (do scenarios cover stated scope?)
+7. Framework coverage (GDPR articles vs scenarios - gaps?)
+8. Value proposition coherence (does architecture support claims?)
+9. Scaling assumptions (will current design support 100 scenarios?)
+10. Automation opportunities (manual steps that could be scripted?)
+
+DOCUMENTATION QUALITY
+11. Specification clarity (ambiguous requirements?)
+12. Decision rationale (ADRs documented for key choices?)
+13. Implementation gaps (missing specs for built features?)
+14. Onboarding readiness (can new contributor understand system?)
+
+RISK ASSESSMENT
+15. Single points of failure (bus factor concerns?)
+16. Technical debt accumulation (shortcuts that need addressing?)
+17. Scope creep indicators (feature bloat vs core value?)
+18. Timeline realism (Phase 0 estimate vs actual progress?)
+
+RECOMMENDATIONS
+- Priority ranking (P0/P1/P2)
+- Quick wins (< 1 hour fixes)
+- Strategic improvements (architectural changes)
+- Defer/drop candidates (overengineering to remove)
+
+Generate comprehensive report with actionable findings.
 ```
 
-**ChatGPT**:
+### ChatGPT Analysis (Monthly)
+**Deep PM Review**
+
 ```
 Review AIGov project at https://github.com/Standivarius/AiGov-specs:
-1. Schema redundancy: Are variables defined multiple times?
-2. File organization: Does structure match file-registry.md?
-3. Documentation gaps: Missing specs for implemented features?
-4. Naming inconsistencies: Violations of naming conventions?
-5. Dependency conflicts: Circular dependencies or broken references?
 
-Generate report: issues + priority ranking
+Perform comprehensive Product Manager analysis covering:
+- Technical health (schemas, files, naming, dependencies)
+- Business logic (feature completeness, value proposition coherence)
+- Documentation quality (clarity, gaps, onboarding)
+- Risk assessment (single points of failure, technical debt, timeline)
+
+Provide:
+1. Executive summary (top 3 concerns, top 3 wins)
+2. Detailed findings by category
+3. Prioritized recommendations (P0/P1/P2)
+4. Quick wins vs strategic improvements
+
+Format: Professional PM audit report
 ```
 
 ---
@@ -115,14 +159,28 @@ Generate report: issues + priority ranking
 ## Claude Session Startup Protocol
 
 **EVERY SESSION, Claude reads**:
-1. This file (`/docs/project-governance.md`) - governance rules
-2. `/docs/specs/file-registry.md` - current project files
-3. `/docs/planning/Phase-0-Detailed.md` - current phase status
+1. `/docs/project-principles.md` - Development philosophy
+2. This file (`/docs/project-governance.md`) - Governance rules
+3. `/docs/specs/file-registry.md` - Current project files
+4. `/docs/planning/Phase-0-Detailed.md` - Current phase status
 
 **Then Claude checks**:
 - Are registries out of sync? (flag for update)
 - Are there pending "TODO: update X" items? (remind Marius)
-- Has it been >10 messages? (suggest consistency check)
+- Has it been >10 messages? (suggest work summary)
+- Has it been >15 messages? (suggest consistency audit)
+
+---
+
+## Claude Memory Clarification
+
+**How Claude's memory works**:
+- **Within same chat**: I remember EVERYTHING from start to current message
+- **New chat**: I only see Project Knowledge docs + userPreferences
+- **After 3-week pause**: If you return to THIS chat, I still have full context
+- **Project-principles.md**: In Project Knowledge → I read it EVERY new chat
+
+**So**: If you pause this chat for 3 weeks and return, I'll remember our whole conversation. But if you start a NEW chat in 3 weeks, I'll only know what's in Project Knowledge (principles, governance, file-registry).
 
 ---
 
@@ -145,12 +203,13 @@ Generate report: issues + priority ranking
 
 ### For Marius
 - Use file-registry.md before creating files (avoid duplicates)
-- Run consistency audit at end of each phase
+- Run consistency audit at end of each project week
 - Update custom instructions when governance patterns emerge
 
 ### For Claude
-- Read project-governance.md FIRST every session
+- Read project-principles.md + project-governance.md FIRST every session
 - Flag registry drift within 3 messages
+- Suggest work summary after 10+ messages
 - Suggest consistency audit after 15+ messages
 - Never propose files without checking file-registry
 - Always update registries when schemas/files change
