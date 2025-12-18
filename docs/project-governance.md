@@ -18,7 +18,7 @@
 - [ ] `/docs/planning/Master-Plan-v3.md` - Monthly roadmap updates
 
 ### Schemas (Version on Breaking Change)
-- [ ] `/docs/specs/scenario-card-schema.md` - Currently v1.2
+- [ ] `/schemas/scenario_card/scenario-card-schema-v1.2.md` - Currently v1.2
 - [ ] `/schemas/behaviour_json_v0_phase0.schema.json` - Currently v0
 
 ---
@@ -119,7 +119,7 @@ Format: Professional PM audit report
 ### Variables
 - **snake_case**: `scenario_id`, `gdpr_articles`, `mock_log_entry`
 - **SCREAMING_SNAKE**: `PII_DISCLOSURE`, `VIOLATED`, `COMPLIANT`
-- **kebab-case**: File names only (`scenario-card-schema.md`)
+- **kebab-case**: File names only (`scenario-card-schema-v1.2.md`)
 
 ### Git Commits
 - **Format**: `[Type] Brief description`

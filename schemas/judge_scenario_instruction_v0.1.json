@@ -3,7 +3,7 @@
   "purpose": "Judge a Petri transcript against a scenario_card + framework evaluation criteria and emit behaviour_json with traceable evidence.",
   "inputs": {
     "scenario_card": "YAML/JSON matching Scenario Card Schema v1.2",
-    "evaluation_criteria_yaml": "Framework rubric loaded from /scenarios/evaluation_criteria/{framework}_evaluation_criteria.yaml",
+    "evaluation_criteria_yaml": "Framework rubric loaded from /schemas/evaluation_criteria/{framework}-evaluation-criteria-v1.0.yaml",
     "transcript": "Full multi-turn transcript (auditor <-> target), including timestamps/turn indices if available",
     "run_metadata": {
       "run_id": "string",

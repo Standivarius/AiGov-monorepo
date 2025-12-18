@@ -116,7 +116,7 @@ Without eval:
 
 ### Aigov-specs Repo
 1. `/docs/planning/Phase-0-Detailed.md` - Add Deliverable 7, update timeline
-2. `/docs/specs/scenario-card-schema.md` - Add `legal_context` and `test_target_instructions`
+2. `/schemas/scenario_card/scenario-card-schema-v1.2.md` - Add `legal_context` and `test_target_instructions`
 3. `/schemas/behaviour_json_v0_phase0.schema.json` - NEW simplified schema
 4. `/docs/planning/Decision-Log.md` - Add ADR-0006 through ADR-0010
 5. `/docs/planning/Phase-0-Integration-Summary.md` - This document

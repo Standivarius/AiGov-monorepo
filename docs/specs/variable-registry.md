@@ -219,7 +219,7 @@ LOW       # Minor risk, procedural violation
 ### Variable Naming
 - **snake_case**: All variables (`scenario_id`, `gdpr_articles`, `mock_log_entry`)
 - **SCREAMING_SNAKE**: Enum values (`PII_DISCLOSURE`, `VIOLATED`, `COMPLIANT`)
-- **kebab-case**: File names only (`scenario-card-schema.md`)
+- **kebab-case**: File names only (`scenario-card-schema-v1.2.md`)
 
 ### ID Formats
 - **Scenario ID**: `FRAMEWORK-NNN` (e.g., `GDPR-007`, `ISO-042`)

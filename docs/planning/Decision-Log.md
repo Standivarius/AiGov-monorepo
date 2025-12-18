@@ -71,7 +71,7 @@
 **Implementation**: `legal_context.gdpr_articles[]` + `legal_context.edpb_guidance[]`  
 **Phase 1 Transition**: Keep inline text, use AKG/RAG for **additional** context (national law, case law)  
 **Impact**: Judge reads inline text, scenario_cards fully self-contained, no database queries Phase 0  
-**References**: `/docs/specs/scenario-card-schema.md` v1.1
+**References**: `/schemas/scenario_card/scenario-card-schema-v1.2.md` v1.2
 
 ### MOCK_LOG Format (ADR-0007)
 **Decision**: Test_target outputs structured log of intentional violations for accuracy measurement  

@@ -56,7 +56,7 @@
 
 ### Scenario_card Schema Updates
 
-See updated `/docs/specs/scenario-card-schema.md` with:
+See updated `/schemas/scenario_card/scenario-card-schema-v1.2.md` with:
 - `legal_context` section (inline GDPR articles + EDPB guidance)
 - `test_target_instructions` section (MOCK_LOG format)
 

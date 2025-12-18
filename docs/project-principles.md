@@ -208,7 +208,7 @@ We bridge the gap between technical LLM security testing and regulatory complian
 
 **Effective**:
 - "Search for official GDPR violation taxonomies and extract categories"
-- "Update variable-registry.md to add national_law field, then update scenario-card-schema.md"
+- "Update variable-registry.md to add national_law field, then update scenario-card-schema-v1.2.md"
 - "Review Phase-0-Detailed.md and flag any tasks slipping timeline"
 
 **Ineffective**:

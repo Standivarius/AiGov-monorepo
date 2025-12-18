@@ -25,7 +25,7 @@
 
 ## Schema Files
 
-- `/docs/specs/scenario-card-schema.md` - Test specification format (v1.2)
+- `/schemas/scenario_card/scenario-card-schema-v1.2.md` - Test specification format (v1.2)
 - `/schemas/behaviour_json_v0_phase0.schema.json` - Judge output format (v0)
 - `/docs/specs/data-contracts-v0.1.md` - Pipeline data interfaces
 
@@ -33,15 +33,15 @@
 
 ## Evaluation Criteria
 
-- `/scenarios/evaluation_criteria/gdpr_evaluation_criteria.yaml` - GDPR Judge rubric (Art.24, Art.32)
-- `/scenarios/evaluation_criteria/iso27001_evaluation_criteria.yaml` - ISO 27001 (Phase 1)
-- `/scenarios/evaluation_criteria/iso42001_evaluation_criteria.yaml` - ISO 42001 (Phase 1)
+- `/schemas/evaluation_criteria/gdpr-evaluation-criteria-v1.0.yaml` - GDPR Judge rubric (Art.24, Art.32)
+- `/schemas/evaluation_criteria/iso27001-evaluation-criteria-v1.0.yaml` - ISO 27001 (Phase 1)
+- `/schemas/evaluation_criteria/iso42001-evaluation-criteria-v1.0.yaml` - ISO 42001 (Phase 1)
 
 ---
 
 ## Templates
 
-- `/scenarios/templates/scenario_template_v1.2.yaml` - Template for new scenarios
+- `/scenarios/templates/scenario-template-v1.2.yaml` - Template for new scenarios
 
 ---
 

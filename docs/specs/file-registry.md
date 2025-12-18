@@ -12,9 +12,11 @@
 |-----------|---------|-------|---------|-------------|
 | `/docs/project-principles.md` | Development philosophy, quality standards | Marius/Claude | v1.0 | None |
 | `/docs/project-governance.md` | Living documents, consistency checks | Claude | v1.0 | None |
+| `/docs/_index.md` | Specs index and canonical entry points | Claude | v0.1 | None |
 | `/docs/specs/variable-registry.md` | Variable governance | Claude | v1.0 | All schemas |
 | `/docs/specs/file-registry.md` | File tracking (this file) | Claude | v1.1 | None |
-| `/docs/specs/client-intake-variables.md` | Client onboarding inputs | Claude | v1.0 | scenario-card-schema |
+| `/docs/specs/client-intake-variables.md` | Client onboarding inputs | Claude | v1.0 | scenario-card-schema-v1.2 |
+| `/docs/decisions/2025-12-19_specs_repo_structure_cleanup_v0.1.md` | Repo structure cleanup decision | Claude | v0.1 | docs/_index.md |
 
 ---
 
@@ -32,8 +34,8 @@
 
 | File Path | Purpose | Owner | Version | Dependencies |
 |-----------|---------|-------|---------|-------------|
-| `/docs/specs/scenario-card-schema.md` | Scenario test specification | Marius/Claude | v1.2 | variable-registry.md |
-| `/schemas/behaviour_json_v0_phase0.schema.json` | Judge output format (Phase 0) | Claude | v0 | scenario-card-schema.md |
+| `/schemas/scenario_card/scenario-card-schema-v1.2.md` | Scenario test specification | Marius/Claude | v1.2 | variable-registry.md |
+| `/schemas/behaviour_json_v0_phase0.schema.json` | Judge output format (Phase 0) | Claude | v0 | scenario-card-schema-v1.2.md |
 | `/docs/specs/data-contracts-v0.1.md` | Pipeline data interfaces | Claude | v0.1 | behaviour_json schema |
 
 ---
@@ -42,9 +44,9 @@
 
 | File Path | Purpose | Based On | Status |
 |-----------|---------|----------|--------|
-| `/scenarios/evaluation_criteria/gdpr_evaluation_criteria.yaml` | GDPR Judge rubric | Art.24, Art.32, supervisory authority standards | Active |
-| `/scenarios/evaluation_criteria/iso27001_evaluation_criteria.yaml` | ISO 27001 Judge rubric | ISO 27001:2022 controls | Phase 1 |
-| `/scenarios/evaluation_criteria/iso42001_evaluation_criteria.yaml` | ISO 42001 Judge rubric | ISO 42001:2023 AI management | Phase 1 |
+| `/schemas/evaluation_criteria/gdpr-evaluation-criteria-v1.0.yaml` | GDPR Judge rubric | Art.24, Art.32, supervisory authority standards | Active |
+| `/schemas/evaluation_criteria/iso27001-evaluation-criteria-v1.0.yaml` | ISO 27001 Judge rubric | ISO 27001:2022 controls | Phase 1 |
+| `/schemas/evaluation_criteria/iso42001-evaluation-criteria-v1.0.yaml` | ISO 42001 Judge rubric | ISO 42001:2023 AI management | Phase 1 |
 
 ---
 
@@ -54,7 +56,7 @@
 |-----------|---------|-----------|--------|
 | `/scenarios/gdpr/scenario_001_third_party_pii.yaml` | Third-party PII disclosure test | GDPR | Pending creation |
 | `/scenarios/gdpr/scenario_007_healthcare_email.yaml` | Healthcare email leak test | GDPR | Pending creation |
-| `/scenarios/templates/scenario_template_v1.2.yaml` | Template for new scenarios | All | Active |
+| `/scenarios/templates/scenario-template-v1.2.yaml` | Template for new scenarios | All | Active |
 
 ---
 
@@ -100,7 +102,7 @@
 
 ### Schema Files
 **Format**: `schema_name_vX.Y.format`  
-**Examples**: `behaviour_json_v0_phase0.schema.json`, `scenario-card-schema.md`
+**Examples**: `behaviour_json_v0_phase0.schema.json`, `scenario-card-schema-v1.2.md`
 
 ### Test Files
 **Format**: `test_component_name.py`  
@@ -112,29 +114,29 @@
 
 ```
 scenario_card.yaml
-  ├─> evaluation_criteria/gdpr_evaluation_criteria.yaml (Judge reads)
-  ├─> variable-registry.md (field definitions)
-  └─> behaviour_json_v0_phase0.schema.json (Judge outputs)
+  -> schemas/evaluation_criteria/gdpr-evaluation-criteria-v1.0.yaml (Judge reads)
+  -> variable-registry.md (field definitions)
+  -> behaviour_json_v0_phase0.schema.json (Judge outputs)
 
 behaviour_json_v0_phase0.schema.json
-  ├─> scenario_card.yaml (finding_id references scenario_id)
-  └─> report templates (L2 report consumes findings)
+  -> scenario_card.yaml (finding_id references scenario_id)
+  -> report templates (L2 report consumes findings)
 
-evaluation_criteria/gdpr_evaluation_criteria.yaml
-  └─> Official GDPR Art.24, Art.32, supervisory authority standards
+schemas/evaluation_criteria/gdpr-evaluation-criteria-v1.0.yaml
+  -> Official GDPR Art.24, Art.32, supervisory authority standards
 
 variable-registry.md
-  ├─> scenario-card-schema.md
-  ├─> behaviour_json schema
-  └─> client-intake-variables.md
+  -> scenario-card-schema-v1.2.md
+  -> behaviour_json schema
+  -> client-intake-variables.md
 
 project-principles.md
-  └─> Project Knowledge (read every new chat)
+  -> Project Knowledge (read every new chat)
 
 project-governance.md
-  ├─> project-principles.md
-  ├─> file-registry.md
-  └─> variable-registry.md
+  -> project-principles.md
+  -> file-registry.md
+  -> variable-registry.md
 ```
 
 ---
@@ -189,3 +191,7 @@ find . -name "*.md"
 
 **Maintenance**: Update this registry when files are added/removed/renamed  
 **Review**: Weekly consistency check (compare registry vs actual files)
+
+
+
+
