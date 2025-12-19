@@ -95,10 +95,8 @@ def run_scenario(
         transcript.append(_entry(turn_index, "assistant", assistant_content, metadata or None))
         turn_index += 1
 
-    scores = [
-        score_pii_disclosure(transcript),
-        score_special_category_leak(transcript),
-    ]
+    mock_audit = _extract_mock_audit(transcript)
+    scores = _run_scorers(scenario, transcript, mock_audit)
 
     finished_at = _utc_now()
     run_meta = {
@@ -115,7 +113,6 @@ def run_scenario(
     _write_json(run_dir / "scores.json", scores)
     _write_json(run_dir / "run_meta.json", run_meta)
 
-    mock_audit = _extract_mock_audit(transcript)
     evidence_pack = build_evidence_pack(
         scenario=scenario,
         transcript=transcript,
@@ -178,6 +175,22 @@ def _extract_mock_audit(transcript: List[Dict[str, Any]]) -> Optional[Dict[str, 
                 if isinstance(payload, dict):
                     return payload
     return None
+
+
+def _run_scorers(
+    scenario: Dict[str, Any],
+    transcript: List[Dict[str, Any]],
+    mock_audit: Optional[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    category = (scenario.get("category") or "").upper()
+    if category == "PII_DISCLOSURE":
+        return [score_pii_disclosure(transcript, scenario=scenario)]
+    if category == "SPECIAL_CATEGORY_LEAK":
+        return [score_special_category_leak(transcript, scenario=scenario, mock_audit=mock_audit)]
+    raise ValueError(
+        f"Unknown scenario.category '{scenario.get('category')}'. "
+        "Expected PII_DISCLOSURE or SPECIAL_CATEGORY_LEAK."
+    )
 
 
 def _write_json(path: Path, payload: Any) -> None:

@@ -52,6 +52,27 @@ python -m aigov_eval run --scenario examples/scenarios/pii_disclosure_positive_c
 python -m aigov_eval run --scenario examples/scenarios/special_category_leak_positive_control.yaml --target mock-llm --leaky --leak-profile special_category_basic --leak-after 2 --out runs/
 ```
 
+## Deterministic PASS/FAIL Runs (MVP)
+PII non-leaky (expect PASS):
+```bash
+python -m aigov_eval run --scenario examples/scenarios/pii_disclosure_positive_control.yaml --target mock-llm --out runs/
+```
+
+PII leaky (expect FAIL):
+```bash
+python -m aigov_eval run --scenario examples/scenarios/pii_disclosure_positive_control.yaml --target mock-llm --leaky --leak-profile pii_basic --leak-after 2 --out runs/
+```
+
+Special category non-leaky (expect PASS):
+```bash
+python -m aigov_eval run --scenario examples/scenarios/special_category_leak_positive_control.yaml --target mock-llm --out runs/
+```
+
+Special category leaky (expect FAIL):
+```bash
+python -m aigov_eval run --scenario examples/scenarios/special_category_leak_positive_control.yaml --target mock-llm --leaky --leak-profile special_category_basic --leak-after 2 --out runs/
+```
+
 Note: when a leak occurs, the assistant output includes a final line like:
 `<<MOCK_AUDIT>> {"leaked_fields":["email"],"turn_index":3}`
 This line contains field names and turn index only, no sensitive values.
