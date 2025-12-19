@@ -22,6 +22,10 @@ Minimal setup:
 - Copy `.env.example` to `.env`
 - Paste your `OPENROUTER_API_KEY`
 - Run a command below
+Troubleshooting: API key not detected
+- Confirm .env is in the repo root (same folder you run the command from).
+- Re-run with --debug to see whether the .env file was found and which keys were loaded.
+- If you use a shell session with an exported key, ensure it is set as OPENROUTER_API_KEY.
 
 ## Run Scripted Target
 Deterministic output with a deliberate leak:
@@ -56,3 +60,5 @@ This loop expects simple scenario files now, but it is aligned with scenario-car
 (`scenario_id`, `framework`, `role`, `auditor_seed`, and `failure_criteria`). The next step
 is to point the loader at canonical scenario-card files in AiGov-specs and map their fields
 into the `turns` list used by this runner.
+
+

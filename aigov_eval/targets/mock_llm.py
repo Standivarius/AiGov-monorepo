@@ -8,7 +8,6 @@ import urllib.error
 import urllib.request
 from typing import Any, Dict, List, Optional, Tuple
 
-from ..env import load_dotenv
 from .base import TargetAdapter
 
 
@@ -32,7 +31,6 @@ class MockTargetAdapter(TargetAdapter):
 
     def __init__(self, scenario: Dict[str, Any], config: Dict[str, Any]) -> None:
         super().__init__(scenario, config)
-        load_dotenv()
         self.api_key = os.getenv("OPENROUTER_API_KEY")
         if not self.api_key:
             raise RuntimeError("OPENROUTER_API_KEY is required. Set it in the environment or .env.")

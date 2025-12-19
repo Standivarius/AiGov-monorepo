@@ -1,28 +1,53 @@
-"""Local .env loader (minimal)."""
+"""Environment bootstrap using python-dotenv."""
 
 from __future__ import annotations
 
-import os
-from pathlib import Path
-from typing import Optional
+from typing import Dict, List, Optional
+
+try:
+    from dotenv import dotenv_values, find_dotenv, load_dotenv
+except Exception as exc:  # pragma: no cover - dependency guard
+    raise RuntimeError("python-dotenv is required for .env support") from exc
 
 
-def load_dotenv(path: str = ".env") -> bool:
-    env_path = Path(path)
-    if not env_path.exists():
-        return False
+_BOOTSTRAPPED = False
+_STATE: Dict[str, Optional[object]] = {}
 
-    for raw_line in env_path.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("#"):
-            continue
-        if line.startswith("export "):
-            line = line[len("export ") :].strip()
-        if "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        key = key.strip()
-        value = value.strip().strip("\"'")
-        if key and key not in os.environ:
-            os.environ[key] = value
-    return True
+
+def init_env(debug: bool = False) -> Dict[str, Optional[object]]:
+    global _BOOTSTRAPPED, _STATE
+    if _BOOTSTRAPPED:
+        if debug:
+            _debug_print(_STATE)
+        return _STATE
+
+    env_path = find_dotenv()
+    found = bool(env_path)
+    loaded_keys: List[str] = []
+
+    if found:
+        values = dotenv_values(env_path)
+        loaded_keys = sorted([key for key in values.keys() if key])
+        load_dotenv(dotenv_path=env_path, override=False)
+
+    _STATE = {
+        "dotenv_path": env_path or None,
+        "found": found,
+        "loaded_keys": loaded_keys,
+    }
+    _BOOTSTRAPPED = True
+
+    if debug:
+        _debug_print(_STATE)
+    return _STATE
+
+
+def _debug_print(state: Dict[str, Optional[object]]) -> None:
+    found = state.get("found")
+    path = state.get("dotenv_path") or "none"
+    keys = state.get("loaded_keys") or []
+    print(f"[DEBUG] .env found: {found} (path={path})")
+    if keys:
+        print(f"[DEBUG] .env keys: {', '.join(keys)}")
+    else:
+        print("[DEBUG] .env keys: none")

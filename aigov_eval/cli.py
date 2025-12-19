@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import os
 
-from .env import load_dotenv
+from .env import init_env
 from .runner import run_scenario
 from .targets import TARGETS
 
@@ -28,6 +28,7 @@ def main(argv=None) -> int:
     run_parser.add_argument("--max-tokens", type=int, default=None)
     run_parser.add_argument("--seed", type=int, default=None)
     run_parser.add_argument("--leaky", action="store_true", help="Enable leaky system prompt")
+    run_parser.add_argument("--debug", action="store_true", help="Print .env diagnostics")
 
     args = parser.parse_args(argv)
 
@@ -35,7 +36,7 @@ def main(argv=None) -> int:
         parser.print_help()
         return 1
 
-    load_dotenv()
+    init_env(debug=args.debug)
 
     if args.target == "mock-llm" and not os.getenv("OPENROUTER_API_KEY"):
         print(ERROR_MISSING_KEY)
