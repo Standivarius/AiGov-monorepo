@@ -21,9 +21,16 @@ def _load_target_config(raw: str | None) -> dict:
     if not raw:
         return {}
     try:
-        data = json.loads(raw)
+        if os.path.exists(raw):
+            with open(raw, "r", encoding="utf-8-sig") as handle:
+                data = json.load(handle)
+        else:
+            data = json.loads(raw)
     except json.JSONDecodeError as exc:
-        raise SystemExit(f"Invalid --target-config-json: {exc.msg}") from exc
+        raise SystemExit(
+            "Invalid --target-config-json: "
+            f"{exc.msg} (hint: on Windows use --target-config-file <path>)"
+        ) from exc
 
     if not isinstance(data, dict):
         raise SystemExit("Invalid --target-config-json: expected a JSON object")
@@ -34,7 +41,7 @@ def _load_target_config_file(path: str | None) -> dict:
     if not path:
         return {}
     try:
-        with open(path, "r", encoding="utf-8") as handle:
+        with open(path, "r", encoding="utf-8-sig") as handle:
             data = json.load(handle)
     except json.JSONDecodeError as exc:
         raise SystemExit(f"Invalid --target-config-file JSON: {exc.msg}") from exc

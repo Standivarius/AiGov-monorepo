@@ -102,16 +102,12 @@ This line contains field names and turn index only, no sensitive values.
 Assumes TargetLab is running at `http://localhost:8000` and exposes `POST /chat`.
 
 Recommended Windows approach (file-based config):
-Create `target_config_http.json` with:
-```json
-{"base_url":"http://localhost:8000","chat_path":"/chat"}
-```
-Run:
+Use the example file:
 ```bash
-python -m aigov_eval.cli run --scenario examples/scenarios/pii_disclosure_positive_control.yaml --target http --target-config-file target_config_http.json --out runs/
+python -m aigov_eval.cli run --scenario examples/scenarios/pii_disclosure_positive_control.yaml --target http --target-config-file examples/target_config_http.json --out runs/
 ```
 
-Inline JSON (PowerShell-safe with stop-parsing):
+Inline JSON (PowerShell-safe with stop-parsing, non-Windows optional):
 ```bash
 python -m aigov_eval.cli run --scenario examples/scenarios/pii_disclosure_positive_control.yaml --target http --target-config-json --% {"base_url":"http://localhost:8000","chat_path":"/chat"} --out runs/
 ```

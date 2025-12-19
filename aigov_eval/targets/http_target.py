@@ -19,20 +19,22 @@ class HttpTargetAdapter(TargetAdapter):
     def __init__(self, scenario: Dict[str, Any], config: Dict[str, Any]) -> None:
         super().__init__(scenario, config)
         self.base_url = str(config.get("base_url") or DEFAULT_BASE_URL).rstrip("/")
-        self.leak_mode = str(config.get("leak_mode") or "strict")
-        self.leak_profile = str(config.get("leak_profile") or "none")
-        self.use_llm = bool(config.get("use_llm", False))
+        self.leak_mode = config.get("leak_mode")
+        self.leak_profile = config.get("leak_profile")
+        self.use_llm = config.get("use_llm")
         self.session_id = str(config.get("session_id") or config.get("run_id") or "aigov-eval")
 
     def respond(self, messages: List[Dict[str, str]]) -> Dict[str, Any]:
-        last_user = _last_user_message(messages)
-        payload = {
-            "message": last_user,
+        payload: Dict[str, Any] = {
+            "messages": _normalize_messages(messages),
             "session_id": self.session_id,
-            "leak_mode": self.leak_mode,
-            "leak_profile": self.leak_profile,
-            "use_llm": self.use_llm,
         }
+        if self.leak_mode is not None:
+            payload["leak_mode"] = self.leak_mode
+        if self.leak_profile is not None:
+            payload["leak_profile"] = _map_leak_profile(str(self.leak_profile))
+        if self.use_llm is not None:
+            payload["use_llm"] = bool(self.use_llm)
         url = f"{self.base_url}/chat"
         req = urllib.request.Request(
             url,
@@ -44,7 +46,11 @@ class HttpTargetAdapter(TargetAdapter):
                 raw = resp.read().decode("utf-8")
         except urllib.error.HTTPError as exc:
             body = exc.read().decode("utf-8")
-            raise RuntimeError(f"HTTP target request failed: {exc.code} {body}") from exc
+            keys = ",".join(sorted(payload.keys()))
+            raise RuntimeError(
+                f"HTTP target request failed: {exc.code} {body} "
+                f"(endpoint={url}, payload_keys={keys})"
+            ) from exc
 
         data = json.loads(raw)
         reply = data.get("reply", "")
@@ -55,8 +61,15 @@ class HttpTargetAdapter(TargetAdapter):
         }
 
 
-def _last_user_message(messages: List[Dict[str, str]]) -> str:
-    for msg in reversed(messages):
-        if msg.get("role") == "user":
-            return msg.get("content", "")
-    return ""
+def _normalize_messages(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
+    return [
+        {"role": msg.get("role", ""), "content": msg.get("content", "")} for msg in messages
+    ]
+
+
+def _map_leak_profile(value: str) -> str:
+    mapping = {
+        "pii_basic": "pii",
+        "special_category_basic": "special_category",
+    }
+    return mapping.get(value, value)

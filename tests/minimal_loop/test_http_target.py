@@ -25,9 +25,28 @@ class DummyResponse:
         return False
 
 
-def _stub_http(monkeypatch, reply: str, audit: dict, expected_mode: str, expected_profile: str):
+def _stub_http(
+    monkeypatch,
+    reply: str,
+    audit: dict,
+    expected_mode: str,
+    expected_profile: str,
+    expected_lengths: list[int],
+):
+    call_index = {"value": 0}
+
     def fake_urlopen(req, timeout=60):
         data = json.loads(req.data.decode("utf-8"))
+        assert "message" not in data
+        assert "messages" in data
+        assert isinstance(data["messages"], list)
+        idx = call_index["value"]
+        assert len(data["messages"]) == expected_lengths[idx]
+        for message in data["messages"]:
+            assert "role" in message
+            assert "content" in message
+        call_index["value"] += 1
+
         assert data["leak_mode"] == expected_mode
         assert data["leak_profile"] == expected_profile
         assert data["session_id"] == "test-session"
@@ -49,6 +68,7 @@ def test_http_pii_strict_passes(monkeypatch, tmp_path):
         audit={"leaked_fields": []},
         expected_mode="strict",
         expected_profile="pii",
+        expected_lengths=[2, 4, 6],
     )
     result = run_scenario(
         scenario_path=str(SCENARIOS / "pii_disclosure_positive_control.yaml"),
@@ -57,7 +77,7 @@ def test_http_pii_strict_passes(monkeypatch, tmp_path):
         config={
             "base_url": "http://localhost:8000",
             "leak_mode": "strict",
-            "leak_profile": "pii",
+            "leak_profile": "pii_basic",
             "use_llm": False,
             "session_id": "test-session",
         },
@@ -81,6 +101,7 @@ def test_http_pii_leaky_fails(monkeypatch, tmp_path):
         audit={"leaked_fields": ["email"]},
         expected_mode="leaky",
         expected_profile="pii",
+        expected_lengths=[2, 4, 6],
     )
     result = run_scenario(
         scenario_path=str(SCENARIOS / "pii_disclosure_positive_control.yaml"),
@@ -89,7 +110,7 @@ def test_http_pii_leaky_fails(monkeypatch, tmp_path):
         config={
             "base_url": "http://localhost:8000",
             "leak_mode": "leaky",
-            "leak_profile": "pii",
+            "leak_profile": "pii_basic",
             "use_llm": False,
             "session_id": "test-session",
         },
@@ -115,6 +136,7 @@ def test_http_special_strict_passes(monkeypatch, tmp_path):
         audit={"leaked_fields": []},
         expected_mode="strict",
         expected_profile="special_category",
+        expected_lengths=[2, 4, 6],
     )
     result = run_scenario(
         scenario_path=str(SCENARIOS / "special_category_leak_positive_control.yaml"),
@@ -123,7 +145,7 @@ def test_http_special_strict_passes(monkeypatch, tmp_path):
         config={
             "base_url": "http://localhost:8000",
             "leak_mode": "strict",
-            "leak_profile": "special_category",
+            "leak_profile": "special_category_basic",
             "use_llm": False,
             "session_id": "test-session",
         },
@@ -147,6 +169,7 @@ def test_http_special_leaky_fails(monkeypatch, tmp_path):
         audit={"leaked_fields": ["health"]},
         expected_mode="leaky",
         expected_profile="special_category",
+        expected_lengths=[2, 4, 6],
     )
     result = run_scenario(
         scenario_path=str(SCENARIOS / "special_category_leak_positive_control.yaml"),
@@ -155,7 +178,7 @@ def test_http_special_leaky_fails(monkeypatch, tmp_path):
         config={
             "base_url": "http://localhost:8000",
             "leak_mode": "leaky",
-            "leak_profile": "special_category",
+            "leak_profile": "special_category_basic",
             "use_llm": False,
             "session_id": "test-session",
         },
