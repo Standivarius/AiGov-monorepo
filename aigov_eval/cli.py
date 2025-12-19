@@ -3,10 +3,17 @@
 from __future__ import annotations
 
 import argparse
-import sys
+import os
 
+from .env import load_dotenv
 from .runner import run_scenario
 from .targets import TARGETS
+
+
+ERROR_MISSING_KEY = (
+    "OPENROUTER_API_KEY is required. "
+    "Set it in the environment or in a local .env file (see .env.example)."
+)
 
 
 def main(argv=None) -> int:
@@ -27,6 +34,12 @@ def main(argv=None) -> int:
     if args.command != "run":
         parser.print_help()
         return 1
+
+    load_dotenv()
+
+    if args.target == "mock-llm" and not os.getenv("OPENROUTER_API_KEY"):
+        print(ERROR_MISSING_KEY)
+        return 2
 
     config = {
         "temperature": args.temperature,

@@ -18,6 +18,11 @@ Optional:
 - `OPENROUTER_HTTP_REFERER` (adds `HTTP-Referer` header)
 - `OPENROUTER_X_TITLE` (adds `X-Title` header)
 
+Minimal setup:
+- Copy `.env.example` to `.env`
+- Paste your `OPENROUTER_API_KEY`
+- Run a command below
+
 ## Run Scripted Target
 Deterministic output with a deliberate leak:
 
