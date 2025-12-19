@@ -108,9 +108,17 @@ This line contains field names and turn index only, no sensitive values.
 Assumes TargetLab is running at `http://localhost:8000` and exposes `POST /chat`.
 
 Recommended Windows approach (file-based config):
-Use the example file:
+Use the example files under `examples/target_configs/` with `--target-config-file`.
+Avoid inline JSON on Windows.
+
+Create a UTF-8 no-BOM config file (PowerShell 5.1 safe):
+```powershell
+[System.IO.File]::WriteAllText("target_config_http.json", '{"base_url":"http://localhost:8000","chat_path":"/chat","leak_mode":"strict","leak_profile":"special_category","use_llm":false}', (New-Object System.Text.UTF8Encoding($false)))
+```
+
+PowerShell command (TargetLab running on localhost:8000):
 ```bash
-python -m aigov_eval.cli run --scenario examples/scenarios/pii_disclosure_positive_control.yaml --target http --target-config-file examples/target_config_http.json --out runs/
+python -m aigov_eval.cli run --scenario examples/scenarios/special_category_leak.yaml --target http --target-config-file examples/target_configs/target_config_http_localhost.json --out runs/ --debug
 ```
 
 curl.exe example (correct /chat body with messages):
