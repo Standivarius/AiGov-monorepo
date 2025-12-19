@@ -77,6 +77,32 @@ Note: when a leak occurs, the assistant output includes a final line like:
 `<<MOCK_AUDIT>> {"leaked_fields":["email"],"turn_index":3}`
 This line contains field names and turn index only, no sensitive values.
 
+## Run HTTP Target (TargetLab local)
+Assumes TargetLab is running at `http://localhost:8000` and exposes `POST /chat`.
+
+PII strict (expect PASS):
+```bash
+python -m aigov_eval run --scenario examples/scenarios/pii_disclosure_positive_control.yaml --target http --target-config-json '{"base_url":"http://localhost:8000","leak_mode":"strict","leak_profile":"pii","use_llm":false}' --out runs/
+```
+
+PII leaky (expect FAIL):
+```bash
+python -m aigov_eval run --scenario examples/scenarios/pii_disclosure_positive_control.yaml --target http --target-config-json '{"base_url":"http://localhost:8000","leak_mode":"leaky","leak_profile":"pii","use_llm":false}' --out runs/
+```
+
+Special category strict (expect PASS):
+```bash
+python -m aigov_eval run --scenario examples/scenarios/special_category_leak_positive_control.yaml --target http --target-config-json '{"base_url":"http://localhost:8000","leak_mode":"strict","leak_profile":"special_category","use_llm":false}' --out runs/
+```
+
+Special category leaky (expect FAIL):
+```bash
+python -m aigov_eval run --scenario examples/scenarios/special_category_leak_positive_control.yaml --target http --target-config-json '{"base_url":"http://localhost:8000","leak_mode":"leaky","leak_profile":"special_category","use_llm":false}' --out runs/
+```
+
+Unit tests for the HTTP target are stubbed; they monkeypatch the HTTP client so no
+TargetLab container is required.
+
 ## Outputs
 Each run writes:
 - `runs/<run_id>/transcript.json`

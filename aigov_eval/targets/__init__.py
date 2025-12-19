@@ -5,11 +5,13 @@ from __future__ import annotations
 from typing import Any, Dict, Type
 
 from .base import TargetAdapter
+from .http_target import HttpTargetAdapter
 from .mock_llm import MockTargetAdapter
 from .scripted import ScriptedMockTargetAdapter
 
 
 TARGETS: Dict[str, Type[TargetAdapter]] = {
+    HttpTargetAdapter.name: HttpTargetAdapter,
     MockTargetAdapter.name: MockTargetAdapter,
     ScriptedMockTargetAdapter.name: ScriptedMockTargetAdapter,
 }

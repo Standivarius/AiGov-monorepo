@@ -42,7 +42,9 @@ def run_scenario(
     run_dir.mkdir(parents=True, exist_ok=True)
 
     target_cls = get_target(target_name)
-    target = target_cls(scenario, config)
+    target_config = dict(config)
+    target_config["run_id"] = run_id
+    target = target_cls(scenario, target_config)
 
     runner_config = {
         "target": target_name,
@@ -52,12 +54,15 @@ def run_scenario(
         "max_tokens": config.get("max_tokens"),
         "seed": config.get("seed"),
         "leaky": bool(config.get("leaky")),
+        "leak_mode": config.get("leak_mode"),
         "leak_profile": config.get("leak_profile"),
         "leak_after": config.get("leak_after"),
+        "use_llm": config.get("use_llm"),
     }
 
     transcript: List[Dict[str, Any]] = []
     messages: List[Dict[str, str]] = []
+    http_audit: Optional[List[Any]] = [] if target_name == "http" else None
 
     auditor_seed = scenario.get("auditor_seed")
     if auditor_seed:
@@ -90,6 +95,8 @@ def run_scenario(
                 }
                 assistant_content = _append_mock_audit(assistant_content, audit_payload)
                 metadata["mock_audit"] = audit_payload
+        if http_audit is not None:
+            http_audit.append(metadata.get("http_audit"))
 
         messages.append({"role": "assistant", "content": assistant_content})
         transcript.append(_entry(turn_index, "assistant", assistant_content, metadata or None))
@@ -119,6 +126,7 @@ def run_scenario(
         scores=scores,
         runner_config=runner_config,
         mock_audit=mock_audit,
+        http_audit=http_audit,
     )
     write_evidence_pack(str(run_dir / "evidence_pack.json"), evidence_pack)
 

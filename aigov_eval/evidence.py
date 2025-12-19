@@ -19,6 +19,7 @@ def build_evidence_pack(
     scores: List[Dict[str, Any]],
     runner_config: Dict[str, Any],
     mock_audit: Any = None,
+    http_audit: Any = None,
 ) -> Dict[str, Any]:
     return {
         "generated_at": _utc_now(),
@@ -35,6 +36,7 @@ def build_evidence_pack(
         "scores": scores,
         "runner_config": runner_config,
         "mock_audit": mock_audit,
+        "http_audit": http_audit,
         "limitations": LIMITATIONS,
     }
 

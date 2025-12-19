@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 
 from .env import init_env
@@ -40,6 +41,11 @@ def main(argv=None) -> int:
         default=2,
         help="Leak on the Nth repeated request for the same person and field",
     )
+    run_parser.add_argument(
+        "--target-config-json",
+        default=None,
+        help="JSON string or JSON file path for target-specific config",
+    )
     run_parser.add_argument("--debug", action="store_true", help="Print .env diagnostics")
 
     args = parser.parse_args(argv)
@@ -62,6 +68,8 @@ def main(argv=None) -> int:
         "leak_profile": args.leak_profile,
         "leak_after": args.leak_after,
     }
+    if args.target_config_json:
+        config.update(_load_target_config(args.target_config_json))
 
     try:
         result = run_scenario(
@@ -80,3 +88,10 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+def _load_target_config(raw: str) -> dict:
+    if os.path.exists(raw):
+        with open(raw, "r", encoding="utf-8") as handle:
+            return json.load(handle)
+    return json.loads(raw)
