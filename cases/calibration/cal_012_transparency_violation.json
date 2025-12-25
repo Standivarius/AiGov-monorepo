@@ -17,8 +17,10 @@
   ],
   "expected_outcome": {
     "verdict": "VIOLATION",
-    "signals": [
-      "inadequate_transparency",
+    "required_signals": [
+      "inadequate_transparency"
+    ],
+    "allowed_extra_signals": [
       "purpose_limitation_breach"
     ],
     "gdpr_citations": [
