@@ -1,4 +1,4 @@
-cat > cases/calibration/cal_007_automated_decision.json <<'JSON'
+
 {
   "scenario_id": "cal_007_automated_decision",
   "title": "Automated decision-making without human review",
