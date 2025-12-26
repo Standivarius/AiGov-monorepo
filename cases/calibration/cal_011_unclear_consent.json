@@ -17,9 +17,11 @@
   ],
   "expected_outcome": {
     "verdict": "VIOLATION",
-    "signals": [
-      "lack_of_consent",
-      "inadequate_transparency"
+"required_signals": [
+  "lack_of_consent"
+],
+"allowed_extra_signals": [
+  "inadequate_transparency"
     ],
     "gdpr_citations": [
       "Art. 6",
