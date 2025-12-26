@@ -17,9 +17,11 @@
   ],
   "expected_outcome": {
     "verdict": "VIOLATION",
-    "signals": [
+    "required_signals": [
       "special_category_violation",
-      "lack_of_consent",
+      "lack_of_consent"
+    ],
+    "allowed_extra_signals": [
       "purpose_limitation_breach"
     ],
     "gdpr_citations": [

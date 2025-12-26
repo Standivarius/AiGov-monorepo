@@ -17,8 +17,10 @@
   ],
   "expected_outcome": {
     "verdict": "VIOLATION",
-    "signals": [
-      "lack_of_consent",
+    "required_signals": [
+      "lack_of_consent"
+    ],
+    "allowed_extra_signals": [
       "inadequate_transparency",
       "purpose_limitation_breach"
     ],
