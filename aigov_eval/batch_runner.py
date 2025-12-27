@@ -15,7 +15,7 @@ from .runner import run_scenario
 from .taxonomy import get_taxonomy_version
 
 
-def run_batch(
+def batch_run(
     cases_dir: str,
     repeats: int,
     output_root: str,
@@ -32,74 +32,71 @@ def run_batch(
         output_root: Output directory root
         mock_judge: Use mock judge mode
         target: Target name (default: scripted)
-        debug: Enable debug mode
+        debug: Debug mode
 
     Returns:
         Batch summary dict
     """
     cases_path = Path(cases_dir)
     if not cases_path.exists():
-        raise ValueError(f"Cases directory not found: {cases_dir}")
-
-    # Find all case JSON files
-    case_files = sorted(cases_path.glob("*.json"))
-    if not case_files:
-        raise ValueError(f"No JSON files found in {cases_dir}")
+        raise FileNotFoundError(f"Cases directory not found: {cases_dir}")
 
     # Create batch output directory
-    output_path = Path(output_root)
-    output_path.mkdir(parents=True, exist_ok=True)
-
-    batch_id = _build_batch_id()
-    batch_dir = output_path / batch_id
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    batch_id = f"batch_{timestamp}"
+    batch_dir = Path(output_root) / batch_id
     batch_dir.mkdir(parents=True, exist_ok=True)
 
-    # Collect git metadata
+    # Get git SHA and Python version for reproducibility
     git_sha = _get_git_sha()
     python_version = _get_python_version()
 
-    # Extract framework from first case file (default: gdpr)
-    first_scenario = load_scenario(str(case_files[0])) if case_files else {}
-    framework_id = first_scenario.get("framework", "gdpr").lower()
-
-    batch_meta = {
-        "batch_id": batch_id,
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-        "cases_dir": str(cases_dir),
-        "repeats": repeats,
-        "mock_judge": mock_judge,
-        "target": target,
-        "git_sha": git_sha,
-        "python_version": python_version,
-        "total_cases": len(case_files),
-        # Taxonomy and framework metadata
-        "framework_id": framework_id,
-        "taxonomy_version": get_taxonomy_version(),
-        "rubric_id": "gdpr_phase0_v1",
-    }
-
     # Run all cases
     case_results = []
+    case_files = sorted(cases_path.glob("*.json"))
+
     for case_file in case_files:
         print(f"\nRunning case: {case_file.name} ({repeats} repeats)")
-        case_result = _run_case_with_repeats(
-            case_file=case_file,
-            repeats=repeats,
-            batch_dir=batch_dir,
-            mock_judge=mock_judge,
-            target=target,
-            debug=debug,
-        )
-        case_results.append(case_result)
-        print(f"  Verdict repeatability: {case_result['metrics']['verdict_repeatability']:.2%}")
-        print(f"  Verdict correctness: {case_result['metrics'].get('verdict_correctness', 'N/A')}")
+        try:
+            result = _run_case_with_repeats(
+                case_file=case_file,
+                repeats=repeats,
+                batch_dir=batch_dir,
+                mock_judge=mock_judge,
+                target=target,
+                debug=debug,
+            )
+            case_results.append(result)
+
+            # Print summary
+            metrics = result["metrics"]
+            print(f"  Verdict repeatability: {metrics['verdict_repeatability']:.2%}")
+            if "verdict_correctness" in metrics:
+                print(f"  Verdict correctness: {metrics['verdict_correctness']}")
+
+        except Exception as e:
+            print(f"Error running case {case_file.name}: {e}")
+            if debug:
+                raise
 
     # Calculate aggregate metrics
     aggregate_metrics = _calculate_aggregate_metrics(case_results)
 
-    # Build batch summary
     batch_summary = {
-        "batch_meta": batch_meta,
+        "batch_meta": {
+            "batch_id": batch_id,
+            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "cases_dir": cases_dir,
+            "repeats": repeats,
+            "mock_judge": mock_judge,
+            "target": target,
+            "git_sha": git_sha,
+            "python_version": python_version,
+            "framework_id": "gdpr",
+            "taxonomy_version": get_taxonomy_version(),
+            "rubric_id": "gdpr_phase0_v1",
+            "total_cases": len(case_results),
+        },
         "aggregate_metrics": aggregate_metrics,
         "case_results": case_results,
     }
@@ -165,6 +162,8 @@ def _run_case_with_repeats(
             "run_dir": str(result.run_dir),
             "verdict": gdpr_score.get("verdict") if gdpr_score else None,
             "signals": gdpr_score.get("signals", []) if gdpr_score else [],
+            # Optional future field: tolerated even if missing
+            "unscored_findings": gdpr_score.get("unscored_findings", []) if gdpr_score else [],
         })
 
     # Calculate metrics
@@ -172,18 +171,34 @@ def _run_case_with_repeats(
 
     # Extract expected signals for observability
     expected = scenario.get("expected_outcome", {})
-    # Support v2 format: required_signals + allowed_extra_signals
-    # Fallback to v1: signals as required, empty allowed_extra
     expected_required = expected.get("required_signals", expected.get("signals", []))
     expected_allowed_extra = expected.get("allowed_extra_signals", [])
 
-    # Compute missing/extra for debugging
-    modal_signals_set = set(metrics.get("modal_signals", []))
+    # Scenario-scoped scoring set
     required_set = set(expected_required)
-    allowed_set = required_set | set(expected_allowed_extra)
+    allowed_extra_set = set(expected_allowed_extra)
+    score_set = required_set | allowed_extra_set
 
-    missing_required = sorted(required_set - modal_signals_set)
-    extra_unallowed = sorted(modal_signals_set - allowed_set)
+    modal_signals_set = set(metrics.get("modal_signals", []))
+
+    # Scenario-scoped scoring: only score signals that are in SCORE_SET
+    scored_actual_set = modal_signals_set & score_set
+    unscored_signals = sorted(modal_signals_set - score_set)
+
+    # Missing required is computed against scored_actual_set (not raw modal signals)
+    missing_required = sorted(required_set - scored_actual_set)
+
+    # Legacy field retained for backwards compatibility (now equals unscored_signals)
+    extra_unallowed = unscored_signals
+
+    # Ensure metrics reflect scenario-scoped semantics
+    if required_set:
+        metrics["required_recall_pass"] = required_set.issubset(scored_actual_set)
+    if score_set:
+        metrics["allowed_only_pass"] = True  # by design (extras are unscored, not penalised)
+
+    metrics["unscored_signal_count"] = len(unscored_signals)
+    metrics["has_unscored_signals"] = bool(unscored_signals)
 
     return {
         "scenario_id": scenario_id,
@@ -194,6 +209,13 @@ def _run_case_with_repeats(
         # Observability fields for debugging
         "expected_required_signals": list(expected_required),
         "expected_allowed_extra_signals": list(expected_allowed_extra),
+        # New scenario-scoped fields
+        "score_set_signals": sorted(score_set),
+        "scored_actual_signals": sorted(scored_actual_set),
+        "unscored_signals": unscored_signals,
+        # Optional future field (can remain empty if judge doesn't output it)
+        "unscored_findings": [],
+        # Legacy fields (kept)
         "missing_required_signals": missing_required,
         "extra_unallowed_signals": extra_unallowed,
     }
@@ -201,18 +223,15 @@ def _run_case_with_repeats(
 
 def _calculate_case_metrics(run_results: list[dict], scenario: dict) -> dict:
     """Calculate repeatability and correctness metrics for a case."""
-    # Extract verdicts and signals
     verdicts = [r["verdict"] for r in run_results if r["verdict"]]
-    signals_sets = [tuple(sorted(r["signals"])) for r in run_results]
+    signals_sets = [tuple(sorted(r.get("signals", []))) for r in run_results]
 
-    # Calculate modes
     verdict_counter = Counter(verdicts)
     signals_counter = Counter(signals_sets)
 
     modal_verdict = verdict_counter.most_common(1)[0][0] if verdict_counter else None
     modal_signals = list(signals_counter.most_common(1)[0][0]) if signals_counter else []
 
-    # Repeatability = mode frequency / total runs
     verdict_repeatability = (
         verdict_counter.most_common(1)[0][1] / len(run_results)
         if verdict_counter else 0.0
@@ -222,44 +241,49 @@ def _calculate_case_metrics(run_results: list[dict], scenario: dict) -> dict:
         if signals_counter else 0.0
     )
 
-    metrics = {
+    metrics: dict[str, Any] = {
         "modal_verdict": modal_verdict,
         "modal_signals": modal_signals,
         "verdict_repeatability": verdict_repeatability,
         "signals_repeatability": signals_repeatability,
     }
 
-    # Correctness (if expected_outcome exists)
     expected = scenario.get("expected_outcome", {})
     if expected:
         expected_verdict = expected.get("verdict")
-        # Support v2 format: required_signals + allowed_extra_signals
-        # Fallback to v1: signals as required, empty allowed_extra
+
+        # v2 expected signal sets
         required_signals = set(expected.get("required_signals", expected.get("signals", [])))
         allowed_extra_signals = set(expected.get("allowed_extra_signals", []))
         all_allowed_signals = required_signals | allowed_extra_signals
 
-        # Legacy signals field for backwards compatibility
-        expected_signals = set(expected.get("signals", []))
+        # legacy strict/subset metrics (based on signals field only)
+        expected_signals_legacy = set(expected.get("signals", []))
 
         if expected_verdict and modal_verdict:
-            metrics["verdict_correctness"] = modal_verdict == expected_verdict
+            metrics["verdict_correctness"] = (modal_verdict == expected_verdict)
 
         modal_signals_set = set(modal_signals)
 
-        # Legacy strict/subset metrics (based on signals field)
-        if expected_signals:
-            metrics["signals_correctness_strict"] = modal_signals_set == expected_signals
-            metrics["signals_correctness_subset"] = expected_signals.issubset(modal_signals_set)
+        if expected_signals_legacy:
+            metrics["signals_correctness_strict"] = (modal_signals_set == expected_signals_legacy)
+            metrics["signals_correctness_subset"] = expected_signals_legacy.issubset(modal_signals_set)
 
-        # V2 metrics: required_recall and allowed_only
+        # Scenario-scoped scoring: only score signals that are in SCORE_SET (required ∪ allowed_extra)
+        score_set = all_allowed_signals
+        scored_actual = modal_signals_set & score_set
+        unscored = modal_signals_set - score_set
+
         if required_signals:
-            # Required recall: did we capture all required signals?
-            metrics["required_recall_pass"] = required_signals.issubset(modal_signals_set)
+            metrics["required_recall_pass"] = required_signals.issubset(scored_actual)
 
         if all_allowed_signals:
-            # Allowed only: are all returned signals in the allowed set?
-            metrics["allowed_only_pass"] = modal_signals_set.issubset(all_allowed_signals)
+            # By design: extras are captured as unscored, not penalised in this run.
+            metrics["allowed_only_pass"] = True
+
+        # Informational fields
+        metrics["unscored_signal_count"] = len(unscored)
+        metrics["has_unscored_signals"] = bool(unscored)
 
     return metrics
 
@@ -269,16 +293,9 @@ def _calculate_aggregate_metrics(case_results: list[dict]) -> dict:
     total_cases = len(case_results)
 
     # Collect repeatability scores
-    verdict_repeatability = [
-        cr["metrics"]["verdict_repeatability"]
-        for cr in case_results
-    ]
-    signals_repeatability = [
-        cr["metrics"]["signals_repeatability"]
-        for cr in case_results
-    ]
+    verdict_repeatability = [cr["metrics"]["verdict_repeatability"] for cr in case_results]
+    signals_repeatability = [cr["metrics"]["signals_repeatability"] for cr in case_results]
 
-    # Collect correctness (where available)
     verdict_correctness = [
         cr["metrics"].get("verdict_correctness")
         for cr in case_results
@@ -295,21 +312,17 @@ def _calculate_aggregate_metrics(case_results: list[dict]) -> dict:
         if "signals_correctness_subset" in cr["metrics"]
     ]
 
-    # Count modal verdicts across all cases
-    modal_verdicts = [
-        cr["metrics"].get("modal_verdict")
-        for cr in case_results
-    ]
+    modal_verdicts = [cr["metrics"].get("modal_verdict") for cr in case_results]
     modal_verdict_counter = Counter(modal_verdicts)
 
-    aggregate = {
+    aggregate: dict[str, Any] = {
         "total_cases": total_cases,
         "mean_verdict_repeatability": sum(verdict_repeatability) / total_cases if verdict_repeatability else 0.0,
         "mean_signals_repeatability": sum(signals_repeatability) / total_cases if signals_repeatability else 0.0,
-        # Verdict distribution based on modal_verdict values
         "verdict_pass_count": modal_verdict_counter.get("NO_VIOLATION", 0),
         "verdict_fail_count": modal_verdict_counter.get("VIOLATION", 0),
-        "verdict_unclear_count": modal_verdict_counter.get("UNCLEAR", 0),    }
+        "verdict_unclear_count": modal_verdict_counter.get("UNCLEAR", 0),
+    }
 
     if verdict_correctness:
         aggregate["verdict_accuracy"] = sum(verdict_correctness) / len(verdict_correctness)
@@ -321,21 +334,32 @@ def _calculate_aggregate_metrics(case_results: list[dict]) -> dict:
         aggregate["signals_subset_accuracy"] = sum(signals_subset) / len(signals_subset)
 
     required_recall = [
-        cr.get('metrics', {}).get('required_recall_pass')
+        cr.get("metrics", {}).get("required_recall_pass")
         for cr in case_results
-        if 'required_recall_pass' in cr.get('metrics', {})
+        if "required_recall_pass" in cr.get("metrics", {})
     ]
     allowed_only = [
-        cr.get('metrics', {}).get('allowed_only_pass')
+        cr.get("metrics", {}).get("allowed_only_pass")
         for cr in case_results
-        if 'allowed_only_pass' in cr.get('metrics', {})
+        if "allowed_only_pass" in cr.get("metrics", {})
     ]
 
     if required_recall:
         aggregate["required_recall_accuracy"] = sum(required_recall) / len(required_recall)
+        aggregate["required_recall_case_fail_count"] = sum(1 for passed in required_recall if not passed)
+        aggregate["required_recall_missing_count"] = sum(len(cr.get("missing_required_signals", [])) for cr in case_results)
 
     if allowed_only:
         aggregate["allowed_only_accuracy"] = sum(allowed_only) / len(allowed_only)
+        aggregate["allowed_only_case_fail_count"] = sum(1 for passed in allowed_only if not passed)
+
+    # New informational counts: how often the judge emitted out-of-scope signals
+    aggregate["unscored_signal_case_count"] = sum(
+        1 for cr in case_results if cr.get("metrics", {}).get("has_unscored_signals")
+    )
+    aggregate["unscored_signal_total_count"] = sum(
+        cr.get("metrics", {}).get("unscored_signal_count", 0) for cr in case_results
+    )
 
     return aggregate
 
@@ -364,16 +388,15 @@ def _write_batch_report(path: Path, summary: dict) -> None:
         "",
         "## Aggregate Metrics",
         "",
+        "Scenario-scoped scoring: extra findings are captured but not scored in this run.",
+        "",
         f"- **Total Cases**: {agg['total_cases']}",
         f"- **Mean Verdict Repeatability**: {agg['mean_verdict_repeatability']:.2%}",
         f"- **Mean Signals Repeatability**: {agg['mean_signals_repeatability']:.2%}",
-    ]
-
-    # Verdict distribution from modal verdicts
-    lines.extend([
         f"- **Verdict Pass Count (NO_VIOLATION)**: {agg['verdict_pass_count']}",
         f"- **Verdict Fail Count (VIOLATION)**: {agg['verdict_fail_count']}",
-        f"- **Verdict Unclear Count**: {agg['verdict_unclear_count']}",    ])
+        f"- **Verdict Unclear Count**: {agg['verdict_unclear_count']}",
+    ]
 
     if "verdict_accuracy" in agg:
         lines.append(f"- **Verdict Accuracy**: {agg['verdict_accuracy']:.2%}")
@@ -388,15 +411,16 @@ def _write_batch_report(path: Path, summary: dict) -> None:
         lines.append(f"- **Required Recall Accuracy**: {agg['required_recall_accuracy']:.2%}")
 
     if "allowed_only_accuracy" in agg:
-        lines.append(f"- **Allowed Only Accuracy**: {agg['allowed_only_accuracy']:.2%}")
+        lines.append(f"- **Allowed Only Accuracy (unscored extras)**: {agg['allowed_only_accuracy']:.2%}")
 
-    # Debugging counts
     lines.extend([
         "",
         "### Signal Analysis Counts",
         f"- **Required Recall Missing Count**: {agg.get('required_recall_missing_count', 0)} (total missing signals across all cases)",
         f"- **Required Recall Case Fail Count**: {agg.get('required_recall_case_fail_count', 0)} (cases with missing required signals)",
-        f"- **Allowed Only Case Fail Count**: {agg.get('allowed_only_case_fail_count', 0)} (cases with extra unallowed signals)",
+        f"- **Allowed Only Case Fail Count**: {agg.get('allowed_only_case_fail_count', 0)} (cases with extra unallowed signals; scenario-scoped scoring normally keeps this at 0)",
+        f"- **Unscored Signal Case Count**: {agg.get('unscored_signal_case_count', 0)} (cases with out-of-scope signals)",
+        f"- **Unscored Signal Total Count**: {agg.get('unscored_signal_total_count', 0)} (total out-of-scope signals)",
     ])
 
     lines.extend([
@@ -430,33 +454,31 @@ def _write_batch_report(path: Path, summary: dict) -> None:
 
         if "required_recall_pass" in m:
             lines.append(f"- **Required Recall**: {'✓ PASS' if m['required_recall_pass'] else '✗ FAIL'}")
-        elif "required_recall" in m:
-            lines.append(f"- **Required Recall**: {'✓ PASS' if m['required_recall'] else '✗ FAIL'}")
 
         if "allowed_only_pass" in m:
             lines.append(f"- **Allowed Only**: {'✓ PASS' if m['allowed_only_pass'] else '✗ FAIL'}")
-        elif "allowed_only" in m:
-            lines.append(f"- **Allowed Only**: {'✓ PASS' if m['allowed_only'] else '✗ FAIL'}")
 
-        # Observability: show expected and missing/extra signals
         if case.get("expected_required_signals"):
             lines.append(f"- **Expected Required**: {', '.join(case['expected_required_signals'])}")
         if case.get("expected_allowed_extra_signals"):
             lines.append(f"- **Allowed Extra**: {', '.join(case['expected_allowed_extra_signals'])}")
         if case.get("missing_required_signals"):
             lines.append(f"- **Missing Required**: {', '.join(case['missing_required_signals'])}")
-        if case.get("extra_unallowed_signals"):
-            lines.append(f"- **Extra Unallowed**: {', '.join(case['extra_unallowed_signals'])}")
+
+        # Preferred field
+        if case.get("unscored_signals"):
+            lines.append(f"- **Unscored Signals (out of scope)**: {', '.join(case['unscored_signals'])}")
+        # Backwards-compatible fallback
+        elif case.get("extra_unallowed_signals"):
+            lines.append(f"- **Unscored Signals (out of scope)**: {', '.join(case['extra_unallowed_signals'])}")
+
+        if case.get("unscored_findings"):
+            lines.append(f"- **Unscored Findings**: {', '.join(case['unscored_findings'])}")
 
         lines.append("")
 
     with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
-
-
-def _build_batch_id() -> str:
-    """Build batch ID with timestamp."""
-    return f"batch_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
 
 
 def _get_git_sha() -> str:
