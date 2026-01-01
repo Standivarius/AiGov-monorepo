@@ -240,6 +240,12 @@ Phase 2 is complete when:
 ### Master Index
 - [AiGov Specs Index](../_index.md) - All specs organized by phase
 
+
+## Milestones & Closure Log
+
+For milestone-level completion and architectural closure notes,
+see [docs/decisions/MILESTONES.md](../decisions/MILESTONES.md).
+
 ---
 
 **Document Status**: v0.1 Landing Page
