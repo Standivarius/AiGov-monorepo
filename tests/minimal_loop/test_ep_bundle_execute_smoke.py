@@ -25,6 +25,18 @@ def _extract_line_value(output: str, prefix: str) -> str:
     return ""
 
 
+def _load_checksums(path: Path) -> dict[str, str]:
+    entries: dict[str, str] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        parts = line.split()
+        if len(parts) < 2:
+            continue
+        entries[parts[1]] = parts[0]
+    return entries
+
+
 def test_ep_bundle_execute_smoke(tmp_path: Path) -> None:
     if not _env_truthy("AIGOV_RUN_EP_SMOKE"):
         pytest.skip("AIGOV_RUN_EP_SMOKE not set; skipping EP bundle smoke test.")
@@ -86,9 +98,25 @@ def test_ep_bundle_execute_smoke(tmp_path: Path) -> None:
     if not run_dir.is_absolute():
         run_dir = (Path.cwd() / run_dir).resolve()
 
-    required = ["scenario.json", "transcript.json", "run_meta.json"]
+    required = [
+        "scenario.json",
+        "transcript.json",
+        "run_meta.json",
+        "run_manifest.json",
+        "checksums.sha256",
+    ]
     missing = [name for name in required if not (run_dir / name).exists()]
     assert not missing, f"Missing Stage A artifacts in {run_dir}: {missing}"
+
+    checksums = _load_checksums(run_dir / "checksums.sha256")
+    required_checksums = [
+        "scenario.json",
+        "transcript.json",
+        "run_meta.json",
+        "run_manifest.json",
+    ]
+    missing_checksums = [name for name in required_checksums if name not in checksums]
+    assert not missing_checksums, f"Missing checksums in {run_dir}: {missing_checksums}"
 
     unexpected = ["scores.json", "evidence_pack.json"]
     present = [name for name in unexpected if (run_dir / name).exists()]
