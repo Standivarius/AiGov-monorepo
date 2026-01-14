@@ -1,2 +1,4 @@
 node_modules/
 .nx/
+EVALSET-MIGRATION-SMOKE-v1_*.log
+aigov-nxpackage.json
