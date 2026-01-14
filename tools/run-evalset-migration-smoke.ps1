@@ -41,8 +41,12 @@ function Invoke-Step($Name, [scriptblock]$Block) {
 }
 
 function Invoke-GitPullIfTracking($RepoLabel) {
-  git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>$null | Out-Null
-  if ($LASTEXITCODE -ne 0) {
+  $branch = git rev-parse --abbrev-ref HEAD
+  if ($LASTEXITCODE -ne 0) { throw "${RepoLabel}: git rev-parse failed with exit code $LASTEXITCODE" }
+
+  $remote = git config --get ("branch.{0}.remote" -f $branch)
+  $merge = git config --get ("branch.{0}.merge" -f $branch)
+  if (-not $remote -or -not $merge) {
     Write-Host "${RepoLabel}: no upstream configured; skipping git pull."
     $global:LASTEXITCODE = 0
     return
