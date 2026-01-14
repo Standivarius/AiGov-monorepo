@@ -20,11 +20,13 @@ $RepoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
 $MonorepoSpecs = Join-Path $RepoRoot "packages\specs"
 $MonorepoMvp   = Join-Path $RepoRoot "packages\ep"
 $MonorepoEval  = Join-Path $RepoRoot "packages\pe"
-$HasMonorepoLayout = (Test-Path -LiteralPath $MonorepoSpecs) -and (Test-Path -LiteralPath $MonorepoMvp) -and (Test-Path -LiteralPath $MonorepoEval)
+$HasMonorepoSpecs = Test-Path -LiteralPath $MonorepoSpecs
+$HasMonorepoMvp   = Test-Path -LiteralPath $MonorepoMvp
+$HasMonorepoEval  = Test-Path -LiteralPath $MonorepoEval
 
-$SPECS = if ($env:AIGOV_SPECS_ROOT) { $env:AIGOV_SPECS_ROOT } elseif ($HasMonorepoLayout) { $MonorepoSpecs } else { "C:\Users\User\OneDrive - DMR Ergonomics\aigov-workspace\AiGov-specs" }
-$MVP   = if ($env:AIGOV_MVP_ROOT)   { $env:AIGOV_MVP_ROOT }   elseif ($HasMonorepoLayout) { $MonorepoMvp }   else { "C:\Users\User\OneDrive - DMR Ergonomics\aigov-workspace\AiGov-mvp" }
-$EVAL  = if ($env:AIGOV_EVAL_ROOT)  { $env:AIGOV_EVAL_ROOT }  elseif ($HasMonorepoLayout) { $MonorepoEval }  else { "C:\Users\User\OneDrive - DMR Ergonomics\aigov-workspace\Aigov-eval" }
+$SPECS = if ($env:AIGOV_SPECS_ROOT) { $env:AIGOV_SPECS_ROOT } elseif ($HasMonorepoSpecs) { $MonorepoSpecs } else { "C:\Users\User\OneDrive - DMR Ergonomics\aigov-workspace\AiGov-specs" }
+$MVP   = if ($env:AIGOV_MVP_ROOT)   { $env:AIGOV_MVP_ROOT }   elseif ($HasMonorepoMvp)   { $MonorepoMvp }   else { "C:\Users\User\OneDrive - DMR Ergonomics\aigov-workspace\AiGov-mvp" }
+$EVAL  = if ($env:AIGOV_EVAL_ROOT)  { $env:AIGOV_EVAL_ROOT }  elseif ($HasMonorepoEval)  { $MonorepoEval }  else { "C:\Users\User\OneDrive - DMR Ergonomics\aigov-workspace\Aigov-eval" }
 
 function Assert-Dir($Path, $Name) {
   if (-not (Test-Path -LiteralPath $Path)) { throw "Missing $Name directory: $Path" }
