@@ -6,7 +6,7 @@
     "migration-smoke": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "..",
+        "cwd": ".",
         "command": "powershell -ExecutionPolicy Bypass -File .\\\\tools\\\\run-evalset-migration-smoke.ps1"
       }
     }
