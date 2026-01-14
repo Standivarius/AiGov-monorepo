@@ -43,12 +43,12 @@ function Invoke-Step($Name, [scriptblock]$Block) {
 function Invoke-GitPullIfTracking($RepoLabel) {
   $null = git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>$null
   if ($LASTEXITCODE -ne 0) {
-    Write-Host "$RepoLabel: no upstream configured; skipping git pull."
+    Write-Host "${RepoLabel}: no upstream configured; skipping git pull."
     return
   }
 
   git pull
-  if ($LASTEXITCODE -ne 0) { throw "$RepoLabel: git pull failed with exit code $LASTEXITCODE" }
+  if ($LASTEXITCODE -ne 0) { throw "${RepoLabel}: git pull failed with exit code $LASTEXITCODE" }
 }
 
 function Assert-Clean-GitDiff($RepoLabel) {
