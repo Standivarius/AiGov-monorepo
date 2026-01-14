@@ -1,4 +1,19 @@
+﻿# Node / Nx
 node_modules/
 .nx/
+
+# Proof logs
 EVALSET-MIGRATION-SMOKE-v1_*.log
-aigov-nxpackage.json
+*.log
+
+# Python
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+venv/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
