@@ -1,0 +1,10 @@
+{
+  "name": "aigov-nx",
+  "private": true,
+  "devDependencies": {
+    "nx": "^19.0.0"
+  },
+  "scripts": {
+    "migration-smoke": "nx run evalsets:migration-smoke"
+  }
+}
