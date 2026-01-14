@@ -40,6 +40,17 @@ function Invoke-Step($Name, [scriptblock]$Block) {
   if ($LASTEXITCODE -ne 0) { throw "$Name failed with exit code $LASTEXITCODE" }
 }
 
+function Invoke-GitPullIfTracking($RepoLabel) {
+  $null = git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>$null
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "$RepoLabel: no upstream configured; skipping git pull."
+    return
+  }
+
+  git pull
+  if ($LASTEXITCODE -ne 0) { throw "$RepoLabel: git pull failed with exit code $LASTEXITCODE" }
+}
+
 function Assert-Clean-GitDiff($RepoLabel) {
   $diff = git diff --name-only
   if ($LASTEXITCODE -ne 0) { throw "${RepoLabel}: git diff failed with exit code $LASTEXITCODE" }
@@ -65,13 +76,13 @@ try {
   Invoke-Step "Specs: checkout main + pull" {
     Set-Location -LiteralPath $SPECS
     git checkout main
-    git pull
+    Invoke-GitPullIfTracking "Specs"
   }
 
   Invoke-Step "MVP: checkout main + pull + sync from Specs + drift gate" {
     Set-Location -LiteralPath $MVP
     git checkout main
-    git pull
+    Invoke-GitPullIfTracking "MVP"
 
     python tools/sync_taxonomy_from_specs.py --specs-root "$SPECS"
     if ($LASTEXITCODE -ne 0) { throw "MVP: sync_taxonomy_from_specs.py failed with exit code $LASTEXITCODE" }
@@ -82,7 +93,7 @@ try {
   Invoke-Step "Eval: checkout main + pull + sync from Specs + drift gate" {
     Set-Location -LiteralPath $EVAL
     git checkout main
-    git pull
+    Invoke-GitPullIfTracking "Eval"
 
     python tools/sync_contracts_from_specs.py --specs-root "$SPECS"
     if ($LASTEXITCODE -ne 0) { throw "Eval: sync_contracts_from_specs.py failed with exit code $LASTEXITCODE" }
