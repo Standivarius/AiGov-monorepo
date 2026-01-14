@@ -41,9 +41,10 @@ function Invoke-Step($Name, [scriptblock]$Block) {
 }
 
 function Invoke-GitPullIfTracking($RepoLabel) {
-  $null = git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>$null
+  git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>$null | Out-Null
   if ($LASTEXITCODE -ne 0) {
     Write-Host "${RepoLabel}: no upstream configured; skipping git pull."
+    $global:LASTEXITCODE = 0
     return
   }
 
