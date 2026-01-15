@@ -1,0 +1,7 @@
+{
+  "name": "aigov-monorepo",
+  "private": true,
+  "devDependencies": {
+    "nx": "19.8.2"
+  }
+}
