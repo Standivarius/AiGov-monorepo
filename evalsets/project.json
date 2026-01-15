@@ -1,0 +1,12 @@
+{
+  "name": "evalsets",
+  "targets": {
+    "migration-smoke": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/run-migration-smoke.cjs",
+        "cwd": "."
+      }
+    }
+  }
+}
