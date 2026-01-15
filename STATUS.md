@@ -1,4 +1,5 @@
 ## PR-0: Monorepo skeleton + migration smoke runner
+- Status: pending merge to main.
 - Added minimal Nx workspace files and evalsets migration-smoke target to run `node tools/run-migration-smoke.cjs`.
 - Added WSL-first smoke runners with drift gates scoped to packages/ep and packages/pe plus venv-aware pytest.
 - Imported specs, ep, pe as git subtrees under packages/ to preserve history and keep specs canonical.
