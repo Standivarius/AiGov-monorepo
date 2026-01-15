@@ -1,3 +1,9 @@
+## PR-B: Devcontainer + reproducible migration smoke
+- Added devcontainer config for Node + Python to make Codespaces/local devcontainer setup predictable.
+- Migration smoke now writes logs under `docs/logs/` and ensures a PE venv exists with required deps (no global pip).
+- WSL proof: `npm install`; `npx nx run evalsets:migration-smoke` (1 skipped). Log: docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260116_004744.log.
+- Next: PR-C (CI wiring + Windows parity).
+
 ## PR-0: Monorepo skeleton + migration smoke runner
 - Added minimal Nx workspace files and evalsets migration-smoke target to run `node tools/run-migration-smoke.cjs`.
 - Added WSL-first smoke runners with drift gates scoped to packages/ep and packages/pe plus venv-aware pytest.

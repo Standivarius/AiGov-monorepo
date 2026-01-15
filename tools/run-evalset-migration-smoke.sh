@@ -10,12 +10,40 @@ EP="${AIGOV_MVP_ROOT:-$REPO_ROOT/packages/ep}"
 PE="${AIGOV_EVAL_ROOT:-$REPO_ROOT/packages/pe}"
 
 LOG="EVALSET-MIGRATION-SMOKE-v1_$(date +%Y%m%d_%H%M%S).log"
-exec > >(tee -a "$REPO_ROOT/$LOG") 2>&1
+LOG_DIR="$REPO_ROOT/docs/logs"
+mkdir -p "$LOG_DIR"
+LOG_PATH="$LOG_DIR/$LOG"
+exec > >(tee -a "$LOG_PATH") 2>&1
 
-fail(){ echo; echo "❌ EVALSET-MIGRATION-SMOKE-v1 FAILED"; echo "$1"; echo "Log saved to: $REPO_ROOT/$LOG"; exit 1; }
-pass(){ echo; echo "✅ EVALSET-MIGRATION-SMOKE-v1 PASSED"; echo "Log saved to: $REPO_ROOT/$LOG"; }
+fail(){ echo; echo "❌ EVALSET-MIGRATION-SMOKE-v1 FAILED"; echo "$1"; echo "Log saved to: $LOG_PATH"; exit 1; }
+pass(){ echo; echo "✅ EVALSET-MIGRATION-SMOKE-v1 PASSED"; echo "Log saved to: $LOG_PATH"; }
 
 assert_dir(){ [[ -d "$1" ]] || fail "Missing directory: $1"; }
+
+ensure_pe_venv(){
+  local venv_dir="$PE/.venv"
+  local venv_py="$venv_dir/bin/python"
+  if [[ ! -x "$venv_py" ]]; then
+    echo "PE: creating venv at $venv_dir"
+    python3 -m venv "$venv_dir" || fail "PE: failed to create venv. Run: python3 -m venv $venv_dir"
+  fi
+  PE_VENV_PY="$venv_py"
+}
+
+ensure_pe_deps(){
+  if "$PE_VENV_PY" - <<'PY'
+import importlib.util
+missing = [name for name in ("pytest", "jsonschema", "aigov_ep") if importlib.util.find_spec(name) is None]
+raise SystemExit(1 if missing else 0)
+PY
+  then
+    return 0
+  fi
+  echo "PE: installing venv dependencies"
+  "$PE_VENV_PY" -m pip install -r "$PE/requirements.txt" -r "$PE/requirements-dev.txt" || fail "PE: pip install requirements failed"
+  "$PE_VENV_PY" -m pip install -e "$EP" || fail "PE: pip install -e packages/ep failed"
+  "$PE_VENV_PY" -m pip install jsonschema || fail "PE: pip install jsonschema failed"
+}
 
 assert_clean_diff_path(){
   local label="$1" path="$2"
@@ -42,11 +70,8 @@ assert_clean_diff_path "PE" "packages/pe"
 step "PE: run judge smoke"
 cd "$PE"
 export AIGOV_RUN_EP_SMOKE="1"
-PE_VENV_PY="$PE/.venv/bin/python"
-PYTHON_BIN="python3"
-if [[ -x "$PE_VENV_PY" ]]; then
-  PYTHON_BIN="$PE_VENV_PY"
-fi
-"$PYTHON_BIN" -m pytest tests/minimal_loop/test_ep_cli_judge_smoke.py -q || fail "PE: pytest failed"
+ensure_pe_venv
+ensure_pe_deps
+"$PE_VENV_PY" -m pytest tests/minimal_loop/test_ep_cli_judge_smoke.py -q || fail "PE: pytest failed"
 
 pass
