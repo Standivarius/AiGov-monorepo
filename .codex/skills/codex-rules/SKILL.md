@@ -6,5 +6,5 @@ description: "Enforce repo execution discipline: keep PRs small; always update S
 ## Always
 - Keep PRs small and auditable; avoid drive-by refactors.
 - Update /STATUS.md (what changed, why, what's next).
-- If invariants/plumbing are touched: run `npx nx run evalsets:migration-smoke`.
+- If invariants/plumbing are touched: run the canonical proof command listed in /STATUS.md (once PR-0 lands this is typically `npx nx run evalsets:migration-smoke`).
 - Never hand-edit vendored contracts; use sync scripts + drift gates.
