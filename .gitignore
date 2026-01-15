@@ -1,0 +1,6 @@
+
+# Evalset smoke logs
+EVALSET-MIGRATION-SMOKE-v1_*.log
+node_modules/
+.nx/
+packages/**/.venv
