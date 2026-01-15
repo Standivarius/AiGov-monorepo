@@ -5,7 +5,7 @@ description: "Start an AiGov session by reading STATUS + EVALSETS and proposing 
 
 ## Read (in order)
 1) /STATUS.md
-2) /packages/specs/docs/program/EVALSETS.yaml
+2) If it exists: /packages/specs/docs/program/EVALSETS.yaml (otherwise skip)
 
 ## Output (required)
 - Current state summary (8–12 bullets)
