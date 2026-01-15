@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aigov-ep"
+version = "0.0.0"
+description = "AiGov EP runtime (client-run evaluation product)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "PyYAML>=6.0",
+]
+
+[project.scripts]
+aigov-ep = "aigov_ep.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["aigov_ep*"]
+
+[tool.setuptools.package-data]
+"aigov_ep.taxonomy" = ["signals.json"]
+"aigov_ep.taxonomy.contracts" = ["signals.json", "verdicts.json"]
+"aigov_ep.contracts" = ["behaviour_json_v0_phase0.schema.json"]
+"aigov_ep.contracts.evidence_pack" = [
+    "evidence_pack_v0.schema.json",
+    "evidence_pack_manifest_v1.json",
+]
