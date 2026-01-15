@@ -5,3 +5,6 @@ docs/logs/
 node_modules/
 .nx/
 packages/**/.venv
+
+# Evalset smoke logs
+/docs/logs/*.log
