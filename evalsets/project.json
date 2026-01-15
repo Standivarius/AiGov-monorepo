@@ -1,5 +1,5 @@
 {
-  "": "../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
   "name": "evalsets",
   "projectType": "library",
   "targets": {
@@ -7,7 +7,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": ".",
-        "command": "powershell -ExecutionPolicy Bypass -File .\\\\tools\\\\run-evalset-migration-smoke.ps1"
+        "command": "node tools/run-migration-smoke.cjs"
       }
     }
   }

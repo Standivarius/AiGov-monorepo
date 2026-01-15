@@ -1,6 +1,6 @@
 ---
 name: codex-rules
-description: Enforce repo execution discipline: small PRs, always update STATUS.md, run migration-smoke when invariants change, never hand-edit vendored contracts.
+description: ""Enforce repo execution discipline: keep PRs small; always update STATUS.md; run migration-smoke when invariants change; never hand-edit vendored contracts.""
 ---
 
 ## Always
