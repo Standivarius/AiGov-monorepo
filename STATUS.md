@@ -1,3 +1,8 @@
+Phase: Hardening the monorepo proof so it runs the same everywhere.
+
+## PR-D: CI proof + logs
+- CI now runs the proof command and uploads docs/logs/*.log as an artifact. WSL proof log: docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260116_154302.log.
+
 ## PR-C: AGENTS + Claude handoff
 - Added AGENTS.md and the Claude handoff protocol to the codex-rules skill.
 
@@ -5,7 +10,7 @@
 - Added devcontainer config for Node + Python to make Codespaces/local devcontainer setup predictable.
 - Migration smoke now writes logs under `docs/logs/` and ensures a PE venv exists with required deps (no global pip).
 - WSL proof: `npm install`; `npx nx run evalsets:migration-smoke` (1 skipped). Log: docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260116_004744.log.
-- Next: PR-C (CI wiring + Windows parity).
+- Next: PR-D (CI wiring + Windows parity).
 
 ## PR-0: Monorepo skeleton + migration smoke runner
 - Added minimal Nx workspace files and evalsets migration-smoke target to run `node tools/run-migration-smoke.cjs`.
