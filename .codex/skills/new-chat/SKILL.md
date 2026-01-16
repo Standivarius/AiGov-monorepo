@@ -13,3 +13,6 @@ description: "Start an AiGov session by reading STATUS + EVALSETS and proposing 
 - Next PR proposal (<=7 steps)
 - Verification commands (exact)
 - Effort: low / medium / high / xhigh
+
+## Claude check
+If the user’s desired outcome implies repo-wide enumeration, independent audit, or long-doc synthesis, propose a Claude lane run (per AGENTS.md) before starting implementation.
