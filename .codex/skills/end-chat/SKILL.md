@@ -16,3 +16,6 @@ Include a link to the new worklog entry.
 - Summary bullets
 - Verification commands (or "Not run")
 - Risks / follow-ups
+
+## Claude artifacts
+If any `docs/reviews/*` or `docs/worklog/*` entries were created this session (especially from Claude), link them explicitly in the end-of-session summary and ensure STATUS.md references the newest one.

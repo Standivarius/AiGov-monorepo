@@ -1,3 +1,6 @@
+## PR-C: AGENTS + Claude handoff
+- Added AGENTS.md and the Claude handoff protocol to the codex-rules skill.
+
 ## PR-B: Devcontainer + reproducible migration smoke
 - Added devcontainer config for Node + Python to make Codespaces/local devcontainer setup predictable.
 - Migration smoke now writes logs under `docs/logs/` and ensures a PE venv exists with required deps (no global pip).
