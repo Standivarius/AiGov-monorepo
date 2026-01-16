@@ -5,7 +5,6 @@ Phase: Hardening the monorepo proof so it runs the same everywhere.
 - Codex skill added: status-pr-update produces a paste-ready STATUS snippet + conflict check.
 - Dashboard: (link)
 
-
 ## PR-C: AGENTS + Claude handoff
 - Added AGENTS.md and the Claude handoff protocol to the codex-rules skill.
 
