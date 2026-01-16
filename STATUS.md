@@ -5,8 +5,6 @@ Phase: Hardening the monorepo proof so it runs the same everywhere.
 - Codex skill added: status-pr-update produces a paste-ready STATUS snippet + conflict check.
 - Dashboard: (link)
 
-## PR-D: CI proof + logs
-- CI now runs the proof command and uploads docs/logs/*.log as an artifact. WSL proof log: docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260116_154302.log.
 
 ## PR-C: AGENTS + Claude handoff
 - Added AGENTS.md and the Claude handoff protocol to the codex-rules skill.
