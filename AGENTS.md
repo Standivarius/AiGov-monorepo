@@ -4,18 +4,16 @@ This repo uses **Codex-first** development, with **Claude Code as an optional sp
 The durable source of truth is Git; chats are not.
 
 ## Canonical references
-- **/STATUS.md** = current phase, green proof, next PR, and project heartbeat.
 - **/.codex/skills/** = repo-scoped skills:
   - `$new-chat` (session startup)
-  - `$end-chat` (session wrap + worklog + STATUS update)
+  - `$end-chat` (session wrap + worklog)
   - `$codex-rules` (execution discipline)
 
 ## Default workflow (Codex)
 1) Start every session: run `$new-chat`
-2) Do the smallest PR that moves STATUS forward.
-3) Update `/STATUS.md` (what changed / why / what’s next).
-4) If plumbing/invariants changed: run the canonical proof.
-5) End session: run `$end-chat`
+2) Do the smallest PR that moves the phase forward.
+3) If plumbing/invariants changed: run the canonical proof.
+4) End session: run `$end-chat`
 
 ## When to use Claude Code (specialist mode)
 Use Claude Code **only** when it is clearly a better fit than Codex, e.g.
@@ -38,4 +36,4 @@ When a task should be done in Claude, Codex must produce a **paste-ready work or
 After Claude finishes, bring results back to Codex for:
 - sanity checks
 - proof run (if needed)
-- PR writeup + STATUS update 
+- PR writeup + worklog update

@@ -62,5 +62,4 @@ ViolationPattern (email leak, RTBF failure, etc.)
 ## Links
 - [TASKS.md](TASKS.md) - Validation & expansion tasks
 - [RESEARCH.md](RESEARCH.md) - Query optimization findings
-- [STATUS.md](STATUS.md) - Current state
 - **Codex-Petri repo**: [Local path TBD]

@@ -47,5 +47,4 @@ Vector search over legal corpus (EDPB cases, CJEU rulings, ENISA guidance). Base
 ## Links
 - [TASKS.md](TASKS.md) - Validation & expansion tasks
 - [RESEARCH.md](RESEARCH.md) - Retrieval optimization findings
-- [STATUS.md](STATUS.md) - Current state
 - **CC-Petri repo**: [Local path TBD]

@@ -33,4 +33,3 @@ Phase 3: Output Generation
 ## Links
 - [TASKS.md](TASKS.md) - Implementation checklist
 - [RESEARCH.md](RESEARCH.md) - Tool research findings
-- [STATUS.md](STATUS.md) - Current state & blockers

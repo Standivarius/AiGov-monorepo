@@ -70,4 +70,3 @@ Translate reports: EN → RO
 ## Links
 - [TASKS.md](TASKS.md) - Implementation checklist
 - [RESEARCH.md](RESEARCH.md) - LLM testing results
-- [STATUS.md](STATUS.md) - Current state
