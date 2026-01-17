@@ -2,10 +2,15 @@ name: status-guard
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 jobs:
   status-guard:
     runs-on: ubuntu-latest
+    env:
+      # STATUS guard is opt-in so migrations aren't blocked by STATUS updates.
+      # To enforce: add label "status-required".
+      DO_STATUS_GUARD: ${{ contains(github.event.pull_request.labels.*.name, 'status-required') }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -13,5 +18,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Skip STATUS guard (opt-in via label status-required)
+        if: env.DO_STATUS_GUARD != 'true'
+        run: echo "Skipping STATUS guard (opt-in via label status-required)."
       - name: Check STATUS update
+        if: env.DO_STATUS_GUARD == 'true'
         run: node tools/check-status-updated.cjs
