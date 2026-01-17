@@ -15,6 +15,12 @@ The durable source of truth is Git; chats are not.
 3) If plumbing/invariants changed: run the canonical proof.
 4) End session: run `$end-chat`
 
+## Execution Contract
+- ChatGPT: planning, review, audit, decision support
+- Codex (VS Code): execution, edits, commits
+- All git commands run ONLY in VS Code terminal (WSL/Codespaces)
+- Small PRs, auditable diffs, one concern per PR
+
 ## When to use Claude Code (specialist mode)
 Use Claude Code **only** when it is clearly a better fit than Codex, e.g.
 - Large multi-file refactors (rename/move, mechanical edits across many files)
