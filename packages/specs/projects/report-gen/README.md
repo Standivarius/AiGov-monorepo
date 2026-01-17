@@ -40,4 +40,3 @@ Generates complete audit reports from Judge findings: L1/L2/L3, framework annexe
 ## Links
 - [TASKS.md](TASKS.md) - Implementation checklist
 - [RESEARCH.md](RESEARCH.md) - Template tool comparison
-- [STATUS.md](STATUS.md) - Current state

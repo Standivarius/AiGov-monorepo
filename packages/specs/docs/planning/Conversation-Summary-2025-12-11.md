@@ -20,7 +20,7 @@
 - **README.md**: Entry point with quick links
 
 ### 3. Sub-Project Skeletons Created (7 total)
-Each project has: README.md, TASKS.md, RESEARCH.md, STATUS.md
+Each project has: README.md, TASKS.md, RESEARCH.md
 
 - **IntakeAgent**: AI-dynamic onboarding questionnaire
 - **ScenarioForge**: Scenario pipeline creation

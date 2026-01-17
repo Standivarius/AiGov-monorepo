@@ -151,7 +151,7 @@ See: `RESEARCH.md` for:
 
 ## Status
 
-See: `STATUS.md` for current progress
+See: project tracker for current progress
 
 ---
 

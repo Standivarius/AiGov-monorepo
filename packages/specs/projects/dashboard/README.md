@@ -45,4 +45,3 @@ https://verifywise.ai/images/blog/improved-model-inventory.png
 
 ## Links
 - [TASKS.md](TASKS.md) - Implementation checklist
-- [STATUS.md](STATUS.md) - Current state
