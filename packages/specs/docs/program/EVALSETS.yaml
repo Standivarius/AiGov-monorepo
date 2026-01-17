@@ -4,6 +4,11 @@ purpose: >
   EVALSETS group concrete checks aligned with the requirements/evals matrix.
   These definitions are stable across multi-repo and future Nx monorepo.
   A runner may be added later; for now this is the canonical spec.
+notes: >
+  Monorepo (Nx) proof: npx nx run evalsets:migration-smoke.
+  Defined in evalsets/project.json.
+  CI: .github/workflows/migration-smoke.yml uploads docs/logs/*.log as migration-smoke-logs.
+  The pwsh multi-repo steps below are legacy defaults; override in monorepo/Codespaces.
 
 variables:
   # Default local multi-repo workspace (Windows). Override in CI/Codespaces/monorepo.
