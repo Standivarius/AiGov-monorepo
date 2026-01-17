@@ -27,3 +27,9 @@ jobs:
         with:
           name: migration-smoke-logs
           path: docs/logs/*.log
+      - name: Print smoke info
+        if: always()
+        run: |
+          echo "Proof command: npx nx run evalsets:migration-smoke"
+          echo "Logs written to: docs/logs/*.log"
+          echo "Artifact to download: migration-smoke-logs"
