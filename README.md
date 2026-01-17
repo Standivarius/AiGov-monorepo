@@ -10,4 +10,5 @@ Start here: read `/STATUS.md`.
 
 ## Claude Code (optional)
 Use Claude Code for large mechanical edits/refactors; bring results back to Codex for gating + verification.
-See `/AGENTS.md`.
+See `/AGENTS.md`. 
+
