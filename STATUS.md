@@ -1,5 +1,11 @@
 Phase: Hardening the monorepo proof so it runs the same everywhere.
 
+## PR-G: EVALSETS spec alignment + required-checks checklist
+- EVALSETS.yaml now calls out the monorepo proof command, where it is defined, and CI log artifacts to reduce ambiguity.
+- Flagged the pwsh multi-repo steps as legacy defaults that should be overridden in monorepo/Codespaces.
+- Verification: npm ci; npx nx run evalsets:migration-smoke
+- Manual: Enable required status check: migration-smoke (keep status-guard opt-in via label status-required).
+
 ## PR-E: STATUS guard + status-pr-update skill
 - STATUS guard added: PRs touching core areas must update STATUS.md.
 - Codex skill added: status-pr-update produces a paste-ready STATUS snippet + conflict check.
