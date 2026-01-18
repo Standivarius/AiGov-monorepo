@@ -13,6 +13,7 @@ See `/AGENTS.md`.
 
 ## Monorepo-only policy
 AiGov-monorepo is canonical. Legacy repos are deprecated; do not clone them for runs/builds.
-See docs/migration/LEGACY_REPOS.md (placeholder; landing next PR).
+See docs/migration/LEGACY_REPOS.md (placeholder; landing next PR). 
+
 
 
