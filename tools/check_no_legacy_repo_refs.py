@@ -15,6 +15,23 @@ LEGACY_TOKENS = ("AiGov-specs", "AiGov-mvp", "Aigov-eval")
 ALLOWLIST_PREFIX = "docs/migration/"
 TEXT_EXTENSIONS = {".md", ".py", ".yml", ".yaml", ".json", ".toml"}
 
+CI_INCLUDE_ROOTS = (
+    "docs/",
+    "packages/specs/docs/program/",
+    "tools/",
+)
+CI_INCLUDE_FILES = ("README.md", "AGENTS.md")
+CI_EXCLUDE_PREFIXES = (
+    "docs/migration/",
+    "packages/specs/docs/planning/",
+    "packages/pe/docs/chat_logs/",
+    "packages/pe/reports/",
+    "packages/pe/sources/",
+)
+CI_EXCLUDE_DIR_FRAGMENT = "/schemas/"
+CI_EXCLUDE_SUFFIXES = (".schema.json",)
+SELF_PATH = "tools/check_no_legacy_repo_refs.py"
+
 
 def iter_tracked_files() -> list[str]:
     result = subprocess.run(
@@ -27,6 +44,32 @@ def iter_tracked_files() -> list[str]:
     if result.returncode != 0:
         raise RuntimeError(f"git ls-files failed: {result.stderr.strip()}")
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
+
+def is_text_file(path: Path) -> bool:
+    return path.suffix in TEXT_EXTENSIONS
+
+
+def is_ci_candidate(rel: str) -> bool:
+    if rel in CI_INCLUDE_FILES:
+        return True
+    if rel.startswith(CI_INCLUDE_ROOTS):
+        if rel == SELF_PATH:
+            return False
+        if rel.startswith("docs/") and not rel.endswith(".md"):
+            return False
+        return True
+    return False
+
+
+def is_ci_excluded(rel: str) -> bool:
+    if rel.startswith(CI_EXCLUDE_PREFIXES):
+        return True
+    if rel.endswith(CI_EXCLUDE_SUFFIXES):
+        return True
+    if CI_EXCLUDE_DIR_FRAGMENT in rel:
+        return True
+    return False
 
 
 def scan_file(path: Path) -> dict[str, list[int]]:
@@ -47,6 +90,12 @@ def main(argv: list[str]) -> int:
         description="Fail if legacy repo names appear outside docs/migration/.",
     )
     parser.add_argument(
+        "--scope",
+        choices=("ci", "full"),
+        default="ci",
+        help="Scan scope (default: ci).",
+    )
+    parser.add_argument(
         "--help-only",
         action="store_true",
         help="Print help and exit 0.",
@@ -60,11 +109,18 @@ def main(argv: list[str]) -> int:
 
     failures = []
     for rel in iter_tracked_files():
-        if rel.startswith(ALLOWLIST_PREFIX):
+        path = Path(rel)
+        if not is_text_file(path):
             continue
-        if Path(rel).suffix not in TEXT_EXTENSIONS:
-            continue
-        hit_map = scan_file(Path(rel))
+        if args.scope == "ci":
+            if not is_ci_candidate(rel):
+                continue
+            if is_ci_excluded(rel):
+                continue
+        else:
+            if rel.startswith(ALLOWLIST_PREFIX):
+                continue
+        hit_map = scan_file(path)
         for token, lines in hit_map.items():
             failures.append((rel, token, lines))
 
