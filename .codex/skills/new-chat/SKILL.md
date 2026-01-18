@@ -1,11 +1,11 @@
 ---
 name: new-chat
-description: "Start an AiGov session by reading STATUS + EVALSETS and proposing the smallest next PR with verification and effort label."
+description: "Start an AiGov session by reading AGENTS + EVALSETS and proposing the smallest next PR with verification and effort label."
 ---
 
 ## Read (in order)
-1) /STATUS.md
-2) If it exists: /packages/specs/docs/program/EVALSETS.yaml (otherwise skip)
+1) /AGENTS.md
+2) /packages/specs/docs/program/EVALSETS.yaml
 
 ## Output (required)
 - Current state summary (8–12 bullets)
