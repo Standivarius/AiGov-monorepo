@@ -1,12 +1,11 @@
 ---
 name: codex-rules
-description: "Enforce repo execution discipline: keep PRs small; always update STATUS.md; run migration-smoke when invariants change; never hand-edit vendored contracts."
+description: "Enforce repo execution discipline: keep PRs small; run migration-smoke when invariants change; never hand-edit vendored contracts."
 ---
 
 ## Always
 - Keep PRs small and auditable; avoid drive-by refactors.
-- Update /STATUS.md (what changed, why, what's next).
-- If invariants/plumbing are touched: run the canonical proof command listed in /STATUS.md (once PR-0 lands this is typically `npx nx run evalsets:migration-smoke`).
+- If invariants/plumbing are touched: run the canonical proof command listed in EVALSETS.yaml (currently: `npx nx run evalsets:migration-smoke`).
 - Never hand-edit vendored contracts; use sync scripts + drift gates.
 
 ## Claude lane (enforced triggers)
@@ -35,4 +34,4 @@ When proposing Claude, output a paste-ready “Claude Work Order” with:
 Do not proceed with Claude unless the user explicitly says “yes”.
 
 ## Claude Code (optional specialist)
-Follow the AGENTS.md handoff protocol. Codex must provide a paste-ready work order (goal, allowed paths, constraints, verification, expected output), then re-verify and update STATUS after Claude returns results.
+Follow the AGENTS.md handoff protocol. Codex must provide a paste-ready work order (goal, allowed paths, constraints, verification, expected output), then re-verify and update the worklog after Claude returns results.
