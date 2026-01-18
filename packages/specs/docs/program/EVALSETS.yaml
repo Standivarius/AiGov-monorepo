@@ -12,9 +12,9 @@ notes: >
 
 variables:
   # Default local multi-repo workspace (Windows). Override in CI/Codespaces/monorepo.
-  AIGOV_SPECS_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\AiGov-specs"
-  AIGOV_MVP_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\AiGov-mvp"
-  AIGOV_EVAL_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\Aigov-eval"
+  AIGOV_SPECS_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\packages/specs"
+  AIGOV_MVP_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\packages/ep"
+  AIGOV_EVAL_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\packages/pe"
 
 evalsets:
   EVALSET-MIGRATION-SMOKE-v1:
@@ -36,7 +36,7 @@ evalsets:
         run: |
           git checkout main
           git pull
-          python tools/sync_taxonomy_from_specs.py --specs-root "..\\AiGov-specs"
+          python tools/sync_taxonomy_from_specs.py --specs-root "..\\packages/specs"
           git diff --name-only
         ok_criteria: "git diff --name-only prints nothing"
 
@@ -46,7 +46,7 @@ evalsets:
         run: |
           git checkout main
           git pull
-          python tools/sync_contracts_from_specs.py --specs-root "..\\AiGov-specs"
+          python tools/sync_contracts_from_specs.py --specs-root "..\\packages/specs"
           git diff --name-only
         ok_criteria: "git diff --name-only prints nothing"
 
@@ -55,7 +55,7 @@ evalsets:
         cwd: "${AIGOV_EVAL_ROOT}"
         run: |
           where.exe aigov-ep
-        ok_criteria: "path points to the expected install (editable from AiGov-mvp when used)"
+        ok_criteria: "path points to the expected install (editable from packages/ep when used)"
 
       - name: "EVAL: run EP judge smoke (Stage B artefacts + behaviour_json schema validation)"
         shell: "pwsh"

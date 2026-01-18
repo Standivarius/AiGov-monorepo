@@ -4,39 +4,39 @@
 
 This plan is designed so an implementation agent can execute it without guessing.
 The machine-readable task list is in:
-- `AiGov-specs/docs/program/CODEX_EXECUTION_PACK.yaml`
+- `packages/specs/docs/program/CODEX_EXECUTION_PACK.yaml`
 
 ---
 
-## Phase 0 — Canonical docs + contracts lock (AiGov-specs only)
+## Phase 0 — Canonical docs + contracts lock (packages/specs only)
 **Goal:** make the plan canonical so later refactors are grounded.
 
-- Update `AiGov-specs/docs/contracts/terminology.md` (done in this step)
-- Add Program Pack folder `AiGov-specs/docs/program/*` (done in this step)
+- Update `packages/specs/docs/contracts/terminology.md` (done in this step)
+- Add Program Pack folder `packages/specs/docs/program/*` (done in this step)
 
 Verification (how to run):
-- `ls -la AiGov-specs/docs/program` → shows program files
-- `grep -n "Boundary rule" AiGov-specs/docs/contracts/terminology.md` → shows locked boundary rule
+- `ls -la packages/specs/docs/program` → shows program files
+- `grep -n "Boundary rule" packages/specs/docs/contracts/terminology.md` → shows locked boundary rule
 
 ---
 
-## Phase 1 — Create EP package skeleton in aigov-mvp
+## Phase 1 — Create EP package skeleton in packages/ep
 (Do not execute in this step; implemented later by Codex)
 
-- Add `aigov_ep/` python package + CLI skeleton in `aigov-mvp/`
+- Add `aigov_ep/` python package + CLI skeleton in `packages/ep/`
 - Verification will be:
-  - `cd aigov-mvp && python -m venv .venv && . .venv/bin/activate && pip install -e .`
+  - `cd packages/ep && python -m venv .venv && . .venv/bin/activate && pip install -e .`
   - `python -c "import aigov_ep; print('ok')"` → prints ok
 
 ---
 
-## Phase 2 — Migrate EP runtime modules from aigov-evals to aigov-mvp
+## Phase 2 — Migrate EP runtime modules from packages/pe to packages/ep
 (Do not execute in this step; implemented later)
 
-- Move target adapters / runner / evidence / judge / mapper into `aigov-mvp/aigov_ep/*`
-- Update PE tests in `aigov-evals/tests/**` to import from EP or call EP CLI
+- Move target adapters / runner / evidence / judge / mapper into `packages/ep/aigov_ep/*`
+- Update PE tests in `packages/pe/tests/**` to import from EP or call EP CLI
 - Verification will be:
-  - `cd aigov-evals && pytest -q` → remains green
+  - `cd packages/pe && pytest -q` → remains green
 
 ---
 
