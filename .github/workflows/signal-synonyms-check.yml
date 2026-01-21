@@ -1,0 +1,17 @@
+name: Signal Synonyms Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  signal-synonyms-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify generated synonyms
+        run: python3 tools/build_signal_synonyms.py --check
