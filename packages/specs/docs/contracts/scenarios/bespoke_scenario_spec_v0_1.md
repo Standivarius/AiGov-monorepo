@@ -23,10 +23,33 @@ instruction files. This is contract-only scaffolding.
   - `judge_instructions_template_ref`
   - `rule`: both outputs are generated from this spec (no drift)
 
+## Authoritative validation block
+
+```json
+{
+  "required_keys": [
+    "bespoke_scenario_spec_id",
+    "scenario_card_id",
+    "scenario_instance_id",
+    "canonical_signal_ids",
+    "verification_mode",
+    "required_evidence_artifacts",
+    "instruction_generation"
+  ],
+  "allowed_verification_modes": [
+    "runtime",
+    "doc",
+    "timeline",
+    "out-of-scope"
+  ]
+}
+```
+
 ## Invariants
 - No scenario_instance without at least one canonical signal.
 - Variant does not create taxonomy (no new signal IDs).
 - Judge scope is the declared violation only; Scout can detect extra violations later.
+auditor and judge instructions MUST be generated from the same bespoke scenario spec
 
 ## Example (minimal)
 ```json
