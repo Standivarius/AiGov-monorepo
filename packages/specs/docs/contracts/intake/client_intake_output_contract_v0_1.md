@@ -62,6 +62,22 @@ Required mock fields:
     "public",
     "mixed"
   ],
+  "allowed_dsar_channels": [
+    "email",
+    "in_chat",
+    "portal"
+  ],
+  "target_profile_required_fields": [
+    "target_type",
+    "auth_context",
+    "data_sources_touched",
+    "integration_surfaces",
+    "locale_context"
+  ],
+  "mock_target_profile_required_fields": [
+    "target_type",
+    "auth_context"
+  ],
   "allowed_verification_modes": [
     "runtime",
     "doc",

@@ -1,0 +1,17 @@
+name: Pre2.5 Intake Contracts Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  pre2-5-intake-contracts-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Pre2.5 intake contract
+        run: python3 tools/validate_pre2_5_intake_contracts.py
