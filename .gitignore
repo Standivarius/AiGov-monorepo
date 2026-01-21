@@ -8,3 +8,6 @@ packages/**/.venv
 
 # Evalset smoke logs
 /docs/logs/*.log
+
+# Windows Zone.Identifier alternate data stream artifacts (often appear as :Zone.Identifier)
+*:Zone.Identifier
