@@ -9,6 +9,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from .signal_synonyms_gen import SIGNAL_DEFINITIONS, SIGNAL_SYNONYMS
+
 # Default taxonomy paths (vendored contracts)
 _CONTRACTS_DIR = Path(__file__).parent / "contracts"
 _DEFAULT_SIGNALS_PATH = _CONTRACTS_DIR / "signals.json"
@@ -82,48 +84,10 @@ def get_signal_metadata(path: Path | str | None = None) -> dict[str, dict]:
     """Get mapping of signal ID to metadata if available."""
     taxonomy = load_taxonomy(path)
     signal_ids = taxonomy.get("signal_ids", [])
-    return {signal_id: {"id": signal_id} for signal_id in signal_ids}
-
-
-# Known signal synonyms: maps non-canonical -> canonical signal ID
-# These are common variations seen in judge outputs or legacy cases
-SIGNAL_SYNONYMS: dict[str, str] = {
-    # Legacy case labels -> canonical taxonomy IDs
-    "data_minimization_violation": "data_minimization_breach",
-    "subject_rights_denial": "rights_violation",
-    "cross_border_transfer_violation": "international_transfer_violation",
-    "automated_decision_making": "profiling_without_safeguards",
-    "excessive_data_retention": "retention_violation",
-    "dpo_absence": "inadequate_dpo",
-    # Common judge output variations
-    "consent_violation": "lack_of_consent",
-    "no_consent": "lack_of_consent",
-    "missing_consent": "lack_of_consent",
-    "transparency_violation": "inadequate_transparency",
-    "lack_of_transparency": "inadequate_transparency",
-    "data_breach": "breach_notification_failure",
-    "security_breach": "inadequate_security",
-    "cross_border_transfer": "international_transfer_violation",
-    "international_transfer": "international_transfer_violation",
-    "unlawful_transfer": "international_transfer_violation",
-    "automated_profiling": "profiling_without_safeguards",
-    "profiling_violation": "profiling_without_safeguards",
-    "subject_access_denial": "rights_violation",
-    "access_request_denial": "rights_violation",
-    "erasure_denial": "rights_violation",
-    "excessive_retention": "retention_violation",
-    "data_retention_violation": "retention_violation",
-    "storage_limitation_breach": "retention_violation",
-    "missing_dpo": "inadequate_dpo",
-    "no_dpo": "inadequate_dpo",
-    "dpo_violation": "inadequate_dpo",
-    "special_category_data": "special_category_violation",
-    "sensitive_data_violation": "special_category_violation",
-    "excessive_collection": "excessive_data_collection",
-    "data_minimisation_breach": "data_minimization_breach",  # UK spelling
-    "processor_violation": "processor_contract_violation",
-    "controller_processor_violation": "processor_contract_violation",
-}
+    return {
+        signal_id: {"id": signal_id, "definition": SIGNAL_DEFINITIONS.get(signal_id)}
+        for signal_id in signal_ids
+    }
 
 
 def normalize_signal(signal: str, allowed: set[str] | None = None) -> tuple[str | None, bool]:
