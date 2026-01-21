@@ -6,6 +6,140 @@ Signal references must use `packages/specs/docs/contracts/taxonomy/signals.json`
 
 ## Crosswalk
 
+The JSON block below is the authoritative crosswalk for validation.
+
+```json
+[
+  {
+    "field_id": "l1_scope_snapshot",
+    "layer": "L1",
+    "source": "Intake",
+    "evidence_artifact": "intake_form_hash",
+    "verification_mode": "doc"
+  },
+  {
+    "field_id": "l1_overall_status",
+    "layer": "L1",
+    "source": "Both",
+    "evidence_artifact": "judge_output_manifest",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "l1_risk_summary",
+    "layer": "L1",
+    "source": "Both",
+    "evidence_artifact": "evidence_pack_ref",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "l1_key_findings",
+    "layer": "L1",
+    "source": "Judge",
+    "evidence_artifact": "evidence_pack_ref",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "l1_recommendations",
+    "layer": "L1",
+    "source": "Both",
+    "evidence_artifact": "evidence_pack_ref",
+    "verification_mode": "doc"
+  },
+  {
+    "field_id": "l2_article_coverage",
+    "layer": "L2",
+    "source": "Judge",
+    "evidence_artifact": "evidence_pack_ref",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "l2_findings_summary",
+    "layer": "L2",
+    "source": "Judge",
+    "evidence_artifact": "evidence_pack_ref",
+    "verification_mode": "runtime",
+    "signal_ids": []
+  },
+  {
+    "field_id": "l2_evidence_excerpts",
+    "layer": "L2",
+    "source": "Judge",
+    "evidence_artifact": "transcript_hash",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "l2_provenance_chain",
+    "layer": "L2",
+    "source": "Both",
+    "evidence_artifact": "run_manifest_path",
+    "verification_mode": "timeline"
+  },
+  {
+    "field_id": "l2_judge_manifest",
+    "layer": "L2",
+    "source": "Judge",
+    "evidence_artifact": "judge_manifest_path",
+    "verification_mode": "doc"
+  },
+  {
+    "field_id": "l3_transcript_bundle_ref",
+    "layer": "L3",
+    "source": "Judge",
+    "evidence_artifact": "transcript_hash",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "l3_evidence_pack_ref",
+    "layer": "L3",
+    "source": "Judge",
+    "evidence_artifact": "evidence_pack_path",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "l3_run_manifest",
+    "layer": "L3",
+    "source": "Both",
+    "evidence_artifact": "run_manifest_path",
+    "verification_mode": "timeline"
+  },
+  {
+    "field_id": "l3_raw_outputs_ref",
+    "layer": "L3",
+    "source": "Judge",
+    "evidence_artifact": "raw_outputs_path",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "gdpr_gr_audit_scope",
+    "layer": "GDPR-GR",
+    "source": "Intake",
+    "evidence_artifact": "intake_form_hash",
+    "verification_mode": "doc"
+  },
+  {
+    "field_id": "gdpr_gr_compliance_statement",
+    "layer": "GDPR-GR",
+    "source": "Both",
+    "evidence_artifact": "judge_output_manifest",
+    "verification_mode": "doc"
+  },
+  {
+    "field_id": "gdpr_gr_article_matrix",
+    "layer": "GDPR-GR",
+    "source": "Judge",
+    "evidence_artifact": "evidence_pack_ref",
+    "verification_mode": "runtime"
+  },
+  {
+    "field_id": "gdpr_gr_limitations",
+    "layer": "GDPR-GR",
+    "source": "Both",
+    "evidence_artifact": "limitations_log",
+    "verification_mode": "doc"
+  }
+]
+```
+
 | field_id | layer | source | evidence_artifact | verification_mode |
 | --- | --- | --- | --- | --- |
 | l1_scope_snapshot | L1 | Intake | intake_form_hash | doc |
