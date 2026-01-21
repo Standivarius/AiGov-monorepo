@@ -1,0 +1,17 @@
+name: Pre2.4 Contracts Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  pre2-4-contracts-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Pre2.4 contracts
+        run: python3 tools/validate_pre2_4_contracts.py
