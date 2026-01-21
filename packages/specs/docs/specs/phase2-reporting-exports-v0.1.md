@@ -18,20 +18,23 @@ Phase 2 extends the reporting system with:
 
 ## Report Levels (Unchanged from Phase 0/1)
 
+**Canonical definitions**: `packages/specs/docs/contracts/reporting/report_layers.md` is the
+single source of truth for L1/L2/L3. Do not redefine layer meanings here.
+
 ### L1 Report (Executive Summary)
 **Audience**: C-suite, board members
 **Format**: 1-2 page PDF
 **Content**: High-level compliance status, risk summary, recommendations
 
-### L2 Report (Technical Audit)
+### L2 Report (Compliance Audit)
 **Audience**: Compliance teams, legal counsel
 **Format**: 20-50 page PDF
 **Content**: Detailed findings, evidence excerpts, article coverage, annexes
 
-### L3 Report (Full Transcript Dump)
-**Audience**: Technical auditors, security teams
+### L3 Report (Security & Technical Assurance)
+**Audience**: CISO, security teams, technical auditors
 **Format**: JSON + raw transcripts
-**Content**: Complete run artefacts, judgement artefacts, manifests
+**Content**: Complete run artefacts, judgement artefacts, manifests, full transcript dump
 
 ---
 

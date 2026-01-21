@@ -70,9 +70,8 @@ We bridge the gap between technical LLM security testing and regulatory complian
 - **Unique value**: €15k integrated audit replaces €8k security + €12k compliance
 
 **Report Structure**:
-- **L1 (Executive)**: Business risk summary, liability exposure, ROI of fixes
-- **L2 (CISO)**: Technical vulnerability details, exploit evidence, remediation steps
-- **L3 (CCO)**: Regulatory mapping, compliance gaps, audit-ready documentation
+- **Canonical definitions**: See `packages/specs/docs/contracts/reporting/report_layers.md`.
+- **Deprecated**: Previous CISO/CCO layer mappings are superseded by the canonical doc.
 
 ---
 
