@@ -1,0 +1,121 @@
+{
+  "lack_of_consent": {
+    "definition": "Processing without valid, specific, informed consent.",
+    "synonyms": [
+      "consent_violation",
+      "no_consent",
+      "missing_consent"
+    ]
+  },
+  "inadequate_transparency": {
+    "definition": "Insufficient or misleading disclosure about data use.",
+    "synonyms": [
+      "transparency_violation",
+      "lack_of_transparency"
+    ]
+  },
+  "excessive_data_collection": {
+    "definition": "Collecting more personal data than necessary.",
+    "synonyms": [
+      "excessive_collection"
+    ]
+  },
+  "purpose_limitation_breach": {
+    "definition": "Using data beyond the stated purpose."
+  },
+  "inadequate_security": {
+    "definition": "Insufficient technical or organizational safeguards for data.",
+    "synonyms": [
+      "security_breach"
+    ]
+  },
+  "unlawful_processing": {
+    "definition": "Processing without a lawful basis under GDPR."
+  },
+  "rights_violation": {
+    "definition": "Failure to honor data subject rights requests.",
+    "synonyms": [
+      "subject_rights_denial",
+      "subject_access_denial",
+      "access_request_denial",
+      "erasure_denial"
+    ]
+  },
+  "missing_dpia": {
+    "definition": "Required DPIA not performed or documented."
+  },
+  "inadequate_dpo": {
+    "definition": "Missing or ineffective Data Protection Officer.",
+    "synonyms": [
+      "dpo_absence",
+      "missing_dpo",
+      "no_dpo",
+      "dpo_violation"
+    ]
+  },
+  "breach_notification_failure": {
+    "definition": "Failure to notify a data breach as required.",
+    "synonyms": [
+      "data_breach"
+    ]
+  },
+  "international_transfer_violation": {
+    "definition": "Unlawful transfer of data across borders.",
+    "synonyms": [
+      "cross_border_transfer_violation",
+      "cross_border_transfer",
+      "international_transfer",
+      "unlawful_transfer"
+    ]
+  },
+  "profiling_without_safeguards": {
+    "definition": "Automated profiling or decisions without required safeguards.",
+    "synonyms": [
+      "automated_decision_making",
+      "automated_profiling",
+      "profiling_violation"
+    ]
+  },
+  "special_category_violation": {
+    "definition": "Improper processing of special category data.",
+    "synonyms": [
+      "special_category_data",
+      "sensitive_data_violation"
+    ]
+  },
+  "children_data_violation": {
+    "definition": "Non-compliant processing of children's data."
+  },
+  "data_minimization_breach": {
+    "definition": "Data not minimized to what is necessary.",
+    "synonyms": [
+      "data_minimization_violation",
+      "data_minimisation_breach"
+    ]
+  },
+  "accuracy_violation": {
+    "definition": "Failure to keep personal data accurate and up to date."
+  },
+  "retention_violation": {
+    "definition": "Keeping data longer than permitted.",
+    "synonyms": [
+      "excessive_data_retention",
+      "excessive_retention",
+      "data_retention_violation",
+      "storage_limitation_breach"
+    ]
+  },
+  "accountability_breach": {
+    "definition": "Lack of governance evidence or accountability measures."
+  },
+  "processor_contract_violation": {
+    "definition": "Missing or insufficient processor/controller contract terms.",
+    "synonyms": [
+      "processor_violation",
+      "controller_processor_violation"
+    ]
+  },
+  "cross_border_cooperation_failure": {
+    "definition": "Failure to cooperate with cross-border supervisory authorities."
+  }
+}
