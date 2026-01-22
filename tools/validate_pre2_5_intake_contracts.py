@@ -23,6 +23,12 @@ REQUIRED_KEYS = {
 REQUIRED_TARGET_TYPES = {"chatbot", "chatbot_with_actions", "agent"}
 REQUIRED_AUTH_CONTEXT = {"logged_in", "public", "mixed"}
 REQUIRED_DSAR_CHANNELS = {"email", "in_chat", "portal"}
+REQUIRED_MOCK_FIELDS = {
+    "target_type",
+    "auth_context",
+    "action_capabilities",
+    "logging_requirements",
+}
 
 
 def _read_text(path: Path) -> str:
@@ -106,6 +112,13 @@ def main() -> int:
     mock_fields = block.get("mock_target_profile_required_fields")
     if not isinstance(mock_fields, list):
         print("ERROR: mock_target_profile_required_fields must be a list")
+        return 1
+    missing_mock = REQUIRED_MOCK_FIELDS - set(mock_fields)
+    if missing_mock:
+        print(
+            "ERROR: mock_target_profile_required_fields missing entries: "
+            f"{sorted(missing_mock)}"
+        )
         return 1
     if not set(mock_fields).issubset(set(target_fields)):
         extra = sorted(set(mock_fields) - set(target_fields))

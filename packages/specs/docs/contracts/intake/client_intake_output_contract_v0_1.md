@@ -72,11 +72,15 @@ Required mock fields:
     "auth_context",
     "data_sources_touched",
     "integration_surfaces",
-    "locale_context"
+    "locale_context",
+    "action_capabilities",
+    "logging_requirements"
   ],
   "mock_target_profile_required_fields": [
     "target_type",
-    "auth_context"
+    "auth_context",
+    "action_capabilities",
+    "logging_requirements"
   ],
   "allowed_verification_modes": [
     "runtime",
