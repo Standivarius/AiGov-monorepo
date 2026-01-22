@@ -1,0 +1,265 @@
+eval_registry.yaml
+- eval_id EVAL-001
+  ep_id CAP-108
+  description Boundary enforcement (EP vs PE vs contracts) via packagemodule dependency checks.
+  pass_rule No prohibited importsdependencies across EP runtime vs PE evaluation harness vs canonical contracts; check exits 0.
+  evidence_artifacts
+    - EVID-001 Program Pack v1 docs snapshot
+    - EVID-011 PE test reports
+  runtime_tier pr_gate
+  notes Monorepo adaptation enforce boundaries as packagemodule rules (not separate repos).
+
+- eval_id EVAL-002
+  ep_id CAP-108
+  description Contract sync + drift check (schemas, taxonomy, report fields, scenario spec).
+  pass_rule All contract snapshots match canonical versions; any unversioned drift fails closed; check exits 0.
+  evidence_artifacts
+    - EVID-002 Contract snapshot with provenance (commit SHAhash)
+    - EVID-011 PE test reports
+  runtime_tier pr_gate
+  notes If contracts are updated, requires version bump + crosswalk update per CAP-108 AC-018.
+
+- eval_id EVAL-003
+  ep_id CAP-101
+  description Intake schema validation + deterministic bundle reproducibility.
+  pass_rule Intake validates against contract AND identical inputs produce identical bundle_hash + manifest; exits 0.
+  evidence_artifacts
+    - EVID-003 Scenario bundle artifact + manifest
+    - EVID-011 PE test reports
+  runtime_tier pr_gate
+  notes Keeps PR-gate short schema + hash determinism only (no Stage AB).
+
+- eval_id EVAL-004
+  ep_id CAP-102
+  description Stage A smoke run (runner + target adapter) with artifact completeness.
+  pass_rule Stage A completes on smoke bundle; required transcriptsartifacts exist; no judge calls; exits 0.
+  evidence_artifacts
+    - EVID-004 Stage A transcripts + raw artifacts
+    - EVID-005 Evidence pack (skeleton or full) + manifest
+    - EVID-011 PE test reports
+  runtime_tier nightly
+  notes Use mock target to bound runtime; real-target adapters can be excluded from nightly if unstable.
+
+- eval_id EVAL-005
+  ep_id CAP-104
+  description Stage B on golden cases (judge correctness vs golden thresholds).
+  pass_rule Judgments are schema-valid AND meet golden-set correctness thresholds; exits 0.
+  evidence_artifacts
+    - EVID-006 Stage B judgments JSON
+    - EVID-011 PE test reports
+  runtime_tier nightly
+  notes Golden set definitions live in EVID-012.
+
+- eval_id EVAL-006
+  ep_id CAP-104
+  description Verdict enum conformance + drift test (normalization coverage).
+  pass_rule All verdict labels belong to canonical enum; no invalidlegacy labels remain; exits 0.
+  evidence_artifacts
+    - EVID-002 Contract snapshot (taxonomyverdict enum provenance)
+    - EVID-011 PE test reports
+  runtime_tier pr_gate
+  notes Fail-closed unknown verdicts are hard failures.
+
+- eval_id EVAL-007
+  ep_id CAP-105
+  description Report generation + link integrity (L1 EXEC  L2 COMPLIANCE  L3 SECURITY).
+  pass_rule Reports generate successfully; required fields validate; all evidence links resolve; regen works without rerunning Stage A; exits 0.
+  evidence_artifacts
+    - EVID-007 L1 report
+    - EVID-008 L2 report
+    - EVID-009 L3 traceevidence export
+    - EVID-011 PE test reports
+  runtime_tier nightly
+  notes Use evidence pack from a fixed run to keep output stable.
+
+- eval_id EVAL-008
+  ep_id CAP-106
+  description Export schema validation (GDPR-GR).
+  pass_rule Exports validate against export schema and crosswalk-required fields exist (run_id, timestamps, jurisdiction, evidence refs); exits 0.
+  evidence_artifacts
+    - EVID-010 GRC export files
+    - EVID-011 PE test reports
+  runtime_tier release
+  notes Do not redefine export formats here; validate against contract crosswalk.
+
+- eval_id EVAL-009
+  ep_id CAP-104
+  description Determinism  replayability Stage B outputs stable on identical evidence packs.
+  pass_rule Re-running Stage B on the same evidence pack produces identical normalized output (or within defined tolerances); exits 0.
+  evidence_artifacts
+    - EVID-005 Evidence pack + manifest
+    - EVID-006 Stage B judgments JSON
+    - EVID-011 PE test reports
+  runtime_tier nightly
+  notes Defines the acceptable tolerance window for model nondeterminism (contract or config).
+
+- eval_id EVAL-010
+  ep_id CAP-101
+  description Translation fidelity (multilingual scenarioJudge instructions remain semantically equivalent).
+  pass_rule Sampled translations meet fidelity thresholds and do not invert obligation meaning; exits 0.
+  evidence_artifacts
+    - EVID-011 PE test reports
+  runtime_tier release
+  notes Only required if multilingual scenarios are enabled in MVP.
+
+- eval_id EVAL-011
+  ep_id CAP-104
+  description Edge-case handling (unclear evidence  partial logs  target failures) produces explicit, bounded outcomes.
+  pass_rule Edge-case suite yields only allowed outcome types (PASSFAILGAPEXECUTION_ERROR per contract); no crashes; exits 0.
+  evidence_artifacts
+    - EVID-011 PE test reports
+    - EVID-006 Stage B judgments JSON
+  runtime_tier release
+  notes Ensures judge doesn’t hallucinate beyond evidence.
+
+- eval_id EVAL-012
+  ep_id CAP-107
+  description AKG retrieval precision + citation completeness.
+  pass_rule Retrieval precisioncitation completeness meet thresholds; exits 0.
+  evidence_artifacts
+    - EVID-013 AKGRAG evaluation reports
+    - EVID-011 PE test reports
+  runtime_tier nightly
+  notes P1 unless AKG is mandatory for MVP judge citations.
+
+- eval_id EVAL-013
+  ep_id CAP-102
+  description RAG retrieval relevance + latency (if Stage AStage B depends on retrieval).
+  pass_rule Relevance and latency within thresholds; exits 0.
+  evidence_artifacts
+    - EVID-013 AKGRAG evaluation reports
+    - EVID-011 PE test reports
+  runtime_tier nightly
+  notes Keep nightly; not in PR-gate unless extremely small.
+
+- eval_id EVAL-014
+  ep_id CAP-101
+  description Scenario validity test (schema integrity, required instructions present, expansion rules applied).
+  pass_rule Scenario library and generated bundles validate; required fieldsinstructions exist; expansion rules produce expected instances; exits 0.
+  evidence_artifacts
+    - EVID-003 Scenario bundle artifact + manifest
+    - EVID-011 PE test reports
+  runtime_tier pr_gate
+  notes Fast structural validation; no target execution.
+
+- eval_id EVAL-015
+  ep_id CAP-105
+  description Citation accuracy  traceability every finding is traceable to evidence IDs + judgment references.
+  pass_rule All reportjudgment citations resolve to evidence pack artifact IDs; no missing references; exits 0.
+  evidence_artifacts
+    - EVID-009 L3 traceevidence export
+    - EVID-006 Stage B judgments JSON
+    - EVID-011 PE test reports
+  runtime_tier release
+  notes Critical for auditor defensibility.
+
+- eval_id EVAL-016
+  ep_id CAP-109
+  description Golden set importer validation.
+  pass_rule Golden set imports into executable cases cleanly; schema-valid; exits 0.
+  evidence_artifacts
+    - EVID-012 Golden set + executable cases
+    - EVID-011 PE test reports
+  runtime_tier nightly
+  notes Can be deferred if MVP uses only a minimal fixed golden subset.
+
+- eval_id EVAL-017
+  ep_id CAP-108
+  description CI gate required checks run and publish artifacts.
+  pass_rule Required evalset(s) run in CI and producepublish required evidence artifacts; merge blocked if missing; exits 0.
+  evidence_artifacts
+    - EVID-011 PE test reports
+  runtime_tier pr_gate
+  notes Enforces eval-first discipline.
+
+# Tier A control eval catalog (enterprise defensibility)
+- eval_id EVAL-201
+  ep_id CROSS_CUTTING
+  description Tier A Audit logging & traceability completeness.
+  pass_rule For any sampled run, audit log contains run_id, timestamps, scenario_ids, tool calls, and hashprovenance pointers; integrity checks pass.
+  evidence_artifacts
+    - EVID-TIERA-001 Audit Log Sample + Integrity Report
+  runtime_tier audit_pack
+  notes Maps to CO-001.
+
+- eval_id EVAL-202
+  ep_id CROSS_CUTTING
+  description Tier A Role-based access controls (RBAC) evidence.
+  pass_rule RBAC policy + role matrix exists; least-privilege enforced for reportevidence access; sampled access checks pass.
+  evidence_artifacts
+    - EVID-TIERA-002 RBAC Policy + Role Matrix
+  runtime_tier audit_pack
+  notes Maps to CO-002.
+
+- eval_id EVAL-203
+  ep_id CROSS_CUTTING
+  description Tier A DSARerasure procedure evidence.
+  pass_rule DSAR procedure doc exists; sample logs show intake→verification→response path; evidence is complete for sampled cases.
+  evidence_artifacts
+    - EVID-TIERA-003 DSAR Procedure Doc + Sample Logs
+  runtime_tier audit_pack
+  notes Maps to CO-003; aligns to DSAR timeliness obligations (GDPR Art.12).
+
+- eval_id EVAL-204
+  ep_id CROSS_CUTTING
+  description Tier A Data retention & deletion control evidence.
+  pass_rule Retention schedule exists; deletion audit shows policy enforcement for sampled data classes; exceptions documented.
+  evidence_artifacts
+    - EVID-TIERA-004 Data Retention Schedule + Deletion Audit
+  runtime_tier audit_pack
+  notes Maps to CO-004; may align to right-to-erasure requirements (GDPR Art.17).
+
+- eval_id EVAL-205
+  ep_id CROSS_CUTTING
+  description Tier A Modelprompt change management evidence.
+  pass_rule All material modelprompt changes have change log entries and approvals; can trace change to run outputs.
+  evidence_artifacts
+    - EVID-TIERA-005 Change Log + Approval Records
+  runtime_tier release
+  notes Maps to CO-005.
+
+- eval_id EVAL-206
+  ep_id CROSS_CUTTING
+  description Tier A Monitoring & incident response readiness.
+  pass_rule Monitoring runbook exists; incident drill executed with recorded outcomes and remediation actions.
+  evidence_artifacts
+    - EVID-TIERA-006 Monitoring Runbook + Incident Drill
+  runtime_tier audit_pack
+  notes Maps to CO-006.
+
+- eval_id EVAL-207
+  ep_id CROSS_CUTTING
+  description Tier A Privacy notice presence + lawful basis disclosure in chatbot behavior.
+  pass_rule Disclosure evidence exists (UI texttranscript) and matches policy; sampled scenarios confirm correct disclosure behavior.
+  evidence_artifacts
+    - EVID-TIERA-007 Disclosure Capture + Finding Evidence
+  runtime_tier release
+  notes Maps to CO-007.
+
+- eval_id EVAL-208
+  ep_id CROSS_CUTTING
+  description Tier A Security controls evidence (PII leakageprompt injection scenarios).
+  pass_rule Security test transcripts show controls preventing leakage beyond threshold; remediation is documented when failures occur.
+  evidence_artifacts
+    - EVID-TIERA-008 Security Test Transcript + Remediation
+  runtime_tier audit_pack
+  notes Maps to CO-008.
+
+- eval_id EVAL-209
+  ep_id CROSS_CUTTING
+  description Tier A Vendorsubprocessor list & contracts evidence.
+  pass_rule Vendorsubprocessor list exists; DPA clauses evidence present; change tracking exists.
+  evidence_artifacts
+    - EVID-TIERA-009 Vendor List + DPA Clauses
+  runtime_tier audit_pack
+  notes Maps to CO-009.
+
+- eval_id EVAL-210
+  ep_id CROSS_CUTTING
+  description Tier A Audit-ready reporting & export integrity.
+  pass_rule Reportsexports include integrity metadata (hashesprovenance); export schema validation passes; evidence pointers resolve.
+  evidence_artifacts
+    - EVID-TIERA-010 Report Integrity + Export Validation
+  runtime_tier release
+  notes Maps to CO-010.
+________________________________________
