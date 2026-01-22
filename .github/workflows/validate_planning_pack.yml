@@ -1,0 +1,25 @@
+name: Planning Pack Validator
+
+on:
+  pull_request:
+    paths:
+      - "packages/specs/docs/planning/2026-01-22-run/**"
+      - "packages/specs/docs/contracts/**"
+      - "tools/**"
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/specs/docs/planning/2026-01-22-run/**"
+      - "packages/specs/docs/contracts/**"
+      - "tools/**"
+
+jobs:
+  planning-pack-validator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate planning pack
+        run: python3 tools/validate_planning_pack.py
