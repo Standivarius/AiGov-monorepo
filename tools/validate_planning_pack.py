@@ -63,10 +63,10 @@ def _parse_eval_registry(lines: list[str]) -> list[dict[str, object]]:
     return entries
 
 
-def _parse_evalsets_registry(lines: list[str]) -> dict[str, object]:
-    data: dict[str, object] = {"evalsets": {}, "runtime_tiers": []}
+def _parse_evalsets_registry(lines: list[str]) -> list[dict[str, object]]:
+    evalsets: list[dict[str, object]] = []
+    current: dict[str, object] | None = None
     section: str | None = None
-    current_set: str | None = None
 
     for raw in lines:
         line = raw.rstrip()
@@ -74,32 +74,53 @@ def _parse_evalsets_registry(lines: list[str]) -> dict[str, object]:
         if not stripped or stripped.startswith("#"):
             continue
 
-        if stripped == "evalsets:":
-            section = "evalsets"
-            current_set = None
+        if stripped.startswith("- evalset_id:"):
+            current = {
+                "evalset_id": stripped.split(":", 1)[1].strip(),
+                "eval_ids": [],
+                "stop_conditions": [],
+                "required_evidence_artifacts": [],
+            }
+            evalsets.append(current)
+            section = None
             continue
-        if stripped == "runtime_tiers:":
-            section = "runtime_tiers"
-            current_set = None
+
+        if current is None:
             continue
 
-        if section == "evalsets":
-            if line.startswith("  ") and stripped.endswith(":") and not stripped.startswith("-"):
-                current_set = stripped[:-1]
-                data["evalsets"][current_set] = []
-                continue
-            if line.startswith("    -") and current_set:
-                eval_id = stripped.lstrip("-").strip()
-                data["evalsets"][current_set].append(eval_id)
-                continue
+        if stripped.startswith("purpose:"):
+            current["purpose"] = stripped.split(":", 1)[1].strip()
+            section = None
+            continue
+        if stripped.startswith("runtime_tier:"):
+            current["runtime_tier"] = stripped.split(":", 1)[1].strip()
+            section = None
+            continue
+        if stripped.startswith("max_runtime_seconds:"):
+            current["max_runtime_seconds"] = stripped.split(":", 1)[1].strip()
+            section = None
+            continue
+        if stripped.startswith("eval_ids:"):
+            section = "eval_ids"
+            continue
+        if stripped.startswith("stop_conditions:"):
+            section = "stop_conditions"
+            continue
+        if stripped.startswith("required_evidence_artifacts:"):
+            section = "required_evidence_artifacts"
+            continue
 
-        if section == "runtime_tiers":
-            if line.startswith("  -"):
-                tier = stripped.lstrip("-").strip()
-                data["runtime_tiers"].append(tier)
-                continue
+        if stripped.startswith("-") and section in {
+            "eval_ids",
+            "stop_conditions",
+            "required_evidence_artifacts",
+        }:
+            item = stripped.lstrip("-").strip()
+            if item:
+                current[section].append(item)
+            continue
 
-    return data
+    return evalsets
 
 
 def _parse_tier_a_controls(lines: list[str]) -> list[dict[str, object]]:
@@ -155,22 +176,46 @@ def main() -> int:
     eval_ids = {entry.get("eval_id") for entry in eval_entries if entry.get("eval_id")}
     runtime_tiers = {entry.get("runtime_tier") for entry in eval_entries if entry.get("runtime_tier")}
 
-    evalsets_data = _parse_evalsets_registry(_read_lines(EVALSETS_REGISTRY_PATH))
-    evalsets = evalsets_data.get("evalsets", {})
-    defined_tiers = set(evalsets_data.get("runtime_tiers", []))
-
+    evalsets = _parse_evalsets_registry(_read_lines(EVALSETS_REGISTRY_PATH))
     if not evalsets:
-        print("ERROR: evalsets_registry.yaml missing evalsets")
-        return 1
-    if not defined_tiers:
-        print("ERROR: evalsets_registry.yaml missing runtime_tiers")
+        print("ERROR: evalsets_registry.yaml missing evalset entries")
         return 1
 
+    defined_tiers = set()
+    missing_fields: list[str] = []
     missing_eval_ids: list[str] = []
-    for name, members in evalsets.items():
-        for eval_id in members:
+    for entry in evalsets:
+        evalset_id = entry.get("evalset_id")
+        if not evalset_id:
+            missing_fields.append("<missing evalset_id>")
+            continue
+        for field in (
+            "purpose",
+            "runtime_tier",
+            "max_runtime_seconds",
+            "eval_ids",
+            "stop_conditions",
+            "required_evidence_artifacts",
+        ):
+            value = entry.get(field)
+            if value is None or value == "" or value == []:
+                missing_fields.append(f"{evalset_id}:{field}")
+        runtime_tier = entry.get("runtime_tier")
+        if runtime_tier:
+            defined_tiers.add(runtime_tier)
+        for eval_id in entry.get("eval_ids", []):
             if eval_id not in eval_ids:
-                missing_eval_ids.append(f"{name}:{eval_id}")
+                missing_eval_ids.append(f"{evalset_id}:{eval_id}")
+
+    if missing_fields:
+        print("ERROR: evalsets_registry.yaml missing required fields:")
+        for item in sorted(missing_fields):
+            print(f"  - {item}")
+        return 1
+
+    if not defined_tiers:
+        print("ERROR: evalsets_registry.yaml missing runtime_tier values")
+        return 1
     if missing_eval_ids:
         print("ERROR: evalsets reference unknown eval_id values:")
         for item in sorted(missing_eval_ids):
@@ -188,15 +233,26 @@ def main() -> int:
         return 1
 
     missing_controls = []
+    missing_control_eval_ids: list[str] = []
     for control in controls:
         eval_list = control.get("eval_ids", [])
         evidence_list = control.get("evidence_artifacts", [])
         if not eval_list or not evidence_list:
             missing_controls.append(control.get("control_id", "UNKNOWN"))
+        for eval_id in eval_list:
+            if eval_id not in eval_ids:
+                missing_control_eval_ids.append(
+                    f"{control.get('control_id', 'UNKNOWN')}:{eval_id}"
+                )
     if missing_controls:
         print("ERROR: Tier A controls missing eval_ids or evidence_artifacts:")
         for control_id in missing_controls:
             print(f"  - {control_id}")
+        return 1
+    if missing_control_eval_ids:
+        print("ERROR: Tier A controls reference unknown eval_ids:")
+        for item in sorted(missing_control_eval_ids):
+            print(f"  - {item}")
         return 1
 
     print("PASS: planning pack validated.")

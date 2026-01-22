@@ -1,12 +1,28 @@
-evalsets:
-  pr_gate_short:
+- evalset_id: pe_pr_gate_short
+  purpose: PR-gate short checks (schema + determinism + contract drift)
+  runtime_tier: pr_gate
+  max_runtime_seconds: 600
+  eval_ids:
     - EVAL-001
     - EVAL-002
     - EVAL-003
     - EVAL-006
     - EVAL-014
     - EVAL-017
-  nightly:
+  stop_conditions:
+    - any eval fails
+    - required evidence artifacts missing
+  required_evidence_artifacts:
+    - EVID-001 Program Pack v1 docs snapshot
+    - EVID-002 Contract snapshot with provenance (commit SHAhash)
+    - EVID-003 Scenario bundle artifact + manifest
+    - EVID-011 PE test reports
+
+- evalset_id: pe_nightly
+  purpose: Nightly pipeline checks (Stage A/B + retrieval + evidence packs)
+  runtime_tier: nightly
+  max_runtime_seconds: 7200
+  eval_ids:
     - EVAL-004
     - EVAL-005
     - EVAL-009
@@ -14,7 +30,22 @@ evalsets:
     - EVAL-013
     - EVAL-016
     - EVAL-018
-  release:
+  stop_conditions:
+    - any eval fails
+    - required evidence artifacts missing
+  required_evidence_artifacts:
+    - EVID-004 Stage A transcripts + raw artifacts
+    - EVID-005 Evidence pack (admissible) + manifest
+    - EVID-006 Stage B judgments JSON
+    - EVID-012 Golden set + executable cases
+    - EVID-013 AKGRAG evaluation reports
+    - EVID-011 PE test reports
+
+- evalset_id: pe_release
+  purpose: Release gate checks (exports + citation integrity + Tier A release controls)
+  runtime_tier: release
+  max_runtime_seconds: 7200
+  eval_ids:
     - EVAL-008
     - EVAL-010
     - EVAL-011
@@ -22,7 +53,23 @@ evalsets:
     - EVAL-205
     - EVAL-207
     - EVAL-210
-  audit_pack:
+  stop_conditions:
+    - any eval fails
+    - required evidence artifacts missing
+  required_evidence_artifacts:
+    - EVID-010 GRC export files
+    - EVID-009 L3 traceevidence export
+    - EVID-006 Stage B judgments JSON
+    - EVID-011 PE test reports
+    - EVID-TIERA-005 Change Log + Approval Records
+    - EVID-TIERA-007 Disclosure Capture + Finding Evidence
+    - EVID-TIERA-010 Report Integrity + Export Validation
+
+- evalset_id: audit_pack
+  purpose: Audit pack checks for Tier A controls
+  runtime_tier: audit_pack
+  max_runtime_seconds: 7200
+  eval_ids:
     - EVAL-201
     - EVAL-202
     - EVAL-203
@@ -30,9 +77,14 @@ evalsets:
     - EVAL-206
     - EVAL-208
     - EVAL-209
-
-runtime_tiers:
-  - pr_gate
-  - nightly
-  - release
-  - audit_pack
+  stop_conditions:
+    - any eval fails
+    - required evidence artifacts missing
+  required_evidence_artifacts:
+    - EVID-TIERA-001 Audit Log Sample + Integrity Report
+    - EVID-TIERA-002 RBAC Policy + Role Matrix
+    - EVID-TIERA-003 DSAR Procedure Doc + Sample Logs
+    - EVID-TIERA-004 Data Retention Schedule + Deletion Audit
+    - EVID-TIERA-006 Monitoring Runbook + Incident Drill
+    - EVID-TIERA-008 Security Test Transcript + Remediation
+    - EVID-TIERA-009 Vendor List + DPA Clauses
