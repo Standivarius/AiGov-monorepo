@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Judgments Output v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "judgement_id",
+    "judgments"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "judgement_id": {
+      "type": "string"
+    },
+    "verdicts_version": {
+      "type": "string",
+      "description": "Version of contracts/taxonomy/verdicts.json used for canonical verdicts."
+    },
+    "judgments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scenario_instance_id",
+          "verdict",
+          "evidence_ids"
+        ],
+        "properties": {
+          "scenario_instance_id": {
+            "type": "string"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "INFRINGEMENT",
+              "COMPLIANT",
+              "UNDECIDED"
+            ]
+          },
+          "canonical_signal_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rationale": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

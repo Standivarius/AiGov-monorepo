@@ -163,7 +163,9 @@ The JSON block below is the authoritative crosswalk for validation.
 
 ## Verification modes
 - **runtime**: Verifiable from generated artifacts and run outputs.
-- **doc**: Verified against documented inputs/assumptions.
+- **doc**: Verified against documented inputs/assumptions and MUST include
+  operational timeline references via `limitations_log` when the claim depends
+  on process completion.
 - **timeline**: Verified by run sequencing and provenance metadata.
 - **out-of-scope**: Not verifiable in this phase (avoid unless explicitly approved).
 
@@ -171,3 +173,4 @@ The JSON block below is the authoritative crosswalk for validation.
 - Every field_id listed in `report_fields_v0_1.md` must appear exactly once here.
 - No extra field_ids may appear without adding them to `report_fields_v0_1.md`.
 - Source and evidence_artifact must be non-empty for every field.
+- Doc-mode operational claims MUST reference `limitations_log`.
