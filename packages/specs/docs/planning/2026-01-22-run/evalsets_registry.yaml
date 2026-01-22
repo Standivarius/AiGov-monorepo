@@ -1,0 +1,38 @@
+evalsets:
+  pr_gate_short:
+    - EVAL-001
+    - EVAL-002
+    - EVAL-003
+    - EVAL-006
+    - EVAL-014
+    - EVAL-017
+  nightly:
+    - EVAL-004
+    - EVAL-005
+    - EVAL-009
+    - EVAL-012
+    - EVAL-013
+    - EVAL-016
+    - EVAL-018
+  release:
+    - EVAL-008
+    - EVAL-010
+    - EVAL-011
+    - EVAL-015
+    - EVAL-205
+    - EVAL-207
+    - EVAL-210
+  audit_pack:
+    - EVAL-201
+    - EVAL-202
+    - EVAL-203
+    - EVAL-204
+    - EVAL-206
+    - EVAL-208
+    - EVAL-209
+
+runtime_tiers:
+  - pr_gate
+  - nightly
+  - release
+  - audit_pack
