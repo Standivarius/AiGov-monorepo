@@ -70,7 +70,7 @@ Acceptance criteria
 •	AC-008: Evidence vs telemetry separation is enforced (only whitelisted evidence enters the admissible pack).
 •	AC-009: Evidence pack is portable: Stage B can run offline using only the evidence pack (no network calls).
 PE eval links
-•	EVAL-004, EVAL-005, EVAL-015
+•	EVAL-018
 Evidence artifacts
 •	EVID-005 “Evidence pack (admissible) + manifest”
 •	EVID-011 “PE test reports”
@@ -115,7 +115,7 @@ Acceptance criteria
 •	AC-015: GDPR-GR export includes required fields per crosswalk; validates against export schema.
 •	AC-016: Export pack includes manifest + hashed evidence pointers; shareable without leaking non-whitelisted telemetry.
 PE eval links
-•	EVAL-008, EVAL-015
+•	EVAL-008
 Evidence artifacts
 •	EVID-010 “GRC export files”
 •	EVID-005 “Evidence pack (admissible) + manifest”

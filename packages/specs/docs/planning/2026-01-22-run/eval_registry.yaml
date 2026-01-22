@@ -40,6 +40,16 @@ eval_registry.yaml
   runtime_tier nightly
   notes Use mock target to bound runtime; real-target adapters can be excluded from nightly if unstable.
 
+- eval_id EVAL-018
+  ep_id CAP-103
+  description Evidence pack builder validation (schema + manifest + hashes).
+  pass_rule Evidence pack validates against schema; manifest + hashes present; offline pack is sufficient for Stage B; exits 0.
+  evidence_artifacts
+    - EVID-005 Evidence pack (admissible) + manifest
+    - EVID-011 PE test reports
+  runtime_tier nightly
+  notes Covers CAP-103 AC-007/AC-008/AC-009.
+
 - eval_id EVAL-005
   ep_id CAP-104
   description Stage B on golden cases (judge correctness vs golden thresholds).
@@ -113,14 +123,14 @@ eval_registry.yaml
   notes Ensures judge doesn’t hallucinate beyond evidence.
 
 - eval_id EVAL-012
-  ep_id CAP-107
+  ep_id CROSS_CUTTING
   description AKG retrieval precision + citation completeness.
   pass_rule Retrieval precisioncitation completeness meet thresholds; exits 0.
   evidence_artifacts
     - EVID-013 AKGRAG evaluation reports
     - EVID-011 PE test reports
   runtime_tier nightly
-  notes P1 unless AKG is mandatory for MVP judge citations.
+  notes Internal defensibility tooling; not a customer-paid EP.
 
 - eval_id EVAL-013
   ep_id CAP-102
@@ -154,14 +164,14 @@ eval_registry.yaml
   notes Critical for auditor defensibility.
 
 - eval_id EVAL-016
-  ep_id CAP-109
+  ep_id CROSS_CUTTING
   description Golden set importer validation.
   pass_rule Golden set imports into executable cases cleanly; schema-valid; exits 0.
   evidence_artifacts
     - EVID-012 Golden set + executable cases
     - EVID-011 PE test reports
   runtime_tier nightly
-  notes Can be deferred if MVP uses only a minimal fixed golden subset.
+  notes Internal tooling for eval hygiene; not a customer-paid EP.
 
 - eval_id EVAL-017
   ep_id CAP-108
