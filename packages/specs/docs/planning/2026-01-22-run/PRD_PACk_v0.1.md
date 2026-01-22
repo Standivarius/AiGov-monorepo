@@ -37,7 +37,7 @@ What it enables
 •	Customer provides target/context intake once; AiGov deterministically compiles a bespoke scenario bundle with a stable bundle hash + manifest.
 Acceptance criteria (must be testable)
 •	AC-001: Intake output validates against the intake contract; missing required fields fails closed.
-•	AC-002: Same intake + same scenario library version ⇒ same bundle_hash and identical bundle manifest (byte-for-byte or canonicalized equivalence).
+•	AC-002: Same intake + same scenario library version ⇒ same bundle_hash and identical bundle manifest (byte-for-byte or canonicalized equivalence per `packages/specs/docs/contracts/reporting/hash_canonicalization_v0_1.md`).
 •	AC-002a (expansion rule compliance): Scenario instances are generated per the expansion rules (multi-channel ⇒ multiple instances unless explicitly equivalent; one “violation concept” can yield multiple instances). (Contract-anchored; do not redefine here.)
 PE eval links
 •	EVAL-003, EVAL-014
@@ -81,7 +81,7 @@ ________________________________________
 What it enables
 •	Runs a governed judge process on frozen evidence packs to produce normalized findings, verdicts, and citations.
 Acceptance criteria
-•	AC-010: Stage B reads evidence pack and produces judgments.json (or equivalent) with normalized verdicts and citations to evidence IDs.
+•	AC-010: Stage B reads evidence pack and produces judgments.json per `packages/specs/docs/contracts/judgements/judgments_v0.schema.json` with normalized verdicts and citations to evidence IDs.
 •	AC-011: Judge output passes schema validation; unknown verdict enum fails closed.
 •	AC-012: Re-running Stage B on the same evidence pack yields identical normalized output (within defined tolerances).
 PE eval links
@@ -90,7 +90,7 @@ Evidence artifacts
 •	EVID-006 “Stage B judgments (schema-valid)”
 •	EVID-011 “PE test reports”
 Runtime tier
-•	Primary gate: Nightly (golden-case correctness + determinism checks)
+•	Primary gate: Nightly (golden-case correctness + determinism checks per `packages/specs/docs/contracts/judgements/stage_b_determinism_v0_1.md`)
 ________________________________________
 5) CAP-105 — Layered Reports (L1 EXEC / L2 COMPLIANCE / L3 SECURITY)
 What it enables
@@ -142,7 +142,7 @@ Core pipeline (modules, plain English)
 3.	Bespoke scenario bundle compilation (deterministic; bundle hash + manifest)
 4.	Stage A execution runner (target adapter; transcripts + raw artifacts; no judging)
 5.	Evidence pack builder (admissible pack; manifest + hashes; evidence/telemetry separation)
-6.	Stage B offline judge (governed, normalized outputs; citations to evidence IDs)
+6.	Stage B offline judge (governed, normalized outputs; citations to evidence IDs; material change per `packages/specs/docs/contracts/judgements/stage_b_determinism_v0_1.md`)
 7.	Stage C reporting (EXEC/COMPLIANCE/SECURITY; drill-down to evidence)
 8.	Exports (GDPR-GR)
 9.	PE eval harness + runtime tiers (PR-gate short; heavier suites nightly/release/audit)
@@ -170,5 +170,5 @@ Open variables (must be resolved, not handwaved)
 •	Q-001: Scope boundary: evaluation product vs broader governance platform (what Tier A controls must ship in v1 vs deferred).
 •	Q-002: Does a Stage B runner already exist (or is it a gap)?
 •	Additional MVP questions:
-o	What counts as “deterministic equivalence” for bundles and judge outputs (byte-for-byte vs canonical JSON)?
+o	What counts as “deterministic equivalence” for bundles and judge outputs (byte-for-byte vs canonical JSON per `packages/specs/docs/contracts/reporting/hash_canonicalization_v0_1.md`)?
 o	How to represent obligations that require timeline/process evidence in MVP exports (route + disclosure verifiable; completion may be document-verifiable). (EUR-Lex)
