@@ -1,0 +1,112 @@
+{
+  "state_object_version": "v0.1",
+  "as_of_date": "2026-01-22",
+  "repo": {
+    "name": "Standivarius/AiGov-monorepo",
+    "default_branch": "main"
+  },
+  "locked_non_negotiables": {
+    "EP": "Evaluated Product = customer-paid capabilities/features.",
+    "PE": "Product Evaluation = acceptance criteria + evaluations proving EP claims + MUST-HAVE enterprise defensibility controls.",
+    "mapping_rule": "EP -> acceptance criteria -> PE evals.",
+    "eval_first_rule": "No requirement is ready until it has >=1 PE eval with explicit pass rule + evidence artifact definition.",
+    "tier_a_controls": "Minimal enterprise auditability/defensibility controls; 100% of Tier A must map to PE evals with evidence.",
+    "runtime_budgets": "PR gate evalset short; broader suites go to nightly/release/audit packs."
+  },
+  "canonical_contracts_and_sources_of_truth": [
+    {
+      "id": "report_layers",
+      "path": "packages/specs/docs/contracts/reporting/report_layers.md",
+      "purpose": "Single source of truth for L1/L2/L3 meanings and audiences."
+    },
+    {
+      "id": "signals_taxonomy",
+      "path": "packages/specs/docs/contracts/taxonomy/signals.json",
+      "purpose": "Canonical list of signal IDs."
+    },
+    {
+      "id": "signals_metadata",
+      "path": "packages/specs/docs/contracts/taxonomy/signals.meta.json",
+      "purpose": "Definitions and synonyms used to generate runtime mappings."
+    },
+    {
+      "id": "intake_contract",
+      "path": "packages/specs/docs/contracts/intake/client_intake_output_contract_v0_1.md",
+      "purpose": "Schema-driven client intake output contract including mock target mapping requirements."
+    },
+    {
+      "id": "scenario_contract_validation",
+      "path": "packages/specs/docs/contracts/scenarios/bespoke_scenario_spec_v0_1.md",
+      "purpose": "Bespoke scenario spec and invariants; validated by tooling."
+    },
+    {
+      "id": "pre2_2_taxonomy_artifact_verbatim",
+      "path": "packages/specs/docs/contracts/taxonomy/pre2.2/Pre2.2-TAXONOMY-Pro-Run.md",
+      "purpose": "Verbatim preservation of the Pre2.2 Pro run output for audit trail (not edited)."
+    }
+  ],
+  "planning_outputs_run_2026_01_22": {
+    "run_folder": "packages/specs/docs/planning/2026-01-22-run/",
+    "files": [
+      "PRD_PACk_v0.1.md",
+      "eval_registry.yaml",
+      "tier_a_coverage_report.md",
+      "codex_execution_pack.md"
+    ]
+  },
+  "drift_gates_and_validators": [
+    {
+      "id": "report_layer_drift_gate",
+      "path": "tools/check_report_layer_drift.py",
+      "ci": ".github/workflows/report-layer-drift.yml",
+      "purpose": "Prevent L-layer audience drift outside allowlisted historical artifacts."
+    },
+    {
+      "id": "signal_synonyms_generator_check",
+      "path": "tools/build_signal_synonyms.py",
+      "mode": "--check",
+      "purpose": "Ensure generated runtime mapping matches contract metadata."
+    },
+    {
+      "id": "pre2_4_contracts_validator",
+      "path": "tools/validate_pre2_4_contracts.py",
+      "purpose": "Validate bespoke scenario contract JSON blocks + invariants against signals.json."
+    },
+    {
+      "id": "pre2_5_intake_contracts_validator",
+      "path": "tools/validate_pre2_5_intake_contracts.py",
+      "purpose": "Validate intake contract JSON block and mock-target required fields."
+    }
+  ],
+  "open_items": [
+    {
+      "id": "pr_24_cleanup",
+      "type": "repo_hygiene",
+      "recommended_action": "Close PR #24 (legacy required-check test PR) to reduce noise."
+    }
+  ],
+  "next_run": {
+    "name": "Product-planning-pro-run-2",
+    "goal": "Convert PRD pack + registries into an executable PR chain grounded to repo reality (small auditable diffs, verification commands, stop conditions, evidence artifacts).",
+    "inputs": [
+      "packages/specs/docs/planning/2026-01-22-run/*",
+      "contracts under packages/specs/docs/contracts/**",
+      "migration proof run status (migration-smoke + no-legacy-repo-refs + status-guard)"
+    ],
+    "outputs": [
+      "Executable PR chain plan (PR-by-PR)",
+      "Per-PR verification commands",
+      "Per-PR stop conditions",
+      "Evidence artifact list per evalset and Tier A control coverage"
+    ],
+    "stop_conditions": [
+      "Any EP capability without >=1 PE eval with pass rule + evidence definition",
+      "Any Tier A control without mapping to PE eval evidence",
+      "Any PR slice that can’t be verified with a short command set"
+    ]
+  },
+  "chat_transcript_reference": {
+    "note": "Save this chat transcript to a markdown file and commit under artifacts, then update this reference.",
+    "suggested_path": "packages/specs/docs/artifacts/2026-01-22__chat__product-planning-prephases.md"
+  }
+}
