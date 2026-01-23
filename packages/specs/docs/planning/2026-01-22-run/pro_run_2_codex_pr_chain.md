@@ -18,7 +18,7 @@ Keep diffs doc-only and keep PR-gate fast.
 - PR #37 merged: planning pack validator + CI check.
 - PR #39 merged: evalsets registry schema aligned with execution pack.
 - PR #40 merged: nx + codex workflow guidance in AGENTS.md.
-- PR #38 pending merge: contract hardening for judgments/determinism/aggregation/doc-mode (https://github.com/Standivarius/AiGov-monorepo/pull/38).
+- PR #38 merged: contract hardening for judgments/determinism/aggregation/doc-mode (https://github.com/Standivarius/AiGov-monorepo/pull/38).
 
 ---
 
@@ -32,13 +32,54 @@ Keep diffs doc-only and keep PR-gate fast.
 
 ## Next PR prompts
 
-### PR #38 (pending merge)
+### PR #38 (merged)
 ```text
-Merge PR #38 after review:
+PR #38 merged:
 https://github.com/Standivarius/AiGov-monorepo/pull/38
 ```
 
-### PR #42 (anti-gaming validators + pass-rule caps)
+### PR #42 (contract addendum to unblock validators)
+```text
+ROLE: You are Codex implementing PR #42 for AiGov-monorepo. Doc-first. No guessing.
+MISSION: Unblock anti-gaming validators by defining missing contract field names + schemas.
+
+NON-NEGOTIABLES:
+- Do NOT introduce new product concepts.
+- Do NOT change locked enums/taxonomies.
+- If a validator would require guessing field names, STOP and instead define them in contracts.
+
+TODO (required):
+1) Add a Stage A run manifest JSON schema at:
+   packages/specs/docs/contracts/execution/run_manifest_v0.schema.json
+   Must include at minimum: run_id, start_time_utc (or generated_at_utc), challenge_nonce, and per-artifact captured_at_utc metadata.
+2) Add a limitations_log JSON schema at:
+   packages/specs/docs/contracts/reporting/limitations_log_v0.schema.json
+   Keep aligned with artifact_registry_v0_1.md’s limitations_log definition (timeline_refs/limitations/assumptions).
+3) Update scenario_instance_expansion_rules_v0_1.md to require that any “explicit equivalence” assertion includes a non-empty policy_ref and must be labeled as deputy-verified (not VERIFIED_RUNTIME).
+4) Update packages/specs/docs/planning/2026-01-22-run/pro_run_2_codex_pr_chain.md:
+   - mark PR #38 as merged
+   - replace the current PR #42 prompt (validators) with this PR #42 (contracts)
+   - add the next PR prompt as PR #43 (validators) AFTER this PR
+
+SUGGESTIONS (optional, only if very small):
+- Add 1 short paragraph to report_aggregation_v0_1.md clarifying fail-closed aggregation: any instance INFRINGEMENT/EXECUTION_ERROR => parent INFRINGEMENT.
+
+VERIFY (fast):
+- python3 tools/validate_planning_pack.py
+- python3 -m compileall tools
+- json.load on the new schema files
+
+STOP CONDITIONS:
+- Any missing field name would require guessing semantics.
+- Touching more than ~6 files.
+- Any attempt to change locked enums/taxonomy.
+
+OUTPUT:
+- Open PR titled: "pro-run-2: contract addendum to unblock anti-gaming validators"
+EFFORT: medium
+```
+
+### PR #43 (validators)
 ```text
 ROLE: You are Codex. Implement only high-ROI drift/abuse blockers as validators. Keep PR-gate short.
 TASK:
@@ -58,8 +99,8 @@ VERIFY:
 - Run unit tests/fixtures for validators locally.
 - Confirm PR workflow runtime stays short.
 STOP IF:
-- You can’t find the right contract field names; then update PR-PRO2-003 contracts first rather than guessing.
+- You can’t find the right contract field names; then update contracts first rather than guessing.
 OUTPUT:
-- PR titled "pro-run-2: add high-ROI anti-gaming validators (short PR-gate)"
-EFFORT TAG: medium–high
+- PR titled "pro-run-2: high-ROI integrity validators + pass-rule caps"
+EFFORT: medium–high
 ```
