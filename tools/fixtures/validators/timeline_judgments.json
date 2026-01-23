@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "run-004",
+  "judgement_id": "judgment-004",
+  "verdicts_version": "0.1.0",
+  "judgments": [
+    {
+      "scenario_instance_id": "scn-004",
+      "verdict": "UNDECIDED",
+      "verification_mode": "timeline",
+      "verification_label": "VERIFIED_BY_DEPUTY",
+      "evidence_ids": ["EVID-006"]
+    }
+  ]
+}

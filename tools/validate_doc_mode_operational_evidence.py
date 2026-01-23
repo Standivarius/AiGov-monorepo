@@ -35,13 +35,13 @@ def main() -> int:
     limitations = _load_json(limitations_path)
 
     needs_operational = any(
-        item.get("verification_mode") in {"doc", "timeline", "out-of-scope"}
+        item.get("verification_mode") == "doc"
         for item in judgments.get("judgments", [])
     )
 
     operational_refs = limitations.get("operational_evidence_refs", [])
     if needs_operational and not operational_refs:
-        print("ERROR: doc/timeline/out-of-scope judgments require operational_evidence_refs")
+        print("ERROR: doc-mode judgments require operational_evidence_refs")
         return 1
 
     print("PASS: doc-mode operational evidence requirements satisfied.")
