@@ -21,5 +21,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: npm ci
+
       - name: Validate planning pack
         run: python3 tools/validate_planning_pack.py
+
+      - name: Run PR-gate validators
+        run: bash tools/run_pr_gate_validators.sh
+
+      - name: Migration smoke
+        run: NX_DAEMON=false npx nx run evalsets:migration-smoke
