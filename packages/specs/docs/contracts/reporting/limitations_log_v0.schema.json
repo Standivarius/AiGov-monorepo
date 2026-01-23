@@ -8,6 +8,7 @@
     "run_id",
     "generated_at",
     "timeline_refs",
+    "operational_evidence_refs",
     "limitations",
     "assumptions"
   ],
@@ -24,6 +25,12 @@
       "format": "date-time"
     },
     "timeline_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "operational_evidence_refs": {
       "type": "array",
       "items": {
         "type": "string"
