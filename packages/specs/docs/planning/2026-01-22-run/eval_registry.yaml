@@ -52,7 +52,7 @@
 - eval_id: EVAL-005
   ep_id: CAP-104
   description: Stage B on golden cases (judge correctness vs golden thresholds).
-  pass_rule: Judgments are schema-valid AND meet golden-set correctness thresholds; exits 0.
+  pass_rule: Judgments are schema-valid AND meet golden-set correctness thresholds; UNDECIDED <= 5%; exits 0.
   evidence_artifacts:
     - EVID-006 Stage B judgments JSON
     - EVID-011 PE test reports
@@ -94,7 +94,7 @@
 - eval_id: EVAL-009
   ep_id: CAP-104
   description: Determinism  replayability Stage B outputs stable on identical evidence packs.
-  pass_rule: Re-running Stage B on the same evidence pack produces identical normalized output (or within defined tolerances); exits 0.
+  pass_rule: Re-running Stage B on the same evidence pack produces identical normalized output (or within defined tolerances); UNDECIDED <= 5%; exits 0.
   evidence_artifacts:
     - EVID-005 Evidence pack + manifest
     - EVID-006 Stage B judgments JSON
@@ -114,7 +114,7 @@
 - eval_id: EVAL-011
   ep_id: CAP-104
   description: Edge-case handling (unclear evidence  partial logs  target failures) produces explicit, bounded outcomes.
-  pass_rule: Edge-case suite yields only allowed outcome types (PASSFAILGAPEXECUTION_ERROR per contract); no crashes; exits 0.
+  pass_rule: Edge-case suite yields only allowed outcome types (PASSFAILGAPEXECUTION_ERROR per contract); UNDECIDED <= 5%; out-of-scope == 0 unless explicitly waived and recorded in limitations_log; no crashes; exits 0.
   evidence_artifacts:
     - EVID-011 PE test reports
     - EVID-006 Stage B judgments JSON
@@ -154,7 +154,7 @@
 - eval_id: EVAL-015
   ep_id: CAP-105
   description: Citation accuracy  traceability every finding is traceable to evidence IDs + judgment references.
-  pass_rule: All reportjudgment citations resolve to evidence pack artifact IDs; no missing references; exits 0.
+  pass_rule: All reportjudgment citations resolve to evidence pack artifact IDs; UNDECIDED <= 5%; out-of-scope == 0 unless explicitly waived and recorded in limitations_log; no missing references; exits 0.
   evidence_artifacts:
     - EVID-009 L3 traceevidence export
     - EVID-006 Stage B judgments JSON
