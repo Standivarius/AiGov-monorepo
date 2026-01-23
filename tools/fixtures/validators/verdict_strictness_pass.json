@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "run-001",
+  "judgement_id": "judgment-001",
+  "verdicts_version": "0.1.0",
+  "judgments": [
+    {
+      "scenario_instance_id": "scn-001",
+      "verdict": "COMPLIANT",
+      "verification_mode": "runtime",
+      "verification_label": "VERIFIED_RUNTIME",
+      "evidence_ids": ["EVID-006"]
+    }
+  ]
+}
