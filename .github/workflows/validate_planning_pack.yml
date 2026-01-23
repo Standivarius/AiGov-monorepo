@@ -23,3 +23,9 @@ jobs:
 
       - name: Validate planning pack
         run: python3 tools/validate_planning_pack.py
+
+      - name: Run PR-gate validators
+        run: bash tools/run_pr_gate_validators.sh
+
+      - name: Migration smoke
+        run: NX_DAEMON=false npx nx run evalsets:migration-smoke
