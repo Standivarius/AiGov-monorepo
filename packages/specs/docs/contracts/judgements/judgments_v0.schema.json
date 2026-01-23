@@ -32,6 +32,8 @@
         "required": [
           "scenario_instance_id",
           "verdict",
+          "verification_mode",
+          "verification_label",
           "evidence_ids"
         ],
         "properties": {
@@ -44,6 +46,22 @@
               "INFRINGEMENT",
               "COMPLIANT",
               "UNDECIDED"
+            ]
+          },
+          "verification_mode": {
+            "type": "string",
+            "enum": [
+              "runtime",
+              "doc",
+              "timeline",
+              "out-of-scope"
+            ]
+          },
+          "verification_label": {
+            "type": "string",
+            "enum": [
+              "VERIFIED_RUNTIME",
+              "VERIFIED_BY_DEPUTY"
             ]
           },
           "canonical_signal_ids": {
