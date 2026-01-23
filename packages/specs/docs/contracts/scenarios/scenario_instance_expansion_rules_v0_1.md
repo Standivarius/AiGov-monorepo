@@ -22,6 +22,8 @@ specs and runnable instances. This is contract-only scaffolding.
 - **Multi-channel variants**: if client policy supports multiple channels for
   a right (email vs in-chat vs portal), create one instance per channel unless
   explicitly marked equivalent.
+- **Equivalence assertions**: any explicit equivalence must include a non-empty
+  `policy_ref` and MUST be labeled deputy-verified (not VERIFIED_RUNTIME).
 - **Verification mode constraints**: if client policy indicates a requirement
   is only doc- or timeline-verifiable, set `verification_mode` accordingly and
   do not force runtime verification.
