@@ -1,0 +1,8 @@
+{
+  "equivalence_assertions": [
+    {
+      "policy_ref": "policy-001",
+      "verification_label": "VERIFIED_BY_DEPUTY"
+    }
+  ]
+}

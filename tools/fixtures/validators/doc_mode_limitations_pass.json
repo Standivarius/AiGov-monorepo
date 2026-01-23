@@ -1,0 +1,9 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "run-003",
+  "generated_at": "2026-01-23T00:00:00Z",
+  "timeline_refs": ["timeline-001"],
+  "operational_evidence_refs": ["op-evid-001"],
+  "limitations": ["doc-mode verification used"],
+  "assumptions": ["intake verified by deputy"]
+}
