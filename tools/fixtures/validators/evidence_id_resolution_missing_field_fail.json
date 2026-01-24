@@ -1,0 +1,30 @@
+{
+  "manifest": {
+    "schema_version": "1.0",
+    "run_dir": "runs/2026-01-24/RUN-003",
+    "scenario_id": "scn-003",
+    "target": "mock",
+    "contracts": {},
+    "hashes": {},
+    "files": [
+      {
+        "evidence_id": "EVID-004:transcript.json",
+        "relpath": "transcript.json",
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      }
+    ]
+  },
+  "judgments": {
+    "schema_version": "0.1.0",
+    "run_id": "RUN-003",
+    "judgement_id": "JUD-003",
+    "judgments": [
+      {
+        "scenario_instance_id": "scn-003",
+        "verdict": "COMPLIANT",
+        "verification_mode": "runtime",
+        "verification_label": "VERIFIED_RUNTIME"
+      }
+    ]
+  }
+}

@@ -81,7 +81,13 @@ def main() -> int:
         if not isinstance(item, dict):
             print("ERROR: judgments.judgments entries must be objects")
             return 1
-        evidence_ids = item.get("evidence_ids", [])
+        if "evidence_ids" not in item:
+            print("ERROR: missing judgments.judgments[].evidence_ids (required by schema)")
+            return 1
+        evidence_ids = item.get("evidence_ids")
+        if evidence_ids is None:
+            print("ERROR: evidence_ids must not be null")
+            return 1
         if not isinstance(evidence_ids, list):
             print("ERROR: judgments.judgments.evidence_ids must be an array")
             return 1
