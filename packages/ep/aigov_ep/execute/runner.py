@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from ..artifacts.manifests import write_run_manifest
+from ..artifacts.manifests import write_run_manifest, write_run_manifest_v0
 from ..loader import load_scenario
 from ..targets import get_target
 from ..utils.io import read_json, write_json
@@ -154,7 +154,7 @@ def execute_scenario(
     write_json(transcript_path, transcript)
     write_json(run_meta_path, run_meta)
     write_json(scenario_json_path, scenario)
-    write_run_manifest(
+    legacy_manifest_path = write_run_manifest(
         run_dir=run_dir,
         scenario_source_path=Path(scenario_path),
         scenario_json_path=scenario_json_path,
@@ -162,6 +162,20 @@ def execute_scenario(
         run_meta_path=run_meta_path,
         target_name=target_name,
         target_config=target_config,
+    )
+    artifacts = [
+        scenario_json_path,
+        transcript_path,
+        run_meta_path,
+        legacy_manifest_path,
+    ]
+    checksums_path = run_dir / "checksums.sha256"
+    if checksums_path.exists():
+        artifacts.append(checksums_path)
+    write_run_manifest_v0(
+        run_dir=run_dir,
+        run_id=run_id,
+        artifacts=artifacts,
     )
 
     return ExecuteResult(

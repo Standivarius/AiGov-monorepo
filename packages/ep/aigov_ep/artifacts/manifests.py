@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import secrets
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -89,6 +90,32 @@ def write_run_manifest(
     return manifest_path
 
 
+def write_run_manifest_v0(
+    *,
+    run_dir: Path,
+    run_id: str,
+    artifacts: list[Path],
+    challenge_nonce: Optional[str] = None,
+) -> Path:
+    manifest = {
+        "schema_version": "0.1.0",
+        "run_id": run_id,
+        "generated_at_utc": _utc_now(),
+        "challenge_nonce": challenge_nonce or secrets.token_hex(16),
+        "artifacts": [
+            {
+                "artifact_id": _relative_path(run_dir, artifact),
+                "captured_at_utc": _captured_at_utc(artifact),
+            }
+            for artifact in artifacts
+        ],
+    }
+
+    manifest_path = run_dir / "run_manifest_v0.json"
+    write_json(manifest_path, manifest)
+    return manifest_path
+
+
 def _sanitize_config(value: Any) -> Any:
     if isinstance(value, dict):
         sanitized: Dict[str, Any] = {}
@@ -116,6 +143,14 @@ def _relative_path(root: Path, path: Path) -> str:
     except ValueError:
         rel = path
     return str(rel)
+
+
+def _captured_at_utc(path: Path) -> str:
+    try:
+        timestamp = path.stat().st_mtime
+    except FileNotFoundError:
+        return _utc_now()
+    return datetime.fromtimestamp(timestamp, tz=timezone.utc).isoformat()
 
 
 def _find_bundle_info(scenario_source_path: Optional[Path]) -> Optional[Dict[str, Any]]:
