@@ -32,6 +32,12 @@ Keep diffs doc-only and keep PR-gate fast.
 
 ---
 
+## External reviews
+
+- Claude Code architecture review snapshot: `packages/specs/docs/artifacts/2026-01-24__claude_code__architecture_review_and_execution_plan.md`
+
+---
+
 ## Next PR prompts
 
 ### PR #38 (merged)
