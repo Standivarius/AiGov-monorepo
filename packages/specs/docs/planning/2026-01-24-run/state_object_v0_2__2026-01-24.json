@@ -1,0 +1,120 @@
+{
+  "schema_version": "state_object_v0_2",
+  "generated_at_utc": "2026-01-24T00:00:00Z",
+  "run_name": "product-planning-pro-run-2",
+  "repo": "Standivarius/AiGov-monorepo",
+
+  "non_negotiables_locked": {
+    "ep_definition": "EP (Evaluated Product) = customer-paid capabilities/features.",
+    "pe_definition": "PE (Product Evaluation) = acceptance criteria + evals proving EP claims + MUST-HAVE enterprise defensibility controls.",
+    "mapping_rule": "EP -> acceptance criteria -> PE evals.",
+    "eval_first_rule": "No requirement is ready until it has >=1 PE eval with explicit pass rule + evidence artifact definition.",
+    "tier_a_rule": "100% Tier A controls must map to PE evals with evidence.",
+    "runtime_budgets": "PR gate evalset must be short; broader suites go to nightly/release/audit packs.",
+    "golden_set_firewall": "Golden sets are PE defensibility assets; must be firewalled from runtime retrieval/AKG."
+  },
+
+  "process_rules_locked": {
+    "always_separate_todos_vs_suggestions": true,
+    "multi_step_requires_good_bad_decide": true,
+    "codex_long_horizon_friendly": {
+      "small_pr_slices": true,
+      "explicit_file_touch_expectations": true,
+      "verification_commands": true,
+      "stop_conditions": true,
+      "evidence_artifacts": true
+    }
+  },
+
+  "repo_source_of_truth_paths": {
+    "planning_pack_primary": "packages/specs/docs/planning/2026-01-22-run/",
+    "prd_pack": "packages/specs/docs/planning/2026-01-22-run/PRD_PACk_v0.1.md",
+    "eval_registry": "packages/specs/docs/planning/2026-01-22-run/eval_registry.yaml",
+    "evalsets_registry": "packages/specs/docs/planning/2026-01-22-run/evalsets_registry.yaml",
+    "tier_a_report": "packages/specs/docs/planning/2026-01-22-run/tier_a_coverage_report.md",
+    "codex_execution_pack": "packages/specs/docs/planning/2026-01-22-run/codex_execution_pack.md",
+    "codex_pr_chain_doc": "packages/specs/docs/planning/2026-01-22-run/pro_run_2_codex_pr_chain.md",
+    "contracts_root": "packages/specs/docs/contracts/**",
+    "artifacts_root": "packages/specs/docs/artifacts/"
+  },
+
+  "current_ci_pr_gate_definition": {
+    "must_run_fast": true,
+    "commands": [
+      "python3 tools/validate_planning_pack.py",
+      "tools/run_pr_gate_validators.sh",
+      "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+    ],
+    "principle": "PR-gate remains fixtures-only; heavy checks move to nightly/release."
+  },
+
+  "nx_status": {
+    "nx_is_in_use": true,
+    "canonical_drift_proof_target": "evalsets:migration-smoke",
+    "timing_note": "Observed ~1s locally; safe to keep as always-on gate."
+  },
+
+  "work_completed_summary": {
+    "planning_pack_machine_checkable": true,
+    "anti_gaming_contract_fields_added": true,
+    "fixture_based_pr_gate_validators_added": true,
+    "run_manifest_v0_emitted": true,
+    "evidence_id_determinism_in_progress": true
+  },
+
+  "major_decisions": [
+    {
+      "decision": "Keep PR-gate structural + fixture-based; no Stage A execution or live model calls in PR-gate.",
+      "reason": "Runtime budget non-negotiable."
+    },
+    {
+      "decision": "Split large validator work into smaller PRs to respect file-touch/complexity stop conditions.",
+      "reason": "Auditability + Codex reliability."
+    },
+    {
+      "decision": "Evidence IDs must be resolvable deterministically using EVID-### + repo-relative path + sha256 (+ optional JSON pointer), without introducing new taxonomy.",
+      "reason": "Prevent drift + enforceability; avoid new product concepts."
+    }
+  ],
+
+  "known_open_items": {
+    "merge_blockers": [
+      "Issue #51 requires PR #56 and PR #57 merged to complete evidence-id determinism module."
+    ],
+    "next_major_modules_queue": [
+      {
+        "issue": "EP intake runtime validation (stub removal)",
+        "effort": "medium",
+        "goal": "Replace NotImplemented intake validator with contract-grounded runtime checks."
+      },
+      {
+        "issue": "Evidence pack alignment + admissible manifest/hashes",
+        "effort": "high",
+        "goal": "Portable evidence pack with manifest + hashes; evidence vs telemetry separation."
+      },
+      {
+        "issue": "Stage C reporting generator (L1 first)",
+        "effort": "xhigh",
+        "goal": "Crosswalk-driven L1/L2/L3 outputs + limitations_log + link integrity."
+      }
+    ]
+  },
+
+  "global_stop_conditions": [
+    "Do NOT introduce new product concepts unless required to satisfy an existing EP/PE/TierA contract.",
+    "Do NOT weaken drift gates or validators under tools/** or .github/workflows/**.",
+    "Stop if a required validator would require guessing field names; do a contract-only addendum PR first.",
+    "Stop if PR-gate runtime expands beyond short fixture-only checks."
+  ],
+
+  "project_tracking": {
+    "github_project_url": "https://github.com/users/Standivarius/projects/3",
+    "issues_created": [
+      "https://github.com/Standivarius/AiGov-monorepo/issues/49",
+      "https://github.com/Standivarius/AiGov-monorepo/issues/50",
+      "https://github.com/Standivarius/AiGov-monorepo/issues/51",
+      "https://github.com/Standivarius/AiGov-monorepo/issues/52",
+      "https://github.com/Standivarius/AiGov-monorepo/issues/53"
+    ]
+  }
+}
