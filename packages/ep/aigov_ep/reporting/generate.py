@@ -13,6 +13,12 @@ from ..utils.io import read_json, write_json
 
 
 _CROSSWALK_PATH = Path(__file__).resolve().parents[3] / "specs" / "docs" / "contracts" / "reporting" / "report_fields_crosswalk_v0_1.md"
+_EVIDENCE_ID_PREFIXES = {
+    "run_manifest_v0.json": "EVID-004",
+    "transcript.json": "EVID-004",
+    "evidence_pack.json": "EVID-005",
+    "judgments.json": "EVID-006",
+}
 
 
 @dataclass
@@ -38,19 +44,13 @@ def _load_crosswalk() -> list[dict[str, Any]]:
     return json.loads(block)
 
 
-def _load_manifest_evidence_ids(run_dir: Path) -> list[str]:
-    manifest_path = run_dir / "run_manifest_v0.json"
-    if not manifest_path.exists():
-        return []
-    manifest = read_json(manifest_path)
-    artifacts = manifest.get("artifacts", [])
-    evidence_ids: list[str] = []
-    for item in artifacts:
-        if isinstance(item, dict):
-            artifact_id = item.get("artifact_id")
-            if isinstance(artifact_id, str) and artifact_id:
-                evidence_ids.append(artifact_id)
-    return sorted(set(evidence_ids))
+def _build_timeline_refs(run_dir: Path) -> list[str]:
+    refs: list[str] = []
+    for filename, prefix in _EVIDENCE_ID_PREFIXES.items():
+        path = run_dir / filename
+        if path.exists():
+            refs.append(f"{prefix}:{filename}")
+    return sorted(set(refs))
 
 
 def _overall_status(verdicts: list[str]) -> str:
@@ -104,6 +104,9 @@ def _generate_l1_report(run_dir: Path, out_dir: Path) -> ReportArtifacts:
 
     judgments_payload = read_json(judgments_path)
     judgments = judgments_payload.get("judgments", [])
+    if not isinstance(judgments, list):
+        raise ValueError("judgments.json missing judgments array")
+    has_judgments = bool(judgments)
     verdicts = [item.get("verdict", "UNDECIDED") for item in judgments]
 
     crosswalk = _load_crosswalk()
@@ -128,6 +131,16 @@ def _generate_l1_report(run_dir: Path, out_dir: Path) -> ReportArtifacts:
             )
             continue
 
+        if not has_judgments and field_id in {
+            "l1_overall_status",
+            "l1_risk_summary",
+            "l1_key_findings",
+        }:
+            limitations.append(
+                f"Missing judgments for {field_id}; cannot derive verified output."
+            )
+            continue
+
         if field_id == "l1_overall_status":
             fields[field_id] = _overall_status(verdicts)
         elif field_id == "l1_risk_summary":
@@ -146,7 +159,7 @@ def _generate_l1_report(run_dir: Path, out_dir: Path) -> ReportArtifacts:
         "fields": fields,
     }
 
-    evidence_ids = _load_manifest_evidence_ids(run_dir)
+    evidence_ids = _build_timeline_refs(run_dir)
     limitations_log = {
         "schema_version": "0.1.0",
         "run_id": run_id,
