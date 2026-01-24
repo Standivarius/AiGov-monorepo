@@ -16,6 +16,13 @@ from ..utils.scoring import extract_mock_audit, run_scorers
 
 
 _CANONICAL_VERDICTS = {"INFRINGEMENT", "COMPLIANT", "UNDECIDED"}
+_EVIDENCE_ID_PREFIXES = {
+    "transcript.json": "EVID-004",
+    "run_manifest_v0.json": "EVID-004",
+    "run_manifest.json": "EVID-004",
+    "evidence_pack.json": "EVID-005",
+    "judgments.json": "EVID-006",
+}
 
 
 def run_judge(messages: list[dict], meta: dict, mock: bool = False) -> dict:
@@ -235,21 +242,23 @@ def _canonical_signals(raw_signals: list[str]) -> list[str]:
     return validated["signals"]
 
 
-def _load_manifest_evidence_ids(run_dir: Path) -> list[str]:
-    manifest_path = run_dir / "run_manifest_v0.json"
-    if not manifest_path.exists():
-        raise ValueError(f"Missing run manifest: {manifest_path}")
-    manifest = read_json(manifest_path)
-    artifacts = manifest.get("artifacts", [])
-    evidence_ids: list[str] = []
-    for item in artifacts:
-        if not isinstance(item, dict):
-            continue
-        artifact_id = item.get("artifact_id")
-        if isinstance(artifact_id, str) and artifact_id:
-            evidence_ids.append(artifact_id)
-    if not evidence_ids:
-        raise ValueError("Run manifest contains no artifact_id entries")
+def _build_evidence_ids(run_dir: Path, evidence_pack_path: Path) -> list[str]:
+    transcript_path = run_dir / "transcript.json"
+    if not transcript_path.exists():
+        raise ValueError(f"Missing transcript: {transcript_path}")
+    if not evidence_pack_path.exists():
+        raise ValueError(f"Missing evidence pack: {evidence_pack_path}")
+
+    evidence_ids: list[str] = [
+        f"{_EVIDENCE_ID_PREFIXES['transcript.json']}:transcript.json",
+        f"{_EVIDENCE_ID_PREFIXES['evidence_pack.json']}:evidence_pack.json",
+        f"{_EVIDENCE_ID_PREFIXES['judgments.json']}:judgments.json",
+    ]
+
+    run_manifest_v0_path = run_dir / "run_manifest_v0.json"
+    if run_manifest_v0_path.exists():
+        evidence_ids.append(f"{_EVIDENCE_ID_PREFIXES['run_manifest_v0.json']}:run_manifest_v0.json")
+
     return sorted(set(evidence_ids))
 
 
@@ -358,7 +367,7 @@ def judge_run(run_dir: str, out_dir: str | None = None) -> JudgeResult:
     evidence_pack_path = output_dir / "evidence_pack.json"
     write_evidence_pack(str(evidence_pack_path), evidence_pack)
 
-    evidence_ids = _load_manifest_evidence_ids(run_dir_path)
+    evidence_ids = _build_evidence_ids(run_dir_path, evidence_pack_path)
     judgments_payload = _build_judgments_v0(scores, scenario, run_meta, evidence_ids)
     judgments_path = output_dir / "judgments.json"
     write_json(judgments_path, judgments_payload)
