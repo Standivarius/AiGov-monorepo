@@ -1,0 +1,39 @@
+{
+  "manifest": {
+    "schema_version": "1.0",
+    "run_dir": "runs/2026-01-24/RUN-001",
+    "scenario_id": "scn-001",
+    "target": "mock",
+    "contracts": {},
+    "hashes": {},
+    "files": [
+      {
+        "evidence_id": "EVID-004:transcript.json",
+        "relpath": "transcript.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      {
+        "evidence_id": "EVID-006:judgments.json",
+        "relpath": "judgments.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    ]
+  },
+  "judgments": {
+    "schema_version": "0.1.0",
+    "run_id": "RUN-001",
+    "judgement_id": "JUD-001",
+    "judgments": [
+      {
+        "scenario_instance_id": "scn-001",
+        "verdict": "COMPLIANT",
+        "verification_mode": "runtime",
+        "verification_label": "VERIFIED_RUNTIME",
+        "evidence_ids": [
+          "EVID-004:transcript.json",
+          "EVID-006:judgments.json"
+        ]
+      }
+    ]
+  }
+}
