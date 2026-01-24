@@ -13,3 +13,6 @@ python3 tools/validate_equivalence_labeling.py \
 
 python3 tools/validate_golden_contamination.py \
   --citations tools/fixtures/validators/retrieval_citations_pass.json
+
+python3 tools/validate_evidence_id_resolution.py \
+  --fixture tools/fixtures/validators/evidence_id_resolution_pass.json
