@@ -34,7 +34,30 @@
       "type": "object"
     },
     "files": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "evidence_id",
+          "relpath",
+          "sha256"
+        ],
+        "properties": {
+          "evidence_id": {
+            "type": "string"
+          },
+          "relpath": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "json_pointer": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }
