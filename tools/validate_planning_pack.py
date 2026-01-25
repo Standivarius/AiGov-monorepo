@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 from validate_evidence_pack_v0_schema import validate_evidence_pack_v0_fixture
-from validate_base_scenarios import validate_base_scenarios
+from validate_base_scenarios import validate_base_scenarios, validate_base_scenario_fixture
 from validate_client_overrides import validate_override_fixture
 
 
@@ -21,6 +21,9 @@ CLIENT_OVERRIDE_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client
 CLIENT_OVERRIDE_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_fail.json"
 CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_override_empty_supported.json"
+)
+BASE_SCENARIO_EMPTY_SIGNALS_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "base_scenario_empty_signals.json"
 )
 
 
@@ -286,6 +289,12 @@ def main() -> int:
         for error in scenario_errors:
             print(f"  - {error}")
         return 1
+
+    base_scenario_fail_errors = validate_base_scenario_fixture(BASE_SCENARIO_EMPTY_SIGNALS_PATH)
+    if not base_scenario_fail_errors:
+        print("ERROR: base scenario empty signal_ids fixture unexpectedly passed validation.")
+        return 1
+    print(f"FAIL (as expected): base scenario fixture validated: {BASE_SCENARIO_EMPTY_SIGNALS_PATH}")
 
     override_errors = validate_override_fixture(CLIENT_OVERRIDE_PASS_PATH)
     if override_errors:
