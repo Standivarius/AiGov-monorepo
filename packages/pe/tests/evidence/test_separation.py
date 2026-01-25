@@ -20,7 +20,13 @@ def test_admissible_pack_excludes_telemetry() -> None:
         "failure_criteria": [],
         "source_path": "scenarios/test.json",
     }
-    transcript = [{"role": "user", "content": "Hello"}]
+    transcript = [
+        {
+            "role": "user",
+            "content": "Hello",
+            "metadata": {"mock_audit": {"leaked_fields": ["email"]}},
+        }
+    ]
     scores = [{"verdict": "COMPLIANT"}]
     runner_config = {"target": "mock"}
 
@@ -37,3 +43,4 @@ def test_admissible_pack_excludes_telemetry() -> None:
 
     admissible = admissible_evidence_pack(pack)
     assert "telemetry" not in admissible
+    assert admissible["transcript"][0].get("metadata") is None

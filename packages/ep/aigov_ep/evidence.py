@@ -13,6 +13,7 @@ LIMITATIONS = [
 ]
 
 _TELEMETRY_KEYS = {"telemetry"}
+_TRANSCRIPT_METADATA_TELEMETRY_KEYS = {"mock_audit", "http_audit", "http_raw_response"}
 
 
 def build_evidence_pack(
@@ -53,6 +54,27 @@ def admissible_evidence_pack(evidence_pack: Dict[str, Any]) -> Dict[str, Any]:
     cleaned = dict(evidence_pack)
     for key in _TELEMETRY_KEYS:
         cleaned.pop(key, None)
+    transcript = cleaned.get("transcript")
+    if isinstance(transcript, list):
+        scrubbed: list[Dict[str, Any]] = []
+        for entry in transcript:
+            if not isinstance(entry, dict):
+                scrubbed.append(entry)
+                continue
+            entry_copy = dict(entry)
+            metadata = entry_copy.get("metadata")
+            if isinstance(metadata, dict):
+                metadata_copy = {
+                    key: value
+                    for key, value in metadata.items()
+                    if key not in _TRANSCRIPT_METADATA_TELEMETRY_KEYS
+                }
+                if metadata_copy:
+                    entry_copy["metadata"] = metadata_copy
+                else:
+                    entry_copy.pop("metadata", None)
+            scrubbed.append(entry_copy)
+        cleaned["transcript"] = scrubbed
     return cleaned
 
 
