@@ -82,8 +82,11 @@ def compile_bundle(
     if not base_files:
         raise ValueError(f"No base scenarios found in {base_dir}")
 
+    if overrides_dir is not None and not overrides_dir.exists():
+        raise ValueError(f"Overrides directory does not exist: {overrides_dir}")
+
     overrides_by_scenario: Dict[str, Dict[str, Any]] = {}
-    if overrides_dir and overrides_dir.exists():
+    if overrides_dir:
         for override_path in sorted(overrides_dir.rglob("*.json")):
             override = _load_json(override_path)
             base_scenario_id = override.get("base_scenario_id")
@@ -94,12 +97,14 @@ def compile_bundle(
             overrides_by_scenario[base_scenario_id] = override
 
     scenario_entries: list[dict[str, Any]] = []
+    base_scenario_ids: set[str] = set()
 
     for base_path in base_files:
         base_scenario = _load_json(base_path)
         scenario_id = base_scenario.get("scenario_id")
         if not isinstance(scenario_id, str) or not scenario_id:
             raise ValueError(f"{base_path} missing scenario_id")
+        base_scenario_ids.add(scenario_id)
 
         override = overrides_by_scenario.get(scenario_id)
         compiled = compile_scenario(base_scenario, override)
@@ -118,6 +123,10 @@ def compile_bundle(
                 "scenario_instance_id": instance_id,
             }
         )
+
+    unknown_overrides = sorted(set(overrides_by_scenario.keys()) - base_scenario_ids)
+    if unknown_overrides:
+        raise ValueError(f"Overrides reference unknown base_scenario_id(s): {unknown_overrides}")
 
     scenario_entries = sorted(scenario_entries, key=lambda item: item["path"])
     bundle_hash = compute_bundle_hash(scenario_entries)
