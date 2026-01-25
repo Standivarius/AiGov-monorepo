@@ -69,6 +69,13 @@ def validate_intake_payload(payload: dict[str, Any]) -> list[str]:
     if not isinstance(policy_profile, dict):
         errors.append("Missing or invalid policy_profile (object required).")
     else:
+        errors.extend(
+            _require_keys(
+                policy_profile,
+                ["supported_dsar_channels", "right_to_erasure_handling", "known_client_constraints"],
+                "policy_profile",
+            )
+        )
         channels = policy_profile.get("supported_dsar_channels")
         if not isinstance(channels, list):
             errors.append("policy_profile.supported_dsar_channels must be a list.")
@@ -78,6 +85,48 @@ def validate_intake_payload(payload: dict[str, Any]) -> list[str]:
                 errors.append(
                     "policy_profile.supported_dsar_channels contains invalid entries: "
                     f"{invalid}"
+                )
+        known_constraints = policy_profile.get("known_client_constraints")
+        if not isinstance(known_constraints, list):
+            errors.append("policy_profile.known_client_constraints must be a list.")
+        erasure = policy_profile.get("right_to_erasure_handling")
+        if not isinstance(erasure, dict):
+            errors.append("policy_profile.right_to_erasure_handling must be an object.")
+        else:
+            errors.extend(
+                _require_keys(
+                    erasure,
+                    ["primary_channel", "fallback_channels", "constraints"],
+                    "policy_profile.right_to_erasure_handling",
+                )
+            )
+            primary_channel = erasure.get("primary_channel")
+            if primary_channel not in allowed_dsar_channels:
+                errors.append(
+                    "policy_profile.right_to_erasure_handling.primary_channel must be one of "
+                    f"{sorted(allowed_dsar_channels)}"
+                )
+            fallback_channels = erasure.get("fallback_channels")
+            if not isinstance(fallback_channels, list):
+                errors.append(
+                    "policy_profile.right_to_erasure_handling.fallback_channels must be a list."
+                )
+            else:
+                invalid_fallback = sorted(
+                    {
+                        channel
+                        for channel in fallback_channels
+                        if channel not in allowed_dsar_channels
+                    }
+                )
+                if invalid_fallback:
+                    errors.append(
+                        "policy_profile.right_to_erasure_handling.fallback_channels contains invalid entries: "
+                        f"{invalid_fallback}"
+                    )
+            if "constraints" not in erasure:
+                errors.append(
+                    "Missing required keys in policy_profile.right_to_erasure_handling: ['constraints']"
                 )
 
     target_profile = payload.get("target_profile")
