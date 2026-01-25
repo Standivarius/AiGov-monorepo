@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1.0",
+  "run_dir": "runs/fixture/RUN-001",
+  "scenario_id": "scn-001",
+  "target": "mock",
+  "signals": [
+    {
+      "signal_id": "signal-001",
+      "verdict": "COMPLIANT",
+      "confidence": 0.42,
+      "notes": "Fixture signal"
+    }
+  ],
+  "items": [
+    {
+      "kind": "transcript_excerpt",
+      "payload": {
+        "text": "hello"
+      },
+      "signal_id": "signal-001",
+      "verdict": "COMPLIANT",
+      "source": "transcript",
+      "timestamp_utc": "2026-01-25T00:00:00Z"
+    }
+  ]
+}

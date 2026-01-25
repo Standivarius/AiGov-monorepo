@@ -5,12 +5,16 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+from validate_evidence_pack_v0_schema import validate_evidence_pack_v0_fixture
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANNING_DIR = ROOT / "packages" / "specs" / "docs" / "planning" / "2026-01-22-run"
 EVAL_REGISTRY_PATH = PLANNING_DIR / "eval_registry.yaml"
 EVALSETS_REGISTRY_PATH = PLANNING_DIR / "evalsets_registry.yaml"
 TIER_A_REPORT_PATH = PLANNING_DIR / "tier_a_coverage_report.md"
+EVIDENCE_PACK_V0_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "evidence_pack_v0_pass.json"
+EVIDENCE_PACK_V0_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "evidence_pack_v0_fail.json"
 
 
 def _read_lines(path: Path) -> list[str]:
@@ -254,6 +258,20 @@ def main() -> int:
         for item in sorted(missing_control_eval_ids):
             print(f"  - {item}")
         return 1
+
+    evidence_pack_errors = validate_evidence_pack_v0_fixture(EVIDENCE_PACK_V0_PASS_PATH)
+    if evidence_pack_errors:
+        print("ERROR: evidence_pack_v0 pass fixture failed validation:")
+        for error in evidence_pack_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: evidence_pack_v0 fixture validated: {EVIDENCE_PACK_V0_PASS_PATH}")
+
+    evidence_pack_fail_errors = validate_evidence_pack_v0_fixture(EVIDENCE_PACK_V0_FAIL_PATH)
+    if not evidence_pack_fail_errors:
+        print("ERROR: evidence_pack_v0 fail fixture unexpectedly passed validation.")
+        return 1
+    print(f"FAIL (as expected): evidence_pack_v0 fixture validated: {EVIDENCE_PACK_V0_FAIL_PATH}")
 
     print("PASS: planning pack validated.")
     return 0

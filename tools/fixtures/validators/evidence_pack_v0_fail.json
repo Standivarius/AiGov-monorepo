@@ -1,0 +1,7 @@
+{
+  "schema_version": "0.1.0",
+  "run_dir": "runs/fixture/RUN-002",
+  "scenario_id": "scn-002",
+  "target": "mock",
+  "items": []
+}
