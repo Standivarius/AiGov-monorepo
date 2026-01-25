@@ -77,4 +77,6 @@ def test_validate_intake_payload_invalid() -> None:
     errors = validate_intake_payload(payload)
     assert errors
     assert any("policy_profile.supported_dsar_channels" in error for error in errors)
+    assert any("policy_profile.right_to_erasure_handling" in error for error in errors)
+    assert any("policy_profile.known_client_constraints" in error for error in errors)
     assert any("target_profile.target_type" in error for error in errors)
