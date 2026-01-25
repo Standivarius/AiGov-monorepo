@@ -62,7 +62,7 @@
 - eval_id: EVAL-006
   ep_id: CAP-104
   description: Verdict enum conformance + drift test (normalization coverage).
-  pass_rule: All verdict labels belong to canonical enum; no invalidlegacy labels remain; exits 0.
+  pass_rule: All verdict labels belong to canonical enum; evidence IDs are canonical + registry-backed; no invalidlegacy labels remain; exits 0.
   evidence_artifacts:
     - EVID-002 Contract snapshot (taxonomyverdict enum provenance)
     - EVID-011 PE test reports
