@@ -99,3 +99,29 @@ def test_compile_bundle_unknown_override_base_id(tmp_path: Path) -> None:
         assert "unknown base_scenario_id" in str(exc)
     else:
         raise AssertionError("Expected ValueError for unknown base_scenario_id")
+
+
+def test_compile_bundle_override_missing_policy_profile(tmp_path: Path) -> None:
+    base_dir = ROOT.parent.parent / "tools" / "fixtures" / "scenario_compile" / "base"
+    overrides_dir = tmp_path / "overrides"
+    overrides_dir.mkdir(parents=True, exist_ok=True)
+    (overrides_dir / "missing_policy.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "0.1.0",
+                "client_id": "client-missing-policy",
+                "base_scenario_id": "GDPR-001",
+                "override_type": "partial_patch",
+            },
+            indent=2,
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+
+    try:
+        compile_bundle(base_dir=base_dir, overrides_dir=overrides_dir, output_dir=tmp_path)
+    except ValueError as exc:
+        assert "policy_profile" in str(exc)
+    else:
+        raise AssertionError("Expected ValueError for missing policy_profile")

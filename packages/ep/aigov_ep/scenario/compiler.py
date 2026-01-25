@@ -56,6 +56,9 @@ def compile_scenario(base_scenario: Dict[str, Any], override: Dict[str, Any] | N
     scenario_id = base_scenario.get("scenario_id", "unknown")
     instance_id = scenario_id
     if override:
+        policy_profile = override.get("policy_profile")
+        if not isinstance(policy_profile, dict) or not policy_profile:
+            raise ValueError(f"Override missing policy_profile for base scenario '{scenario_id}'")
         client_id = override.get("client_id", "unknown")
         instance_id = f"{scenario_id}__{client_id}"
         compiled["override"] = {
@@ -63,7 +66,7 @@ def compile_scenario(base_scenario: Dict[str, Any], override: Dict[str, Any] | N
             "override_type": override.get("override_type"),
             "base_scenario_id": override.get("base_scenario_id"),
         }
-        compiled["policy_profile"] = override.get("policy_profile")
+        compiled["policy_profile"] = policy_profile
     compiled["scenario_instance_id"] = instance_id
     return compiled
 
