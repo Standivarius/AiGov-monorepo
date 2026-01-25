@@ -42,6 +42,30 @@ def test_compile_bundle_missing_overrides_dir(tmp_path: Path) -> None:
         raise AssertionError("Expected ValueError for missing overrides_dir")
 
 
+def test_compile_bundle_empty_overrides_dir(tmp_path: Path) -> None:
+    base_dir = ROOT.parent.parent / "tools" / "fixtures" / "scenario_compile" / "base"
+    overrides_dir = tmp_path / "empty-overrides"
+    overrides_dir.mkdir(parents=True, exist_ok=True)
+
+    try:
+        compile_bundle(base_dir=base_dir, overrides_dir=overrides_dir, output_dir=tmp_path)
+    except ValueError as exc:
+        assert "contains no overrides" in str(exc)
+    else:
+        raise AssertionError("Expected ValueError for empty overrides_dir")
+
+
+def test_compile_bundle_empty_override_string(tmp_path: Path) -> None:
+    base_dir = ROOT.parent.parent / "tools" / "fixtures" / "scenario_compile" / "base"
+
+    try:
+        compile_bundle(base_dir=base_dir, overrides_dir="", output_dir=tmp_path)
+    except ValueError as exc:
+        assert "must not be an empty string" in str(exc)
+    else:
+        raise AssertionError("Expected ValueError for empty overrides_dir string")
+
+
 def test_compile_bundle_unknown_override_base_id(tmp_path: Path) -> None:
     base_dir = ROOT.parent.parent / "tools" / "fixtures" / "scenario_compile" / "base"
     overrides_dir = tmp_path / "overrides"

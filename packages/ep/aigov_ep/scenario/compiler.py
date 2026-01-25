@@ -74,7 +74,9 @@ def compile_bundle(
     output_dir: str | Path,
 ) -> Dict[str, Any]:
     base_dir = Path(base_dir)
-    overrides_dir = Path(overrides_dir) if overrides_dir else None
+    if isinstance(overrides_dir, str) and overrides_dir == "":
+        raise ValueError("overrides_dir must not be an empty string")
+    overrides_dir = Path(overrides_dir) if overrides_dir is not None else None
     output_dir = Path(output_dir)
     scenarios_dir = output_dir / "scenarios"
 
@@ -82,12 +84,14 @@ def compile_bundle(
     if not base_files:
         raise ValueError(f"No base scenarios found in {base_dir}")
 
-    if overrides_dir is not None and not overrides_dir.exists():
-        raise ValueError(f"Overrides directory does not exist: {overrides_dir}")
-
     overrides_by_scenario: Dict[str, Dict[str, Any]] = {}
     if overrides_dir:
-        for override_path in sorted(overrides_dir.rglob("*.json")):
+        if not overrides_dir.exists():
+            raise ValueError(f"Overrides directory does not exist: {overrides_dir}")
+        override_files = sorted(overrides_dir.rglob("*.json"))
+        if not override_files:
+            raise ValueError(f"Overrides directory contains no overrides: {overrides_dir}")
+        for override_path in override_files:
             override = _load_json(override_path)
             base_scenario_id = override.get("base_scenario_id")
             if not isinstance(base_scenario_id, str) or not base_scenario_id:
