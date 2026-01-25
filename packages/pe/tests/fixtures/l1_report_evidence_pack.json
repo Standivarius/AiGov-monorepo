@@ -1,0 +1,8 @@
+{
+  "schema_version": "0.1.0",
+  "run_dir": "runs/RUN-TEST-001",
+  "scenario_id": "scn-001",
+  "target": "mock",
+  "signals": [],
+  "items": []
+}
