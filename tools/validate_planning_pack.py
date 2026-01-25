@@ -7,6 +7,7 @@ from pathlib import Path
 
 from validate_evidence_pack_v0_schema import validate_evidence_pack_v0_fixture
 from validate_base_scenarios import validate_base_scenarios
+from validate_client_overrides import validate_override_fixture
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,6 +17,8 @@ EVALSETS_REGISTRY_PATH = PLANNING_DIR / "evalsets_registry.yaml"
 TIER_A_REPORT_PATH = PLANNING_DIR / "tier_a_coverage_report.md"
 EVIDENCE_PACK_V0_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "evidence_pack_v0_pass.json"
 EVIDENCE_PACK_V0_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "evidence_pack_v0_fail.json"
+CLIENT_OVERRIDE_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_pass.json"
+CLIENT_OVERRIDE_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_fail.json"
 
 
 def _read_lines(path: Path) -> list[str]:
@@ -280,6 +283,20 @@ def main() -> int:
         for error in scenario_errors:
             print(f"  - {error}")
         return 1
+
+    override_errors = validate_override_fixture(CLIENT_OVERRIDE_PASS_PATH)
+    if override_errors:
+        print("ERROR: client override pass fixture failed validation:")
+        for error in override_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: client override validated: {CLIENT_OVERRIDE_PASS_PATH}")
+
+    override_fail_errors = validate_override_fixture(CLIENT_OVERRIDE_FAIL_PATH)
+    if not override_fail_errors:
+        print("ERROR: client override fail fixture unexpectedly passed validation.")
+        return 1
+    print(f"FAIL (as expected): client override validated: {CLIENT_OVERRIDE_FAIL_PATH}")
 
     print("PASS: planning pack validated.")
     return 0

@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Client Scenario Override v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "client_id",
+    "base_scenario_id",
+    "override_type",
+    "policy_profile"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "client_id": {
+      "type": "string"
+    },
+    "base_scenario_id": {
+      "type": "string"
+    },
+    "override_type": {
+      "type": "string",
+      "enum": [
+        "partial_patch"
+      ]
+    },
+    "generated_at_utc": {
+      "type": "string"
+    },
+    "policy_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported_dsar_channels",
+        "right_to_erasure_handling",
+        "known_client_constraints"
+      ],
+      "properties": {
+        "supported_dsar_channels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "right_to_erasure_handling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "primary_channel",
+            "fallback_channels",
+            "constraints"
+          ],
+          "properties": {
+            "primary_channel": {
+              "type": "string"
+            },
+            "fallback_channels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "known_client_constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
