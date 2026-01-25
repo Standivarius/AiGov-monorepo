@@ -15,6 +15,16 @@ from ..utils.io import read_json, write_json
 from ..utils.scoring import extract_mock_audit, run_scorers
 
 
+_CANONICAL_VERDICTS = {"INFRINGEMENT", "COMPLIANT", "UNDECIDED"}
+_EVIDENCE_ID_PREFIXES = {
+    "transcript.json": "EVID-004",
+    "run_manifest_v0.json": "EVID-004",
+    "run_manifest.json": "EVID-004",
+    "evidence_pack.json": "EVID-005",
+    "judgments.json": "EVID-006",
+}
+
+
 def run_judge(messages: list[dict], meta: dict, mock: bool = False) -> dict:
     """
     Run GDPR compliance judge on conversation transcript.
@@ -214,6 +224,109 @@ class JudgeResult:
     run_dir: str
     scores_path: str
     evidence_pack_path: str
+    judgments_path: str
+
+
+def _canonical_verdict(verdict: str | None) -> str:
+    normalized = normalize_verdict(verdict or "UNDECIDED")
+    if normalized not in _CANONICAL_VERDICTS:
+        raise ValueError(f"Unknown verdict after normalization: {normalized}")
+    return normalized
+
+
+def _canonical_signals(raw_signals: list[str]) -> list[str]:
+    allowed = get_allowed_signal_ids()
+    validated = validate_signals(raw_signals, allowed)
+    if validated["other_signals"]:
+        raise ValueError(f"Unknown signals: {validated['other_signals']}")
+    return validated["signals"]
+
+
+def _build_evidence_ids(run_dir: Path, evidence_pack_path: Path) -> list[str]:
+    transcript_path = run_dir / "transcript.json"
+    if not transcript_path.exists():
+        raise ValueError(f"Missing transcript: {transcript_path}")
+    if not evidence_pack_path.exists():
+        raise ValueError(f"Missing evidence pack: {evidence_pack_path}")
+
+    evidence_ids: list[str] = [
+        f"{_EVIDENCE_ID_PREFIXES['transcript.json']}:transcript.json",
+        f"{_EVIDENCE_ID_PREFIXES['evidence_pack.json']}:evidence_pack.json",
+        f"{_EVIDENCE_ID_PREFIXES['judgments.json']}:judgments.json",
+    ]
+
+    run_manifest_v0_path = run_dir / "run_manifest_v0.json"
+    if run_manifest_v0_path.exists():
+        evidence_ids.append(f"{_EVIDENCE_ID_PREFIXES['run_manifest_v0.json']}:run_manifest_v0.json")
+
+    return sorted(set(evidence_ids))
+
+
+def _score_to_judgment(
+    score: dict,
+    scenario_instance_id: str,
+    evidence_ids: list[str],
+) -> dict:
+    verdict: str
+    canonical_signal_ids: list[str] = []
+    rationale = score.get("rationale")
+
+    if "verdict" in score:
+        verdict = _canonical_verdict(score.get("verdict"))
+        raw_signals = score.get("signals") or []
+        if isinstance(raw_signals, list):
+            canonical_signal_ids = _canonical_signals(raw_signals)
+    elif "pass" in score:
+        verdict = "COMPLIANT" if score.get("pass") else "INFRINGEMENT"
+    else:
+        raise ValueError("Score payload missing verdict/pass fields")
+
+    rationale_text = ""
+    if isinstance(rationale, list):
+        rationale_text = " ".join(str(item) for item in rationale if item)
+    elif isinstance(rationale, str):
+        rationale_text = rationale
+    elif isinstance(score.get("notes"), str):
+        rationale_text = score.get("notes")
+
+    judgment = {
+        "scenario_instance_id": scenario_instance_id,
+        "verdict": verdict,
+        "verification_mode": "runtime",
+        "verification_label": "VERIFIED_RUNTIME",
+        "evidence_ids": evidence_ids,
+    }
+    if canonical_signal_ids:
+        judgment["canonical_signal_ids"] = canonical_signal_ids
+    if rationale_text:
+        judgment["rationale"] = rationale_text
+    return judgment
+
+
+def _build_judgments_v0(
+    scores: list[dict],
+    scenario: dict,
+    run_meta: dict,
+    evidence_ids: list[str],
+) -> dict:
+    if not scores:
+        raise ValueError("No scores available to build judgments")
+    run_id = run_meta.get("run_id") or scenario.get("run_id") or "unknown"
+    scenario_instance_id = (
+        scenario.get("scenario_instance_id")
+        or scenario.get("scenario_id")
+        or "unknown"
+    )
+    judgments = [
+        _score_to_judgment(score, scenario_instance_id, evidence_ids)
+        for score in scores
+    ]
+    return {
+        "schema_version": "0.1.0",
+        "run_id": run_id,
+        "judgement_id": f"judgement-{run_id}",
+        "judgments": judgments,
+    }
 
 
 def judge_run(run_dir: str, out_dir: str | None = None) -> JudgeResult:
@@ -253,6 +366,11 @@ def judge_run(run_dir: str, out_dir: str | None = None) -> JudgeResult:
     _normalize_verdict_fields(evidence_pack)
     evidence_pack_path = output_dir / "evidence_pack.json"
     write_evidence_pack(str(evidence_pack_path), evidence_pack)
+
+    evidence_ids = _build_evidence_ids(run_dir_path, evidence_pack_path)
+    judgments_payload = _build_judgments_v0(scores, scenario, run_meta, evidence_ids)
+    judgments_path = output_dir / "judgments.json"
+    write_json(judgments_path, judgments_payload)
 
     # --- NEW: Stage B contract required by Aigov-eval smoke ---
     # Emit behaviour_json_v0_phase0.json next to scores.json and evidence_pack.json.
@@ -309,4 +427,5 @@ def judge_run(run_dir: str, out_dir: str | None = None) -> JudgeResult:
         run_dir=str(output_dir),
         scores_path=str(scores_path),
         evidence_pack_path=str(evidence_pack_path),
+        judgments_path=str(judgments_path),
     )
