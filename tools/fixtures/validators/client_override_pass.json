@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1.0",
+  "client_id": "client-001",
+  "base_scenario_id": "GDPR-001",
+  "override_type": "partial_patch",
+  "policy_profile": {
+    "supported_dsar_channels": ["email", "portal"],
+    "right_to_erasure_handling": {
+      "primary_channel": "email",
+      "fallback_channels": ["portal"],
+      "constraints": ["manual_verification_required"]
+    },
+    "known_client_constraints": ["no_canary_delete"]
+  }
+}
