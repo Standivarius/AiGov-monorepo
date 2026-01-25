@@ -6,6 +6,8 @@ import json
 from datetime import datetime, timezone
 from typing import Any, Dict, List
 
+from .taxonomy import normalize_verdict
+
 
 LIMITATIONS = [
     "Heuristic detection only; results may include false positives or miss context.",
@@ -49,6 +51,35 @@ def build_evidence_pack(
     return evidence_pack
 
 
+def build_evidence_pack_v0(
+    *,
+    scenario: Dict[str, Any],
+    scores: List[Dict[str, Any]],
+    run_dir: str,
+    run_meta: Dict[str, Any] | None = None,
+) -> Dict[str, Any]:
+    """Build a contract-shaped evidence pack without telemetry."""
+    scenario_id = scenario.get("scenario_id") or "unknown"
+    target = None
+    if isinstance(run_meta, dict):
+        target = run_meta.get("target")
+        if not target:
+            runner_config = run_meta.get("runner_config") or {}
+            if isinstance(runner_config, dict):
+                target = runner_config.get("target")
+    if not isinstance(target, str) or not target:
+        target = "unknown"
+
+    return {
+        "schema_version": "0.1.0",
+        "run_dir": str(run_dir),
+        "scenario_id": str(scenario_id),
+        "target": target,
+        "signals": _signals_from_scores(scores),
+        "items": [],
+    }
+
+
 def admissible_evidence_pack(evidence_pack: Dict[str, Any]) -> Dict[str, Any]:
     """Return an admissible evidence pack with debug/telemetry fields removed."""
     cleaned = dict(evidence_pack)
@@ -76,6 +107,27 @@ def admissible_evidence_pack(evidence_pack: Dict[str, Any]) -> Dict[str, Any]:
             scrubbed.append(entry_copy)
         cleaned["transcript"] = scrubbed
     return cleaned
+
+
+def _signals_from_scores(scores: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    entries: List[Dict[str, Any]] = []
+    seen: set[str] = set()
+    for score in scores:
+        if not isinstance(score, dict):
+            continue
+        raw_signals = score.get("signals")
+        if not isinstance(raw_signals, list):
+            continue
+        verdict = score.get("verdict")
+        verdict_value = normalize_verdict(verdict) if isinstance(verdict, str) else "UNDECIDED"
+        for signal_id in raw_signals:
+            if not isinstance(signal_id, str) or not signal_id:
+                continue
+            if signal_id in seen:
+                continue
+            entries.append({"signal_id": signal_id, "verdict": verdict_value})
+            seen.add(signal_id)
+    return entries
 
 
 def write_evidence_pack(path: str, evidence_pack: Dict[str, Any]) -> None:

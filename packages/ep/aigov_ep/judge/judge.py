@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
 
-from ..evidence import build_evidence_pack, write_evidence_pack
+from ..evidence import build_evidence_pack, build_evidence_pack_v0, write_evidence_pack
 from ..taxonomy import get_allowed_signal_ids, normalize_verdict, validate_signals
 from ..utils.io import read_json, write_json
 from ..utils.scoring import extract_mock_audit, run_scorers
@@ -366,6 +366,16 @@ def judge_run(run_dir: str, out_dir: str | None = None) -> JudgeResult:
     _normalize_verdict_fields(evidence_pack)
     evidence_pack_path = output_dir / "evidence_pack.json"
     write_evidence_pack(str(evidence_pack_path), evidence_pack)
+
+    evidence_pack_v0 = build_evidence_pack_v0(
+        scenario=scenario,
+        scores=scores,
+        run_dir=str(output_dir),
+        run_meta=run_meta,
+    )
+    _normalize_verdict_fields(evidence_pack_v0)
+    evidence_pack_v0_path = output_dir / "evidence_pack_v0.json"
+    write_evidence_pack(str(evidence_pack_v0_path), evidence_pack_v0)
 
     evidence_ids = _build_evidence_ids(run_dir_path, evidence_pack_path)
     judgments_payload = _build_judgments_v0(scores, scenario, run_meta, evidence_ids)
