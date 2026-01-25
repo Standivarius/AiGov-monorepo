@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[2]
+EP_ROOT = ROOT.parent / "ep"
+sys.path.insert(0, str(EP_ROOT))
 
 from aigov_ep.reporting.generate import _generate_l1_report
 
 
-ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "tests" / "fixtures"
 
 
