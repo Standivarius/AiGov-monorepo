@@ -72,6 +72,8 @@ def _validate_scenario(
         except ValueError as exc:
             errors.append(str(exc))
         else:
+            if not signals:
+                errors.append(f"{path}: signal_ids must contain at least one entry")
             for signal in signals:
                 if not isinstance(signal, str) or not signal:
                     errors.append(f"{path}: signal_ids must be non-empty strings")
@@ -124,6 +126,23 @@ def validate_base_scenarios() -> list[str]:
         errors.extend(_validate_scenario(scenario, required, allowed, signal_ids, path))
 
     return errors
+
+
+def validate_base_scenario_fixture(path: Path) -> list[str]:
+    if not path.exists():
+        return [f"base scenario fixture missing: {path}"]
+    if not SCHEMA_PATH.exists():
+        return [f"base scenario schema missing: {SCHEMA_PATH}"]
+    if not SIGNALS_PATH.exists():
+        return [f"signals registry missing: {SIGNALS_PATH}"]
+
+    try:
+        required, allowed = _load_schema()
+        signal_ids = _load_signal_ids()
+        scenario = _ensure_dict(_load_json(path), f"{path}")
+    except (json.JSONDecodeError, ValueError) as exc:
+        return [f"{path}: invalid JSON ({exc})"]
+    return _validate_scenario(scenario, required, allowed, signal_ids, path)
 
 
 def main() -> int:
