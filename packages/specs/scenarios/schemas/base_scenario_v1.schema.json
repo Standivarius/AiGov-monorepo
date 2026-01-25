@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Base Scenario v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scenario_id",
+    "title",
+    "version",
+    "framework",
+    "role",
+    "risk_category",
+    "auditor_seed",
+    "signal_ids"
+  ],
+  "properties": {
+    "scenario_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "framework": {
+      "type": "string",
+      "enum": [
+        "GDPR",
+        "ISO27001",
+        "ISO42001",
+        "AI_ACT"
+      ]
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "hr",
+        "logistics",
+        "customer_service",
+        "admin",
+        "general"
+      ]
+    },
+    "risk_category": {
+      "type": "string"
+    },
+    "auditor_seed": {
+      "type": "string"
+    },
+    "signal_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
