@@ -12,6 +12,8 @@ LIMITATIONS = [
     "Transcript-only evaluation; no backend controls or logs are assessed.",
 ]
 
+_TELEMETRY_KEYS = {"telemetry"}
+
 
 def build_evidence_pack(
     scenario: Dict[str, Any],
@@ -44,6 +46,14 @@ def build_evidence_pack(
         "http_raw_response": http_raw_response,
     }
     return evidence_pack
+
+
+def admissible_evidence_pack(evidence_pack: Dict[str, Any]) -> Dict[str, Any]:
+    """Return an admissible evidence pack with debug/telemetry fields removed."""
+    cleaned = dict(evidence_pack)
+    for key in _TELEMETRY_KEYS:
+        cleaned.pop(key, None)
+    return cleaned
 
 
 def write_evidence_pack(path: str, evidence_pack: Dict[str, Any]) -> None:
