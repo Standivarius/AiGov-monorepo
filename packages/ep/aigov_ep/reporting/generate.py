@@ -19,6 +19,16 @@ _EVIDENCE_ID_PREFIXES = {
     "evidence_pack.json": "EVID-005",
     "judgments.json": "EVID-006",
 }
+_CROSSWALK_ARTIFACT_MAP: dict[str, tuple[str, str] | None] = {
+    "judge_output_manifest": ("judgments.json", "EVID-006:judgments.json"),
+    "evidence_pack_ref": ("evidence_pack.json", "EVID-005:evidence_pack.json"),
+    "run_manifest_path": ("run_manifest_v0.json", "EVID-004:run_manifest_v0.json"),
+    "transcript_hash": ("transcript.json", "EVID-004:transcript.json"),
+    "evidence_pack_path": ("evidence_pack.json", "EVID-005:evidence_pack.json"),
+    "raw_outputs_path": None,
+    "intake_form_hash": None,
+    "judge_manifest_path": None,
+}
 
 
 @dataclass
@@ -51,6 +61,17 @@ def _build_timeline_refs(run_dir: Path) -> list[str]:
         if path.exists():
             refs.append(f"{prefix}:{filename}")
     return sorted(set(refs))
+
+
+def _resolve_artifact_evidence_ids(run_dir: Path) -> dict[str, str]:
+    available: dict[str, str] = {}
+    for artifact_key, mapping in _CROSSWALK_ARTIFACT_MAP.items():
+        if mapping is None:
+            continue
+        relpath, evidence_id = mapping
+        if (run_dir / relpath).exists():
+            available[artifact_key] = evidence_id
+    return available
 
 
 def _overall_status(verdicts: list[str]) -> str:
@@ -94,28 +115,22 @@ def _generate_l1_report(run_dir: Path, out_dir: Path) -> ReportArtifacts:
     judgments_path = run_dir / "judgments.json"
     run_meta_path = run_dir / "run_meta.json"
 
-    if not evidence_pack_path.exists():
-        raise ValueError(f"Missing evidence pack: {evidence_pack_path}")
-    if not judgments_path.exists():
-        raise ValueError(f"Missing judgments: {judgments_path}")
-
     run_meta = read_json(run_meta_path) if run_meta_path.exists() else {}
     run_id = run_meta.get("run_id") or run_dir.name
 
-    judgments_payload = read_json(judgments_path)
-    judgments = judgments_payload.get("judgments", [])
-    if not isinstance(judgments, list):
-        raise ValueError("judgments.json missing judgments array")
+    judgments: list[dict[str, Any]] = []
+    if judgments_path.exists():
+        judgments_payload = read_json(judgments_path)
+        judgments = judgments_payload.get("judgments", [])
+        if not isinstance(judgments, list):
+            judgments = []
     has_judgments = bool(judgments)
     verdicts = [item.get("verdict", "UNDECIDED") for item in judgments]
 
     crosswalk = _load_crosswalk()
     l1_fields = [entry for entry in crosswalk if entry.get("layer") == "L1"]
 
-    available_artifacts = {
-        "evidence_pack_ref": str(evidence_pack_path),
-        "judge_output_manifest": str(judgments_path),
-    }
+    available_artifacts = _resolve_artifact_evidence_ids(run_dir)
 
     fields: dict[str, Any] = {}
     limitations: list[str] = []
