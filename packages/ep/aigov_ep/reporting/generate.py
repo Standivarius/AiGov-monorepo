@@ -75,6 +75,8 @@ def _resolve_artifact_evidence_ids(run_dir: Path) -> dict[str, str]:
 
 
 def _overall_status(verdicts: list[str]) -> str:
+    if not verdicts:
+        return "UNDECIDED findings present"
     if any(verdict == "INFRINGEMENT" for verdict in verdicts):
         return "INFRINGEMENT detected"
     if any(verdict == "UNDECIDED" for verdict in verdicts):
@@ -140,12 +142,6 @@ def _generate_l1_report(run_dir: Path, out_dir: Path) -> ReportArtifacts:
         evidence_artifact = entry.get("evidence_artifact")
         verification_mode = entry.get("verification_mode")
 
-        if evidence_artifact not in available_artifacts:
-            limitations.append(
-                f"Missing evidence for {field_id} (requires {evidence_artifact}; verification_mode={verification_mode})."
-            )
-            continue
-
         if not has_judgments and field_id in {
             "l1_overall_status",
             "l1_risk_summary",
@@ -153,6 +149,11 @@ def _generate_l1_report(run_dir: Path, out_dir: Path) -> ReportArtifacts:
         }:
             limitations.append(
                 f"Missing judgments for {field_id}; cannot derive verified output."
+            )
+            continue
+        if evidence_artifact not in available_artifacts:
+            limitations.append(
+                f"Missing evidence for {field_id} (requires {evidence_artifact}; verification_mode={verification_mode})."
             )
             continue
 
