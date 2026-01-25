@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from validate_evidence_pack_v0_schema import validate_evidence_pack_v0_fixture
+from validate_base_scenarios import validate_base_scenarios
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -272,6 +273,13 @@ def main() -> int:
         print("ERROR: evidence_pack_v0 fail fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): evidence_pack_v0 fixture validated: {EVIDENCE_PACK_V0_FAIL_PATH}")
+
+    scenario_errors = validate_base_scenarios()
+    if scenario_errors:
+        print("ERROR: base scenario validation failed:")
+        for error in scenario_errors:
+            print(f"  - {error}")
+        return 1
 
     print("PASS: planning pack validated.")
     return 0
