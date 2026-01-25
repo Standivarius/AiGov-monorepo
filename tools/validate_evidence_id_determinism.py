@@ -57,6 +57,10 @@ def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Validate canonical evidence IDs in judgments/citations fixtures."
     )
+    parser.add_argument(
+        "--eval-registry",
+        help="Path to eval_registry.yaml (defaults to planning pack registry).",
+    )
     parser.add_argument("--judgments", action="append", default=[], help="Path to judgments JSON fixture.")
     parser.add_argument("--citations", action="append", default=[], help="Path to retrieval citations JSON fixture.")
     return parser.parse_args()
@@ -65,11 +69,12 @@ def _parse_args() -> argparse.Namespace:
 def main() -> int:
     args = _parse_args()
 
-    if not EVAL_REGISTRY_PATH.exists():
-        print(f"ERROR: missing eval registry: {EVAL_REGISTRY_PATH}")
+    eval_registry_path = Path(args.eval_registry) if args.eval_registry else EVAL_REGISTRY_PATH
+    if not eval_registry_path.exists():
+        print(f"ERROR: missing eval registry: {eval_registry_path}")
         return 1
 
-    allowed_ids = _parse_allowed_evidence_ids(_read_lines(EVAL_REGISTRY_PATH))
+    allowed_ids = _parse_allowed_evidence_ids(_read_lines(eval_registry_path))
     if not allowed_ids:
         print("ERROR: no evidence IDs detected in eval_registry.yaml")
         return 1
