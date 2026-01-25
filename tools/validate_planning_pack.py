@@ -19,6 +19,9 @@ EVIDENCE_PACK_V0_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "evide
 EVIDENCE_PACK_V0_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "evidence_pack_v0_fail.json"
 CLIENT_OVERRIDE_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_pass.json"
 CLIENT_OVERRIDE_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_fail.json"
+CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "client_override_empty_supported.json"
+)
 
 
 def _read_lines(path: Path) -> list[str]:
@@ -297,6 +300,15 @@ def main() -> int:
         print("ERROR: client override fail fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): client override validated: {CLIENT_OVERRIDE_FAIL_PATH}")
+
+    override_empty_supported_errors = validate_override_fixture(CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH)
+    if not override_empty_supported_errors:
+        print("ERROR: client override empty supported_dsar_channels fixture unexpectedly passed validation.")
+        return 1
+    print(
+        "FAIL (as expected): client override validated: "
+        f"{CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH}"
+    )
 
     print("PASS: planning pack validated.")
     return 0
