@@ -2,12 +2,16 @@
 """Validate planning pack registries for Pro Run 2."""
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
 from validate_evidence_pack_v0_schema import validate_evidence_pack_v0_fixture
 from validate_base_scenarios import validate_base_scenarios
 from validate_client_overrides import validate_override_fixture
+from validate_bundle_integrity import validate_bundle
+from validate_scenario_determinism import validate_determinism
+from validate_schema_strictness import validate_schema_strictness
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,10 +23,19 @@ EVIDENCE_PACK_V0_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "evide
 EVIDENCE_PACK_V0_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "evidence_pack_v0_fail.json"
 CLIENT_OVERRIDE_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_pass.json"
 CLIENT_OVERRIDE_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_fail.json"
+BUNDLE_GOOD_DIR = ROOT / "tools" / "fixtures" / "bundles" / "good"
+BUNDLE_POISON_DIR = ROOT / "tools" / "fixtures" / "bundles" / "poison"
+SCENARIO_COMPILE_BASE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "base"
+SCENARIO_COMPILE_OVERRIDE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "overrides"
+SCHEMA_LIST_PATH = ROOT / "tools" / "fixtures" / "validators" / "scenario_schema_list.json"
 
 
 def _read_lines(path: Path) -> list[str]:
     return path.read_text(encoding="utf-8").splitlines()
+
+
+def _read_json(path: Path) -> object:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _parse_eval_registry(lines: list[str]) -> list[dict[str, object]]:
@@ -297,6 +310,41 @@ def main() -> int:
         print("ERROR: client override fail fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): client override validated: {CLIENT_OVERRIDE_FAIL_PATH}")
+
+    bundle_errors = validate_bundle(BUNDLE_GOOD_DIR)
+    if bundle_errors:
+        print("ERROR: bundle integrity validation failed:")
+        for error in bundle_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: bundle integrity validated: {BUNDLE_GOOD_DIR}")
+
+    bundle_poison_errors = validate_bundle(BUNDLE_POISON_DIR)
+    if not bundle_poison_errors:
+        print("ERROR: poisoned bundle unexpectedly passed integrity validation.")
+        return 1
+    print(f"FAIL (as expected): bundle integrity validated: {BUNDLE_POISON_DIR}")
+
+    determinism_errors = validate_determinism(SCENARIO_COMPILE_BASE_DIR, SCENARIO_COMPILE_OVERRIDE_DIR)
+    if determinism_errors:
+        print("ERROR: scenario determinism validation failed:")
+        for error in determinism_errors:
+            print(f"  - {error}")
+        return 1
+    print("PASS: scenario determinism validated.")
+
+    schema_list = _read_json(SCHEMA_LIST_PATH)
+    if not isinstance(schema_list, list) or not schema_list:
+        print(f"ERROR: schema list must be a non-empty array: {SCHEMA_LIST_PATH}")
+        return 1
+    schema_paths = [Path(item) for item in schema_list if str(item).strip()]
+    strictness_errors = validate_schema_strictness(schema_paths, set())
+    if strictness_errors:
+        print("ERROR: scenario schema strictness failed:")
+        for error in strictness_errors:
+            print(f"  - {error}")
+        return 1
+    print("PASS: scenario schema strictness validated.")
 
     print("PASS: planning pack validated.")
     return 0

@@ -1,0 +1,4 @@
+[
+  "packages/specs/scenarios/schemas/base_scenario_v1.schema.json",
+  "packages/specs/schemas/client_scenario_override_v0.schema.json"
+]
