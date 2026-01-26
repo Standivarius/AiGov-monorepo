@@ -30,6 +30,12 @@ The durable source of truth is Git; chats are not.
 - **PR-gate / evalsets**: definitions live in `packages/specs/docs/planning/2026-01-22-run/evalsets_registry.yaml` and planning guidance in `packages/specs/docs/planning/2026-01-22-run/codex_execution_pack.md`.
 - **Monorepo proof (invariants)**: `npx nx run evalsets:migration-smoke` (see `packages/specs/docs/program/EVALSETS.yaml`)
 
+## Where to store session artifacts and state
+- Chat artifacts (session logs): `packages/specs/docs/artifacts/YYYY-MM-DD__chat__<topic>.md` (example: `packages/specs/docs/artifacts/2026-01-26__chat__execution-planning-standivarius.md`)
+- Handoff primer artifact (optional but recommended): `packages/specs/docs/artifacts/YYYY-MM-DD__handoff__new-chat-primer.md` (example: `packages/specs/docs/artifacts/2026-01-26__handoff__new-chat-primer.md`)
+- State object JSON: `packages/specs/docs/planning/2026-01-24-run/state_object_v0_3__2026-01-26.json` (prior canonical: `state_object_v0_2__2026-01-24.json`)
+- Planning-pack “spine” pointers: `packages/specs/docs/planning/2026-01-22-run/eval_registry.yaml`, `packages/specs/docs/planning/2026-01-22-run/evalsets_registry.yaml`, `packages/specs/docs/planning/2026-01-22-run/codex_execution_pack.md`
+
 ## Pytest / unit test policy
 - NEVER run `pytest -q` at repo root as a verification step unless a workflow explicitly installs required deps.
 - NEVER use `|| pytest -q` fallback.
