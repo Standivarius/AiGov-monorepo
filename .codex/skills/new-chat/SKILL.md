@@ -12,6 +12,7 @@ description: "Start an AiGov session by reading AGENTS + EVALSETS and proposing 
 - Ask for single outcome for this session
 - Next PR proposal (<=7 steps)
 - Verification commands (exact)
+- Verification commands must be exact and deterministic; avoid repo-wide pytest; specify exact file path.
 - Effort: low / medium / high / xhigh
 
 ## Claude check

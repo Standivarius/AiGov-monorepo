@@ -30,6 +30,12 @@ The durable source of truth is Git; chats are not.
 - **PR-gate / evalsets**: definitions live in `packages/specs/docs/planning/2026-01-22-run/evalsets_registry.yaml` and planning guidance in `packages/specs/docs/planning/2026-01-22-run/codex_execution_pack.md`.
 - **Monorepo proof (invariants)**: `npx nx run evalsets:migration-smoke` (see `packages/specs/docs/program/EVALSETS.yaml`)
 
+## Pytest / unit test policy
+- NEVER run `pytest -q` at repo root as a verification step unless a workflow explicitly installs required deps.
+- NEVER use `|| pytest -q` fallback.
+- Always run an explicit test file or explicit test package path (e.g., `python3 -m pytest -q packages/pe/tests/scenario/test_bundle_compiler.py`).
+- If unsure of the file path, use `git ls-files | grep -n "test_<name>.py"` then run `python3 -m pytest -q <exact_path>`.
+
 ## Offline (Codex)
 - Prefer local-only validation and avoid networked commands when offline.
 - If network is unavailable, use cached deps and limit checks to fast, deterministic validators.
