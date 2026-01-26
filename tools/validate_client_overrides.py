@@ -76,6 +76,8 @@ def validate_override(override: dict[str, Any], path: Path, required: set[str], 
 
     supported = policy_profile.get("supported_dsar_channels")
     if isinstance(supported, list):
+        if not supported:
+            errors.append(f"{path}: supported_dsar_channels must contain at least one entry")
         supported_channels = []
         for channel in supported:
             if not isinstance(channel, str) or not channel:

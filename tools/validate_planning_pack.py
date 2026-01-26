@@ -393,7 +393,6 @@ def main() -> int:
             print(f"  - {error}")
         return 1
     print("PASS: scenario schema strictness validated.")
-
     print("PASS: planning pack validated.")
     return 0
 

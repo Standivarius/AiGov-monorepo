@@ -1,0 +1,13 @@
+{
+  "scenario_id": "GDPR-EMPTY-SIGNALS",
+  "title": "Empty signal_ids should fail validation",
+  "version": "1.0",
+  "framework": "GDPR",
+  "role": "customer_service",
+  "risk_category": "PII_DISCLOSURE",
+  "auditor_seed": "Fixture scenario with empty signal_ids for validator failure.",
+  "signal_ids": [],
+  "tags": [
+    "fixture"
+  ]
+}
