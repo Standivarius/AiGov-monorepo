@@ -6,8 +6,8 @@ import json
 import sys
 from pathlib import Path
 
+import validate_base_scenarios as base_scenarios
 from validate_evidence_pack_v0_schema import validate_evidence_pack_v0_fixture
-from validate_base_scenarios import validate_base_scenarios
 from validate_client_overrides import validate_override_fixture
 from validate_bundle_integrity import validate_bundle
 from validate_scenario_determinism import validate_determinism
@@ -23,6 +23,12 @@ EVIDENCE_PACK_V0_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "evide
 EVIDENCE_PACK_V0_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "evidence_pack_v0_fail.json"
 CLIENT_OVERRIDE_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_pass.json"
 CLIENT_OVERRIDE_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_fail.json"
+CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "client_override_empty_supported.json"
+)
+BASE_SCENARIO_EMPTY_SIGNALS_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "base_scenario_empty_signals.json"
+)
 BUNDLE_GOOD_DIR = ROOT / "tools" / "fixtures" / "bundles" / "good"
 BUNDLE_POISON_DIR = ROOT / "tools" / "fixtures" / "bundles" / "poison"
 SCENARIO_COMPILE_BASE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "base"
@@ -36,6 +42,33 @@ def _read_lines(path: Path) -> list[str]:
 
 def _read_json(path: Path) -> object:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _validate_base_scenario_fixture(path: Path) -> list[str]:
+    if hasattr(base_scenarios, "validate_base_scenario_fixture"):
+        return base_scenarios.validate_base_scenario_fixture(path)
+    if not path.exists():
+        return [f"base scenario fixture missing: {path}"]
+    if not base_scenarios.SCHEMA_PATH.exists():
+        return [f"base scenario schema missing: {base_scenarios.SCHEMA_PATH}"]
+    if not base_scenarios.SIGNALS_PATH.exists():
+        return [f"signals registry missing: {base_scenarios.SIGNALS_PATH}"]
+
+    try:
+        required, allowed = base_scenarios._load_schema()
+        signal_ids = base_scenarios._load_signal_ids()
+    except ValueError as exc:
+        return [str(exc)]
+
+    try:
+        scenario = base_scenarios._ensure_dict(base_scenarios._load_json(path), f"{path}")
+    except (json.JSONDecodeError, ValueError) as exc:
+        return [f"{path}: invalid JSON ({exc})"]
+
+    errors = base_scenarios._validate_scenario(scenario, required, allowed, signal_ids, path)
+    if isinstance(scenario.get("signal_ids"), list) and not scenario.get("signal_ids"):
+        errors.append(f"{path}: signal_ids must contain at least one entry")
+    return errors
 
 
 def _parse_eval_registry(lines: list[str]) -> list[dict[str, object]]:
@@ -290,12 +323,18 @@ def main() -> int:
         return 1
     print(f"FAIL (as expected): evidence_pack_v0 fixture validated: {EVIDENCE_PACK_V0_FAIL_PATH}")
 
-    scenario_errors = validate_base_scenarios()
+    scenario_errors = base_scenarios.validate_base_scenarios()
     if scenario_errors:
         print("ERROR: base scenario validation failed:")
         for error in scenario_errors:
             print(f"  - {error}")
         return 1
+
+    base_scenario_fail_errors = _validate_base_scenario_fixture(BASE_SCENARIO_EMPTY_SIGNALS_PATH)
+    if not base_scenario_fail_errors:
+        print("ERROR: base scenario empty signal_ids fixture unexpectedly passed validation.")
+        return 1
+    print(f"FAIL (as expected): base scenario fixture validated: {BASE_SCENARIO_EMPTY_SIGNALS_PATH}")
 
     override_errors = validate_override_fixture(CLIENT_OVERRIDE_PASS_PATH)
     if override_errors:
@@ -310,6 +349,15 @@ def main() -> int:
         print("ERROR: client override fail fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): client override validated: {CLIENT_OVERRIDE_FAIL_PATH}")
+
+    override_empty_supported_errors = validate_override_fixture(CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH)
+    if not override_empty_supported_errors:
+        print("ERROR: client override empty supported_dsar_channels fixture unexpectedly passed validation.")
+        return 1
+    print(
+        "FAIL (as expected): client override validated: "
+        f"{CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH}"
+    )
 
     bundle_errors = validate_bundle(BUNDLE_GOOD_DIR)
     if bundle_errors:
