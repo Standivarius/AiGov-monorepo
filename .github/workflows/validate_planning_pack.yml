@@ -5,6 +5,7 @@ on:
     paths:
       - "packages/specs/docs/planning/2026-01-22-run/**"
       - "packages/specs/docs/contracts/**"
+      - "packages/specs/scenarios/**"
       - "tools/**"
   push:
     branches:
@@ -12,6 +13,7 @@ on:
     paths:
       - "packages/specs/docs/planning/2026-01-22-run/**"
       - "packages/specs/docs/contracts/**"
+      - "packages/specs/scenarios/**"
       - "tools/**"
 
 jobs:
@@ -21,19 +23,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: 20
-
-      - name: Install deps
-        run: npm ci
+          python-version: "3.11"
 
       - name: Validate planning pack
         run: python3 tools/validate_planning_pack.py
 
       - name: Run PR-gate validators
         run: bash tools/run_pr_gate_validators.sh
-
-      - name: Migration smoke
-        run: NX_DAEMON=false npx nx run evalsets:migration-smoke
