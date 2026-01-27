@@ -7,7 +7,22 @@
     },
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "GitHub.vscode-pull-request-github",
+        "openai.chatgpt"
+      ]
     }
   },
+  "mounts": [
+    "source=aigov-vscode-server,target=/home/vscode/.vscode-server,type=volume",
+    "source=aigov-gh-config,target=/home/vscode/.config/gh,type=volume"
+  ],
   "postCreateCommand": "npm install"
 }
