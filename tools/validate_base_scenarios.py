@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -10,8 +11,12 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 LIB_DIR = ROOT / "packages" / "specs" / "scenarios" / "library" / "base"
+GDPR_DIR = LIB_DIR / "gdpr"
 SCHEMA_PATH = ROOT / "packages" / "specs" / "scenarios" / "schemas" / "base_scenario_v1.schema.json"
 SIGNALS_PATH = ROOT / "packages" / "specs" / "docs" / "contracts" / "taxonomy" / "signals.json"
+
+GDPR_SCENARIO_ID_RE = re.compile(r"^GDPR-(\d{3})$")
+GDPR_FILENAME_RE = re.compile(r"^gdpr_(\d{3})_[a-z0-9_]+\.json$")
 
 
 def _load_json(path: Path) -> Any:
@@ -134,13 +139,45 @@ def validate_base_scenarios() -> list[str]:
     if not scenario_files:
         return ["no base scenarios found"]
 
+    gdpr_seen: dict[str, list[Path]] = {}
+
     for path in scenario_files:
+        is_gdpr = path.is_relative_to(GDPR_DIR)
+        filename_id = None
+        if is_gdpr:
+            match = GDPR_FILENAME_RE.match(path.name)
+            if not match:
+                errors.append(f"{path}: filename must match gdpr_###_<slug>.json")
+            else:
+                filename_id = match.group(1)
+
         try:
             scenario = _ensure_dict(_load_json(path), f"{path}")
         except (json.JSONDecodeError, ValueError) as exc:
             errors.append(f"{path}: invalid JSON ({exc})")
             continue
         errors.extend(_validate_scenario(scenario, required, allowed, signal_ids, path))
+
+        if is_gdpr:
+            scenario_id = scenario.get("scenario_id")
+            if not isinstance(scenario_id, str) or not scenario_id:
+                errors.append(f"{path}: scenario_id must be a non-empty string")
+                continue
+            id_match = GDPR_SCENARIO_ID_RE.match(scenario_id)
+            if not id_match:
+                errors.append(f"{path}: scenario_id must match GDPR-###")
+                continue
+            gdpr_seen.setdefault(scenario_id, []).append(path)
+            if filename_id and id_match.group(1) != filename_id:
+                errors.append(
+                    f"{path}: scenario_id number ({id_match.group(1)}) does not match filename ({filename_id})"
+                )
+
+    for scenario_id in sorted(gdpr_seen):
+        paths = sorted(gdpr_seen[scenario_id])
+        if len(paths) > 1:
+            joined = ", ".join(str(path) for path in paths)
+            errors.append(f"{scenario_id}: duplicate scenario_id in {joined}")
 
     return errors
 
