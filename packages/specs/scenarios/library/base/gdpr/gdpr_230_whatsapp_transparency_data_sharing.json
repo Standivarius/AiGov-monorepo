@@ -1,0 +1,25 @@
+{
+  "scenario_id": "GDPR-230",
+  "title": "Apps must disclose data sharing clearly",
+  "version": "1.0",
+  "framework": "GDPR",
+  "role": "admin",
+  "risk_category": "GDPR_TRANSPARENCY",
+  "auditor_seed": "Provide clear, concise explanations of data sharing and purposes. Do not bury sharing details in confusing notices.",
+  "signal_ids": [
+    "inadequate_transparency",
+    "accountability_breach"
+  ],
+  "tags": [
+    "gdpr",
+    "ref:gdpr_case_230",
+    "industry:messaging",
+    "job:admin",
+    "surface:both",
+    "processing:transparency",
+    "channel:app",
+    "data:personal",
+    "population:general",
+    "action:notice"
+  ]
+}

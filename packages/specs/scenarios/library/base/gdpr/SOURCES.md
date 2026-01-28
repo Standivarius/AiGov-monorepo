@@ -1442,3 +1442,403 @@ Each entry maps a scenario to its enforcement source and rationale.
 - Source URL: URL: (missing in backlog doc)
 - Likely GDPR Articles: Art 6; Art 5(1)(a); Art 13/14
 - Rationale: Targeted ads lacked lawful basis and transparency; this scenario tests consent and notice.
+
+## GDPR-204
+- Authority: UODO (Poland)
+- Date: 2020-03-05
+- Source title: EDPB News (Poland)
+- Source URL: https://edpb.europa.eu/news/national-news/2020/fine-processing-students-fingerprints-imposed-school_en
+- Likely GDPR Articles: Art. 5(1)(c), 6(1), 9(1), 32
+- Rationale: A school used fingerprint scanners for lunches; this scenario tests lawful basis and proportionality for children.
+
+## GDPR-205
+- Authority: Datainspektionen (Sweden)
+- Date: 2019-08-22
+- Source title: EDPB News (Sweden)
+- Source URL: https://edpb.europa.eu/news/national-news/2019/facial-recognition-school-renders-swedens-first-gdpr-fine_sv
+- Likely GDPR Articles: Art. 5(1)(a), 6(1), 9(1), 35
+- Rationale: School facial recognition lacked DPIA and lawful basis; this scenario tests suspension and DPIA completion.
+
+## GDPR-206
+- Authority: Autoriteit Persoonsgegevens (Netherlands)
+- Date: 2019
+- Source title: Enforcement Tracker
+- Source URL: https://www.enforcementtracker.com/
+- Likely GDPR Articles: Art. 12, 13, 14
+- Rationale: Children received complex notices; this scenario tests age-appropriate transparency.
+
+## GDPR-207
+- Authority: DPC (Ireland)
+- Date: 2021-09-15
+- Source title: Reuters (Instagram)
+- Source URL: https://www.reuters.com/technology/irish-regulator-opens-probe-into-instagrams-handling-childrens-data-2021-09-15/
+- Likely GDPR Articles: Art. 5(1)(a), 25(2), 32
+- Rationale: Minors' data was exposed by default; this scenario tests privacy-by-default controls.
+
+## GDPR-208
+- Authority: DPC (Ireland)
+- Date: 2021-09-02
+- Source title: Reuters (WhatsApp fine)
+- Source URL: https://www.reuters.com/technology/whatsapp-fined-record-225-mln-euro-by-ireland-over-privacy-2021-09-02/
+- Likely GDPR Articles: Art. 5(1)(a), 12, 13
+- Rationale: Transparency for underage users was inadequate; this scenario tests clear disclosures.
+
+## GDPR-209
+- Authority: ICO (United Kingdom)
+- Date: 2020
+- Source title: ICO Children's Code
+- Source URL: https://ico.org.uk/for-organisations/childrens-code/
+- Likely GDPR Articles: Art. 5(1)(a), 6(1), 12, 25
+- Rationale: Children's services lacked valid consent; this scenario tests age-appropriate consent flows.
+
+## GDPR-210
+- Authority: AEPD (Spain)
+- Date: 2021
+- Source title: AEPD sanction summaries
+- Source URL: https://www.aepd.es/
+- Likely GDPR Articles: Art. 6(1), 8, 9
+- Rationale: Minors' photos were published without consent; this scenario tests lawful basis for publication.
+
+## GDPR-211
+- Authority: CNIL (France)
+- Date: Oct 2019
+- Source title: CNIL guidance/enforcement
+- Source URL: https://www.cnil.fr/
+- Likely GDPR Articles: Art. 5(1)(c), 6(1), 13
+- Rationale: School surveillance was excessive and poorly disclosed; this scenario tests minimization and notice.
+
+## GDPR-212
+- Authority: Datatilsynet (Denmark)
+- Date: 2022
+- Source title: Dataguidance summary
+- Source URL: https://www.dataguidance.com/
+- Likely GDPR Articles: Art. 44, 46, 5(1)(f)
+- Rationale: Student data transfers lacked safeguards; this scenario tests TIAs and mitigation.
+
+## GDPR-213
+- Authority: ICO (United Kingdom)
+- Date: 2022
+- Source title: ICO enforcement blog/news
+- Source URL: https://ico.org.uk/
+- Likely GDPR Articles: Art. 5(1)(a), 6(1), 13, 14
+- Rationale: Sharing was opaque and lacked lawful basis; this scenario tests disclosure and consent.
+
+## GDPR-214
+- Authority: DPC (Ireland)
+- Date: 2023-05-22
+- Source title: DPC decision (Meta transfers)
+- Source URL: https://www.dataprotection.ie/
+- Likely GDPR Articles: Art. 44, 46, 49
+- Rationale: Transfers lacked safeguards; this scenario tests suspension and compliant transfer mechanisms.
+
+## GDPR-215
+- Authority: CNPD (Luxembourg)
+- Date: 2021-07-16
+- Source title: Reuters/Dataguidance (Amazon ads)
+- Source URL: https://www.reuters.com/technology/luxembourg-privacy-watchdog-fines-amazon-746-million-euros-2021-07-30/
+- Likely GDPR Articles: Art. 6(1), 5(1)(a), 12, 13
+- Rationale: Targeted ads lacked consent and transparency; this scenario tests lawful basis and disclosure.
+
+## GDPR-216
+- Authority: CNIL (France)
+- Date: Jan 2019
+- Source title: CNIL enforcement summary
+- Source URL: https://www.cnil.fr/
+- Likely GDPR Articles: Art. 6(1)(a), 7, 13
+- Rationale: Apps collected identifiers/location without valid consent; this scenario tests consent UX.
+
+## GDPR-217
+- Authority: BE DPA (Belgium)
+- Date: 2022-02-02
+- Source title: BE DPA Press Release
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(a),(f), 6(1), 24, 30, 35, 37
+- Rationale: TCF consent string failed GDPR requirements; this scenario tests valid consent management.
+
+## GDPR-218
+- Authority: CNIL (France)
+- Date: 2022-10-20
+- Source title: EDPB News (Clearview AI)
+- Source URL: https://edpb.europa.eu/news/national-news/2022/french-sa-fines-clearview-ai-eur-20-million_en
+- Likely GDPR Articles: Art. 6(1), 12, 15, 17, 31
+- Rationale: Clearview scraped faces and ignored deletion requests; this scenario tests rights handling and lawful collection.
+
+## GDPR-219
+- Authority: ICO (United Kingdom)
+- Date: 2020-10-16
+- Source title: Clifford Chance (BA fine)
+- Source URL: https://www.cliffordchance.com/insights/resources/blogs/talking-tech/en/articles/2020/10/ico-announces-significantly-reduced-gdpr-fine-for-british-airway.html
+- Likely GDPR Articles: Art. 5(1)(f), 32(1),(2)
+- Rationale: BA breach persisted undetected; this scenario tests monitoring and security controls.
+
+## GDPR-220
+- Authority: ICO (United Kingdom)
+- Date: 2020-10-30
+- Source title: Reuters (Marriott breach)
+- Source URL: https://www.reuters.com/business/uks-ico-fines-marriott-184-mln-pounds-failing-secure-customer-data-2020-10-30/
+- Likely GDPR Articles: Art. 5(1)(f), 33(1)
+- Rationale: Marriott breach was long-running; this scenario tests prompt detection and notification.
+
+## GDPR-221
+- Authority: AEPD (Spain)
+- Date: 2019-06-11
+- Source title: Reuters (La Liga app)
+- Source URL: https://www.reuters.com/article/sports/-la-liga-fined-by-spains-data-protection-agency-idUSKCN1TC2S9/
+- Likely GDPR Articles: Art. 5(1)(a),(b), 6(1), 7(1)
+- Rationale: Monitoring was not disclosed; this scenario tests transparency and consent for monitoring features.
+
+## GDPR-222
+- Authority: CNPD (Portugal)
+- Date: 2018-07-17
+- Source title: News report
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(f), 32, 33
+- Rationale: Hospital access controls were weak; this scenario tests RBAC for health data.
+
+## GDPR-223
+- Authority: Garante Privacy (Italy)
+- Date: 2020-01-15
+- Source title: EDPB News (TIM)
+- Source URL: https://edpb.europa.eu/news/national-news/2020/marketing-italian-sa-fines-tim-eur-278-million_en
+- Likely GDPR Articles: Art. 5(1)(a),(b),(d), 6(1), 21, 25
+- Rationale: Unsolicited marketing ignored opt-outs; this scenario tests consent checks and objections.
+
+## GDPR-224
+- Authority: HmbBfDI (Germany - Hamburg)
+- Date: 2020-10-01
+- Source title: Reuters (H&M)
+- Source URL: https://www.reuters.com/world/americas/germany-fines-hm-35-mln-euros-data-protection-breaches-2020-10-01/
+- Likely GDPR Articles: Art. 5(1)(a),(e), 6(1), 9(2), 24
+- Rationale: Employee monitoring was excessive and unlawful; this scenario tests minimization and lawful basis.
+
+## GDPR-225
+- Authority: DSB (Austria)
+- Date: 2019-10-23
+- Source title: EDPB News (Austrian Post)
+- Source URL: https://edpb.europa.eu/news/national-news/2019/administrative-criminal-proceedings-austrian-data-protection-authority_en
+- Likely GDPR Articles: Art. 5(1)(b),(c), 6(1), 9(1)
+- Rationale: Political profiling was unlawful; this scenario tests consent and purpose limitation.
+
+## GDPR-226
+- Authority: BfDI (Germany - Federal)
+- Date: 2019-12-09
+- Source title: BfDI Press Release
+- Source URL: https://www.bfdi.bund.de/SharedDocs/Pressemitteilungen/EN/2020/28_Urteil-1und1.html
+- Likely GDPR Articles: Art. 5(1)(f), 32(1),(2)
+- Rationale: Weak authentication exposed customer data; this scenario tests stronger verification.
+
+## GDPR-227
+- Authority: DPC (Ireland)
+- Date: 2020-12-15
+- Source title: EDPB News (Twitter)
+- Source URL: https://edpb.europa.eu/news/national-news/2020/irish-data-protection-commission-announces-decision-twitter-inquiry_en
+- Likely GDPR Articles: Art. 33(1), 33(5)
+- Rationale: Reporting was late and poorly documented; this scenario tests 72-hour reporting and records.
+
+## GDPR-228
+- Authority: DPC (Ireland)
+- Date: 2022-11-28
+- Source title: Reuters (Facebook scraping)
+- Source URL: https://www.reuters.com/technology/irish-regulator-fines-facebook-265-mln-euros-over-privacy-breach-2022-11-28/
+- Likely GDPR Articles: Art. 5(1)(f), 25(1),(2), 32
+- Rationale: Contact import allowed scraping; this scenario tests anti-scraping controls and minimization.
+
+## GDPR-229
+- Authority: UODO (Poland)
+- Date: 2019-03-26
+- Source title: EDPB News (Poland first fine)
+- Source URL: https://edpb.europa.eu/news/national-news/2019/first-fine-imposed-president-personal-data-protection-office_en
+- Likely GDPR Articles: Art. 5(1)(a),(b), 14(1),(2)
+- Rationale: Indirect collection lacked notice; this scenario tests Art.14 notification.
+
+## GDPR-230
+- Authority: DPC (Ireland)
+- Date: 2021-09-02
+- Source title: Reuters (WhatsApp fine)
+- Source URL: https://www.reuters.com/technology/whatsapp-fined-record-225-mln-euro-by-ireland-over-privacy-2021-09-02/
+- Likely GDPR Articles: Art. 5(1)(a), 12(1), 13(1),(2)
+- Rationale: Transparency was inadequate; this scenario tests clear data sharing disclosures.
+
+## GDPR-231
+- Authority: AP (Netherlands)
+- Date: 2024
+- Source title: Enforcement Tracker report
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 44, 45, 46
+- Rationale: Driver data transfers lacked safeguards; this scenario tests Schrems II compliance.
+
+## GDPR-232
+- Authority: PDPC (Bulgaria)
+- Date: Jul 2019
+- Source title: News article
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(f), 32, 33
+- Rationale: Security and notification were inadequate; this scenario tests public-sector breach handling.
+
+## GDPR-233
+- Authority: UODO (Poland)
+- Date: 2020
+- Source title: UODO decision
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(c), 28(3)
+- Rationale: Schools lacked processor contracts and collected excessive IDs; this scenario tests contract and minimization.
+
+## GDPR-234
+- Authority: CNIL (France)
+- Date: 2022
+- Source title: CNIL/Dataguidance GA transfers
+- Source URL: https://www.cnil.fr/
+- Likely GDPR Articles: Art. 44, 46
+- Rationale: GA transfers lacked safeguards; this scenario tests transfer assessments.
+
+## GDPR-235
+- Authority: Austrian DPA (DSB)
+- Date: 2022
+- Source title: Enforcement Tracker / GDPRhub
+- Source URL: https://gdprhub.eu/
+- Likely GDPR Articles: Art. 44, 46
+- Rationale: GA transfers were unlawful; this scenario tests stopping transfers or adding safeguards.
+
+## GDPR-236
+- Authority: CNIL (France)
+- Date: 2020
+- Source title: CNIL cookies enforcement
+- Source URL: https://www.cnil.fr/
+- Likely GDPR Articles: Art. 6(1)(a), 7, 13
+- Rationale: Cookie consent was invalid; this scenario tests equal choice and transparency.
+
+## GDPR-237
+- Authority: Lithuanian DPA
+- Date: 2021
+- Source title: Enforcement Tracker
+- Source URL: https://www.enforcementtracker.com/
+- Likely GDPR Articles: Art. 5(1)(c), 6(1)
+- Rationale: Collected fields were excessive; this scenario tests data minimization.
+
+## GDPR-238
+- Authority: CNIL (France)
+- Date: 2019
+- Source title: Dataguidance (Sergic)
+- Source URL: https://www.dataguidance.com/
+- Likely GDPR Articles: Art. 5(1)(e), 32
+- Rationale: Sergic lacked retention policy and security; this scenario tests retention and safeguards.
+
+## GDPR-239
+- Authority: Garante (Italy)
+- Date: 2020
+- Source title: Garante announcements
+- Source URL: https://www.garanteprivacy.it/
+- Likely GDPR Articles: Art. 6(1), 9(1), 13
+- Rationale: Health tracking lacked transparency and lawful basis; this scenario tests notices and legal basis.
+
+## GDPR-240
+- Authority: Belgian DPA (APD)
+- Date: 2024-08-23
+- Source title: PPC Land
+- Source URL: https://ppc.land/belgian-data-protection-authority-fines-telecom-company-eu100-000-for-gdpr-breach/
+- Likely GDPR Articles: Art. 12(3), 15
+- Rationale: Access requests were delayed for 14 months; this scenario tests DSAR timing and tracking.
+
+## GDPR-241
+- Authority: ICO (UK)
+- Date: 2022-09-28
+- Source title: ICO News
+- Source URL: https://ico.org.uk/about-the-ico/news-and-events/news-and-blogs/2022/09/ico-acts-over-concerns-about-organisations-failing-to-respond-to-public-s-access-requests/
+- Likely GDPR Articles: Art. 12(3), 15
+- Rationale: Backlogs caused long delays; this scenario tests DSAR resourcing and tracking.
+
+## GDPR-242
+- Authority: AEPD (Spain)
+- Date: 2022-12-09
+- Source title: Conecta UNIVE
+- Source URL: https://conecta.unive.es/la-aepd-sanciona-por-no-dar-respuesta-a-un-ejercicio-de-derechos/
+- Likely GDPR Articles: Art. 12(4), 15
+- Rationale: Responses were incomplete; this scenario tests full DSAR replies.
+
+## GDPR-243
+- Authority: Garante (Italy)
+- Date: 2019
+- Source title: Garante site / summaries
+- Source URL: https://www.garanteprivacy.it/
+- Likely GDPR Articles: Art. 6(1)(a), 7
+- Rationale: Consent was forced; this scenario tests unbundled consent.
+
+## GDPR-244
+- Authority: LfDI BW (Germany)
+- Date: 2019
+- Source title: EDPB News / summaries
+- Source URL: https://edpb.europa.eu/
+- Likely GDPR Articles: Art. 5(1)(b), 6(1)
+- Rationale: Personal use of official databases breached purpose limits; this scenario tests access control.
+
+## GDPR-245
+- Authority: Garante (Italy)
+- Date: 2021
+- Source title: Garante / EDPB summaries
+- Source URL: https://www.garanteprivacy.it/
+- Likely GDPR Articles: Art. 22, 13, 15
+- Rationale: Profiling lacked transparency and contestability; this scenario tests human review.
+
+## GDPR-246
+- Authority: BfDI (Germany)
+- Date: 2025
+- Source title: BfDI / BankInfoSecurity
+- Source URL: https://www.bankinfosecurity.com/
+- Likely GDPR Articles: Art. 28(1), 32
+- Rationale: Processor oversight gaps caused mishandling; this scenario tests contracts and monitoring.
+
+## GDPR-247
+- Authority: UODO (Poland)
+- Date: 2019
+- Source title: EDPB News
+- Source URL: https://edpb.europa.eu/
+- Likely GDPR Articles: Art. 14, 12
+- Rationale: Indirect collection lacked notices; this scenario tests Art.14 notification.
+
+## GDPR-248
+- Authority: AP (Netherlands)
+- Date: 2019
+- Source title: Reuters / Dutch enforcement
+- Source URL: https://www.reuters.com/
+- Likely GDPR Articles: Art. 32, 5(1)(f)
+- Rationale: Hospital access controls were weak; this scenario tests RBAC and auditing.
+
+## GDPR-249
+- Authority: AEPD (Spain)
+- Date: 2019-10-17
+- Source title: AEPD / summaries
+- Source URL: https://www.aepd.es/
+- Likely GDPR Articles: Art. 6(1)(a), 7
+- Rationale: Cookie consent lacked reject option; this scenario tests opt-out support.
+
+## GDPR-250
+- Authority: EU / National DPA
+- Date: 2019
+- Source title: Dataguidance / Reuters
+- Source URL: https://www.dataguidance.com/
+- Likely GDPR Articles: Art. 32, 33
+- Rationale: Public agency breach handling was weak; this scenario tests security and notification.
+
+## GDPR-251
+- Authority: CNIL (France)
+- Date: 2021
+- Source title: CNIL guidance/enforcement
+- Source URL: https://www.cnil.fr/
+- Likely GDPR Articles: Art. 5(1)(c), 6(1), 9(1)
+- Rationale: Sensitive data was published without redaction; this scenario tests redaction before publication.
+
+## GDPR-252
+- Authority: UOOU (Czech Republic)
+- Date: 2023
+- Source title: UOOU Press Release
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(a),(c), 6(1)
+- Rationale: FOI responses lacked redaction; this scenario tests minimization in publications.
+
+## GDPR-253
+- Authority: UOOU (Czech Republic)
+- Date: 2023
+- Source title: UOOU Press Release
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(a),(c), 6(1)
+- Rationale: Sensitive data was disclosed in FOI responses; this scenario tests redaction and lawful basis.
