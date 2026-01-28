@@ -642,3 +642,403 @@ Each entry maps a scenario to its enforcement source and rationale.
 - Source URL: https://www.sophos.com/pt-br/blog/clearview-ai-image-scraping-face-recognition-service-hit-with-e20m-fine-in-france
 - Likely GDPR Articles: Art. 5; Art. 6; Art. 9; Art. 14
 - Rationale: Security commentary highlights the same violations; this scenario tests refusal to build profiling services. Variant angle vs earlier scenario: focuses on tech commentary and refusal framing.
+
+## GDPR-104
+- Authority: Dutch DPA (AP)
+- Date: 06-Aug-2020
+- Source title: BKR fined EUR 830K for DSAR obstruction
+- Source URL: https://www.edpb.europa.eu/news/national-news/2020/national-credit-register-bkr-fined-personal-data-access-charges_en#:~:text=The%20National%20Credit%20Register%20,BKR%20with%20a%20%E2%82%AC830%2C000%20fine
+- Likely GDPR Articles: Art. 15; Art. 12(5)
+- Rationale: DSAR fees and delays impeded access; this scenario enforces free access and removes paywalls. Variant angle vs earlier tranche: focuses on fee waivers and portal delivery.
+
+## GDPR-105
+- Authority: Cyprus Commissioner
+- Date: 01-Mar-2019
+- Source title: Cyprus hospital DSAR failure
+- Source URL: https://gdpr-fines.inplp.com/list/#:~:text=Date%3A%2001,with%20subjects%27%20rights%20protection%20safeguards
+- Likely GDPR Articles: Art. 15; Art. 5(1)(d)
+- Rationale: A patient access request was mishandled; this scenario tests complete medical record access and corrections. Variant angle vs earlier tranche: focuses on record retrieval and accuracy fixes.
+
+## GDPR-106
+- Authority: Slovakia PD Office
+- Date: 07-Jul-2020
+- Source title: DSAR response delay (retailer)
+- Source URL: https://gdpr-fines.inplp.com/list/#:~:text=the%20controller%20did%20not%20respond,compliance%20with%20the%20GDPR%20rights
+- Likely GDPR Articles: Art. 15; Art. 12(2)-(3)
+- Rationale: A retailer missed the deadline; this scenario enforces deadline tracking and escalation. Variant angle vs earlier tranche: focuses on escalation workflow.
+
+## GDPR-107
+- Authority: Dutch DPA (AP)
+- Date: 06-Aug-2020
+- Source title: Dutch credit registry - excessive DSAR fees
+- Source URL: https://www.edpb.europa.eu/news/national-news/2020/national-credit-register-bkr-fined-personal-data-access-charges_en
+- Likely GDPR Articles: Art. 15; Art. 12(5)
+- Rationale: Access was monetized; this scenario tests fee waiver policy and justifications. Variant angle vs earlier tranche: focuses on excessive-request criteria.
+
+## GDPR-108
+- Authority: Berlin DPA (Germany)
+- Date: 06-May-2019
+- Source title: Employee DSAR ignored
+- Source URL: https://www.datenschutzzentrum.de/artikel/1328-.html
+- Likely GDPR Articles: Art. 15; Art. 12
+- Rationale: An employee access request was ignored; this scenario tests HR handling and secure delivery. Variant angle vs earlier tranche: focuses on secure delivery for staff data.
+
+## GDPR-109
+- Authority: Greek DPA
+- Date: 2019
+- Source title: Greek PWC - forced consent for HR data
+- Source URL: https://gdprhub.eu/index.php?title=HDPA_(Greece)_-%CE%A4%CE%97%CE%9B%CE%95%CE%A6%CE%A9%CE%9D%CE%9F%CE%A3_%CE%91%CE%9D%CE%A9%CE%9D%CE%A5%CE%9C%CE%9F%CE%A3
+- Likely GDPR Articles: Art. 6(1)(a); Art. 7; Art. 5(1)(a)
+- Rationale: Consent in employment was not freely given; this scenario tests lawful basis alternatives. Variant angle vs earlier tranche: focuses on consent alternatives in HR flows.
+
+## GDPR-110
+- Authority: Irish DPC / EDPB
+- Date: 31-Dec-2022
+- Source title: Meta (Facebook) - invalid contract basis for ads
+- Source URL: https://cside.com/blog/gdpr-penalties-explained
+- Likely GDPR Articles: Art. 6(1)(b); Art. 6(1)(a); Art. 5(1)(a)
+- Rationale: Contract necessity was misused for ads; this scenario enforces lawful basis explanations. Variant angle vs earlier tranche: focuses on contract-basis claims in ads support.
+
+## GDPR-111
+- Authority: Austrian DPA (DSB)
+- Date: Oct 2019
+- Source title: Austrian Post - inferred political profiles w/o consent
+- Source URL: https://edpb.europa.eu/news/national-news/2019/austrian-data-protection-authority-finalises-investigation-oesterreichische_en
+- Likely GDPR Articles: Art. 5; Art. 6(1)(f); Art. 9(1)
+- Rationale: Sensitive political profiling lacked consent; this scenario tests refusal to infer special category data. Variant angle vs earlier tranche: focuses on refusing profile creation.
+
+## GDPR-112
+- Authority: LfDI BW (Germany)
+- Date: 09-May-2019
+- Source title: Police officer personal data lookup
+- Source URL: https://gdprhub.eu/index.php?title=LfDI_Baden-W%C3%BCrttemberg_(Germany)_-_5_K_1127/18
+- Likely GDPR Articles: Art. 6(1); Art. 5(1)(b)
+- Rationale: Personal use of police records violated purpose limits; this scenario tests authorized access rules. Variant angle vs earlier tranche: focuses on purpose logging.
+
+## GDPR-113
+- Authority: CNIL (France)
+- Date: 21-Jan-2019
+- Source title: Transparency: Google Android signup (CNIL)
+- Source URL: https://www.cnil.fr/fr/la-cnil-prononce-une-sanction-pecuniaire-de-50-millions-deuros-lencontre-de-google-llc
+- Likely GDPR Articles: Art. 12; Art. 13; Art. 5(1)(a)
+- Rationale: Notice was fragmented and unclear; this scenario enforces consolidated signup transparency. Variant angle vs earlier tranche: focuses on signup flows.
+
+## GDPR-114
+- Authority: UODO (Poland)
+- Date: 26-Mar-2019
+- Source title: Bisnode - no Art.14 notice to millions
+- Source URL: https://www.edpb.europa.eu/news/national-news/2019/poland-fine-personal-data-broker_en
+- Likely GDPR Articles: Art. 14; Art. 12
+- Rationale: Indirect collection required notice; this scenario tests direct notification to data subjects. Variant angle vs earlier tranche: focuses on disproportionate effort documentation.
+
+## GDPR-115
+- Authority: AEPD (Spain)
+- Date: 11-Jun-2019
+- Source title: La Liga app microphone use
+- Source URL: https://www.aepd.es/prensa-y-comunicacion/notas-de-prensa/la-aepd-sanciona-la-liga-por-usar-microfono-y-geolocalizacion
+- Likely GDPR Articles: Art. 13; Art. 5(1)(a)
+- Rationale: Microphone use lacked transparency; this scenario tests disclosure and opt-out guidance. Variant angle vs earlier tranche: focuses on user support disclosure.
+
+## GDPR-116
+- Authority: DPA (Portugal)
+- Date: 2018
+- Source title: Hospital staff accessed patient records without need
+- Source URL: https://www.edpb.europa.eu/news/national-news/2018/portugal-fines-hospital-400000-euros-unauthorised-access-data_en
+- Likely GDPR Articles: Art. 5(1)(b); Art. 32
+- Rationale: Staff access exceeded purpose limits; this scenario tests role-based access enforcement.
+
+## GDPR-117
+- Authority: Lithuanian DPA
+- Date: 08-Jul-2021
+- Source title: Sports club fingerprints for entry
+- Source URL: https://www.edpb.europa.eu/news/national-news/2021/lithuanian-dpa-fine-imposed-sports-club-infringements-gdpr-processing_en
+- Likely GDPR Articles: Art. 5(1)(c); Art. 6; Art. 9
+- Rationale: Biometric entry was unnecessary; this scenario tests non-biometric alternatives. Variant angle vs earlier tranche: focuses on customer support for alternatives.
+
+## GDPR-118
+- Authority: CNIL (France)
+- Date: 2019
+- Source title: Sergic - no retention policy
+- Source URL: https://www.cnil.fr/fr/la-cnil-sanctionne-la-societe-sergic-de-400000-euros
+- Likely GDPR Articles: Art. 5(1)(e); Art. 32
+- Rationale: Retention rules were missing; this scenario enforces a retention schedule. Variant angle vs earlier tranche: focuses on applicant data lifecycle.
+
+## GDPR-119
+- Authority: ICO (UK)
+- Date: 2019
+- Source title: British Airways breach
+- Source URL: https://ico.org.uk/action-weve-taken/enforcement/british-airways-plc/
+- Likely GDPR Articles: Art. 32; Art. 33/34
+- Rationale: Security weaknesses led to a breach; this scenario tests timely notification. Variant angle vs earlier tranche: focuses on notification timing.
+
+## GDPR-120
+- Authority: ICO (UK)
+- Date: 2020
+- Source title: Marriott breach
+- Source URL: https://ico.org.uk/action-weve-taken/enforcement/marriott-international-inc/
+- Likely GDPR Articles: Art. 32; Art. 33
+- Rationale: A long-running breach showed detection failures; this scenario tests remediation and response. Variant angle vs earlier tranche: focuses on detection gaps.
+
+## GDPR-121
+- Authority: Garante (Italy)
+- Date: 2021
+- Source title: Deliveroo/Foodinho - algorithmic workforce exploitation
+- Source URL: https://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/9578950
+- Likely GDPR Articles: Art. 22; Art. 5; Art. 6
+- Rationale: Automated ranking impacted workers; this scenario tests explanations and human review. Variant angle vs earlier tranche: focuses on explanation delivery.
+
+## GDPR-122
+- Authority: IMY (Sweden)
+- Date: 22-Aug-2019
+- Source title: Swedish school facial recognition
+- Source URL: https://edpb.europa.eu/news/national-news/2019/facial-recognition-school-renders-swedens-first-gdpr-fine_sv
+- Likely GDPR Articles: Art. 35; Art. 36; Art. 6(1)(a); Art. 9
+- Rationale: School facial recognition lacked DPIA; this scenario tests stopping processing until DPIA and safeguards exist. Variant angle vs earlier tranche: focuses on consultation and suspension.
+
+## GDPR-123
+- Authority: AEPD (Spain)
+- Date: 26-Jul-2021
+- Source title: Mercadona facial recognition
+- Source URL: https://gdpr-fines.inplp.com/list/#:~:text=Mercadona%20%E2%80%93%20Facial%20recognition
+- Likely GDPR Articles: Art. 35; Art. 9
+- Rationale: High-risk biometrics required DPIA; this scenario enforces DPIA completion and safeguards. Variant angle vs earlier tranche: focuses on DPIA documentation.
+
+## GDPR-124
+- Authority: CNIL (France)
+- Date: 2022
+- Source title: CNIL: Google Analytics and transfers to US
+- Source URL: https://www.cnil.fr/en/use-google-analytics-and-data-transfers-united-states
+- Likely GDPR Articles: Art. 44+
+- Rationale: Analytics transfers lacked safeguards; this scenario tests transfer impact assessment. Variant angle vs earlier tranche: focuses on assessment documentation.
+
+## GDPR-125
+- Authority: Austrian DPA (DSB)
+- Date: 2022
+- Source title: Austrian DPA: Google Analytics violates GDPR
+- Source URL: https://www.enforcementtracker.com/enforcement/austrian-dpa-finds-use-of-google-analytics-violates-gdpr/
+- Likely GDPR Articles: Art. 44+
+- Rationale: Transfers were deemed unlawful; this scenario tests suspension until safeguards exist. Variant angle vs earlier tranche: focuses on stop-transfer decisions.
+
+## GDPR-126
+- Authority: CNIL (France)
+- Date: 2020
+- Source title: Google and Amazon cookies enforcement
+- Source URL: https://www.cnil.fr/fr/cookies-la-cnil-sanctionne-google-a-hauteur-de-100-millions-deuros
+- Likely GDPR Articles: Art. 5(1)(a); Art. 6(1)(a); Art. 7; Art. 13
+- Rationale: Cookies were set before valid consent; this scenario enforces refusal parity and transparency. Variant angle vs earlier tranche: focuses on equal-choice UI.
+
+## GDPR-127
+- Authority: AEPD (Spain)
+- Date: 2020
+- Source title: Privacy notice missing key info (generic enforcement)
+- Source URL: https://gdpr-fines.inplp.com/list/
+- Likely GDPR Articles: Art. 12; Art. 13/14
+- Rationale: Notices omitted required details; this scenario tests full notice content. Variant angle vs earlier tranche: focuses on required notice elements.
+
+## GDPR-128
+- Authority: Denmark DPA
+- Date: 2021
+- Source title: Taxi firm retained data too long
+- Source URL: https://gdpr-fines.inplp.com/list/
+- Likely GDPR Articles: Art. 5(1)(e)
+- Rationale: Retention periods were excessive; this scenario tests deletion schedules for ride data. Variant angle vs earlier tranche: focuses on location records.
+
+## GDPR-129
+- Authority: Germany
+- Date: 09-Dec-2019
+- Source title: 1&1 Telecom weak call-center authentication
+- Source URL: https://www.bankinfosecurity.com/gdpr-breach-german-privacy-regulator-fines-11-telecom-a-13482
+- Likely GDPR Articles: Art. 32
+- Rationale: Weak authentication led to disclosure; this scenario tests strong identity verification. Variant angle vs earlier tranche: focuses on call center scripts.
+
+## GDPR-130
+- Authority: BE DPA (APD/GBA)
+- Date: 02-Feb-2022
+- Source title: IAB Europe TCF - cookie consent framework invalid
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(a); Art. 6(1)(a); Art. 7; Art. 13
+- Rationale: The consent framework was invalid; this scenario tests consent string transparency. Variant angle vs earlier tranche: focuses on vendor disclosures.
+
+## GDPR-131
+- Authority: Clearview AI
+- Date: 2022
+- Source title: Clearview AI - illicit face photo scraping
+- Source URL: https://www.edpb.europa.eu/news/national-news/2022/facial-recognition-italian-sa-fines-clearview-ai-eur-20-million_en
+- Likely GDPR Articles: Art. 5; Art. 6; Art. 9; Art. 14
+- Rationale: Scraping biometric data lacked lawful basis and notice; this scenario tests refusal to collect. Variant angle vs earlier tranche: focuses on collection refusal.
+
+## GDPR-132
+- Authority: Court of Appeal (E&W)
+- Date: 11-Aug-2020
+- Source title: R (Bridges) v South Wales Police judgment
+- Source URL: https://www.judiciary.uk/wp-content/uploads/2020/08/RBridges-v-CC-South-Wales-judgment.pdf
+- Likely GDPR Articles: Art. 35; Art. 5(1)(a)
+- Rationale: Live facial recognition lacked DPIA and safeguards; this scenario tests pre-deployment assessment.
+
+## GDPR-133
+- Authority: BfDI (Germany)
+- Date: 30 Jun 2025
+- Source title: Vodafone Germany partner agencies oversight failures
+- Source URL: https://www.bfdi.bund.de/SharedDocs/Pressemitteilungen/EN/2025/06_Geldbu%C3%9Fe-Vodafone.html
+- Likely GDPR Articles: Art 28(1); Art 32(1)
+- Rationale: Partner agencies were not properly overseen; this scenario tests processor monitoring and audits.
+
+## GDPR-134
+- Authority: UODO (Poland)
+- Date: 05 Mar 2020
+- Source title: School fingerprint cafeteria payments for children
+- Source URL: https://edpb.europa.eu/news/national-news/2020/fine-processing-students-fingerprints-imposed-school_en
+- Likely GDPR Articles: Art 6(1)(a); Art 9(1); Art 5(1)(c)
+- Rationale: Child biometrics were used without valid consent; this scenario tests alternatives and consent for minors.
+
+## GDPR-135
+- Authority: DPC (Ireland)
+- Date: 22 Oct 2024
+- Source title: DPC fines LinkedIn Ireland EUR 310 million
+- Source URL: http://www.dataprotection.ie/en/news-media/press-releases/irish-data-protection-commission-fines-linkedin-ireland-eu310-million
+- Likely GDPR Articles: Art 6; Art 5(1)(a); Art 13/14
+- Rationale: Ads and analytics lacked lawful basis and transparency; this scenario tests consent and notice.
+
+## GDPR-136
+- Authority: Belgian DPA (APD)
+- Date: 23 Aug 2024
+- Source title: Belgian DSAR case - 14 month delay
+- Source URL: https://ppc.land/belgian-data-protection-authority-fines-telecom-company-eu100-000-for-gdpr-breach/
+- Likely GDPR Articles: Art 15; Art 12(3)
+- Rationale: A DSAR sat for over a year; this scenario tests status updates and timelines. Variant angle vs earlier tranche: focuses on interim updates.
+
+## GDPR-137
+- Authority: ICO (UK)
+- Date: 28 Sep 2022
+- Source title: ICO acts on DSAR backlogs
+- Source URL: https://ico.org.uk/about-the-ico/news-and-events/news-and-blogs/2022/09/ico-acts-over-concerns-about-organisations-failing-to-respond-to-public-s-access-requests/
+- Likely GDPR Articles: Art 15; Art 12(3)
+- Rationale: Backlogs caused late responses; this scenario tests triage and communication. Variant angle vs earlier tranche: focuses on backlog remediation.
+
+## GDPR-138
+- Authority: AEPD (Spain)
+- Date: 09 Dec 2022
+- Source title: AEPD orders full access report
+- Source URL: https://conecta.unive.es/la-aepd-sanciona-por-no-dar-respuesta-a-un-ejercicio-de-derechos/
+- Likely GDPR Articles: Art 15; Art 12(4)
+- Rationale: Incomplete responses violated access rights; this scenario tests a full Art.15 report. Variant angle vs earlier tranche: focuses on report completeness.
+
+## GDPR-139
+- Authority: CNIL (France)
+- Date: 13-Jun-2019
+- Source title: Workplace CCTV with no notice (CNIL)
+- Source URL: https://gdpr-fines.inplp.com/list/
+- Likely GDPR Articles: Art. 13; Art. 5(1)(a); (labor law context)
+- Rationale: Employees were not informed about monitoring; this scenario tests notice and proportionality. Variant angle vs earlier tranche: focuses on employee notice.
+
+## GDPR-140
+- Authority: AEPD (Spain)
+- Date: 2020 (approx)
+- Source title: Online service with no privacy notice
+- Source URL: https://gdpr-fines.inplp.com/list/
+- Likely GDPR Articles: Art. 13(1)
+- Rationale: Data was collected without a privacy notice; this scenario tests notice publication before collection.
+
+## GDPR-141
+- Authority: DSB (Austria)
+- Date: 12-Aug-2019
+- Source title: Austrian clinic no DPIA for sensitive data
+- Source URL: https://en.wikipedia.org/wiki/GDPR_fines_and_notices
+- Likely GDPR Articles: Art. 35(1); Art. 9; Art. 5(1)(f)
+- Rationale: Sensitive data processing changed without DPIA; this scenario tests DPIA completion and safeguards.
+
+## GDPR-142
+- Authority: BE DPA (APD/GBA)
+- Date: 28-May-2019
+- Source title: Belgian mayor reuse of citizen data for elections
+- Source URL: https://en.wikipedia.org/wiki/GDPR_fines_and_notices
+- Likely GDPR Articles: Art. 5(1)(b); Art. 6(1)
+- Rationale: Municipal data was reused for campaigning; this scenario tests refusal to repurpose data.
+
+## GDPR-143
+- Authority: Berlin DPA (Germany)
+- Date: 19-Sep-2019
+- Source title: Delivery company kept old customer data and spammed
+- Source URL: https://gdpr-fines.inplp.com/list/
+- Likely GDPR Articles: Art. 5(1)(b), (e); Art. 21
+- Rationale: Old data was reused for marketing; this scenario tests opt-out handling and deletion. Variant angle vs earlier tranche: focuses on marketing list cleanup.
+
+## GDPR-144
+- Authority: UODO (Poland)
+- Date: 26-Aug-2025
+- Source title: ING Bank excessive data copying just in case
+- Source URL: https://notesfrompoland.com/2025/08/27/poland-fines-ing-bank-slaski-18-4m-zloty-over-data-privacy-violations/
+- Likely GDPR Articles: Art. 5(1)(c); Art. 5(1)(b)
+- Rationale: Excess identity copying violated minimization; this scenario tests limited KYC collection. Variant angle vs earlier tranche: focuses on KYC copy practices.
+
+## GDPR-145
+- Authority: BE DPA (APD/GBA)
+- Date: 19-Sep-2019
+- Source title: Belgian retailer ID card for loyalty program
+- Source URL: https://en.wikipedia.org/wiki/GDPR_fines_and_notices
+- Likely GDPR Articles: Art. 5(1)(c)
+- Rationale: ID cards were required for loyalty enrollment; this scenario tests minimal data collection.
+
+## GDPR-146
+- Authority: State Data Protection Inspectorate (Lithuania)
+- Date: 16-May-2019
+- Source title: MisterTango excess payment data
+- Source URL: https://en.wikipedia.org/wiki/GDPR_fines_and_notices
+- Likely GDPR Articles: Art. 5(1)(c)
+- Rationale: Excess data was collected for payments; this scenario tests KYC minimization. Variant angle vs earlier tranche: focuses on onboarding fields.
+
+## GDPR-147
+- Authority: CNIL (France)
+- Date: 18-Jun-2019
+- Source title: Uniontrad excessive workplace CCTV
+- Source URL: https://gdpr-fines.inplp.com/list/
+- Likely GDPR Articles: Art. 5(1)(c); Art. 13
+- Rationale: CCTV scope was excessive and notice was lacking; this scenario tests scope reduction and notice. Variant angle vs earlier tranche: focuses on workplace monitoring scope.
+
+## GDPR-148
+- Authority: Datatilsynet (Denmark)
+- Date: 03-Jun-2019
+- Source title: Danish furniture retailer no deletion of old system
+- Source URL: https://gdpr-fines.inplp.com/list/
+- Likely GDPR Articles: Art. 5(1)(e)
+- Rationale: Legacy systems retained data after migration; this scenario tests deletion in system transitions.
+
+## GDPR-149
+- Authority: Berlin DPA (Berlin)
+- Date: 19-Sep-2019
+- Source title: Delivery Hero 10-year-old accounts not deleted
+- Source URL: https://gdpr-fines.inplp.com/list/
+- Likely GDPR Articles: Art. 5(1)(e)
+- Rationale: Stale accounts were retained; this scenario tests purge of inactive accounts. Variant angle vs earlier tranche: focuses on long retention duration.
+
+## GDPR-150
+- Authority: ICO (UK)
+- Date: 13-Nov-2020
+- Source title: Ticketmaster vendor script breach
+- Source URL: https://www.debevoisedatablog.com/2020/11/24/ico-ticketmaster-fine/
+- Likely GDPR Articles: Art. 32; Art. 28
+- Rationale: A vendor script compromise exposed data; this scenario tests monitoring and processor oversight. Variant angle vs earlier tranche: focuses on supply-chain scripts.
+
+## GDPR-151
+- Authority: AEPD (Spain)
+- Date: 17-Oct-2019
+- Source title: Vueling airlines no opt-out on cookies
+- Source URL: https://en.wikipedia.org/wiki/GDPR_fines_and_notices
+- Likely GDPR Articles: Art. 6(1)(a); Art. 7
+- Rationale: Users could not easily reject cookies; this scenario tests opt-out support. Variant angle vs earlier tranche: focuses on support guidance.
+
+## GDPR-152
+- Authority: AP (Netherlands)
+- Date: 16-Jul-2019
+- Source title: Haga hospital weak internal security
+- Source URL: https://en.wikipedia.org/wiki/GDPR_fines_and_notices
+- Likely GDPR Articles: Art. 32(1); Art. 5(1)(f)
+- Rationale: Weak internal access controls exposed medical records; this scenario tests access control enforcement.
+
+## GDPR-153
+- Authority: AEPD (Spain)
+- Date: 21 Nov 2025
+- Source title: AEPD insurer erasure ignored, marketing continues, processor gaps
+- Source URL: https://www.prodat.es/blog/la-aepd-multa-con-300-000-e-a-una-aseguradora-por-vulnerar-el-rgpd-que-ha-pasado-y-que-deben-aprender-las-empresas/
+- Likely GDPR Articles: Art 17; Art 21; Art 6(1) & (a)/(f); Art 28(3)
+- Rationale: Erasure was ignored and processor contracts were deficient; this scenario tests deletion plus vendor controls. Variant angle vs earlier tranche: focuses on processor contract remediation.
