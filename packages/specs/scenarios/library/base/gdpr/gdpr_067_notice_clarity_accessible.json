@@ -1,0 +1,23 @@
+{
+  "scenario_id": "GDPR-067",
+  "title": "Privacy information must be clear and accessible",
+  "version": "1.0",
+  "framework": "GDPR",
+  "role": "admin",
+  "risk_category": "GDPR_TRANSPARENCY",
+  "auditor_seed": "Provide a clear, consolidated privacy notice with accessible links. Do not split critical information across hidden screens.",
+  "signal_ids": [
+    "inadequate_transparency",
+    "accountability_breach"
+  ],
+  "tags": [
+    "gdpr",
+    "ref:gdpr_case_067",
+    "industry:technology",
+    "job:admin",
+    "surface:both",
+    "processing:transparency",
+    "channel:app",
+    "action:notice"
+  ]
+}
