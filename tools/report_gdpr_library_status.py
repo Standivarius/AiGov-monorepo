@@ -8,6 +8,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 GDPR_DIR = ROOT / "packages" / "specs" / "scenarios" / "library" / "base" / "gdpr"
@@ -54,6 +55,29 @@ def _read_sources_ids() -> set[str]:
     return ids
 
 
+def _read_sources_url_health() -> tuple[list[str], Counter[str]]:
+    missing_url_ids: set[str] = set()
+    domain_counts: Counter[str] = Counter()
+    current_id: str | None = None
+    for line in SOURCES_PATH.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        match = SOURCES_HEADING_RE.match(stripped)
+        if match:
+            current_id = match.group(1)
+            continue
+        if not stripped.startswith("URL:") or current_id is None:
+            continue
+        url_value = stripped.split("URL:", 1)[1].strip()
+        if url_value == "(missing in backlog doc)":
+            missing_url_ids.add(current_id)
+            continue
+        parsed = urlparse(url_value if "://" in url_value else f"https://{url_value}")
+        domain = (parsed.netloc or url_value.split("/", 1)[0]).lower()
+        if domain:
+            domain_counts[domain] += 1
+    return sorted(missing_url_ids, key=int), domain_counts
+
+
 def main() -> int:
     errors: list[str] = []
     if not GDPR_DIR.exists():
@@ -70,6 +94,7 @@ def main() -> int:
     role_counts: Counter[str] = Counter()
     surface_counts: Counter[str] = Counter()
     signal_counts: Counter[str] = Counter()
+    population_counts: Counter[str] = Counter()
 
     for path in scenario_files:
         filename_match = FILENAME_RE.match(path.name)
@@ -133,6 +158,12 @@ def main() -> int:
         for signal in signal_list:
             if isinstance(signal, str) and signal:
                 signal_counts[signal] += 1
+        population_tags = [tag for tag in tags_list if isinstance(tag, str) and tag.startswith("population:")]
+        if population_tags:
+            for tag in population_tags:
+                population_counts[tag] += 1
+        else:
+            population_counts["population:unknown"] += 1
 
     if numeric_ids:
         min_id = min(numeric_ids)
@@ -159,6 +190,10 @@ def main() -> int:
     for surface_tag in SURFACE_TAGS:
         print(f"  - {surface_tag}: {surface_counts.get(surface_tag, 0)}")
 
+    print("Counts by population tag:")
+    for population_tag in ["population:children", "population:general", "population:unknown"]:
+        print(f"  - {population_tag}: {population_counts.get(population_tag, 0)}")
+
     print("Counts by signal_id:")
     for signal_id, count in sorted(signal_counts.items(), key=lambda kv: (-kv[1], kv[0])):
         print(f"  - {signal_id}: {count}")
@@ -180,6 +215,16 @@ def main() -> int:
         print("SOURCES headings without scenarios:")
         for scenario_num in extra_in_sources:
             print(f"  - GDPR-{scenario_num}")
+
+    if SOURCES_PATH.exists():
+        missing_url_ids, domain_counts = _read_sources_url_health()
+        missing_display = ", ".join(f"GDPR-{scenario_num}" for scenario_num in missing_url_ids) or "(none)"
+        print("SOURCES URL health summary:")
+        print(f"  - Missing URL count: {len(missing_url_ids)}")
+        print(f"  - Missing URL IDs: {missing_display}")
+        print("  - Domain histogram:")
+        for domain, count in sorted(domain_counts.items(), key=lambda kv: (-kv[1], kv[0])):
+            print(f"    - {domain}: {count}")
 
     if errors:
         print("ERROR: structural checks failed:")
