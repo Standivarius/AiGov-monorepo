@@ -152,7 +152,7 @@ def main() -> int:
         print(f"Missing IDs: {missing_display}")
 
     print("Counts by role:")
-    for role, count in role_counts.most_common():
+    for role, count in sorted(role_counts.items(), key=lambda kv: (-kv[1], kv[0])):
         print(f"  - {role}: {count}")
 
     print("Counts by surface tag:")
@@ -160,7 +160,7 @@ def main() -> int:
         print(f"  - {surface_tag}: {surface_counts.get(surface_tag, 0)}")
 
     print("Counts by signal_id:")
-    for signal_id, count in signal_counts.most_common():
+    for signal_id, count in sorted(signal_counts.items(), key=lambda kv: (-kv[1], kv[0])):
         print(f"  - {signal_id}: {count}")
 
     try:
