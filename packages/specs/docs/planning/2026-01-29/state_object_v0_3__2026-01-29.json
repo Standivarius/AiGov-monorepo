@@ -1,0 +1,109 @@
+{
+  "schema_version": "state_object_v0_3",
+  "generated_at_utc": "2026-01-29T00:00:00Z",
+  "run_name": "gdpr-mvp-chat-run-1",
+  "repo": "Standivarius/AiGov-monorepo",
+
+  "non_negotiables_locked": {
+    "mvp_scope": "GDPR-only. Anything non-GDPR is out of scope for MVP.",
+    "pr_gate_must_be_fast_and_deterministic": true,
+    "allowed_verification_commands_only": [
+      "python3 tools/validate_planning_pack.py",
+      "bash tools/run_pr_gate_validators.sh",
+      "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+    ],
+    "golden_set_firewall": "Golden sets are PE defensibility assets; must be firewalled from runtime retrieval."
+  },
+
+  "process_rules_locked": {
+    "always_separate_todos_vs_suggestions": true,
+    "effort_label_required": true,
+    "prompts_must_be_single_outcome": true,
+    "explicit_merge_instructions_per_pr": true,
+    "verification_commands_must_be_exact": true,
+    "ban_repo_wide_pytest_in_verification": true,
+    "ban_pytest_fallback_or_operator": true,
+    "keep_prs_small": "Split if >6 files.",
+    "do_not_ask_clarifying_questions": true,
+    "ci_wiring_rule": "Prefer wiring scenario/catalog checks into tools/validate_planning_pack.py (or tools/validate_base_scenarios.py) instead of tools/run_pr_gate_validators.sh unless strictly necessary.",
+    "schema_vs_policy_distinction": "Regex/filename↔scenario_id consistency is catalog policy enforced by validator, not necessarily schema."
+  },
+
+  "repo_source_of_truth_paths": {
+    "agents_guide": "AGENTS.md",
+    "artifacts_root": "packages/specs/docs/artifacts/",
+    "planning_root": "packages/specs/docs/planning/",
+    "planning_pack_primary": "packages/specs/docs/planning/2026-01-22-run/",
+    "contracts_taxonomy_signals": "packages/specs/docs/contracts/taxonomy/signals.json",
+    "scenario_library_gdpr_root": "packages/specs/scenarios/library/base/gdpr/",
+    "scenario_traceability_sources": "packages/specs/scenarios/library/base/gdpr/SOURCES.md",
+    "client_override_schema": "packages/specs/schemas/client_scenario_override_v0.schema.json",
+    "client_override_validator": "tools/validate_client_overrides.py",
+    "planning_pack_validator": "tools/validate_planning_pack.py",
+    "scenario_compiler": "packages/ep/aigov_ep/scenario/compiler.py",
+    "scenario_bundle_determinism_validator": "tools/validate_scenario_determinism.py",
+    "gdpr_library_status_reporter": "tools/report_gdpr_library_status.py"
+  },
+
+  "current_ci_pr_gate_definition": {
+    "must_run_fast": true,
+    "commands": [
+      "python3 tools/validate_planning_pack.py",
+      "bash tools/run_pr_gate_validators.sh",
+      "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+    ],
+    "principle": "PR-gate remains deterministic; no broad test sweeps."
+  },
+
+  "milestones": [
+    {
+      "name": "Deterministic CI workflow for planning-pack validation",
+      "status": "done",
+      "notes": "Workflow slimmed to deterministic steps + scenarios path filter + pinned Python."
+    },
+    {
+      "name": "GDPR base scenario library expansion (through GDPR-253)",
+      "status": "done",
+      "notes": "GDPR-001..GDPR-253 present under scenario_library_gdpr_root with SOURCES traceability."
+    },
+    {
+      "name": "GDPR library status reporter",
+      "status": "done",
+      "notes": "Reporter enforces deterministic ordering; includes SOURCES heading alignment + URL/domain health + population counts."
+    },
+    {
+      "name": "Milestone close-out summary artifact",
+      "status": "done",
+      "notes": "Docs-only milestone summary merged under artifacts_root."
+    }
+  ],
+
+  "known_repo_realities": {
+    "scenario_compiler_override_semantics": "compile_bundle can run with overrides_dir=None; if overrides_dir is provided it must exist and contain at least one override JSON, and overrides must match existing base_scenario_id values.",
+    "override_policy_profile_core_fields": [
+      "supported_dsar_channels",
+      "right_to_erasure_handling",
+      "known_client_constraints"
+    ]
+  },
+
+  "next_major_modules_queue": [
+    {
+      "module": "Client intake -> bespoke scenario bundles (GDPR-only alpha)",
+      "goal": "Define GDPR-only client intake contract + deterministic generator that produces per-client overrides and compiles a bespoke bundle using the existing scenario compiler.",
+      "effort": "high",
+      "dependencies": [
+        "packages/specs/schemas/client_scenario_override_v0.schema.json",
+        "tools/validate_client_overrides.py",
+        "packages/ep/aigov_ep/scenario/compiler.py"
+      ]
+    }
+  ],
+
+  "global_stop_conditions": [
+    "Do NOT expand PR-gate beyond the allowed commands.",
+    "Do NOT suggest repo-wide pytest.",
+    "Do NOT invent new schema fields; add contract/schema PR first if needed.",
+    "Do NOT add new source domains to SOURCES.md unless explicitly authorized."
+  ]
+}
