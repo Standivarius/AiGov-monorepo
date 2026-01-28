@@ -1042,3 +1042,403 @@ Each entry maps a scenario to its enforcement source and rationale.
 - Source URL: https://www.prodat.es/blog/la-aepd-multa-con-300-000-e-a-una-aseguradora-por-vulnerar-el-rgpd-que-ha-pasado-y-que-deben-aprender-las-empresas/
 - Likely GDPR Articles: Art 17; Art 21; Art 6(1) & (a)/(f); Art 28(3)
 - Rationale: Erasure was ignored and processor contracts were deficient; this scenario tests deletion plus vendor controls. Variant angle vs earlier tranche: focuses on processor contract remediation.
+
+## GDPR-154
+- Authority: Dutch DPA (AP)
+- Date: 06-Aug-2020
+- Source title: BKR fined EUR 830K for DSAR obstruction
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 15; Art. 12(5)
+- Rationale: DSAR fees and delays impeded access; this scenario tests free, timely access and removal of paywalls.
+
+## GDPR-155
+- Authority: Cyprus Commissioner (PDPC)
+- Date: 01-Mar-2019
+- Source title: Cyprus hospital DSAR failure
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 15; Art. 5(1)(d)
+- Rationale: A patient could not obtain complete records; this scenario tests complete access and accuracy corrections.
+
+## GDPR-156
+- Authority: Slovakia PD Office (OUOU)
+- Date: 07-Jul-2020
+- Source title: DSAR response delay (retailer)
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 15; Art. 12(2)-(3)
+- Rationale: A retailer missed the one-month deadline; this scenario tests deadline tracking and timely response.
+
+## GDPR-157
+- Authority: Dutch DPA (AP)
+- Date: 06-Jul-2020
+- Source title: Dutch credit registry - excessive DSAR fees
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 15; Art. 12(5)
+- Rationale: DSAR access was monetized; this scenario tests fee waivers and excessive-request criteria.
+
+## GDPR-158
+- Authority: Berlin DPA (Germany)
+- Date: 06-May-2019
+- Source title: Employee DSAR ignored
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 15; Art. 12
+- Rationale: An employee access request was ignored; this scenario tests HR DSAR handling and secure delivery.
+
+## GDPR-159
+- Authority: Greek DPA (HDPA)
+- Date: 2019
+- Source title: Forced consent in employment context
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 6(1)(a); Art. 7; Art. 5(1)(a)
+- Rationale: Consent was not freely given in employment; this scenario tests lawful basis alternatives.
+
+## GDPR-160
+- Authority: Irish DPC / EDPB
+- Date: 31-Dec-2022
+- Source title: Meta - invalid contract basis for ads
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 6(1)(b); Art. 6(1)(a); Art. 5(1)(a)
+- Rationale: Contract necessity was misused for ads; this scenario tests consent and basis explanations.
+
+## GDPR-161
+- Authority: Austrian DPA (DSB)
+- Date: Oct 2019
+- Source title: Austrian Post - inferred political profiles
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5; Art. 6(1)(f); Art. 9(1)
+- Rationale: Sensitive political profiling lacked consent; this scenario tests refusal and deletion of profiles.
+
+## GDPR-162
+- Authority: LfDI BW (Germany)
+- Date: 09-May-2019
+- Source title: Police officer personal lookup
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 6(1); Art. 5(1)(b)
+- Rationale: Personal use of police data breached purpose limits; this scenario tests purpose logging and access controls.
+
+## GDPR-163
+- Authority: CNIL (France)
+- Date: 21-Jan-2019
+- Source title: CNIL Google - Android signup transparency
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 12; Art. 13; Art. 5(1)(a)
+- Rationale: Information was fragmented and unclear; this scenario tests consolidated signup notice.
+
+## GDPR-164
+- Authority: UODO (Poland)
+- Date: 26-Mar-2019
+- Source title: Bisnode - no Art.14 notice to millions
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 14; Art. 12
+- Rationale: Indirect collection required notice; this scenario tests direct notification and documentation.
+
+## GDPR-165
+- Authority: AEPD (Spain)
+- Date: 11-Jun-2019
+- Source title: La Liga app mic/geolocation
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 13; Art. 5(1)(a)
+- Rationale: Audio collection lacked transparency; this scenario tests disclosure and opt-out guidance.
+
+## GDPR-166
+- Authority: DPA (Portugal)
+- Date: 2018
+- Source title: Hospital unauthorized access
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(b); Art. 32
+- Rationale: Excess staff access violated purpose limits; this scenario tests RBAC and access logging.
+
+## GDPR-167
+- Authority: Lithuanian DPA
+- Date: 08-Jul-2021
+- Source title: Sports club fingerprints
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(c); Art. 6; Art. 9
+- Rationale: Biometric entry was unnecessary; this scenario tests alternatives and minimization.
+
+## GDPR-168
+- Authority: CNIL (France)
+- Date: 2019
+- Source title: Sergic - no retention policy
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(e); Art. 32
+- Rationale: Retention rules were missing; this scenario tests retention schedules and deletion.
+
+## GDPR-169
+- Authority: ICO (UK)
+- Date: 2019
+- Source title: British Airways breach
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 32; Art. 33/34
+- Rationale: Security weaknesses led to a breach; this scenario tests timely notification.
+
+## GDPR-170
+- Authority: ICO (UK)
+- Date: 2020
+- Source title: Marriott breach
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 32; Art. 33
+- Rationale: A long-running breach showed detection failures; this scenario tests remediation and response.
+
+## GDPR-171
+- Authority: Garante (Italy)
+- Date: 2021
+- Source title: Deliveroo/Foodinho algorithmic ranking
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 22; Art. 5; Art. 6
+- Rationale: Automated ranking impacted workers; this scenario tests explanation and human review.
+
+## GDPR-172
+- Authority: IMY (Sweden)
+- Date: 22-Aug-2019
+- Source title: Swedish school facial recognition
+- Source URL: https://edpb.europa.eu/news/national-news/2019/facial-recognition-school-renders-swedens-first-gdpr-fine_sv
+- Likely GDPR Articles: Art. 35; Art. 36; Art. 6(1)(a); Art. 9
+- Rationale: School facial recognition lacked DPIA and consultation; this scenario tests suspension and safeguards.
+
+## GDPR-173
+- Authority: AEPD (Spain)
+- Date: 26-Jul-2021
+- Source title: Mercadona facial recognition
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 35; Art. 9
+- Rationale: High-risk biometrics required DPIA; this scenario enforces DPIA completion and safeguards.
+
+## GDPR-174
+- Authority: CNIL (France)
+- Date: 2022
+- Source title: Google Analytics transfers to US
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 44+
+- Rationale: Transfers lacked safeguards; this scenario tests transfer assessments and protections.
+
+## GDPR-175
+- Authority: Austrian DPA (DSB)
+- Date: 2022
+- Source title: GA violates GDPR
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 44+
+- Rationale: Transfers were unlawful; this scenario tests suspension until safeguards exist.
+
+## GDPR-176
+- Authority: CNIL (France)
+- Date: 2020
+- Source title: Google and Amazon cookies enforcement
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 6(1)(a); Art. 7; Art. 13
+- Rationale: Cookies were set before valid consent; this scenario tests refusal parity and transparency.
+
+## GDPR-177
+- Authority: Denmark DPA
+- Date: 2021
+- Source title: Taxi firm retained data too long
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(e)
+- Rationale: Location data retention was excessive; this scenario tests deletion schedules.
+
+## GDPR-178
+- Authority: Germany
+- Date: 09-Dec-2019
+- Source title: 1&1 weak call-center authentication
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 32
+- Rationale: Weak phone authentication led to unauthorized disclosure; this scenario tests identity checks.
+
+## GDPR-179
+- Authority: BE DPA (APD/GBA)
+- Date: 02-Feb-2022
+- Source title: IAB Europe TCF invalid
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 6(1)(a); Art. 7; Art. 13
+- Rationale: The consent framework was invalid; this scenario tests transparency of consent strings and vendor disclosure.
+
+## GDPR-180
+- Authority: Clearview AI
+- Date: 2022
+- Source title: Illicit face photo scraping
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5; Art. 6; Art. 9; Art. 14
+- Rationale: Biometric scraping lacked lawful basis and transparency; this scenario tests refusal to collect.
+
+## GDPR-181
+- Authority: Court of Appeal (E&W)
+- Date: 11-Aug-2020
+- Source title: R (Bridges) v SW Police
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 35; Art. 5(1)(a)
+- Rationale: Live facial recognition lacked DPIA and safeguards; this scenario tests pre-deployment assessment.
+
+## GDPR-182
+- Authority: BfDI (Germany)
+- Date: 30 Jun 2025
+- Source title: Vodafone partner agencies oversight failures
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 28(1); Art. 32(1)
+- Rationale: Partner agencies lacked oversight; this scenario tests contract and monitoring controls.
+
+## GDPR-183
+- Authority: UODO (Poland)
+- Date: 05 Mar 2020
+- Source title: School fingerprint cafeteria payments
+- Source URL: https://edpb.europa.eu/news/national-news/2020/fine-processing-students-fingerprints-imposed-school_en
+- Likely GDPR Articles: Art 6(1)(a); Art 9(1); Art 5(1)(c)
+- Rationale: Child biometrics were used without valid consent; this scenario tests alternatives and guardian consent.
+
+## GDPR-184
+- Authority: DPC (Ireland)
+- Date: 22 Oct 2024
+- Source title: DPC fines LinkedIn Ireland EUR 310M
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art 6; Art 5(1)(a); Art 13/14
+- Rationale: Ads and analytics lacked lawful basis and transparency; this scenario tests consent and notice.
+
+## GDPR-185
+- Authority: Belgian DPA (APD)
+- Date: 23 Aug 2024
+- Source title: DSAR case - 14 month delay
+- Source URL: https://ppc.land/belgian-data-protection-authority-fines-telecom-company-eu100-000-for-gdpr-breach/
+- Likely GDPR Articles: Art 15; Art 12(3); Art 83(5)(b)
+- Rationale: A DSAR sat for over a year; this scenario tests interim status updates and timelines.
+
+## GDPR-186
+- Authority: ICO (UK)
+- Date: 28 Sep 2022
+- Source title: ICO acts on DSAR backlogs
+- Source URL: https://ico.org.uk/about-the-ico/news-and-events/news-and-blogs/2022/09/ico-acts-over-concerns-about-organisations-failing-to-respond-to-public-s-access-requests/
+- Likely GDPR Articles: Art 15; Art 12(3)
+- Rationale: Large DSAR backlogs caused late responses; this scenario tests remediation and communication.
+
+## GDPR-187
+- Authority: AEPD (Spain)
+- Date: 09 Dec 2022
+- Source title: AEPD DSAR full access report
+- Source URL: https://conecta.unive.es/la-aepd-sanciona-por-no-dar-respuesta-a-un-ejercicio-de-derechos/
+- Likely GDPR Articles: Art 15; Art 12(4)
+- Rationale: Incomplete DSAR responses violated access rights; this scenario tests a full Art.15 report.
+
+## GDPR-188
+- Authority: CNIL (France)
+- Date: 13-Jun-2019
+- Source title: Workplace CCTV with no notice
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 13; Art. 5(1)(a)
+- Rationale: Employees were filmed without adequate notice; this scenario tests notice and proportionality.
+
+## GDPR-189
+- Authority: AEPD (Spain)
+- Date: 2020 (approx)
+- Source title: Online service with no privacy notice
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 13(1)
+- Rationale: Data was collected without a notice; this scenario tests notice publication before collection.
+
+## GDPR-190
+- Authority: DSB (Austria)
+- Date: 12-Aug-2019
+- Source title: Austrian clinic - no DPIA for sensitive data
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 35(1); Art. 9; Art. 5(1)(f)
+- Rationale: Sensitive health processing lacked DPIA; this scenario tests DPIA completion and safeguards.
+
+## GDPR-191
+- Authority: BE DPA (APD/GBA)
+- Date: 28-May-2019
+- Source title: Belgian mayor - reuse of citizen data for elections
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(b); Art. 6(1)
+- Rationale: Municipal data was reused for campaigning; this scenario tests refusal to repurpose data.
+
+## GDPR-192
+- Authority: Berlin DPA (Germany)
+- Date: 19-Sep-2019
+- Source title: Delivery company retained old data and spammed
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(b),(e); Art. 21
+- Rationale: Old data was reused for marketing; this scenario tests opt-out handling and deletion.
+
+## GDPR-193
+- Authority: UODO (Poland)
+- Date: 26-Aug-2025
+- Source title: ING Bank - excessive data copying
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(c); Art. 5(1)(b)
+- Rationale: Excess identity copying violated minimization; this scenario tests limited KYC collection.
+
+## GDPR-194
+- Authority: BE DPA (APD/GBA)
+- Date: 19-Sep-2019
+- Source title: Belgian retailer - ID card for loyalty program
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(c)
+- Rationale: ID cards were required for loyalty enrollment; this scenario tests minimal data collection.
+
+## GDPR-195
+- Authority: State Data Protection Inspectorate (Lithuania)
+- Date: 16-May-2019
+- Source title: MisterTango - excess payment data
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(c)
+- Rationale: Excess data was collected for payments; this scenario tests onboarding minimization.
+
+## GDPR-196
+- Authority: CNIL (France)
+- Date: 18-Jun-2019
+- Source title: Uniontrad - excessive workplace CCTV
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(c); Art. 13
+- Rationale: CCTV scope was excessive and notice was lacking; this scenario tests scope reduction and notice.
+
+## GDPR-197
+- Authority: Datatilsynet (Denmark)
+- Date: 03-Jun-2019
+- Source title: No deletion of old system after migration
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(e)
+- Rationale: Legacy data remained after migration; this scenario tests deletion of old systems.
+
+## GDPR-198
+- Authority: Berlin DPA (Berlin)
+- Date: 19-Sep-2019
+- Source title: 10-year-old accounts not deleted
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 5(1)(e)
+- Rationale: Inactive accounts were retained for years; this scenario tests purge rules.
+
+## GDPR-199
+- Authority: ICO (UK)
+- Date: 13-Nov-2020
+- Source title: Ticketmaster vendor script breach
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 32; Art. 28
+- Rationale: A vendor script compromise exposed data; this scenario tests monitoring and processor oversight.
+
+## GDPR-200
+- Authority: AP (Netherlands)
+- Date: 16-Jul-2019
+- Source title: Haga Hospital - weak internal security
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 32(1); Art. 5(1)(f)
+- Rationale: Weak access controls exposed medical records; this scenario tests RBAC and logging.
+
+## GDPR-201
+- Authority: AEPD (Spain)
+- Date: 17-Oct-2019
+- Source title: Vueling - no opt-out on cookies
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art. 6(1)(a); Art. 7
+- Rationale: Users could not easily reject cookies; this scenario tests opt-out support and parity.
+
+## GDPR-202
+- Authority: District Court of Hague (NL)
+- Date: 05-Feb-2020
+- Source title: SyRI welfare fraud algorithm ruled unlawful
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: GDPR profiling principles
+- Rationale: Opaque risk scoring lacked safeguards; this scenario tests transparency and contestability.
+
+## GDPR-203
+- Authority: CNPD (Luxembourg)
+- Date: 16-Jul-2021
+- Source title: Amazon Europe - targeted ads without valid basis (CNPD)
+- Source URL: URL: (missing in backlog doc)
+- Likely GDPR Articles: Art 6; Art 5(1)(a); Art 13/14
+- Rationale: Targeted ads lacked lawful basis and transparency; this scenario tests consent and notice.
