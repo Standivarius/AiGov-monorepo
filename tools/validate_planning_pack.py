@@ -10,6 +10,7 @@ import validate_base_scenarios as base_scenarios
 from validate_evidence_pack_v0_schema import validate_evidence_pack_v0_fixture
 from validate_client_overrides import validate_override_fixture
 from validate_bundle_integrity import validate_bundle
+from validate_client_intake_to_bundle import validate_client_intake_to_bundle
 from validate_scenario_determinism import validate_determinism
 from validate_schema_strictness import validate_schema_strictness
 
@@ -26,6 +27,7 @@ CLIENT_OVERRIDE_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client
 CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_override_empty_supported.json"
 )
+CLIENT_INTAKE_FIXTURE = ROOT / "tools" / "fixtures" / "intake" / "client_intake_output_pass.json"
 BASE_SCENARIO_EMPTY_SIGNALS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "base_scenario_empty_signals.json"
 )
@@ -358,6 +360,14 @@ def main() -> int:
         "FAIL (as expected): client override validated: "
         f"{CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH}"
     )
+
+    intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
+    if intake_errors:
+        print("ERROR: client intake -> bundle validation failed:")
+        for error in intake_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: client intake bundle determinism validated: {CLIENT_INTAKE_FIXTURE}")
 
     bundle_errors = validate_bundle(BUNDLE_GOOD_DIR)
     if bundle_errors:
