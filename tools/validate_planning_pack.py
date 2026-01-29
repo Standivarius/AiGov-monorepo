@@ -31,6 +31,12 @@ CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH = (
 CLIENT_INTAKE_FIXTURE = ROOT / "tools" / "fixtures" / "intake" / "client_intake_output_pass.json"
 CLIENT_INTAKE_V0_2_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_pass.json"
 CLIENT_INTAKE_V0_2_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail.json"
+CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail_channel_mismatch.json"
+)
+CLIENT_INTAKE_V0_2_FAIL_EMPTY_SUPPORTED_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail_empty_supported.json"
+)
 BASE_SCENARIO_EMPTY_SIGNALS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "base_scenario_empty_signals.json"
 )
@@ -379,6 +385,30 @@ def main() -> int:
         print("ERROR: client intake v0.2 fail fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): client intake v0.2 fixture validated: {CLIENT_INTAKE_V0_2_FAIL_PATH}")
+
+    intake_v0_2_channel_mismatch_errors = validate_client_intake(
+        _read_json(CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH),
+        CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH,
+    )
+    if not intake_v0_2_channel_mismatch_errors:
+        print("ERROR: client intake v0.2 channel mismatch fixture unexpectedly passed validation.")
+        return 1
+    print(
+        "FAIL (as expected): client intake v0.2 fixture validated: "
+        f"{CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH}"
+    )
+
+    intake_v0_2_empty_supported_errors = validate_client_intake(
+        _read_json(CLIENT_INTAKE_V0_2_FAIL_EMPTY_SUPPORTED_PATH),
+        CLIENT_INTAKE_V0_2_FAIL_EMPTY_SUPPORTED_PATH,
+    )
+    if not intake_v0_2_empty_supported_errors:
+        print("ERROR: client intake v0.2 empty supported_dsar_channels fixture unexpectedly passed validation.")
+        return 1
+    print(
+        "FAIL (as expected): client intake v0.2 fixture validated: "
+        f"{CLIENT_INTAKE_V0_2_FAIL_EMPTY_SUPPORTED_PATH}"
+    )
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
     if intake_errors:
