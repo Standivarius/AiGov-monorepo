@@ -35,6 +35,17 @@ inspect eval petri/audit \
   -T transcript_save_dir="./outputs"
 ```
 
+**Alpha note**: `tools/export_bundle_to_petri_special_instructions_alpha.py` can emit a JSON list of `special_instructions` from a compiled bundle, which can be passed to Inspect/Petri (example only):
+
+```bash
+python tools/export_bundle_to_petri_special_instructions_alpha.py \
+  --bundle-dir tools/fixtures/bundles/good \
+  --out ./outputs/special_instructions.json
+
+inspect eval petri/audit \
+  -T special_instructions=./outputs/special_instructions.json
+```
+
 ### Model Roles
 - **auditor**: Conducts adversarial probing (Petri agent)
 - **target**: System under test (client LLM or test target)
