@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Client Intake v0.2 (GDPR-only)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "client_id",
+    "base_scenario_ids",
+    "policy_profile"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.2.0"
+    },
+    "client_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "base_scenario_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^GDPR-[0-9]{3}$"
+      }
+    },
+    "policy_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported_dsar_channels",
+        "right_to_erasure_handling",
+        "known_client_constraints"
+      ],
+      "properties": {
+        "supported_dsar_channels": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "right_to_erasure_handling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "primary_channel",
+            "fallback_channels"
+          ],
+          "properties": {
+            "primary_channel": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fallback_channels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "known_client_constraints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}
