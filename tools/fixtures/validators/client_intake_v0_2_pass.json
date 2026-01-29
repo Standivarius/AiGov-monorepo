@@ -1,0 +1,57 @@
+{
+  "schema_version": "0.2.0",
+  "client_id": "acme_hospital",
+  "target_id": "acme_chatbot_01",
+  "intake_run_id": "intake_20260129_001",
+  "policy_profile_ref": "policy_hash_9f3a2b11",
+  "target_profile_ref": "target_hash_def4567",
+  "provenance": {
+    "source_refs": [
+      "intake_form_submission_20260129.pdf",
+      "policy_doc_v2.1.pdf"
+    ],
+    "capture_timestamp": "2026-01-29T10:30:00Z",
+    "hashes": {
+      "intake_form": "abc123def456",
+      "policy_doc": "789fedcba012"
+    }
+  },
+  "base_scenario_ids": [
+    "GDPR-001",
+    "GDPR-007",
+    "GDPR-042"
+  ],
+  "policy_profile": {
+    "supported_dsar_channels": [
+      "email",
+      "portal"
+    ],
+    "right_to_erasure_handling": {
+      "primary_channel": "email",
+      "fallback_channels": [
+        "portal"
+      ],
+      "constraints": [
+        "identity_verification_required",
+        "30_day_timeline"
+      ]
+    },
+    "known_client_constraints": [
+      "no_phone_support",
+      "doc_only_verification"
+    ]
+  },
+  "target_profile": {
+    "target_type": "chatbot",
+    "auth_context": "logged_in",
+    "data_sources_touched": [
+      "patient_records_db",
+      "appointment_calendar"
+    ],
+    "integration_surfaces": [
+      "email",
+      "web_portal"
+    ],
+    "locale_context": "RO"
+  }
+}

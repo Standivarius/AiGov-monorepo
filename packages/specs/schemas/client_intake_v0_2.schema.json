@@ -1,0 +1,167 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/aigov/specs/schemas/client_intake_v0_2.schema.json",
+  "title": "Client Intake v0.2",
+  "description": "Client intake output with base_scenario_ids allowlist for deterministic scenario compilation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "client_id",
+    "target_id",
+    "intake_run_id",
+    "policy_profile_ref",
+    "target_profile_ref",
+    "provenance",
+    "base_scenario_ids"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.2.0"
+    },
+    "client_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intake_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_profile_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_profile_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_refs", "capture_timestamp"],
+      "properties": {
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "capture_timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "hashes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "base_scenario_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z_]+\\-[0-9]{3}$"
+      },
+      "description": "Non-empty allowlist of base scenario IDs to compile. Each ID must match pattern FRAMEWORK-NNN (e.g., GDPR-001, ISO27001-042)."
+    },
+    "policy_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported_dsar_channels",
+        "right_to_erasure_handling",
+        "known_client_constraints"
+      ],
+      "properties": {
+        "supported_dsar_channels": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["email", "in_chat", "portal"]
+          }
+        },
+        "right_to_erasure_handling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["primary_channel", "fallback_channels", "constraints"],
+          "properties": {
+            "primary_channel": {
+              "type": "string",
+              "enum": ["email", "in_chat", "portal"]
+            },
+            "fallback_channels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["email", "in_chat", "portal"]
+              }
+            },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "known_client_constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "target_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_type",
+        "auth_context",
+        "data_sources_touched",
+        "integration_surfaces",
+        "locale_context"
+      ],
+      "properties": {
+        "target_type": {
+          "type": "string",
+          "enum": ["chatbot", "chatbot_with_actions", "agent"]
+        },
+        "auth_context": {
+          "type": "string",
+          "enum": ["logged_in", "public", "mixed"]
+        },
+        "data_sources_touched": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "integration_surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "locale_context": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 2,
+          "description": "ISO 3166-1 alpha-2 country code (e.g., RO, US, FR)"
+        }
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ from pathlib import Path
 from validate_evidence_pack_v0_schema import validate_evidence_pack_v0_fixture
 from validate_base_scenarios import validate_base_scenarios
 from validate_client_overrides import validate_override_fixture
+from validate_client_intake_v0_2 import validate_client_intake_v0_2_fixture
 from validate_bundle_integrity import validate_bundle
 from validate_scenario_determinism import validate_determinism
 from validate_schema_strictness import validate_schema_strictness
@@ -23,6 +24,8 @@ EVIDENCE_PACK_V0_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "evide
 EVIDENCE_PACK_V0_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "evidence_pack_v0_fail.json"
 CLIENT_OVERRIDE_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_pass.json"
 CLIENT_OVERRIDE_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_override_fail.json"
+CLIENT_INTAKE_V0_2_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_pass.json"
+CLIENT_INTAKE_V0_2_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail.json"
 BUNDLE_GOOD_DIR = ROOT / "tools" / "fixtures" / "bundles" / "good"
 BUNDLE_POISON_DIR = ROOT / "tools" / "fixtures" / "bundles" / "poison"
 SCENARIO_COMPILE_BASE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "base"
@@ -310,6 +313,20 @@ def main() -> int:
         print("ERROR: client override fail fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): client override validated: {CLIENT_OVERRIDE_FAIL_PATH}")
+
+    intake_v0_2_errors = validate_client_intake_v0_2_fixture(CLIENT_INTAKE_V0_2_PASS_PATH)
+    if intake_v0_2_errors:
+        print("ERROR: client intake v0.2 pass fixture failed validation:")
+        for error in intake_v0_2_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: client intake v0.2 validated: {CLIENT_INTAKE_V0_2_PASS_PATH}")
+
+    intake_v0_2_fail_errors = validate_client_intake_v0_2_fixture(CLIENT_INTAKE_V0_2_FAIL_PATH)
+    if not intake_v0_2_fail_errors:
+        print("ERROR: client intake v0.2 fail fixture unexpectedly passed validation.")
+        return 1
+    print(f"FAIL (as expected): client intake v0.2 validated: {CLIENT_INTAKE_V0_2_FAIL_PATH}")
 
     bundle_errors = validate_bundle(BUNDLE_GOOD_DIR)
     if bundle_errors:

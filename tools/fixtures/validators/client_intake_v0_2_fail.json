@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.2.0",
+  "client_id": "test_client",
+  "target_id": "test_target",
+  "intake_run_id": "test_intake_001",
+  "policy_profile_ref": "policy_test",
+  "target_profile_ref": "target_test",
+  "provenance": {
+    "source_refs": [
+      "test_source.pdf"
+    ],
+    "capture_timestamp": "2026-01-29T12:00:00Z"
+  },
+  "base_scenario_ids": [],
+  "policy_profile": {
+    "supported_dsar_channels": [
+      "email"
+    ],
+    "right_to_erasure_handling": {
+      "primary_channel": "email",
+      "fallback_channels": [],
+      "constraints": []
+    },
+    "known_client_constraints": []
+  },
+  "target_profile": {
+    "target_type": "chatbot",
+    "auth_context": "public",
+    "data_sources_touched": [
+      "test_db"
+    ],
+    "integration_surfaces": [
+      "web"
+    ],
+    "locale_context": "US"
+  }
+}
