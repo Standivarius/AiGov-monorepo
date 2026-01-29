@@ -22,6 +22,9 @@ The durable source of truth is Git; chats are not.
 - Networked commands (e.g., `gh`, `curl`, package installs) may require escalated permissions in the Codex sandbox.
 - Small PRs, auditable diffs, one concern per PR
 
+## Scrutiny principle
+Operate at auditor/enterprise level scrutiny: deterministic, fail-closed, contract-first; but do not overdo process—prefer the smallest check that gives high confidence.
+
 ## Repo commands (canonical)
 - **Install deps**: `npm install` (repo root)
 - **Nx graph**: `npx nx graph`
@@ -35,6 +38,7 @@ The durable source of truth is Git; chats are not.
 - Handoff primer artifact (optional but recommended): `packages/specs/docs/artifacts/YYYY-MM-DD__handoff__new-chat-primer.md` (example: `packages/specs/docs/artifacts/2026-01-26__handoff__new-chat-primer.md`)
 - State object JSON: `packages/specs/docs/planning/2026-01-24-run/state_object_v0_3__2026-01-26.json` (prior canonical: `state_object_v0_2__2026-01-24.json`)
 - Planning-pack “spine” pointers: `packages/specs/docs/planning/2026-01-22-run/eval_registry.yaml`, `packages/specs/docs/planning/2026-01-22-run/evalsets_registry.yaml`, `packages/specs/docs/planning/2026-01-22-run/codex_execution_pack.md`
+- End-chat rules: `.codex/skills/end-chat/end_chat_rules.md`
 
 ## Pytest / unit test policy
 - NEVER run `pytest -q` at repo root as a verification step unless a workflow explicitly installs required deps.

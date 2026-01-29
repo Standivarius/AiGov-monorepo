@@ -17,5 +17,8 @@ Include a link to the new worklog entry.
 - Verification commands (or "Not run")
 - Risks / follow-ups
 
+## Planning artifacts & handoff
+- Follow `.codex/skills/end-chat/end_chat_rules.md` for state object, transcript, and handoff primer paths + checklist.
+
 ## Claude artifacts
 If any `docs/reviews/*` or `docs/worklog/*` entries were created this session (especially from Claude), link them explicitly in the end-of-session summary and ensure STATUS.md references the newest one.
