@@ -11,3 +11,8 @@ packages/**/.venv
 
 # Windows Zone.Identifier alternate data stream artifacts (often appear as :Zone.Identifier)
 *:Zone.Identifier
+
+# Python bytecode cache
+__pycache__/
+*.pyc
+*.pyo
