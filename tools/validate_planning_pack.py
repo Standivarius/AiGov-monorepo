@@ -17,6 +17,7 @@ from validate_export_bundle_to_petri_seed_instructions_alpha import (
 )
 from validate_module_cards import validate_module_cards
 from validate_module_dashboard_snapshot import validate_module_dashboard_snapshot
+from validate_print_inspect_petri_run_command import validate_print_inspect_petri_run_command
 from validate_scenario_determinism import validate_determinism
 from validate_schema_strictness import validate_schema_strictness
 
@@ -39,6 +40,11 @@ CLIENT_INTAKE_V0_2_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "cli
 PETRI_SEED_INSTRUCTIONS_FIXTURE = (
     ROOT / "tools" / "fixtures" / "validators" / "petri_seed_instructions_from_bundle_pass.json"
 )
+RUNPACK_SEED_FIXTURE = ROOT / "tools" / "fixtures" / "runpack" / "seed_instructions_pass.json"
+RUNPACK_EXPECTED_COMMAND = (
+    ROOT / "tools" / "fixtures" / "runpack" / "expected_inspect_command_pass.txt"
+)
+RUNPACK_TOOL_PATH = ROOT / "tools" / "print_inspect_petri_run_command.py"
 MODULE_CARDS_DIR = ROOT / "packages" / "specs" / "docs" / "contracts" / "modules" / "cards"
 CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail_channel_mismatch.json"
@@ -453,6 +459,16 @@ def main() -> int:
         "PASS: seed_instructions export validated: "
         f"{PETRI_SEED_INSTRUCTIONS_FIXTURE}"
     )
+
+    runpack_errors = validate_print_inspect_petri_run_command(
+        RUNPACK_TOOL_PATH, RUNPACK_SEED_FIXTURE, RUNPACK_EXPECTED_COMMAND
+    )
+    if runpack_errors:
+        print("ERROR: runpack command validation failed:")
+        for error in runpack_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: runpack command validated: {RUNPACK_EXPECTED_COMMAND}")
 
     module_card_errors = validate_module_cards(MODULE_CARDS_DIR)
     if module_card_errors:
