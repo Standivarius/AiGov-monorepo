@@ -12,8 +12,8 @@ from validate_client_overrides import validate_override_fixture
 from validate_bundle_integrity import validate_bundle
 from validate_client_intake_to_bundle import validate_client_intake_to_bundle
 from validate_client_intake_v0_2 import validate_client_intake
-from validate_export_bundle_to_petri_special_instructions_alpha import (
-    validate_export_bundle_to_petri_special_instructions_alpha,
+from validate_export_bundle_to_petri_seed_instructions_alpha import (
+    validate_export_bundle_to_petri_seed_instructions_alpha,
 )
 from validate_scenario_determinism import validate_determinism
 from validate_schema_strictness import validate_schema_strictness
@@ -34,8 +34,8 @@ CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH = (
 CLIENT_INTAKE_FIXTURE = ROOT / "tools" / "fixtures" / "intake" / "client_intake_output_pass.json"
 CLIENT_INTAKE_V0_2_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_pass.json"
 CLIENT_INTAKE_V0_2_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail.json"
-PETRI_SPECIAL_INSTRUCTIONS_FIXTURE = (
-    ROOT / "tools" / "fixtures" / "validators" / "petri_special_instructions_from_bundle_pass.json"
+PETRI_SEED_INSTRUCTIONS_FIXTURE = (
+    ROOT / "tools" / "fixtures" / "validators" / "petri_seed_instructions_from_bundle_pass.json"
 )
 CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail_channel_mismatch.json"
@@ -438,17 +438,17 @@ def main() -> int:
         return 1
     print(f"FAIL (as expected): bundle integrity validated: {BUNDLE_POISON_DIR}")
 
-    export_errors = validate_export_bundle_to_petri_special_instructions_alpha(
-        BUNDLE_GOOD_DIR, PETRI_SPECIAL_INSTRUCTIONS_FIXTURE
+    export_errors = validate_export_bundle_to_petri_seed_instructions_alpha(
+        BUNDLE_GOOD_DIR, PETRI_SEED_INSTRUCTIONS_FIXTURE
     )
     if export_errors:
-        print("ERROR: special_instructions export validation failed:")
+        print("ERROR: seed_instructions export validation failed:")
         for error in export_errors:
             print(f"  - {error}")
         return 1
     print(
-        "PASS: special_instructions export validated: "
-        f"{PETRI_SPECIAL_INSTRUCTIONS_FIXTURE}"
+        "PASS: seed_instructions export validated: "
+        f"{PETRI_SEED_INSTRUCTIONS_FIXTURE}"
     )
 
     determinism_errors = validate_determinism(SCENARIO_COMPILE_BASE_DIR, SCENARIO_COMPILE_OVERRIDE_DIR)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate deterministic export of Petri special_instructions (alpha, stdlib-only)."""
+"""Validate deterministic export of Petri seed_instructions (alpha, stdlib-only)."""
 from __future__ import annotations
 
 import argparse
@@ -9,7 +9,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from export_bundle_to_petri_special_instructions_alpha import export_special_instructions
+from export_bundle_to_petri_seed_instructions_alpha import export_seed_instructions
 
 
 def _load_json(path: Path) -> Any:
@@ -33,7 +33,7 @@ def _sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def validate_export_bundle_to_petri_special_instructions_alpha(
+def validate_export_bundle_to_petri_seed_instructions_alpha(
     bundle_dir: Path, fixture_path: Path
 ) -> list[str]:
     errors: list[str] = []
@@ -47,9 +47,9 @@ def validate_export_bundle_to_petri_special_instructions_alpha(
 
     for _ in range(3):
         with tempfile.TemporaryDirectory() as temp_dir:
-            output_path = Path(temp_dir) / "special_instructions.json"
+            output_path = Path(temp_dir) / "seed_instructions.json"
             try:
-                payload = export_special_instructions(bundle_dir)
+                payload = export_seed_instructions(bundle_dir)
             except ValueError as exc:
                 return [str(exc)]
             _write_json_list(output_path, payload)
@@ -57,31 +57,31 @@ def validate_export_bundle_to_petri_special_instructions_alpha(
             output_payload = payload
 
     if len(set(hashes)) != 1:
-        errors.append(f"special_instructions export hash mismatch across runs: {hashes}")
+        errors.append(f"seed_instructions export hash mismatch across runs: {hashes}")
 
     if output_payload is None:
-        errors.append("special_instructions export produced no output")
+        errors.append("seed_instructions export produced no output")
     elif output_payload != golden:
-        errors.append("special_instructions export does not match golden fixture")
+        errors.append("seed_instructions export does not match golden fixture")
 
     return errors
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate Petri special_instructions export.")
+    parser = argparse.ArgumentParser(description="Validate Petri seed_instructions export.")
     parser.add_argument("--bundle-dir", required=True, help="Path to compiled bundle directory")
     parser.add_argument("--fixture", required=True, help="Path to golden fixture JSON list")
     args = parser.parse_args()
 
-    errors = validate_export_bundle_to_petri_special_instructions_alpha(
+    errors = validate_export_bundle_to_petri_seed_instructions_alpha(
         Path(args.bundle_dir), Path(args.fixture)
     )
     if errors:
-        print("ERROR: special_instructions export validation failed:")
+        print("ERROR: seed_instructions export validation failed:")
         for error in errors:
             print(f"  - {error}")
         return 1
-    print("PASS: special_instructions export validated.")
+    print("PASS: seed_instructions export validated.")
     return 0
 
 
