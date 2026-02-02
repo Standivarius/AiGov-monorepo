@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1.0",
+  "module_id": "M_Report",
+  "summary": "Generate GDPR audit reports from judge outputs and run metadata.",
+  "boundaries": {
+    "inputs": [
+      {
+        "name": "judge_outputs",
+        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "report_artifacts",
+        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+      }
+    ]
+  },
+  "knobs": [
+    {
+      "id": "report_output_dir",
+      "description": "Directory for generated report artifacts.",
+      "value_type": "path",
+      "required": true
+    },
+    {
+      "id": "include_raw_logs",
+      "description": "Whether to include raw logs in report bundles.",
+      "value_type": "boolean",
+      "required": false,
+      "default": false
+    }
+  ],
+  "risks": [
+    "Report outputs may omit critical context if inputs are incomplete."
+  ]
+}

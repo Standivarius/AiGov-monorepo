@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.1.0",
+  "module_id": "M_Dashboard",
+  "summary": "Publish a human-facing checklist of module configuration and required knobs.",
+  "boundaries": {
+    "inputs": [
+      {
+        "name": "module_cards",
+        "contract_ref_path": "packages/specs/schemas/module_card_v0.schema.json"
+      },
+      {
+        "name": "module_registry",
+        "contract_ref_path": "packages/specs/docs/contracts/modules/module_registry_v0.yaml"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "dashboard_markdown",
+        "contract_ref_path": "packages/specs/docs/contracts/modules/M_Dashboard.md"
+      }
+    ]
+  },
+  "knobs": [
+    {
+      "id": "cards_dir",
+      "description": "Directory containing module card JSON files.",
+      "value_type": "path",
+      "required": true
+    },
+    {
+      "id": "output_path",
+      "description": "Path for the generated dashboard markdown.",
+      "value_type": "path",
+      "required": true
+    }
+  ],
+  "risks": [
+    "Out-of-date cards can mislead run configuration decisions."
+  ]
+}

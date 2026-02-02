@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1.0",
+  "module_id": "M_Intake",
+  "summary": "Validate GDPR-only client intake payloads and enforce policy profile constraints.",
+  "boundaries": {
+    "inputs": [
+      {
+        "name": "client_intake",
+        "contract_ref_path": "packages/specs/schemas/client_intake_v0_2.schema.json"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "validated_intake",
+        "contract_ref_path": "packages/specs/schemas/client_intake_v0_2.schema.json"
+      }
+    ]
+  },
+  "knobs": [
+    {
+      "id": "intake_json_path",
+      "description": "Filesystem path to a client intake JSON payload.",
+      "value_type": "path",
+      "required": true
+    },
+    {
+      "id": "fail_closed",
+      "description": "Fail validation on any schema or policy error.",
+      "value_type": "boolean",
+      "required": true,
+      "default": true
+    }
+  ],
+  "risks": [
+    "Invalid intake payloads can propagate incorrect policy assumptions."
+  ]
+}

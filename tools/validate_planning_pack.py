@@ -16,6 +16,7 @@ from validate_export_bundle_to_petri_seed_instructions_alpha import (
     validate_export_bundle_to_petri_seed_instructions_alpha,
 )
 from validate_module_cards import validate_module_cards
+from validate_module_dashboard_snapshot import validate_module_dashboard_snapshot
 from validate_scenario_determinism import validate_determinism
 from validate_schema_strictness import validate_schema_strictness
 
@@ -460,6 +461,16 @@ def main() -> int:
             print(f"  - {error}")
         return 1
     print(f"PASS: module cards validated: {MODULE_CARDS_DIR}")
+
+    module_dashboard_errors = validate_module_dashboard_snapshot(
+        ROOT / "packages" / "specs" / "docs" / "contracts" / "modules" / "M_Dashboard.md"
+    )
+    if module_dashboard_errors:
+        print("ERROR: module dashboard snapshot validation failed:")
+        for error in module_dashboard_errors:
+            print(f"  - {error}")
+        return 1
+    print("PASS: module dashboard snapshot validated.")
 
     determinism_errors = validate_determinism(SCENARIO_COMPILE_BASE_DIR, SCENARIO_COMPILE_OVERRIDE_DIR)
     if determinism_errors:
