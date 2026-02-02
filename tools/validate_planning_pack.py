@@ -15,6 +15,7 @@ from validate_client_intake_v0_2 import validate_client_intake
 from validate_export_bundle_to_petri_seed_instructions_alpha import (
     validate_export_bundle_to_petri_seed_instructions_alpha,
 )
+from validate_module_cards import validate_module_cards
 from validate_scenario_determinism import validate_determinism
 from validate_schema_strictness import validate_schema_strictness
 
@@ -37,6 +38,7 @@ CLIENT_INTAKE_V0_2_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "cli
 PETRI_SEED_INSTRUCTIONS_FIXTURE = (
     ROOT / "tools" / "fixtures" / "validators" / "petri_seed_instructions_from_bundle_pass.json"
 )
+MODULE_CARDS_DIR = ROOT / "packages" / "specs" / "docs" / "contracts" / "modules" / "cards"
 CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail_channel_mismatch.json"
 )
@@ -450,6 +452,14 @@ def main() -> int:
         "PASS: seed_instructions export validated: "
         f"{PETRI_SEED_INSTRUCTIONS_FIXTURE}"
     )
+
+    module_card_errors = validate_module_cards(MODULE_CARDS_DIR)
+    if module_card_errors:
+        print("ERROR: module cards validation failed:")
+        for error in module_card_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: module cards validated: {MODULE_CARDS_DIR}")
 
     determinism_errors = validate_determinism(SCENARIO_COMPILE_BASE_DIR, SCENARIO_COMPILE_OVERRIDE_DIR)
     if determinism_errors:

@@ -1,0 +1,13 @@
+version: 0.1.0
+modules:
+  - module_id: M_Library
+  - module_id: M_Intake
+  - module_id: M_Bundle
+  - module_id: M_LiveRun
+  - module_id: M_Judge
+  - module_id: M_Report
+  - module_id: M_Dashboard
+
+registries:
+  - module_id: T_Gate
+    description: "Tests/evals registry; see packages/specs/docs/planning/2026-01-22-run/eval_registry.yaml and evalsets_registry.yaml"

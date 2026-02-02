@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1.0",
+  "module_id": "M_Bundle",
+  "summary": "Compile GDPR base scenarios and overrides into a deterministic bundle manifest.",
+  "boundaries": {
+    "inputs": [
+      {
+        "name": "base_scenarios",
+        "contract_ref_path": "packages/specs/scenarios/schemas/base_scenario_v1.schema.json"
+      },
+      {
+        "name": "client_overrides",
+        "contract_ref_path": "packages/specs/schemas/client_scenario_override_v0.schema.json"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "bundle_manifest",
+        "contract_ref_path": "packages/specs/docs/specs/phase2-scenario-bundle-v0.1.md"
+      },
+      {
+        "name": "bundle_scenarios",
+        "contract_ref_path": "packages/specs/docs/specs/phase2-scenario-bundle-v0.1.md"
+      }
+    ]
+  },
+  "knobs": [
+    {
+      "id": "base_dir",
+      "description": "Filesystem path to base scenario JSONs.",
+      "value_type": "path",
+      "required": true
+    },
+    {
+      "id": "overrides_dir",
+      "description": "Filesystem path to override JSONs.",
+      "value_type": "path",
+      "required": true
+    },
+    {
+      "id": "output_dir",
+      "description": "Filesystem path to compiled bundle output.",
+      "value_type": "path",
+      "required": true
+    }
+  ],
+  "risks": [
+    "Missing or malformed scenario inputs produce invalid bundles."
+  ]
+}
