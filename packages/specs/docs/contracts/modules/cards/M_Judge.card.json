@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.1.0",
+  "module_id": "M_Judge",
+  "summary": "Score GDPR audit runs and emit structured judge outputs for reporting.",
+  "boundaries": {
+    "inputs": [
+      {
+        "name": "audit_transcripts",
+        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "judge_outputs",
+        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+      }
+    ]
+  },
+  "knobs": [
+    {
+      "id": "judge_model",
+      "description": "Model identifier used for judging outputs.",
+      "value_type": "string",
+      "required": true
+    },
+    {
+      "id": "score_schema",
+      "description": "Path to score schema or rubric reference.",
+      "value_type": "path",
+      "required": false
+    }
+  ],
+  "risks": [
+    "Inconsistent judge configuration can skew scoring and reporting."
+  ]
+}
