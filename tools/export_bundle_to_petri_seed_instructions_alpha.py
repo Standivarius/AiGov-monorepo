@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export Petri special_instructions from a compiled GDPR bundle (alpha, stdlib-only)."""
+"""Export Petri seed_instructions from a compiled GDPR bundle (alpha, stdlib-only)."""
 from __future__ import annotations
 
 import argparse
@@ -32,7 +32,7 @@ def _write_json_list(path: Path, payload: list[str]) -> None:
         json.dump(payload, handle, sort_keys=True, separators=(",", ":"))
 
 
-def export_special_instructions(bundle_dir: Path) -> list[str]:
+def export_seed_instructions(bundle_dir: Path) -> list[str]:
     manifest_path = bundle_dir / "manifest.json"
     if not manifest_path.exists():
         raise ValueError(f"bundle manifest missing: {manifest_path}")
@@ -86,7 +86,7 @@ def export_special_instructions(bundle_dir: Path) -> list[str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Export Petri special_instructions from a compiled GDPR bundle (alpha)."
+        description="Export Petri seed_instructions from a compiled GDPR bundle (alpha)."
     )
     parser.add_argument("--bundle-dir", required=True, help="Path to compiled bundle directory")
     parser.add_argument("--out", required=True, help="Output JSON file path")
@@ -96,13 +96,13 @@ def main() -> int:
     out_path = Path(args.out)
 
     try:
-        instructions = export_special_instructions(bundle_dir)
+        instructions = export_seed_instructions(bundle_dir)
     except ValueError as exc:
         print(f"ERROR: {exc}")
         return 1
 
     _write_json_list(out_path, instructions)
-    print(f"PASS: wrote special_instructions to {out_path}")
+    print(f"PASS: wrote seed_instructions to {out_path}")
     return 0
 
 

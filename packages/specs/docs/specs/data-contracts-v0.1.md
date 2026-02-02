@@ -31,19 +31,19 @@ inspect eval petri/audit \
   --log-format=json \
   --log-dir="./logs/aigov" \
   -T max_turns=20 \
-  -T special_instructions="$(python load_scenario.py GDPR-007)" \
+  -T seed_instructions="$(python load_scenario.py GDPR-007)" \
   -T transcript_save_dir="./outputs"
 ```
 
-**Alpha note**: `tools/export_bundle_to_petri_special_instructions_alpha.py` can emit a JSON list of `special_instructions` from a compiled bundle, which can be passed to Inspect/Petri (example only):
+**Alpha note**: `tools/export_bundle_to_petri_seed_instructions_alpha.py` can emit a JSON list of `seed_instructions` from a compiled bundle, which can be passed to Inspect/Petri (example only):
 
 ```bash
-python tools/export_bundle_to_petri_special_instructions_alpha.py \
+python tools/export_bundle_to_petri_seed_instructions_alpha.py \
   --bundle-dir tools/fixtures/bundles/good \
-  --out ./outputs/special_instructions.json
+  --out ./outputs/seed_instructions.json
 
 inspect eval petri/audit \
-  -T special_instructions=./outputs/special_instructions.json
+  -T seed_instructions=./outputs/seed_instructions.json
 ```
 
 ### Model Roles
@@ -58,7 +58,7 @@ inspect eval petri/audit \
 
 ### Task Parameters (-T)
 - `max_turns`: Integer, default 30, range 10-50
-- `special_instructions`: String or array, scenario_card auditor_instructions
+- `seed_instructions`: String or array, scenario_card auditor_instructions
 - `transcript_save_dir`: Path where Petri saves JSON transcripts
 
 ### Outputs
