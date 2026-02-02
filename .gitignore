@@ -16,3 +16,11 @@ packages/**/.venv
 __pycache__/
 *.pyc
 *.pyo
+
+# Local eval artifacts
+outputs/
+logs/
+**/__pycache__/
+.venv*/
+.venv-*/
+*.pyc
