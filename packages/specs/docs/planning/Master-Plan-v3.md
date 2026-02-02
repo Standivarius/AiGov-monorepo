@@ -115,6 +115,7 @@ AIGov is a comprehensive AI governance and compliance audit service targeting EU
 **Objective**: Enable client discovery calls with complete report examples
 
 **Deliverables**:
+1. **Module Cards**: `packages/specs/docs/module_cards/inspect_petri_audit.md`
 1. ✅ Repository structure (Aigov-specs, Aigov-eval)
 2. 🔄 **Report Template Suite** (Priority 1)
    - L1/L2/L3 templates (Jinja2 or Docxtpl or Carbone)
