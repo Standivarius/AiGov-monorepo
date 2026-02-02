@@ -1,0 +1,52 @@
+{
+  "schema_version": "0.1.0",
+  "module_id": "M_LiveRun",
+  "summary": "Execute GDPR audit runs via Inspect + Petri with seed instructions and collect logs.",
+  "boundaries": {
+    "inputs": [
+      {
+        "name": "seed_instructions",
+        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+      },
+      {
+        "name": "inspect_task_args",
+        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "inspect_logs",
+        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+      },
+      {
+        "name": "petri_transcripts",
+        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+      }
+    ]
+  },
+  "knobs": [
+    {
+      "id": "max_turns",
+      "description": "Maximum number of turns per audit run.",
+      "value_type": "number",
+      "required": true,
+      "default": 20
+    },
+    {
+      "id": "seed_instructions",
+      "description": "Seed instructions string or list for Petri audit.",
+      "value_type": "json",
+      "required": true
+    },
+    {
+      "id": "transcript_save_dir",
+      "description": "Directory for Petri transcript JSON outputs.",
+      "value_type": "path",
+      "required": true,
+      "default": "./outputs"
+    }
+  ],
+  "risks": [
+    "Misconfigured task args can invalidate runs or skip expected logging."
+  ]
+}
