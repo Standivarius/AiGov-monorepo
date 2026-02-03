@@ -17,6 +17,7 @@ from aigov_ep.execute.runner import execute_scenario
 from aigov_ep.intake.validate import validate_intake
 from aigov_ep.judge.judge import judge_run
 from aigov_ep.reporting.generate import generate_report
+from aigov_ep.scenario.bundle_manifest_v0_1_0 import load_and_validate_manifest
 
 
 def _make_handler(action: Callable[[], None]) -> Callable[[argparse.Namespace], int]:
@@ -48,25 +49,40 @@ def _execute_handler(args: argparse.Namespace) -> int:
         scenario_path = args.scenario
         if not scenario_path:
             bundle_dir = Path(args.bundle_dir)
-            manifest_path = bundle_dir / "bundle_manifest.json"
-            if not manifest_path.exists():
-                print(f"ERROR: bundle_manifest.json not found in {bundle_dir}")
+            deterministic_manifest_path = bundle_dir / "manifest.json"
+            legacy_manifest_path = bundle_dir / "bundle_manifest.json"
+            if deterministic_manifest_path.exists():
+                try:
+                    scenario_paths = load_and_validate_manifest(bundle_dir)
+                except ValueError as exc:
+                    print(f"ERROR: {exc}")
+                    return 2
+                scenario_path = str(scenario_paths[0])
+            elif legacy_manifest_path.exists():
+                try:
+                    with open(legacy_manifest_path, "r", encoding="utf-8") as handle:
+                        manifest = json.load(handle)
+                except json.JSONDecodeError as exc:
+                    print(f"ERROR: Invalid bundle_manifest.json ({exc.msg})")
+                    return 2
+                scenarios = manifest.get("scenarios") or []
+                if not scenarios or not isinstance(scenarios, list):
+                    print("ERROR: bundle_manifest.json missing scenarios list")
+                    return 2
+                file_path = (
+                    scenarios[0].get("file_path") if isinstance(scenarios[0], dict) else None
+                )
+                if not file_path:
+                    print("ERROR: bundle_manifest.json missing scenarios[0].file_path")
+                    return 2
+                scenario_path = str((bundle_dir / file_path).resolve())
+            else:
+                print(
+                    "ERROR: bundle manifest not found in "
+                    f"{bundle_dir}. Expected manifest.json (schema_version 0.1.0) "
+                    "or bundle_manifest.json."
+                )
                 return 2
-            try:
-                with open(manifest_path, "r", encoding="utf-8") as handle:
-                    manifest = json.load(handle)
-            except json.JSONDecodeError as exc:
-                print(f"ERROR: Invalid bundle_manifest.json ({exc.msg})")
-                return 2
-            scenarios = manifest.get("scenarios") or []
-            if not scenarios or not isinstance(scenarios, list):
-                print("ERROR: bundle_manifest.json missing scenarios list")
-                return 2
-            file_path = scenarios[0].get("file_path") if isinstance(scenarios[0], dict) else None
-            if not file_path:
-                print("ERROR: bundle_manifest.json missing scenarios[0].file_path")
-                return 2
-            scenario_path = str((bundle_dir / file_path).resolve())
         result = execute_scenario(scenario_path, args.target, args.out, config)
     except Exception as exc:
         print(f"ERROR: {exc}")
