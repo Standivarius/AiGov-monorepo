@@ -72,6 +72,8 @@ cd "$PE"
 export AIGOV_RUN_EP_SMOKE="1"
 ensure_pe_venv
 ensure_pe_deps
+export PATH="$(dirname "$PE_VENV_PY"):$PATH"
+echo "PE: PATH includes venv bin: $(dirname "$PE_VENV_PY")"
 "$PE_VENV_PY" -m pytest tests/minimal_loop/test_ep_cli_judge_smoke.py -q || fail "PE: pytest failed"
 
 pass
