@@ -126,34 +126,11 @@
     },
     {
       "risk": "Ambiguous 'skipped' in migration-smoke judge smoke leading to false confidence",
-      "status": "open",
-      "mitigation_plan": "Hygiene PR to ensure venv bin is on PATH when running PE judge smoke and fail closed when AIGOV_RUN_EP_SMOKE=1 but aigov-ep is not found."
+      "status": "mitigated",
+      "mitigation_plan": "Mitigated by adding venv bin to PATH in tools/run-evalset-migration-smoke.sh and failing closed in PE judge smoke when AIGOV_RUN_EP_SMOKE is truthy but aigov-ep is missing."
     }
   ],
   "next_steps": [
-    {
-      "id": "PR110",
-      "title": "Eliminate judge smoke skip ambiguity in migration-smoke",
-      "effort": "low",
-      "single_outcome": "Remove '1 skipped' ambiguity by ensuring venv bin is on PATH during migration-smoke and failing closed if EP smoke is requested but aigov-ep is missing.",
-      "planned_files": [
-        "tools/run-evalset-migration-smoke.sh",
-        "packages/pe/tests/minimal_loop/test_ep_cli_judge_smoke.py"
-      ],
-      "acceptance_criteria": [
-        "NX_DAEMON=false npx nx run evalsets:migration-smoke reports 0 skipped for judge smoke (or the skip is explicitly intentional and documented).",
-        "If AIGOV_RUN_EP_SMOKE=1 and aigov-ep is not resolvable, test fails with clear message (no skip).",
-        "No new CI wiring; only deterministic, local logic changes."
-      ],
-      "verification_commands": [
-        "NX_DAEMON=false npx nx run evalsets:migration-smoke",
-        "python3 tools/validate_planning_pack.py"
-      ],
-      "stop_conditions": [
-        "Any attempt to add new PR-gate commands or wire new bash validators.",
-        "Scope expands beyond the two files above."
-      ]
-    },
     {
       "id": "END_MILESTONE_CHECK",
       "title": "Run end-of-milestone comprehensive tests",
@@ -163,6 +140,21 @@
         "python3 tools/validate_planning_pack.py",
         "bash tools/run_pr_gate_validators.sh",
         "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+      ]
+    },
+    {
+      "id": "MILESTONE_EXECUTION_DETERMINISTIC_BUNDLES",
+      "title": "Milestone: Execution consumes deterministic bundles",
+      "effort": "medium",
+      "single_outcome": "Start the next milestone to make execution consume deterministic bundles (GDPR-only)."
+    },
+    {
+      "id": "PR112",
+      "title": "EP accepts deterministic bundle manifest",
+      "effort": "medium",
+      "single_outcome": "Extend `aigov-ep execute --bundle-dir` to accept deterministic manifest.json (schema_version 0.1.0, verify sha256, fail-closed) while keeping legacy bundle_manifest.json support.",
+      "verification_commands": [
+        "python3 tools/validate_planning_pack.py"
       ]
     }
   ],
