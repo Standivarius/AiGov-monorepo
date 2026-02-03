@@ -62,6 +62,9 @@ Note: Nx graph output is for human exploration; do not commit generated artifact
 ## GitHub PR creation (when gh is flaky)
 If `gh pr create` fails due to connectivity to `api.github.com`, open the PR via the compare URL instead:
 - `https://github.com/Standivarius/AiGov-monorepo/compare/main...<branch>?expand=1`
+Always include a PR body with **Summary** + **Testing**. When sharing PR info:
+- Provide a clickable compare URL.
+- Provide the PR body inside a code block for easy copy/paste.
 
 ## Offline / flaky network guidance (Codex)
 - Prefer local-only validation and avoid networked commands when offline.
