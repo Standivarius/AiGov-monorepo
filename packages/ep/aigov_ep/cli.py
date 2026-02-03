@@ -75,7 +75,15 @@ def _execute_handler(args: argparse.Namespace) -> int:
                 if not file_path:
                     print("ERROR: bundle_manifest.json missing scenarios[0].file_path")
                     return 2
-                scenario_path = str((bundle_dir / file_path).resolve())
+                if Path(file_path).is_absolute():
+                    print("ERROR: bundle_manifest.json file_path must be relative")
+                    return 2
+                resolved_path = (bundle_dir / file_path).resolve()
+                bundle_root = bundle_dir.resolve()
+                if bundle_root not in resolved_path.parents and resolved_path != bundle_root:
+                    print("ERROR: bundle_manifest.json file_path escapes bundle_dir")
+                    return 2
+                scenario_path = str(resolved_path)
             else:
                 print(
                     "ERROR: bundle manifest not found in "

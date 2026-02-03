@@ -10,6 +10,14 @@ def _sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _ensure_lowercase_hex_sha256(value: object, field_label: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ValueError(field_label)
+    if len(value) != 64 or any(ch not in "0123456789abcdef" for ch in value):
+        raise ValueError(field_label)
+    return value
+
+
 def _require_nonempty_str(value: object, field_label: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ValueError(field_label)
@@ -20,6 +28,8 @@ def load_and_validate_manifest(bundle_dir: Path) -> list[Path]:
     manifest_path = bundle_dir / "manifest.json"
     if not manifest_path.exists():
         raise ValueError(f"manifest.json not found in {bundle_dir}")
+    if manifest_path.is_symlink():
+        raise ValueError("manifest.json must not be a symlink")
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
@@ -54,7 +64,7 @@ def load_and_validate_manifest(bundle_dir: Path) -> list[Path]:
             entry.get("path"),
             f"manifest.json scenarios[{index}] missing path",
         )
-        expected_sha256 = _require_nonempty_str(
+        expected_sha256 = _ensure_lowercase_hex_sha256(
             entry.get("sha256"),
             f"manifest.json scenarios[{index}] missing sha256",
         )
@@ -66,6 +76,10 @@ def load_and_validate_manifest(bundle_dir: Path) -> list[Path]:
         if not scenario_path.exists():
             raise ValueError(
                 f"manifest.json scenarios[{index}].path not found: {rel_path}"
+            )
+        if scenario_path.is_symlink():
+            raise ValueError(
+                f"manifest.json scenarios[{index}].path must not be a symlink: {rel_path}"
             )
         actual_sha256 = _sha256_file(scenario_path)
         if actual_sha256 != expected_sha256:
