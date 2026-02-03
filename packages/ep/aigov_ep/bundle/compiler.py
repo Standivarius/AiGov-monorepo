@@ -25,6 +25,9 @@ def compile_single_scenario_bundle(
     _validate_scenario(scenario)
 
     scenario_id = str(scenario.get("scenario_id"))
+    scenario_id = _ensure_safe_path_component(scenario_id, "scenario_id")
+    if client_id is not None:
+        client_id = _ensure_safe_path_component(client_id, "client_id")
     original_path = Path(scenario_path)
     ext = original_path.suffix or ".yaml"
 
@@ -87,6 +90,16 @@ def _validate_scenario(scenario: Dict[str, Any]) -> None:
         value = scenario.get(key)
         if not isinstance(value, expected_type):
             raise BundleCompileError(f"Scenario missing or invalid '{key}'")
+
+
+def _ensure_safe_path_component(value: str, label: str) -> str:
+    if not value:
+        raise ValueError(f"{label} must be non-empty")
+    if "/" in value or "\\" in value:
+        raise ValueError(f"{label} must not contain path separators")
+    if ".." in value:
+        raise ValueError(f"{label} must not contain '..'")
+    return value
 
 
 def _build_manifest(
