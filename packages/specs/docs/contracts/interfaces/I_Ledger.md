@@ -8,5 +8,9 @@ Determinism: interfaces must fail closed on invalid or ambiguous inputs; no sile
 | AIGov bundle | Deterministic scenario bundle (manifest.json v0.1.0 + sha256) | Scenario JSON files + manifest | Paths and hashes are verified; fails closed on mismatch or ambiguity | TBD: multi-scenario execution policy | tools/validate_bundle_integrity.py |
 | Exporter | Bundle directory + manifest.json v0.1.0 | seed_instructions JSON list | Deterministic ordering; fails closed on invalid manifest or schema drift | TBD: future non-GDPR export formats | tools/validate_export_bundle_to_petri_seed_instructions_alpha.py |
 | Inspect | seed_instructions + task args | inspect_logs | Deterministic command printing; fail closed on invalid args | TBD: CLI surface changes | tools/validate_print_inspect_petri_run_command.py |
-| Petri | seed_instructions + audit runtime | petri_transcripts | Transcript outputs are required; missing outputs fail closed | TBD: transcript schema evolution | tools/validate_planning_pack.py |
-| Scout | runtime logs + transcripts | findings report | Fail closed on missing required inputs; deterministic evaluation order | TBD: report schema and scoring policy | tools/report_t_gate_status.py |
+| Petri | seed_instructions + audit runtime | petri_transcripts | Transcript outputs are required; missing outputs fail closed | TBD: transcript schema evolution | TBD (dedicated validator pending) |
+| Scout | runtime logs + transcripts | findings report | Fail closed on missing required inputs; deterministic evaluation order | TBD: report schema and scoring policy | TBD (dedicated validator pending) |
+
+## Validation Policy
+- tools/validate_interface_ledger.py enforces: file exists, table header columns, required module rows, and minimum column count.
+- It does NOT enforce: semantic correctness, referenced tool existence, or I/O contract reality.
