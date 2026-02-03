@@ -8,6 +8,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
+ROOT = Path(__file__).resolve().parents[1]
+EP_ROOT = ROOT / "packages" / "ep"
+sys.path.insert(0, str(EP_ROOT))
+
+from aigov_ep.scenario.bundle_manifest_v0_1_0 import load_and_validate_manifest
+
 
 def _load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
@@ -20,12 +26,6 @@ def _ensure_dict(value: Any, label: str) -> dict[str, Any]:
     return value
 
 
-def _ensure_list(value: Any, label: str) -> list[Any]:
-    if not isinstance(value, list):
-        raise ValueError(f"{label} must be an array")
-    return value
-
-
 def _write_json_list(path: Path, payload: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
@@ -33,24 +33,12 @@ def _write_json_list(path: Path, payload: list[str]) -> None:
 
 
 def export_seed_instructions(bundle_dir: Path) -> list[str]:
-    manifest_path = bundle_dir / "manifest.json"
-    if not manifest_path.exists():
-        raise ValueError(f"bundle manifest missing: {manifest_path}")
-
-    manifest = _ensure_dict(_load_json(manifest_path), str(manifest_path))
-    scenarios = _ensure_list(manifest.get("scenarios"), f"{manifest_path}: scenarios")
-    if not scenarios:
-        raise ValueError("bundle manifest contains no scenarios")
+    scenario_paths = load_and_validate_manifest(bundle_dir)
 
     instructions: list[dict[str, str]] = []
     seen_instance_ids: set[str] = set()
 
-    for entry in scenarios:
-        entry_obj = _ensure_dict(entry, f"{manifest_path}: scenarios entry")
-        rel_path = entry_obj.get("path")
-        if not isinstance(rel_path, str) or not rel_path:
-            raise ValueError("manifest scenario path missing")
-        scenario_path = bundle_dir / rel_path
+    for scenario_path in scenario_paths:
         scenario = _ensure_dict(_load_json(scenario_path), str(scenario_path))
 
         scenario_id = scenario.get("scenario_id")
