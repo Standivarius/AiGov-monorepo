@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Client Intake v0.2 (GDPR-only)",
+  "description": "JSON Schema draft-07 cannot express certain cross-field membership constraints; tools/validate_client_intake_v0_2.py is required for full validation. Examples: right_to_erasure_handling.primary_channel must be a member of policy_profile.supported_dsar_channels; right_to_erasure_handling.fallback_channels must be a subset of policy_profile.supported_dsar_channels.",
   "type": "object",
   "additionalProperties": false,
   "required": [

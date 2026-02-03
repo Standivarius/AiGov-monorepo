@@ -5,6 +5,8 @@ Purpose: PE/EP dashboard/list.
 This document enumerates evalsets and how to run them, based on the canonical
 registries in `packages/specs/docs/planning/2026-01-22-run/`.
 
+Note: bundle integrity checks in `tools/validate_planning_pack.py` include tamper detection via the poison fixture.
+
 ## Evalsets
 
 | evalset_id | tier | description | command to run |
