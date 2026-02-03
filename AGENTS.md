@@ -65,6 +65,7 @@ If `gh pr create` fails due to connectivity to `api.github.com`, open the PR via
 Always include a PR body with **Summary** + **Testing**. When sharing PR info:
 - Provide a clickable compare URL.
 - Provide the PR body inside a code block for easy copy/paste.
+Never omit **Summary** + **Testing**.
 
 ## Offline / flaky network guidance (Codex)
 - Prefer local-only validation and avoid networked commands when offline.
