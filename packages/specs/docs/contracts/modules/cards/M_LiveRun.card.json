@@ -6,21 +6,21 @@
     "inputs": [
       {
         "name": "seed_instructions",
-        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+        "contract_ref_path": "packages/specs/docs/contracts/interfaces/I_Ledger.md"
       },
       {
         "name": "inspect_task_args",
-        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+        "contract_ref_path": "packages/specs/docs/contracts/interfaces/I_Ledger.md"
       }
     ],
     "outputs": [
       {
         "name": "inspect_logs",
-        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+        "contract_ref_path": "packages/specs/docs/contracts/interfaces/I_Ledger.md"
       },
       {
         "name": "petri_transcripts",
-        "contract_ref_path": "packages/specs/docs/specs/data-contracts-v0.1.md"
+        "contract_ref_path": "packages/specs/docs/contracts/interfaces/I_Ledger.md"
       }
     ]
   },
