@@ -1,0 +1,176 @@
+{
+  "schema_version": "state_object_v0.4",
+  "date": "2026-02-03",
+  "repo": {
+    "name": "Standivarius/AiGov-monorepo",
+    "default_branch_source_of_truth": "main"
+  },
+  "scope": {
+    "in_scope": [
+      "GDPR-only alpha (MVP)"
+    ],
+    "out_of_scope": [
+      "Non-GDPR frameworks unless explicitly requested"
+    ]
+  },
+  "hard_rules": {
+    "workflow": [
+      "Do not execute code in planning chats; output paste-ready Codex prompts.",
+      "Always separate TO DOS vs SUGGESTIONS.",
+      "Always label effort: low / medium / high / xhigh.",
+      "Prompts must be single-outcome.",
+      "Keep PRs small; split if >6 files.",
+      "PR-gate must remain fast/deterministic; allowed verification commands only: python3 tools/validate_planning_pack.py; bash tools/run_pr_gate_validators.sh; NX_DAEMON=false npx nx run evalsets:migration-smoke.",
+      "Prefer adding checks under tools/validate_planning_pack.py rather than wiring new things into tools/run_pr_gate_validators.sh unless strictly necessary.",
+      "Be explicit about schema vs policy; validators may enforce policy beyond schema.",
+      "Do not invent new schema fields; add a contract/schema PR first if needed."
+    ],
+    "review_policy": [
+      "End of each PR: run Codex PR review prompt (read-only) and merge only when required checks are green.",
+      "End-of-milestone reviews: (1) Claude architecture pass (propose-only), (2) Gemini safety/drift pass (propose-only), (3) Codex xhigh integrity pass running only allowed verification commands."
+    ]
+  },
+  "milestones": [
+    {
+      "name": "Module Specs + Dashboard v0.1",
+      "status": "done",
+      "what_changed": [
+        "Introduced machine-readable module cards (contract + schema + validator) and a module registry.",
+        "Added deterministic human-facing dashboard generator (M_Dashboard.md) from module cards and wired snapshot validation into tools/validate_planning_pack.py.",
+        "Added repo hygiene to avoid committing local run artifacts (outputs/logs/venvs)."
+      ],
+      "why": "Make module boundaries/knobs/contracts auditable and reduce drift; keep PR-gate deterministic."
+    },
+    {
+      "name": "T_Gate v0.1 (tests/evalsets dashboard)",
+      "status": "done",
+      "what_changed": [
+        "Added a single doc/report surface describing what checks/evalsets exist and how to run them (PE/EP 'tests dashboard' concept)."
+      ],
+      "why": "Reduce confusion about what 'green' means; centralize integrity checks."
+    },
+    {
+      "name": "Runpack v0.1 (Inspect/Petri command printer)",
+      "status": "done",
+      "what_changed": [
+        "Added deterministic tool to print full Inspect command for petri/audit from seed_instructions JSON.",
+        "Added validator to ensure deterministic output and fixture match; wired into tools/validate_planning_pack.py.",
+        "Hardened shell quoting using stdlib shlex and added edge-case fixtures to catch apostrophes/quotes/backslashes."
+      ],
+      "why": "Operator-friendly, deterministic run commands without executing runs in tooling; fail-closed and auditable."
+    },
+    {
+      "name": "Client intake cross-field constraints documentation",
+      "status": "done",
+      "what_changed": [
+        "Documented that JSON Schema draft-07 cannot express certain cross-field constraints, which are enforced by tools/validate_client_intake_v0_2.py.",
+        "Documented tamper-detection coverage via poison bundle fixture in T_Gate docs."
+      ],
+      "why": "Close schema-vs-validator contract gaps for enterprise/auditor clarity."
+    }
+  ],
+  "key_repo_artifacts": {
+    "module_cards": {
+      "registry_path": "packages/specs/docs/contracts/modules/module_registry_v0.yaml",
+      "cards_dir": "packages/specs/docs/contracts/modules/cards/",
+      "schema_path": "packages/specs/schemas/module_card_v0.schema.json",
+      "dashboard_snapshot_path": "packages/specs/docs/contracts/modules/M_Dashboard.md",
+      "dashboard_exporter": "tools/export_module_cards_dashboard.py",
+      "validator": "tools/validate_module_cards.py"
+    },
+    "tests_dashboard": {
+      "t_gate_doc_path": "packages/specs/docs/contracts/tests/T_Gate.md",
+      "t_gate_reporter_path": "tools/report_t_gate_status.py"
+    },
+    "runpack": {
+      "command_printer": "tools/print_inspect_petri_run_command.py",
+      "validator": "tools/validate_print_inspect_petri_run_command.py",
+      "fixtures_dir": "tools/fixtures/runpack/"
+    },
+    "planning_pack_gate": {
+      "validator_path": "tools/validate_planning_pack.py",
+      "allowed_commands": [
+        "python3 tools/validate_planning_pack.py",
+        "bash tools/run_pr_gate_validators.sh",
+        "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+      ]
+    }
+  },
+  "reviews": {
+    "codex_xhigh_latest": {
+      "verdict": "APPROVE",
+      "notes": [
+        "Scope clean; no outputs/logs/venv artifacts in diff.",
+        "All allowed verification commands passed.",
+        "Reported: migration-smoke showed '1 skipped' in PE judge smoke (needs hygiene follow-up)."
+      ]
+    },
+    "claude_latest": {
+      "verdict": "APPROVE (PR108 docs)",
+      "notes": [
+        "Confirmed documentation-only changes accurately reflect validator-enforced cross-field constraints and poison fixture tamper detection."
+      ]
+    },
+    "gemini_latest": {
+      "verdict": "TOOL LIMITATION",
+      "notes": [
+        "Gemini could not access PR diff due to environment constraints; use GitHub diff access or provide changed file contents for review."
+      ]
+    }
+  },
+  "open_risks_and_mitigations": [
+    {
+      "risk": "Shell quoting/injection in printed run commands",
+      "status": "mitigated",
+      "mitigation": "Use shlex.quote (or shlex.join) + enforce edge-case fixtures with apostrophes/quotes/backslashes in runpack validator."
+    },
+    {
+      "risk": "Ambiguous 'skipped' in migration-smoke judge smoke leading to false confidence",
+      "status": "open",
+      "mitigation_plan": "Hygiene PR to ensure venv bin is on PATH when running PE judge smoke and fail closed when AIGOV_RUN_EP_SMOKE=1 but aigov-ep is not found."
+    }
+  ],
+  "next_steps": [
+    {
+      "id": "PR110",
+      "title": "Eliminate judge smoke skip ambiguity in migration-smoke",
+      "effort": "low",
+      "single_outcome": "Remove '1 skipped' ambiguity by ensuring venv bin is on PATH during migration-smoke and failing closed if EP smoke is requested but aigov-ep is missing.",
+      "planned_files": [
+        "tools/run-evalset-migration-smoke.sh",
+        "packages/pe/tests/minimal_loop/test_ep_cli_judge_smoke.py"
+      ],
+      "acceptance_criteria": [
+        "NX_DAEMON=false npx nx run evalsets:migration-smoke reports 0 skipped for judge smoke (or the skip is explicitly intentional and documented).",
+        "If AIGOV_RUN_EP_SMOKE=1 and aigov-ep is not resolvable, test fails with clear message (no skip).",
+        "No new CI wiring; only deterministic, local logic changes."
+      ],
+      "verification_commands": [
+        "NX_DAEMON=false npx nx run evalsets:migration-smoke",
+        "python3 tools/validate_planning_pack.py"
+      ],
+      "stop_conditions": [
+        "Any attempt to add new PR-gate commands or wire new bash validators.",
+        "Scope expands beyond the two files above."
+      ]
+    },
+    {
+      "id": "END_MILESTONE_CHECK",
+      "title": "Run end-of-milestone comprehensive tests",
+      "effort": "low",
+      "single_outcome": "Confirm repo integrity after PR110 by running only the allowed commands.",
+      "verification_commands": [
+        "python3 tools/validate_planning_pack.py",
+        "bash tools/run_pr_gate_validators.sh",
+        "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+      ]
+    }
+  ],
+  "handoff": {
+    "transcript_to_save": "2026-02-03_GDPR_Execution_Planning.md",
+    "recommended_repo_paths": {
+      "state_object": "packages/specs/docs/planning/2026-02-03/state_object_v0_4__2026-02-03.json",
+      "chat_transcript": "packages/specs/docs/artifacts/2026-02-03_GDPR_Execution_Planning.md"
+    }
+  }
+}
