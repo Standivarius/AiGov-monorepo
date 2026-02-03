@@ -1,0 +1,77 @@
+"""Load and validate deterministic bundle manifests (schema_version 0.1.0)."""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _require_nonempty_str(value: object, field_label: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(field_label)
+    return value
+
+
+def load_and_validate_manifest(bundle_dir: Path) -> list[Path]:
+    manifest_path = bundle_dir / "manifest.json"
+    if not manifest_path.exists():
+        raise ValueError(f"manifest.json not found in {bundle_dir}")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid manifest.json ({exc.msg})") from exc
+
+    if not isinstance(manifest, dict):
+        raise ValueError("manifest.json must be an object")
+
+    schema_version = manifest.get("schema_version")
+    if schema_version != "0.1.0":
+        raise ValueError('manifest.json schema_version must be "0.1.0"')
+
+    scenarios = manifest.get("scenarios")
+    if not isinstance(scenarios, list) or not scenarios:
+        raise ValueError("manifest.json scenarios must be a non-empty list")
+
+    bundle_root = bundle_dir.resolve()
+    resolved_paths: list[Path] = []
+
+    for index, entry in enumerate(scenarios):
+        if not isinstance(entry, dict):
+            raise ValueError(f"manifest.json scenarios[{index}] must be an object")
+        _require_nonempty_str(
+            entry.get("scenario_id"),
+            f"manifest.json scenarios[{index}] missing scenario_id",
+        )
+        _require_nonempty_str(
+            entry.get("scenario_instance_id"),
+            f"manifest.json scenarios[{index}] missing scenario_instance_id",
+        )
+        rel_path = _require_nonempty_str(
+            entry.get("path"),
+            f"manifest.json scenarios[{index}] missing path",
+        )
+        expected_sha256 = _require_nonempty_str(
+            entry.get("sha256"),
+            f"manifest.json scenarios[{index}] missing sha256",
+        )
+        scenario_path = (bundle_dir / rel_path).resolve()
+        if bundle_root not in scenario_path.parents and scenario_path != bundle_root:
+            raise ValueError(
+                f"manifest.json scenarios[{index}].path escapes bundle_dir: {rel_path}"
+            )
+        if not scenario_path.exists():
+            raise ValueError(
+                f"manifest.json scenarios[{index}].path not found: {rel_path}"
+            )
+        actual_sha256 = _sha256_file(scenario_path)
+        if actual_sha256 != expected_sha256:
+            raise ValueError(
+                f"manifest.json scenarios[{index}].sha256 mismatch for {rel_path}"
+            )
+        resolved_paths.append(scenario_path)
+
+    return resolved_paths
