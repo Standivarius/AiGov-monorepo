@@ -13,6 +13,10 @@ from aigov_ep.scenario.bundle_manifest_v0_1_0 import load_and_validate_manifest
 
 
 def validate_ep_deterministic_bundle_manifest(bundle_dir: Path) -> list[str]:
+    deterministic_manifest = bundle_dir / "manifest.json"
+    legacy_manifest = bundle_dir / "bundle_manifest.json"
+    if deterministic_manifest.exists() and legacy_manifest.exists():
+        return ["bundle contains both manifest.json and bundle_manifest.json"]
     try:
         scenario_paths = load_and_validate_manifest(bundle_dir)
     except (ValueError, OSError) as exc:
