@@ -30,9 +30,7 @@ def _run_tool(tool_path: Path, seed_path: Path) -> str:
     return result.stdout.strip()
 
 
-def validate_print_inspect_petri_run_command(
-    tool_path: Path, seed_path: Path, expected_path: Path
-) -> list[str]:
+def _validate_fixture(tool_path: Path, seed_path: Path, expected_path: Path) -> list[str]:
     errors: list[str] = []
     if not tool_path.exists():
         return [f"tool missing: {tool_path}"]
@@ -48,12 +46,23 @@ def validate_print_inspect_petri_run_command(
         return [str(exc)]
 
     if first != second:
-        errors.append("command output is not deterministic across runs")
+        errors.append(f"command output is not deterministic across runs for {seed_path.name}")
 
     expected = expected_path.read_text(encoding="utf-8").strip()
     if first != expected:
-        errors.append("command output does not match expected fixture")
+        errors.append(f"command output does not match expected fixture for {seed_path.name}")
 
+    return errors
+
+
+def validate_print_inspect_petri_run_command(
+    tool_path: Path, seed_path: Path, expected_path: Path
+) -> list[str]:
+    errors = _validate_fixture(tool_path, seed_path, expected_path)
+    edge_seed = seed_path.parent / "seed_instructions_edge_cases.json"
+    edge_expected = seed_path.parent / "expected_inspect_command_edge_cases.txt"
+    if edge_seed.exists() or edge_expected.exists():
+        errors.extend(_validate_fixture(tool_path, edge_seed, edge_expected))
     return errors
 
 

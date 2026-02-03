@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shlex
 import sys
 from pathlib import Path
 from typing import Any
@@ -37,15 +38,20 @@ def build_command(
     transcript_dir: str,
 ) -> str:
     seed_json = _json_dump(seed_instructions)
+    log_dir_q = shlex.quote(log_dir)
+    transcript_token = f"transcript_save_dir={transcript_dir}"
+    transcript_token_q = shlex.quote(transcript_token)
+    seed_token = f"seed_instructions={seed_json}"
+    seed_token_q = shlex.quote(seed_token)
     return (
         "inspect eval petri/audit"
-        f" --limit {limit} --log-format=json --log-dir=\"{log_dir}\""
+        f" --limit {limit} --log-format=json --log-dir={log_dir_q}"
         f" --model-role auditor={auditor_model}"
         f" --model-role target={target_model}"
         f" --model-role judge={judge_model}"
         f" -T max_turns={max_turns}"
-        f" -T transcript_save_dir=\"{transcript_dir}\""
-        f" -T seed_instructions='{seed_json}'"
+        f" -T {transcript_token_q}"
+        f" -T {seed_token_q}"
     )
 
 
