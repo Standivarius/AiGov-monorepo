@@ -12,6 +12,7 @@ from validate_client_overrides import validate_override_fixture
 from validate_bundle_integrity import validate_bundle
 from validate_client_intake_to_bundle import validate_client_intake_to_bundle
 from validate_client_intake_v0_2 import validate_client_intake
+from validate_ep_deterministic_bundle_manifest import validate_ep_deterministic_bundle_manifest
 from validate_export_bundle_to_petri_seed_instructions_alpha import (
     validate_export_bundle_to_petri_seed_instructions_alpha,
 )
@@ -440,6 +441,14 @@ def main() -> int:
             print(f"  - {error}")
         return 1
     print(f"PASS: bundle integrity validated: {BUNDLE_GOOD_DIR}")
+
+    deterministic_manifest_errors = validate_ep_deterministic_bundle_manifest(BUNDLE_GOOD_DIR)
+    if deterministic_manifest_errors:
+        print("ERROR: deterministic bundle manifest validation failed:")
+        for error in deterministic_manifest_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: deterministic bundle manifest validated: {BUNDLE_GOOD_DIR}")
 
     bundle_poison_errors = validate_bundle(BUNDLE_POISON_DIR)
     if not bundle_poison_errors:
