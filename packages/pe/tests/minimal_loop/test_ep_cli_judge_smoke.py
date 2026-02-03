@@ -53,6 +53,11 @@ def test_ep_cli_judge_smoke(tmp_path: Path) -> None:
         pytest.skip("AIGOV_RUN_EP_SMOKE not set; skipping EP judge smoke test.")
 
     if shutil.which("aigov-ep") is None:
+        if _env_truthy("AIGOV_RUN_EP_SMOKE"):
+            pytest.fail(
+                "aigov-ep not found on PATH while AIGOV_RUN_EP_SMOKE is truthy. "
+                "Ensure the venv bin directory is on PATH (e.g., venv/bin)."
+            )
         pytest.skip(
             "aigov-ep not found on PATH. Install with: pushd ..\\AiGov-mvp; pip install -e .; popd"
         )
