@@ -36,6 +36,9 @@ CLIENT_OVERRIDE_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client
 CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_override_empty_supported.json"
 )
+CLIENT_OVERRIDE_UNKNOWN_VOCAB_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "client_override_fail_unknown_vocab.json"
+)
 CLIENT_INTAKE_FIXTURE = ROOT / "tools" / "fixtures" / "intake" / "client_intake_output_pass.json"
 CLIENT_INTAKE_V0_2_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_pass.json"
 CLIENT_INTAKE_V0_2_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail.json"
@@ -377,6 +380,15 @@ def main() -> int:
         print("ERROR: client override fail fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): client override validated: {CLIENT_OVERRIDE_FAIL_PATH}")
+
+    override_unknown_vocab_errors = validate_override_fixture(CLIENT_OVERRIDE_UNKNOWN_VOCAB_PATH)
+    if not override_unknown_vocab_errors:
+        print("ERROR: client override unknown vocab fixture unexpectedly passed validation.")
+        return 1
+    print(
+        "FAIL (as expected): client override validated: "
+        f"{CLIENT_OVERRIDE_UNKNOWN_VOCAB_PATH}"
+    )
 
     override_empty_supported_errors = validate_override_fixture(CLIENT_OVERRIDE_EMPTY_SUPPORTED_PATH)
     if not override_empty_supported_errors:

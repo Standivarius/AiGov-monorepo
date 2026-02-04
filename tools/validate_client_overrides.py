@@ -11,6 +11,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "client_scenario_override_v0.schema.json"
+DSAR_CHANNELS_PATH = ROOT / "packages" / "specs" / "docs" / "contracts" / "taxonomy" / "dsar_channels_v0.json"
+CLIENT_CONSTRAINTS_PATH = (
+    ROOT / "packages" / "specs" / "docs" / "contracts" / "taxonomy" / "client_constraints_v0.json"
+)
 
 
 def _load_json(path: Path) -> Any:
@@ -39,7 +43,62 @@ def _load_schema_keys(schema_path: Path) -> tuple[set[str], set[str]]:
     return set(required), set(properties.keys())
 
 
-def validate_override(override: dict[str, Any], path: Path, required: set[str], allowed: set[str]) -> list[str]:
+def _load_allowlist(path: Path, label: str) -> list[str]:
+    if not path.exists():
+        raise ValueError(f"{label} allowlist not found: {path}")
+    data = _ensure_list(_load_json(path), f"{label} allowlist")
+    items: list[str] = []
+    for item in data:
+        if not isinstance(item, str):
+            raise ValueError(f"{label} allowlist must contain strings")
+        if not item.strip():
+            raise ValueError(f"{label} allowlist must not contain blank entries")
+        items.append(item)
+    if not items:
+        raise ValueError(f"{label} allowlist must not be empty")
+    return items
+
+
+def _validate_vocab_entry(value: Any, label: str, errors: list[str], path: Path) -> str | None:
+    if not isinstance(value, str):
+        errors.append(f"{path}: {label} must be a non-empty, non-whitespace string")
+        return None
+    if not value.strip():
+        errors.append(f"{path}: {label} must be a non-empty, non-whitespace string")
+        return None
+    return value
+
+
+def _validate_vocab_list(
+    values: Any,
+    label: str,
+    allowlist: set[str],
+    errors: list[str],
+    path: Path,
+) -> list[str]:
+    if not isinstance(values, list):
+        errors.append(f"{path}: {label} must be an array")
+        return []
+    validated: list[str] = []
+    for item in values:
+        value = _validate_vocab_entry(item, label, errors, path)
+        if value is None:
+            continue
+        if value not in allowlist:
+            errors.append(f"{path}: {label} contains unknown value '{value}'")
+            continue
+        validated.append(value)
+    return validated
+
+
+def validate_override(
+    override: dict[str, Any],
+    path: Path,
+    required: set[str],
+    allowed: set[str],
+    dsar_allowlist: set[str],
+    constraints_allowlist: set[str],
+) -> list[str]:
     errors: list[str] = []
     keys = set(override.keys())
     missing = sorted(required - keys)
@@ -75,24 +134,14 @@ def validate_override(override: dict[str, Any], path: Path, required: set[str], 
         errors.append(f"{path}: policy_profile extra keys not allowed: {extra_policy}")
 
     supported = policy_profile.get("supported_dsar_channels")
-    if isinstance(supported, list):
-        if not supported:
-            errors.append(f"{path}: supported_dsar_channels must contain at least one entry")
-        supported_channels = []
-        for channel in supported:
-            if not isinstance(channel, str) or not channel:
-                errors.append(f"{path}: supported_dsar_channels must be non-empty strings")
-            else:
-                supported_channels.append(channel)
-    else:
-        errors.append(f"{path}: supported_dsar_channels must be an array")
-        supported_channels = []
+    supported_channels = _validate_vocab_list(
+        supported, "supported_dsar_channels", dsar_allowlist, errors, path
+    )
+    if isinstance(supported, list) and not supported:
+        errors.append(f"{path}: supported_dsar_channels must contain at least one entry")
 
     constraints = policy_profile.get("known_client_constraints")
-    if not isinstance(constraints, list):
-        errors.append(f"{path}: known_client_constraints must be an array")
-    elif any(not isinstance(item, str) or not item for item in constraints):
-        errors.append(f"{path}: known_client_constraints must be non-empty strings")
+    _validate_vocab_list(constraints, "known_client_constraints", constraints_allowlist, errors, path)
 
     r2e = policy_profile.get("right_to_erasure_handling")
     if not isinstance(r2e, dict):
@@ -111,24 +160,17 @@ def validate_override(override: dict[str, Any], path: Path, required: set[str], 
     primary = r2e.get("primary_channel")
     fallback = r2e.get("fallback_channels")
     r2e_constraints = r2e.get("constraints")
-    if not isinstance(primary, str) or not primary:
-        errors.append(f"{path}: primary_channel must be a non-empty string")
-    if not isinstance(fallback, list):
-        errors.append(f"{path}: fallback_channels must be an array")
-        fallback = []
-    if not isinstance(r2e_constraints, list):
-        errors.append(f"{path}: constraints must be an array")
-    elif any(not isinstance(item, str) or not item for item in r2e_constraints):
-        errors.append(f"{path}: constraints must be non-empty strings")
+    primary_value = _validate_vocab_entry(primary, "primary_channel", errors, path)
+    fallback_values = _validate_vocab_list(
+        fallback, "fallback_channels", dsar_allowlist, errors, path
+    )
+    _validate_vocab_list(r2e_constraints, "constraints", constraints_allowlist, errors, path)
 
-    if supported_channels and isinstance(primary, str) and primary:
-        if primary not in supported_channels:
-            errors.append(f"{path}: primary_channel '{primary}' not in supported_dsar_channels")
-    if supported_channels and isinstance(fallback, list):
-        for channel in fallback:
-            if not isinstance(channel, str) or not channel:
-                errors.append(f"{path}: fallback_channels must be non-empty strings")
-                continue
+    if supported_channels and primary_value:
+        if primary_value not in supported_channels:
+            errors.append(f"{path}: primary_channel '{primary_value}' not in supported_dsar_channels")
+    if supported_channels:
+        for channel in fallback_values:
             if channel not in supported_channels:
                 errors.append(f"{path}: fallback_channel '{channel}' not in supported_dsar_channels")
 
@@ -140,15 +182,28 @@ def validate_override_fixture(fixture_path: Path) -> list[str]:
         return [f"fixture not found: {fixture_path}"]
     if not SCHEMA_PATH.exists():
         return [f"override schema not found: {SCHEMA_PATH}"]
+    if not DSAR_CHANNELS_PATH.exists():
+        return [f"dsar channel allowlist not found: {DSAR_CHANNELS_PATH}"]
+    if not CLIENT_CONSTRAINTS_PATH.exists():
+        return [f"client constraints allowlist not found: {CLIENT_CONSTRAINTS_PATH}"]
     try:
         required, allowed = _load_schema_keys(SCHEMA_PATH)
+        dsar_allowlist = set(_load_allowlist(DSAR_CHANNELS_PATH, "dsar_channels"))
+        constraints_allowlist = set(_load_allowlist(CLIENT_CONSTRAINTS_PATH, "client_constraints"))
     except ValueError as exc:
         return [str(exc)]
     try:
         override = _ensure_dict(_load_json(fixture_path), str(fixture_path))
     except (json.JSONDecodeError, ValueError) as exc:
         return [f"{fixture_path}: invalid JSON ({exc})"]
-    return validate_override(override, fixture_path, required, allowed)
+    return validate_override(
+        override,
+        fixture_path,
+        required,
+        allowed,
+        dsar_allowlist,
+        constraints_allowlist,
+    )
 
 
 def main() -> int:
