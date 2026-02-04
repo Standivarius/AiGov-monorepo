@@ -12,6 +12,7 @@ from validate_client_overrides import validate_override_fixture
 from validate_bundle_integrity import validate_bundle
 from validate_client_intake_to_bundle import validate_client_intake_to_bundle
 from validate_client_intake_v0_2 import validate_client_intake
+from validate_aigov_dataset_jsonl_v0_1 import validate_dataset_jsonl
 from validate_interface_ledger import validate_interface_ledger
 from validate_ep_deterministic_bundle_manifest import validate_ep_deterministic_bundle_manifest
 from validate_export_bundle_to_petri_seed_instructions_alpha import (
@@ -53,6 +54,8 @@ RUNPACK_EXPECTED_COMMAND = (
     ROOT / "tools" / "fixtures" / "runpack" / "expected_inspect_command_pass.txt"
 )
 RUNPACK_TOOL_PATH = ROOT / "tools" / "print_inspect_petri_run_command.py"
+DATASET_JSONL_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "dataset_jsonl_v0_1_pass.jsonl"
+DATASET_JSONL_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "dataset_jsonl_v0_1_fail.jsonl"
 MODULE_CARDS_DIR = ROOT / "packages" / "specs" / "docs" / "contracts" / "modules" / "cards"
 CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail_channel_mismatch.json"
@@ -482,6 +485,23 @@ def main() -> int:
         print("ERROR: poisoned bundle unexpectedly passed integrity validation.")
         return 1
     print(f"FAIL (as expected): bundle integrity validated: {BUNDLE_POISON_DIR}")
+
+    dataset_pass_errors = validate_dataset_jsonl(DATASET_JSONL_PASS_PATH)
+    if dataset_pass_errors:
+        print("ERROR: dataset JSONL pass fixture failed validation:")
+        for line_no, message in dataset_pass_errors:
+            if line_no:
+                print(f"  - line {line_no}: {message}")
+            else:
+                print(f"  - {message}")
+        return 1
+    print(f"PASS: dataset JSONL validated: {DATASET_JSONL_PASS_PATH}")
+
+    dataset_fail_errors = validate_dataset_jsonl(DATASET_JSONL_FAIL_PATH)
+    if not dataset_fail_errors:
+        print("ERROR: dataset JSONL fail fixture unexpectedly passed validation.")
+        return 1
+    print(f"FAIL (as expected): dataset JSONL validated: {DATASET_JSONL_FAIL_PATH}")
 
     ledger_errors = validate_interface_ledger()
     if ledger_errors:

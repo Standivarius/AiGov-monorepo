@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AiGov Dataset JSONL v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "item_id",
+    "source",
+    "gdpr",
+    "prompt",
+    "expected"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "aigov_dataset_jsonl_v0_1"
+    },
+    "dataset_id": {
+      "type": "string"
+    },
+    "item_id": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bundle_hash",
+        "scenario_id",
+        "scenario_instance_id",
+        "scenario_sha256"
+      ],
+      "properties": {
+        "bundle_hash": {
+          "type": "string"
+        },
+        "scenario_id": {
+          "type": "string"
+        },
+        "scenario_instance_id": {
+          "type": "string"
+        },
+        "scenario_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "gdpr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lawful_basis",
+        "dsar_type"
+      ],
+      "properties": {
+        "lawful_basis": {
+          "type": "string",
+          "enum": [
+            "contract",
+            "legal_obligation",
+            "legitimate_interests",
+            "consent",
+            "vital_interests",
+            "public_task"
+          ]
+        },
+        "dsar_type": {
+          "type": "string",
+          "enum": [
+            "access",
+            "erasure"
+          ]
+        }
+      }
+    },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seed_instructions"
+      ],
+      "properties": {
+        "seed_instructions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict"
+      ],
+      "properties": {
+        "verdict": {
+          "type": "string"
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
