@@ -69,6 +69,13 @@ DATASET_JSONL_FAIL_SHA_PATH = (
     / "validators"
     / "dataset_jsonl_v0_1_fail_sha_case.jsonl"
 )
+DATASET_JSONL_FAIL_EMPTY_ID_PATH = (
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "dataset_jsonl_v0_1_fail_empty_id.jsonl"
+)
 MODULE_CARDS_DIR = ROOT / "packages" / "specs" / "docs" / "contracts" / "modules" / "cards"
 CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail_channel_mismatch.json"
@@ -521,6 +528,12 @@ def main() -> int:
         print("ERROR: dataset JSONL sha case fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): dataset JSONL validated: {DATASET_JSONL_FAIL_SHA_PATH}")
+
+    dataset_fail_empty_id_errors = validate_dataset_jsonl(DATASET_JSONL_FAIL_EMPTY_ID_PATH)
+    if not dataset_fail_empty_id_errors:
+        print("ERROR: dataset JSONL empty id fixture unexpectedly passed validation.")
+        return 1
+    print(f"FAIL (as expected): dataset JSONL validated: {DATASET_JSONL_FAIL_EMPTY_ID_PATH}")
 
     ledger_errors = validate_interface_ledger()
     if ledger_errors:

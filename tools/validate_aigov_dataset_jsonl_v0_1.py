@@ -65,6 +65,9 @@ def _validate_schema(value: Any, schema: dict[str, Any], path: str, errors: list
         if not isinstance(value, str):
             errors.append(f"{path} must be a string")
             return
+        min_length = schema.get("minLength")
+        if isinstance(min_length, int) and len(value) < min_length:
+            errors.append(f"{path} must be at least {min_length} character(s)")
         if "const" in schema and value != schema.get("const"):
             errors.append(f"{path} must be '{schema.get('const')}'")
         enum = schema.get("enum")
