@@ -76,6 +76,36 @@ DATASET_JSONL_FAIL_EMPTY_ID_PATH = (
     / "validators"
     / "dataset_jsonl_v0_1_fail_empty_id.jsonl"
 )
+BUNDLE_SCENARIO_SCHEMA_PATH = (
+    ROOT / "packages" / "specs" / "schemas" / "gdpr_bundle_scenario_v0.schema.json"
+)
+BUNDLE_SCENARIO_GDPR_001_PATH = (
+    ROOT / "tools" / "fixtures" / "bundles" / "good" / "scenarios" / "GDPR-001__client-001.json"
+)
+BUNDLE_SCENARIO_GDPR_002_PATH = (
+    ROOT / "tools" / "fixtures" / "bundles" / "good" / "scenarios" / "GDPR-002.json"
+)
+BUNDLE_SCENARIO_FAIL_MISSING_EXPECTED_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "gdpr_bundle_scenario_fail_missing_expected.json"
+)
+
+
+def _validate_bundle_scenario(scenario_path: Path) -> list[str]:
+    if not scenario_path.exists():
+        return [f"bundle scenario fixture missing: {scenario_path}"]
+    if not BUNDLE_SCENARIO_SCHEMA_PATH.exists():
+        return [f"bundle scenario schema missing: {BUNDLE_SCENARIO_SCHEMA_PATH}"]
+    scenario = _read_json(scenario_path)
+    if not isinstance(scenario, dict):
+        return [f"{scenario_path}: scenario must be an object"]
+    schema = _read_json(BUNDLE_SCENARIO_SCHEMA_PATH)
+    if not isinstance(schema, dict):
+        return [f"{BUNDLE_SCENARIO_SCHEMA_PATH}: schema must be an object"]
+    errors: list[str] = []
+    from validate_aigov_dataset_jsonl_v0_1 import _validate_schema  # stdlib-only reuse
+
+    _validate_schema(scenario, schema, "scenario", errors)
+    return sorted(errors)
 MODULE_CARDS_DIR = ROOT / "packages" / "specs" / "docs" / "contracts" / "modules" / "cards"
 CLIENT_INTAKE_V0_2_FAIL_CHANNEL_MISMATCH_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail_channel_mismatch.json"
@@ -505,6 +535,31 @@ def main() -> int:
         print("ERROR: poisoned bundle unexpectedly passed integrity validation.")
         return 1
     print(f"FAIL (as expected): bundle integrity validated: {BUNDLE_POISON_DIR}")
+
+    bundle_scenario_errors = _validate_bundle_scenario(BUNDLE_SCENARIO_GDPR_001_PATH)
+    if bundle_scenario_errors:
+        print("ERROR: bundle scenario GDPR-001 fixture failed validation:")
+        for error in bundle_scenario_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: bundle scenario validated: {BUNDLE_SCENARIO_GDPR_001_PATH}")
+
+    bundle_scenario_errors = _validate_bundle_scenario(BUNDLE_SCENARIO_GDPR_002_PATH)
+    if bundle_scenario_errors:
+        print("ERROR: bundle scenario GDPR-002 fixture failed validation:")
+        for error in bundle_scenario_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: bundle scenario validated: {BUNDLE_SCENARIO_GDPR_002_PATH}")
+
+    bundle_scenario_errors = _validate_bundle_scenario(BUNDLE_SCENARIO_FAIL_MISSING_EXPECTED_PATH)
+    if not bundle_scenario_errors:
+        print("ERROR: bundle scenario missing expected fixture unexpectedly passed validation.")
+        return 1
+    print(
+        "FAIL (as expected): bundle scenario validated: "
+        f"{BUNDLE_SCENARIO_FAIL_MISSING_EXPECTED_PATH}"
+    )
 
     dataset_pass_errors = validate_dataset_jsonl(DATASET_JSONL_PASS_PATH)
     if dataset_pass_errors:
