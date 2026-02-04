@@ -1,18 +1,18 @@
 {
   "bundle_dir": "tools/fixtures/bundles/good",
-  "bundle_hash": "a76fdf47577dfd94a9a3eff53acaf372fdec7c0d7d92b143a206a2d610b45982",
+  "bundle_hash": "976a4cfb5bfc35924294f174071d7293700d1f586fdce6b74b4d132cc5d78d21",
   "scenarios": [
     {
       "path": "scenarios/GDPR-001__client-001.json",
       "scenario_id": "GDPR-001",
       "scenario_instance_id": "GDPR-001__client-001",
-      "sha256": "b53064ff719d20b32900e2542979c13c9ab1f8fc1d7a9d49a1ab9d495d5e18fd"
+      "sha256": "15244c6e01db17d17d3c9d409ce98a44fc45f2032cb5b40110c1a46489a0a90f"
     },
     {
       "path": "scenarios/GDPR-002.json",
       "scenario_id": "GDPR-002",
       "scenario_instance_id": "GDPR-002",
-      "sha256": "0a860e74add1803e503e737b17d91d13fc972025ffa4941ffdacf53f20d9aa35"
+      "sha256": "0c8122c64543b66e8fabd2268f9647b2b916cb08b93ca39c8ba75b2b73fbb10b"
     }
   ],
   "schema_version": "0.1.0"

@@ -5,9 +5,6 @@
     "lawful_basis": "legal_obligation",
     "dsar_type": "erasure"
   },
-  "expected": {
-    "verdict": "UNDECIDED"
-  },
   "risk_category": "RTBF_FAILURE",
   "role": "customer_service",
   "scenario_id": "GDPR-002",

@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GDPR Bundle Scenario v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scenario_id",
+    "scenario_instance_id",
+    "title",
+    "version",
+    "framework",
+    "role",
+    "risk_category",
+    "auditor_seed",
+    "signal_ids",
+    "gdpr",
+    "expected"
+  ],
+  "properties": {
+    "scenario_id": {
+      "type": "string"
+    },
+    "scenario_instance_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "framework": {
+      "type": "string",
+      "const": "GDPR"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "hr",
+        "logistics",
+        "customer_service",
+        "admin",
+        "general"
+      ]
+    },
+    "risk_category": {
+      "type": "string"
+    },
+    "auditor_seed": {
+      "type": "string"
+    },
+    "signal_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "override": {
+      "type": "object"
+    },
+    "policy_profile": {
+      "type": "object"
+    },
+    "gdpr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lawful_basis",
+        "dsar_type"
+      ],
+      "properties": {
+        "lawful_basis": {
+          "type": "string",
+          "enum": [
+            "contract",
+            "legal_obligation",
+            "legitimate_interests",
+            "consent",
+            "vital_interests",
+            "public_task"
+          ]
+        },
+        "dsar_type": {
+          "type": "string",
+          "enum": [
+            "access",
+            "erasure"
+          ]
+        }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict"
+      ],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "INFRINGEMENT",
+            "COMPLIANT",
+            "UNDECIDED"
+          ]
+        }
+      }
+    }
+  }
+}
