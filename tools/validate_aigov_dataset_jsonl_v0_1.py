@@ -76,6 +76,8 @@ def _validate_schema(value: Any, schema: dict[str, Any], path: str, errors: list
                 errors.append(f"{path} must match pattern '{pattern}'")
         return
 
+    errors.append(f"{path} has unsupported schema type '{schema_type}'")
+
 
 def validate_dataset_jsonl(path: Path) -> list[tuple[int, str]]:
     if not path.exists():

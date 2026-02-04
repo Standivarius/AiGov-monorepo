@@ -18,10 +18,12 @@
       "const": "aigov_dataset_jsonl_v0_1"
     },
     "dataset_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "item_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "source": {
       "type": "object",
@@ -34,7 +36,8 @@
       ],
       "properties": {
         "bundle_hash": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
         },
         "scenario_id": {
           "type": "string"
@@ -86,7 +89,8 @@
         "seed_instructions": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "minItems": 1
         }
@@ -100,7 +104,12 @@
       ],
       "properties": {
         "verdict": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "INFRINGEMENT",
+            "COMPLIANT",
+            "UNDECIDED"
+          ]
         }
       }
     },
