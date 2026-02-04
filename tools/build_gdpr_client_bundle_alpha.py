@@ -121,7 +121,12 @@ def main() -> int:
         return 2
 
     try:
-        compile_bundle(base_dir=base_dir, overrides_dir=overrides_dir, output_dir=bundle_dir)
+        compile_bundle(
+            base_dir=base_dir,
+            overrides_dir=overrides_dir,
+            output_dir=bundle_dir,
+            strict_coverage=True,
+        )
         bundle_hash = _read_bundle_hash(bundle_dir)
     except ValueError as exc:
         print(f"ERROR: bundle compilation failed ({exc})")
