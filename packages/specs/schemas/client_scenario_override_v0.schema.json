@@ -27,9 +27,6 @@
         "partial_patch"
       ]
     },
-    "generated_at_utc": {
-      "type": "string"
-    },
     "policy_profile": {
       "type": "object",
       "additionalProperties": false,
