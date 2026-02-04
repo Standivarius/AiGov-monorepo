@@ -75,6 +75,7 @@ def compile_bundle(
     base_dir: str | Path,
     overrides_dir: str | Path | None,
     output_dir: str | Path,
+    strict_coverage: bool = False,
 ) -> Dict[str, Any]:
     base_dir = Path(base_dir)
     if isinstance(overrides_dir, str) and overrides_dir == "":
@@ -130,6 +131,11 @@ def compile_bundle(
                 "scenario_instance_id": instance_id,
             }
         )
+
+    if strict_coverage and overrides_dir is not None:
+        missing = sorted(base_scenario_ids - set(overrides_by_scenario.keys()))
+        if missing:
+            raise ValueError(f"Missing overrides for base scenario_id(s): {missing}")
 
     unknown_overrides = sorted(set(overrides_by_scenario.keys()) - base_scenario_ids)
     if unknown_overrides:
