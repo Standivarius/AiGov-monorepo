@@ -16,7 +16,7 @@
     "outputs": [
       {
         "name": "scenario_library",
-        "contract_ref_path": "packages/specs/scenarios/library/base/gdpr/"
+        "contract_ref_path": "packages/specs/scenarios/library/base/gdpr/CONVENTIONS.md"
       }
     ]
   },

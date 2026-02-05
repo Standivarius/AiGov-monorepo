@@ -10,6 +10,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "packages" / "specs" / "docs" / "contracts" / "modules" / "module_registry_v0.yaml"
 SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "module_card_v0.schema.json"
+LEDGER_PATH = ROOT / "packages" / "specs" / "docs" / "contracts" / "interfaces" / "I_Ledger.md"
 
 
 def _load_json(path: Path) -> Any:
@@ -73,6 +74,50 @@ def _schema_required_and_allowed(schema: dict[str, Any]) -> tuple[set[str], set[
     return set(required), set(props.keys())
 
 
+def _validate_contract_ref(path: Path, ref: str) -> list[str]:
+    errors: list[str] = []
+    if ref.startswith("/") or Path(ref).is_absolute():
+        errors.append(f"{path}: contract_ref_path must be repo-relative: {ref}")
+        return errors
+    if "\\" in ref:
+        errors.append(f"{path}: contract_ref_path must not contain backslashes: {ref}")
+        return errors
+    ref_parts = Path(ref).parts
+    if ".." in ref_parts:
+        errors.append(f"{path}: contract_ref_path must not contain '..': {ref}")
+        return errors
+    resolved_root = ROOT.resolve()
+    resolved_ref = (ROOT / ref).resolve()
+    try:
+        resolved_ref.relative_to(resolved_root)
+    except ValueError:
+        errors.append(f"{path}: contract_ref_path escapes repo root: {ref}")
+        return errors
+    if not resolved_ref.exists():
+        errors.append(f"{path}: contract_ref_path does not exist: {ref}")
+        return errors
+    if not resolved_ref.is_file():
+        errors.append(f"{path}: contract_ref_path must point to a file: {ref}")
+    return errors
+
+
+def _load_ledger_module_cells() -> list[str]:
+    if not LEDGER_PATH.exists():
+        raise ValueError(f"ledger missing: {LEDGER_PATH}")
+    cells: list[str] = []
+    for raw in LEDGER_PATH.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line.startswith("|"):
+            continue
+        row = [cell.strip() for cell in line.strip("|").split("|")]
+        if not row or row[0].lower() == "module":
+            continue
+        if all(set(cell) <= {"-", ":"} for cell in row):
+            continue
+        cells.append(row[0])
+    return cells
+
+
 def _validate_card(card: dict[str, Any], path: Path, schema: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     required, allowed = _schema_required_and_allowed(schema)
@@ -113,10 +158,13 @@ def _validate_card(card: dict[str, Any], path: Path, schema: dict[str, Any]) -> 
                             )
                         if not isinstance(item.get("name"), str) or not item.get("name"):
                             errors.append(f"{path}: boundaries.{field}.name must be a non-empty string")
-                        if not isinstance(item.get("contract_ref_path"), str) or not item.get("contract_ref_path"):
+                        contract_ref = item.get("contract_ref_path")
+                        if not isinstance(contract_ref, str) or not contract_ref:
                             errors.append(
                                 f"{path}: boundaries.{field}.contract_ref_path must be a non-empty string"
                             )
+                        else:
+                            errors.extend(_validate_contract_ref(path, contract_ref))
 
     knobs = card.get("knobs")
     if not isinstance(knobs, list):
@@ -154,6 +202,8 @@ def validate_module_cards(cards_dir: Path) -> list[str]:
     if not card_paths:
         return [f"no module cards found in {cards_dir}"]
 
+    module_cards: dict[str, list[Path]] = {}
+    live_run_refs_ledger = False
     for path in card_paths:
         try:
             card = _ensure_dict(_load_json(path), str(path))
@@ -163,10 +213,52 @@ def validate_module_cards(cards_dir: Path) -> list[str]:
 
         errors.extend(_validate_card(card, path, schema))
         module_id = card.get("module_id")
+        if isinstance(module_id, str) and module_id:
+            module_cards.setdefault(module_id, []).append(path)
+        if module_id == "M_LiveRun":
+            boundaries = card.get("boundaries")
+            if isinstance(boundaries, dict):
+                for field in ("inputs", "outputs"):
+                    items = boundaries.get(field)
+                    if not isinstance(items, list):
+                        continue
+                    for item in items:
+                        if not isinstance(item, dict):
+                            continue
+                        contract_ref = item.get("contract_ref_path")
+                        if contract_ref == "packages/specs/docs/contracts/interfaces/I_Ledger.md":
+                            live_run_refs_ledger = True
         if isinstance(module_id, str) and module_id and module_id not in module_ids:
             errors.append(f"{path}: module_id '{module_id}' not in registry")
 
-    return errors
+    missing_cards = sorted(module_ids - module_cards.keys())
+    for module_id in missing_cards:
+        errors.append(f"registry module_id '{module_id}' missing module card")
+
+    duplicate_cards = sorted(
+        (module_id, paths)
+        for module_id, paths in module_cards.items()
+        if len(paths) > 1
+    )
+    for module_id, paths in duplicate_cards:
+        errors.append(
+            f"module_id '{module_id}' appears in multiple cards: "
+            f"{[str(path) for path in sorted(paths)]}"
+        )
+
+    # POLICY (not schema): ensure LiveRun references are reflected in the interface ledger.
+    if live_run_refs_ledger:
+        try:
+            ledger_modules = _load_ledger_module_cells()
+        except ValueError as exc:
+            errors.append(str(exc))
+        else:
+            if not any("M_LiveRun" in cell for cell in ledger_modules):
+                errors.append(
+                    "POLICY: I_Ledger.md must include a Module row for M_LiveRun when referenced by M_LiveRun card"
+                )
+
+    return sorted(errors)
 
 
 def main() -> int:
