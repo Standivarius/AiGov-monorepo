@@ -18,6 +18,7 @@ from validate_ep_deterministic_bundle_manifest import validate_ep_deterministic_
 from validate_export_bundle_to_petri_seed_instructions_alpha import (
     validate_export_bundle_to_petri_seed_instructions_alpha,
 )
+from validate_liverun_inspect_task_args_v0_1 import validate_inspect_task_args
 from validate_module_cards import validate_module_cards
 from validate_module_dashboard_snapshot import validate_module_dashboard_snapshot
 from validate_print_inspect_petri_run_command import validate_print_inspect_petri_run_command
@@ -93,6 +94,8 @@ RUNPACK_EXPECTED_COMMAND = (
     ROOT / "tools" / "fixtures" / "runpack" / "expected_inspect_command_pass.txt"
 )
 RUNPACK_TOOL_PATH = ROOT / "tools" / "print_inspect_petri_run_command.py"
+INSPECT_TASK_ARGS_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "inspect_task_args_v0_1_pass.json"
+INSPECT_TASK_ARGS_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "inspect_task_args_v0_1_fail.json"
 DATASET_JSONL_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "dataset_jsonl_v0_1_pass.jsonl"
 DATASET_JSONL_FAIL_NONDET_PATH = (
     ROOT
@@ -657,6 +660,29 @@ def main() -> int:
             print(f"  - {error}")
         return 1
     print(f"PASS: client intake bundle determinism validated: {CLIENT_INTAKE_FIXTURE}")
+
+    inspect_task_args_payload = _read_json(INSPECT_TASK_ARGS_PASS_PATH)
+    inspect_task_args_errors = validate_inspect_task_args(
+        inspect_task_args_payload, str(INSPECT_TASK_ARGS_PASS_PATH)
+    )
+    if inspect_task_args_errors:
+        print("ERROR: inspect_task_args v0.1 pass fixture failed validation:")
+        for error in inspect_task_args_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: inspect_task_args v0.1 fixture validated: {INSPECT_TASK_ARGS_PASS_PATH}")
+
+    inspect_task_args_fail_payload = _read_json(INSPECT_TASK_ARGS_FAIL_PATH)
+    inspect_task_args_fail_errors = validate_inspect_task_args(
+        inspect_task_args_fail_payload, str(INSPECT_TASK_ARGS_FAIL_PATH)
+    )
+    if not inspect_task_args_fail_errors:
+        print("ERROR: inspect_task_args v0.1 fail fixture unexpectedly passed validation.")
+        return 1
+    print(
+        "FAIL (as expected): inspect_task_args v0.1 fixture validated: "
+        f"{INSPECT_TASK_ARGS_FAIL_PATH}"
+    )
 
     bundle_errors = validate_bundle(BUNDLE_GOOD_DIR)
     if bundle_errors:

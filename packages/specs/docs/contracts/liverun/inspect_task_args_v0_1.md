@@ -21,4 +21,4 @@ This document defines the envelope only; individual fields and schemas are not y
 
 ## Schema vs Policy
 - Schema: No dedicated JSON Schema is defined for this artifact yet.
-- Validators: TBD (dedicated validator pending).
+- Validators: tools/validate_liverun_inspect_task_args_v0_1.py (policy-level checks).
