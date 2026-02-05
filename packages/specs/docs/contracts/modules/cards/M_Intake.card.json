@@ -1,18 +1,18 @@
 {
   "schema_version": "0.1.0",
   "module_id": "M_Intake",
-  "summary": "Validate GDPR-only client intake payloads and enforce policy profile constraints.",
+  "summary": "Validate GDPR-only intake output payloads; context_profile is authoritative with legacy locale_context allowed.",
   "boundaries": {
     "inputs": [
       {
-        "name": "client_intake",
-        "contract_ref_path": "packages/specs/schemas/client_intake_v0_2.schema.json"
+        "name": "intake_output",
+        "contract_ref_path": "packages/specs/docs/contracts/intake/client_intake_output_contract_v0_1.md"
       }
     ],
     "outputs": [
       {
-        "name": "validated_intake",
-        "contract_ref_path": "packages/specs/schemas/client_intake_v0_2.schema.json"
+        "name": "validated_intake_output",
+        "contract_ref_path": "packages/specs/docs/contracts/intake/client_intake_output_contract_v0_1.md"
       }
     ]
   },
@@ -32,6 +32,8 @@
     }
   ],
   "risks": [
-    "Invalid intake payloads can propagate incorrect policy assumptions."
+    "Context allowlists live under contracts/taxonomy; non-allowlisted jurisdiction/sector/policy packs fail closed.",
+    "Validator-enforced policy: policy_pack_stack must equal ['GDPR_EU', jurisdiction, sector, 'client'] (ordering is policy, not schema).",
+    "Mismatch between locale_context and context_profile.jurisdiction fails closed."
   ]
 }
