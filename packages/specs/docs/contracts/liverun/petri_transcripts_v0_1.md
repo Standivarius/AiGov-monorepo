@@ -14,4 +14,4 @@ A Petri transcript artifact must exist and be attributable to a specific run. Th
 
 ## Schema vs Policy
 - Schema: No dedicated JSON Schema is defined for this artifact yet.
-- Validators: TBD (dedicated validator pending).
+- Validators: tools/validate_liverun_output_artifacts_envelope_v0_1.py (planning-pack fixtures).
