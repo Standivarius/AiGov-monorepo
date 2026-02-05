@@ -51,15 +51,27 @@ def validate_intake_payload(payload: dict[str, Any]) -> list[str]:
     allowed_target_types = set(spec.get("allowed_target_types") or [])
     allowed_auth_context = set(spec.get("allowed_auth_context") or [])
     allowed_dsar_channels = set(spec.get("allowed_dsar_channels") or [])
+    allowed_context_jurisdictions = set(spec.get("allowed_context_jurisdictions") or [])
+    allowed_context_sectors = set(spec.get("allowed_context_sectors") or [])
+    allowed_policy_packs = set(spec.get("allowed_policy_packs") or [])
     target_profile_required_fields = spec.get("target_profile_required_fields") or []
     mock_target_profile_required_fields = spec.get("mock_target_profile_required_fields") or []
+    context_profile_required_fields = spec.get("context_profile_required_fields") or []
 
     if not isinstance(required_keys, list):
         errors.append("Contract required_keys must be a list.")
+    if not isinstance(spec.get("allowed_context_jurisdictions"), list):
+        errors.append("Contract allowed_context_jurisdictions must be a list.")
+    if not isinstance(spec.get("allowed_context_sectors"), list):
+        errors.append("Contract allowed_context_sectors must be a list.")
+    if not isinstance(spec.get("allowed_policy_packs"), list):
+        errors.append("Contract allowed_policy_packs must be a list.")
     if not isinstance(target_profile_required_fields, list):
         errors.append("Contract target_profile_required_fields must be a list.")
     if not isinstance(mock_target_profile_required_fields, list):
         errors.append("Contract mock_target_profile_required_fields must be a list.")
+    if not isinstance(context_profile_required_fields, list):
+        errors.append("Contract context_profile_required_fields must be a list.")
     if errors:
         return errors
 
@@ -130,6 +142,7 @@ def validate_intake_payload(payload: dict[str, Any]) -> list[str]:
                 )
 
     target_profile = payload.get("target_profile")
+    locale_context = None
     if not isinstance(target_profile, dict):
         errors.append("Missing or invalid target_profile (object required).")
     else:
@@ -146,6 +159,9 @@ def validate_intake_payload(payload: dict[str, Any]) -> list[str]:
                 "target_profile.auth_context must be one of "
                 f"{sorted(allowed_auth_context)}"
             )
+        locale_context = target_profile.get("locale_context")
+        if locale_context is not None and (not isinstance(locale_context, str) or not locale_context):
+            errors.append("target_profile.locale_context must be a non-empty string")
 
     mock_target_profile = payload.get("mock_target_profile")
     if not isinstance(mock_target_profile, dict):
@@ -170,6 +186,75 @@ def validate_intake_payload(payload: dict[str, Any]) -> list[str]:
                 "mock_target_profile.auth_context must be one of "
                 f"{sorted(allowed_auth_context)}"
             )
+
+    context_profile = payload.get("context_profile")
+    if context_profile is not None:
+        if not isinstance(context_profile, dict):
+            errors.append("context_profile must be an object.")
+        else:
+            errors.extend(
+                _require_keys(
+                    context_profile, context_profile_required_fields, "context_profile"
+                )
+            )
+            jurisdiction = context_profile.get("jurisdiction")
+            if jurisdiction not in allowed_context_jurisdictions:
+                errors.append(
+                    "context_profile.jurisdiction must be one of "
+                    f"{sorted(allowed_context_jurisdictions)}"
+                )
+            sector = context_profile.get("sector")
+            if sector not in allowed_context_sectors:
+                errors.append(
+                    "context_profile.sector must be one of "
+                    f"{sorted(allowed_context_sectors)}"
+                )
+            policy_pack_stack = context_profile.get("policy_pack_stack")
+            if not isinstance(policy_pack_stack, list):
+                errors.append("context_profile.policy_pack_stack must be a list.")
+            else:
+                if len(policy_pack_stack) != 4:
+                    errors.append("context_profile.policy_pack_stack must contain 4 items.")
+                invalid_packs = sorted(
+                    {pack for pack in policy_pack_stack if pack not in allowed_policy_packs}
+                )
+                if invalid_packs:
+                    errors.append(
+                        "context_profile.policy_pack_stack contains invalid entries: "
+                        f"{invalid_packs}"
+                    )
+                if isinstance(jurisdiction, str) and isinstance(sector, str):
+                    expected_stack = ["GDPR_EU", jurisdiction, sector, "client"]
+                    if policy_pack_stack != expected_stack:
+                        errors.append(
+                            "context_profile.policy_pack_stack must equal "
+                            f"{expected_stack}"
+                        )
+            if locale_context is not None and isinstance(locale_context, str):
+                if locale_context != jurisdiction:
+                    errors.append(
+                        "target_profile.locale_context must match context_profile.jurisdiction"
+                    )
+    else:
+        if isinstance(locale_context, str) and locale_context:
+            if locale_context not in allowed_context_jurisdictions:
+                errors.append(
+                    "target_profile.locale_context must be one of "
+                    f"{sorted(allowed_context_jurisdictions)}"
+                )
+            if "unspecified" not in allowed_context_sectors:
+                errors.append(
+                    "context_profile.sector allowlist must include 'unspecified'"
+                )
+            derived_stack = ["GDPR_EU", locale_context, "unspecified", "client"]
+            invalid_packs = sorted(
+                {pack for pack in derived_stack if pack not in allowed_policy_packs}
+            )
+            if invalid_packs:
+                errors.append(
+                    "context_profile.policy_pack_stack contains invalid entries: "
+                    f"{invalid_packs}"
+                )
 
     return errors
 

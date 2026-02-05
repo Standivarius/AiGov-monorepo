@@ -26,6 +26,10 @@ from validate_schema_strictness import validate_schema_strictness
 
 
 ROOT = Path(__file__).resolve().parents[1]
+EP_ROOT = ROOT / "packages" / "ep"
+sys.path.insert(0, str(EP_ROOT))
+
+from aigov_ep.intake.validate import validate_intake_payload
 PLANNING_DIR = ROOT / "packages" / "specs" / "docs" / "planning" / "2026-01-22-run"
 EVAL_REGISTRY_PATH = PLANNING_DIR / "eval_registry.yaml"
 EVALSETS_REGISTRY_PATH = PLANNING_DIR / "evalsets_registry.yaml"
@@ -43,9 +47,27 @@ CLIENT_OVERRIDE_UNKNOWN_VOCAB_PATH = (
 CLIENT_OVERRIDE_NONDETERMINISTIC_FIELD_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "client_override_fail_nondeterministic_field.json"
 )
-CLIENT_INTAKE_FIXTURE = ROOT / "tools" / "fixtures" / "intake" / "client_intake_output_pass.json"
+CLIENT_INTAKE_FIXTURE = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_output_context_pass_nl_public.json"
+)
 CLIENT_INTAKE_V0_2_PASS_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_pass.json"
 CLIENT_INTAKE_V0_2_FAIL_PATH = ROOT / "tools" / "fixtures" / "validators" / "client_intake_v0_2_fail.json"
+INTAKE_OUTPUT_CONTEXT_PASS_NL_PUBLIC_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_output_context_pass_nl_public.json"
+)
+INTAKE_OUTPUT_CONTEXT_PASS_NL_HEALTHCARE_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_output_context_pass_nl_healthcare.json"
+)
+INTAKE_OUTPUT_CONTEXT_PASS_LEGACY_LOCALE_ONLY_PATH = (
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_output_context_pass_legacy_locale_only_nl.json"
+)
+INTAKE_OUTPUT_CONTEXT_FAIL_PACK_ORDER_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_output_context_fail_pack_order.json"
+)
 PETRI_SEED_INSTRUCTIONS_FIXTURE = (
     ROOT / "tools" / "fixtures" / "validators" / "petri_seed_instructions_from_bundle_pass.json"
 )
@@ -504,6 +526,40 @@ def main() -> int:
     print(
         "FAIL (as expected): client intake v0.2 fixture validated: "
         f"{CLIENT_INTAKE_V0_2_FAIL_EMPTY_SUPPORTED_PATH}"
+    )
+
+    intake_context_pass_paths = [
+        INTAKE_OUTPUT_CONTEXT_PASS_NL_PUBLIC_PATH,
+        INTAKE_OUTPUT_CONTEXT_PASS_NL_HEALTHCARE_PATH,
+        INTAKE_OUTPUT_CONTEXT_PASS_LEGACY_LOCALE_ONLY_PATH,
+    ]
+    for path in intake_context_pass_paths:
+        payload = _read_json(path)
+        if not isinstance(payload, dict):
+            print(f"ERROR: intake output context fixture must be an object: {path}")
+            return 1
+        intake_context_errors = validate_intake_payload(payload)
+        if intake_context_errors:
+            print("ERROR: intake output context fixture failed validation:")
+            for error in intake_context_errors:
+                print(f"  - {error}")
+            return 1
+        print(f"PASS: intake output context fixture validated: {path}")
+
+    intake_context_fail_payload = _read_json(INTAKE_OUTPUT_CONTEXT_FAIL_PACK_ORDER_PATH)
+    if not isinstance(intake_context_fail_payload, dict):
+        print(
+            "ERROR: intake output context fail fixture must be an object: "
+            f"{INTAKE_OUTPUT_CONTEXT_FAIL_PACK_ORDER_PATH}"
+        )
+        return 1
+    intake_context_fail_errors = validate_intake_payload(intake_context_fail_payload)
+    if not intake_context_fail_errors:
+        print("ERROR: intake output context fail fixture unexpectedly passed validation.")
+        return 1
+    print(
+        "FAIL (as expected): intake output context fixture validated: "
+        f"{INTAKE_OUTPUT_CONTEXT_FAIL_PACK_ORDER_PATH}"
     )
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
