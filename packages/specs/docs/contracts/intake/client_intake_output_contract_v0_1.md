@@ -31,6 +31,26 @@ and Pre2.4 scenario generation. This is contract-only scaffolding.
 - `integration_surfaces` (array; email, CRM, ticketing, etc.)
 - `locale_context` (country/region)
 
+## context_profile (authoritative, GDPR-only)
+Structured context used to resolve policy packs deterministically.
+
+Required fields:
+- `jurisdiction` (allowlist: `packages/specs/docs/contracts/taxonomy/jurisdictions_v0.json`)
+- `sector` (allowlist: `packages/specs/docs/contracts/taxonomy/sectors_v0.json`)
+- `policy_pack_stack` (exact list of 4 strings; allowlist: `packages/specs/docs/contracts/taxonomy/policy_packs_v0.json`)
+
+Deterministic policy rule (**VALIDATOR POLICY**, not schema):
+- `policy_pack_stack` MUST equal `["GDPR_EU", jurisdiction, sector, "client"]`
+
+Backward compatibility (**VALIDATOR POLICY**, not schema):
+- Keep existing `locale_context` if present today.
+- If ONLY `locale_context` exists, derive minimal `context_profile` deterministically:
+  - `jurisdiction = locale_context`
+  - `sector = "unspecified"`
+  - `policy_pack_stack = ["GDPR_EU", jurisdiction, "unspecified", "client"]`
+- If BOTH exist, `context_profile` wins BUT mismatch between `locale_context` and
+  `context_profile.jurisdiction` MUST FAIL (no warnings-only).
+
 ## mock_target_profile mapping
 Derived from `target_profile` and must remain schema-aligned.
 
@@ -87,7 +107,31 @@ Required mock fields:
     "doc",
     "timeline",
     "out-of-scope"
-  ]
+  ],
+  "allowed_context_jurisdictions": [
+    "EU",
+    "NL"
+  ],
+  "allowed_context_sectors": [
+    "public",
+    "healthcare",
+    "unspecified"
+  ],
+  "allowed_policy_packs": [
+    "GDPR_EU",
+    "EU",
+    "NL",
+    "public",
+    "healthcare",
+    "unspecified",
+    "client"
+  ],
+  "context_profile_required_fields": [
+    "jurisdiction",
+    "sector",
+    "policy_pack_stack"
+  ],
+  "policy_pack_stack_order_rule": "MUST equal ['GDPR_EU', jurisdiction, sector, 'client'] (validator policy)"
 }
 ```
 
