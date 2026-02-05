@@ -6,21 +6,21 @@
     "inputs": [
       {
         "name": "seed_instructions",
-        "contract_ref_path": "packages/specs/docs/contracts/interfaces/I_Ledger.md"
+        "contract_ref_path": "packages/specs/docs/contracts/liverun/seed_instructions_v0_1.md"
       },
       {
         "name": "inspect_task_args",
-        "contract_ref_path": "packages/specs/docs/contracts/interfaces/I_Ledger.md"
+        "contract_ref_path": "packages/specs/docs/contracts/liverun/inspect_task_args_v0_1.md"
       }
     ],
     "outputs": [
       {
         "name": "inspect_logs",
-        "contract_ref_path": "packages/specs/docs/contracts/interfaces/I_Ledger.md"
+        "contract_ref_path": "packages/specs/docs/contracts/liverun/inspect_logs_v0_1.md"
       },
       {
         "name": "petri_transcripts",
-        "contract_ref_path": "packages/specs/docs/contracts/interfaces/I_Ledger.md"
+        "contract_ref_path": "packages/specs/docs/contracts/liverun/petri_transcripts_v0_1.md"
       }
     ]
   },
