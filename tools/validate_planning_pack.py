@@ -68,6 +68,23 @@ INTAKE_OUTPUT_CONTEXT_PASS_LEGACY_LOCALE_ONLY_PATH = (
 INTAKE_OUTPUT_CONTEXT_FAIL_PACK_ORDER_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_output_context_fail_pack_order.json"
 )
+INTAKE_OUTPUT_CONTEXT_FAIL_LOCALE_CONTEXT_NULL_PATH = (
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_output_context_fail_locale_context_null.json"
+)
+INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_JURISDICTION_PATH = (
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_output_context_fail_unknown_jurisdiction.json"
+)
+INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_SECTOR_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_output_context_fail_unknown_sector.json"
+)
 PETRI_SEED_INSTRUCTIONS_FIXTURE = (
     ROOT / "tools" / "fixtures" / "validators" / "petri_seed_instructions_from_bundle_pass.json"
 )
@@ -560,6 +577,77 @@ def main() -> int:
     print(
         "FAIL (as expected): intake output context fixture validated: "
         f"{INTAKE_OUTPUT_CONTEXT_FAIL_PACK_ORDER_PATH}"
+    )
+
+    intake_context_null_payload = _read_json(INTAKE_OUTPUT_CONTEXT_FAIL_LOCALE_CONTEXT_NULL_PATH)
+    if not isinstance(intake_context_null_payload, dict):
+        print(
+            "ERROR: intake output context fail fixture must be an object: "
+            f"{INTAKE_OUTPUT_CONTEXT_FAIL_LOCALE_CONTEXT_NULL_PATH}"
+        )
+        return 1
+    intake_context_null_errors = validate_intake_payload(intake_context_null_payload)
+    if not intake_context_null_errors:
+        print("ERROR: intake output context null locale_context fixture unexpectedly passed validation.")
+        return 1
+    if not any("locale_context" in error for error in intake_context_null_errors):
+        print(
+            "ERROR: intake output context null locale_context fixture missing locale_context error."
+        )
+        return 1
+    print(
+        "FAIL (as expected): intake output context fixture validated: "
+        f"{INTAKE_OUTPUT_CONTEXT_FAIL_LOCALE_CONTEXT_NULL_PATH}"
+    )
+
+    intake_context_unknown_jurisdiction_payload = _read_json(
+        INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_JURISDICTION_PATH
+    )
+    if not isinstance(intake_context_unknown_jurisdiction_payload, dict):
+        print(
+            "ERROR: intake output context fail fixture must be an object: "
+            f"{INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_JURISDICTION_PATH}"
+        )
+        return 1
+    intake_context_unknown_jurisdiction_errors = validate_intake_payload(
+        intake_context_unknown_jurisdiction_payload
+    )
+    if not intake_context_unknown_jurisdiction_errors:
+        print("ERROR: intake output context unknown jurisdiction fixture unexpectedly passed validation.")
+        return 1
+    if not any("jurisdiction" in error for error in intake_context_unknown_jurisdiction_errors):
+        print(
+            "ERROR: intake output context unknown jurisdiction fixture missing jurisdiction error."
+        )
+        return 1
+    print(
+        "FAIL (as expected): intake output context fixture validated: "
+        f"{INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_JURISDICTION_PATH}"
+    )
+
+    intake_context_unknown_sector_payload = _read_json(
+        INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_SECTOR_PATH
+    )
+    if not isinstance(intake_context_unknown_sector_payload, dict):
+        print(
+            "ERROR: intake output context fail fixture must be an object: "
+            f"{INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_SECTOR_PATH}"
+        )
+        return 1
+    intake_context_unknown_sector_errors = validate_intake_payload(
+        intake_context_unknown_sector_payload
+    )
+    if not intake_context_unknown_sector_errors:
+        print("ERROR: intake output context unknown sector fixture unexpectedly passed validation.")
+        return 1
+    if not any("sector" in error for error in intake_context_unknown_sector_errors):
+        print(
+            "ERROR: intake output context unknown sector fixture missing sector error."
+        )
+        return 1
+    print(
+        "FAIL (as expected): intake output context fixture validated: "
+        f"{INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_SECTOR_PATH}"
     )
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)

@@ -160,7 +160,7 @@ def validate_intake_payload(payload: dict[str, Any]) -> list[str]:
                 f"{sorted(allowed_auth_context)}"
             )
         locale_context = target_profile.get("locale_context")
-        if locale_context is not None and (not isinstance(locale_context, str) or not locale_context):
+        if "locale_context" in target_profile and (not isinstance(locale_context, str) or not locale_context):
             errors.append("target_profile.locale_context must be a non-empty string")
 
     mock_target_profile = payload.get("mock_target_profile")
