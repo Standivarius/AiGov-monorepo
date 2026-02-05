@@ -1,0 +1,10 @@
+{
+  "auditor_model": "",
+  "target_model": "target-model-v1",
+  "judge_model": "judge-model-v1",
+  "limit": 0,
+  "max_turns": 0,
+  "log_dir": "outputs/inspect/logs",
+  "transcript_dir": "",
+  "extra_field": "not-allowed"
+}
