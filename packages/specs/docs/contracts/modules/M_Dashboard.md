@@ -21,7 +21,7 @@ Publish a human-facing checklist of module configuration and required knobs.
 
 ## M_Intake
 
-Validate GDPR-only client intake payloads and enforce policy profile constraints.
+Validate GDPR-only intake output payloads; context_profile is authoritative with legacy locale_context allowed.
 
 ### Knobs
 - `fail_closed` (boolean, required; default=true) — Fail validation on any schema or policy error.
