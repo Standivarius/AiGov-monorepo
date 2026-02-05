@@ -13,6 +13,9 @@ from validate_bundle_integrity import validate_bundle
 from validate_client_intake_to_bundle import validate_client_intake_to_bundle
 from validate_client_intake_v0_2 import validate_client_intake
 from validate_aigov_dataset_jsonl_v0_1 import validate_dataset_jsonl
+from validate_export_bundle_to_dataset_jsonl_v0_1 import (
+    validate_export_bundle_to_dataset_jsonl_v0_1,
+)
 from validate_interface_ledger import validate_interface_ledger
 from validate_ep_deterministic_bundle_manifest import validate_ep_deterministic_bundle_manifest
 from validate_export_bundle_to_petri_seed_instructions_alpha import (
@@ -122,6 +125,9 @@ DATASET_JSONL_FAIL_EMPTY_ID_PATH = (
     / "fixtures"
     / "validators"
     / "dataset_jsonl_v0_1_fail_empty_id.jsonl"
+)
+BUNDLE_DATASET_EXPORT_PASS_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "dataset_export_v0_1_pass.jsonl"
 )
 BUNDLE_SCENARIO_SCHEMA_PATH = (
     ROOT / "packages" / "specs" / "schemas" / "gdpr_bundle_scenario_v0.schema.json"
@@ -788,6 +794,16 @@ def main() -> int:
         print("ERROR: dataset JSONL empty id fixture unexpectedly passed validation.")
         return 1
     print(f"FAIL (as expected): dataset JSONL validated: {DATASET_JSONL_FAIL_EMPTY_ID_PATH}")
+
+    dataset_export_errors = validate_export_bundle_to_dataset_jsonl_v0_1(
+        BUNDLE_GOOD_DIR, BUNDLE_DATASET_EXPORT_PASS_PATH
+    )
+    if dataset_export_errors:
+        print("ERROR: dataset export validation failed:")
+        for error in dataset_export_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: dataset export validated: {BUNDLE_DATASET_EXPORT_PASS_PATH}")
 
     ledger_errors = validate_interface_ledger()
     if ledger_errors:
