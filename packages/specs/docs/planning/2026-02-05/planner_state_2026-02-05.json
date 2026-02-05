@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "id": "aigov_planner_state_2026-02-05",
+    "created_utc": "2026-02-05",
+    "owner": "Marius",
+    "repo": "Standivarius/AiGov-monorepo",
+    "planner_chat_role": "EU-programs + OSS modular planning copilot",
+    "execution_mode": "Planner-only; implementation via separate Lead Developer chat PRs"
+  },
+  "guiding_principles": {
+    "scope_constraint": "ONLY EU-funded or EU-facilitated opportunities that accelerate adoption/validation of AiGov; exclude investors, generic GTM, non-EU opportunities.",
+    "product_positioning_hypothesis": "AiGov wedge = GDPR method + EU locale/language + client-specific policy + agent-system testing + evidence + remediation; focus on audit-grade artifacts, repeatability, determinism.",
+    "engineering_method": [
+      "contract-first",
+      "fail-closed validation",
+      "eval-first / TDD (tests+fixtures define scope/behavior before implementation)",
+      "adapter pattern for OSS stitching; keep AiGov canonical contracts as source of truth",
+      "deterministic outputs (stable IDs/hashes; avoid non-deterministic fields)"
+    ],
+    "repo_patterns_to_follow": [
+      "contracts and schemas in packages/specs (docs/contracts + schemas)",
+      "taxonomy allowlists in packages/specs/docs/contracts/taxonomy",
+      "runtime validators in packages/ep",
+      "PE tests/fixtures gate behavior",
+      "module cards + interface ledger updated alongside changes",
+      "M_LiveRun is reference module for structure and docs style"
+    ]
+  },
+  "streams": {
+    "stream_eu_programmes": {
+      "status": "paused (by user); artifacts created",
+      "key_artifacts_local": [
+        "AiGov_Evidence_Memo_v3.docx",
+        "AiGov_Evidence_Memo_v3.pdf",
+        "AiGov_Evidence_Memo_v3_Addendum_EU_Programmes.docx",
+        "AiGov_Evidence_Memo_v3_Addendum_EU_Programmes.pdf",
+        "AiGov_GDPR_Chatbot_ROI_Worksheet.xlsx"
+      ],
+      "notes": [
+        "Evidence memo anchored on EDPS GenAI orientations v2, AI Act logging/monitoring obligations, and enforcement examples.",
+        "Addendum reframes evidence memo into EU programme language: EUSAiR pilots, AI Act sandboxes, TEFs, EDIHs."
+      ]
+    },
+    "stream_competition": {
+      "status": "paused until OSS modules assessed",
+      "inputs_available": [
+        "04022026_chatgpt-Competition-ai.docx",
+        "04022026_claude-Competition-ai.md",
+        "04022026_gemini-Competition-ai.docx"
+      ],
+      "working_conclusions": [
+        "Competition buckets: AI governance suites; privacy program platforms; testing/red-teaming; EU-native AI Act/ISO tools.",
+        "AiGov differentiation likely in compliance-native system testing + evidence/remediation loop, not generic documentation or generic red-teaming."
+      ]
+    },
+    "stream_oss_modules": {
+      "status": "active",
+      "module_focus_now": "M_Intake",
+      "inputs_available": [
+        "04022026_chatgpt-M_Intake-OSS.docx",
+        "04022026_claude-M_Intake-OSS.md",
+        "04022026_gemini-M_Intake-OSS.docx",
+        "04022026_gptPRO-M_Intake-oss_matrix.docx"
+      ],
+      "oss_stitching_thesis": "Value comes from tailored composition: define ideal use case + canonical contracts + deterministic workflow; then stitch OSS/general-purpose tools via adapters; keep AiGov contract/evidence model as moat."
+    }
+  },
+  "decisions": {
+    "v0_1_locale": "NL",
+    "v0_1_sector": "not finalized; allowlists include at least public + healthcare; legacy derivation uses sector='unspecified'",
+    "industry_locale_model": "Context Stack A–D encoded as context_profile + deterministic policy_pack_stack order: baseline -> jurisdiction -> sector -> client",
+    "per_requirement_attribution": "deferred (v0.1 provenance is policy_pack_stack order only)",
+    "intake_philosophy": "Intake is evidence distillation + gap loop (not a classic questionnaire-first UX)."
+  },
+  "implementation_status": {
+    "recent_prs": {
+      "129": "Implemented MUST scope for Intake OUTPUT context stack; context_profile validated fail-closed vs allowlists; deterministic stack enforced; legacy locale_context derives context_profile; mismatch locale_context vs context_profile.jurisdiction fails closed.",
+      "130": "Continuation/supporting changes (tests/docs/ledger) for Intake context stack enforcement.",
+      "131": "Continuation/supporting changes (tests/docs/ledger) for Intake context stack enforcement."
+    },
+    "known_edge_case": {
+      "issue": "locale_context: null may pass (fail-open) unless explicitly rejected when key present",
+      "planned_fix": [
+        "make locale_context null fail-closed",
+        "add PR-gate fixtures for: null locale_context; unknown jurisdiction; unknown sector; invalid stack order",
+        "ensure both-missing case (no context_profile and no locale_context) is fail-closed"
+      ],
+      "owner": "Lead Developer chat (follow-up hardening PR)"
+    }
+  },
+  "next_plan_for_M_Intake": {
+    "phase_1_contracts": {
+      "goal": "Define canonical intake bundle artifact and schemas/validators/tests before integrating any OSS tooling",
+      "deliverables": [
+        "intake_bundle_v0_1 schema + contract doc",
+        "evidence model (evidence per field or global evidence index + refs)",
+        "unknowns[] + conflicts[] semantics as first-class",
+        "clarification_questions[] contract",
+        "fail-closed validators in EP and PE tests/fixtures"
+      ],
+      "open_design_choice": {
+        "question": "Evidence model shape",
+        "options": [
+          "A: evidence[] embedded per field (simpler auditing, more verbose)",
+          "B: global evidence index + field->evidence refs (dedupes, scales better)"
+        ],
+        "default_recommendation": "B (global evidence index + refs), unless auditing simplicity strongly preferred"
+      }
+    },
+    "phase_2_workflow": {
+      "goal": "Deterministic intake workflow state machine (tool-agnostic)",
+      "steps": [
+        "Ingest artifacts -> evidence vault (stable IDs/hashes)",
+        "Extract drafts (can be stub/manual at first) -> intake_bundle_draft_i.json",
+        "Reconcile drafts deterministically -> candidate bundle + conflicts/unknowns",
+        "Gap analysis driven by policy_pack_stack -> clarification_questions",
+        "Readiness gate (SLA basis): unresolved critical unknowns/conflicts <= threshold"
+      ]
+    },
+    "phase_3_llm_council": {
+      "goal": "Plug-in council as ONE implementation of Extract; enforce schema, provenance, and determinism via validators/evals",
+      "notes": [
+        "Multi-perspective extraction + reconciler is useful only when bounded by schema + evidence + deterministic gates.",
+        "Golden docs can start as a small seed set; scale later. Focus evals on schema-level correctness + provenance + unknown/conflict handling."
+      ]
+    },
+    "phase_4_stitching": {
+      "goal": "After contracts/workflow are stable, evaluate OSS adapters (PAR/CNIL/etc.) and deterministic policy engine (OPA)",
+      "candidates": [
+        "OPA as deterministic client policy constraints engine",
+        "PAR DPIA Form as optional intake UX source via adapter",
+        "CNIL PIA as reference architecture / optional isolated import"
+      ]
+    }
+  },
+  "repo_paths_for_saved_artifacts": {
+    "planning_state_target_dir": "packages/specs/docs/planning/2026-02-05/",
+    "chat_log_target_path": "packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities.md"
+  }
+}
