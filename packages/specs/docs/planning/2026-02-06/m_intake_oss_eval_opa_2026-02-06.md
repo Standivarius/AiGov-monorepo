@@ -23,7 +23,7 @@ Run a minimal OPA experiment and document a deterministic, code-grounded integra
   - `tools/fixtures/validators/intake_output_context_fail_pack_order.json`
 
 ### Fit matrix status
-- **Missing**: `packages/specs/docs/planning/2026-02-06/m_intake_monorepo_fit_matrix_2026-02-06.md` was not present in the repo at the provided path. Seam mapping below is grounded in the codebase map and runtime locations; confirm once the fit matrix is available.
+- Fit matrix: Present — `packages/specs/docs/planning/2026-02-06/m_intake_monorepo_fit_matrix_2026-02-06.md`
 
 ---
 
@@ -169,6 +169,7 @@ Output (verbatim):
 - **Determinism controls:**
   - Pin OPA bundle (policy + data) by digest and store alongside artifacts.
   - Forbid Rego builtins that introduce nondeterminism (`time.now_ns`, `uuid`, `rand`, external HTTP calls).
+  - Canonical forbidden builtins list is defined in the architecture plan; keep OPA eval list in sync.
   - Normalize any unordered collections before emitting `reasons` (sort lexicographically).
 - **Audit/evidence handling (Model B compatible):**
   - Store a **policy decision artifact** as JSON with ordered keys.
@@ -212,7 +213,7 @@ Output (verbatim):
 ## Findings
 - OPA can serve as a deterministic policy gate if bundles + inputs are pinned and evaluation is offline.
 - Sidecar operation increases nondeterminism risk (remote policy drift); embedded CLI avoids network dependence.
-- Fit matrix file was missing at the provided path; mapping is based on runtime + test files and should be confirmed once the fit matrix exists.
+- Fit matrix is present and should be used as the canonical seam-verification source.
 
 ## Checkpoint
 - Files changed:
@@ -240,7 +241,7 @@ Output (verbatim):
   - OPA install via open-policy-agent.org blocked (403); GitHub release download succeeded.
   - `opa version` and minimal `opa eval` executed successfully; outputs captured above.
 - Risks/unknowns:
-  - Fit matrix file missing at specified path; seam mapping needs confirmation once available.
+  - Seam mapping still depends on future intake_bundle/Evidence Model B contracts being finalized.
 - Next task:
   - Confirm seam mapping against the monorepo fit matrix when provided.
   - Draft eval-first fixtures for OPA adapter once integration decision is approved.

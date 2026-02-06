@@ -12,7 +12,7 @@ Treat PAR export as an input, map it to intake_bundle_v0_1, and flag EUPL constr
 - PAR OSS notes + license caution: `packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities.md`.
 
 ### Fit matrix status
-- **Missing**: `packages/specs/docs/planning/2026-02-06/m_intake_monorepo_fit_matrix_2026-02-06.md` was not present in the repo at the provided path. Touchpoint paths below are grounded in the codebase map and must be verified against the fit matrix once available.
+- Fit matrix: Present — `packages/specs/docs/planning/2026-02-06/m_intake_monorepo_fit_matrix_2026-02-06.md`
 
 ### Outputs (artifacts + paths)
 - `packages/specs/docs/planning/2026-02-06/m_intake_oss_eval_par_2026-02-06.md`
@@ -116,9 +116,9 @@ Treat PAR export as an input, map it to intake_bundle_v0_1, and flag EUPL constr
   - `sed -n '5410,5710p' packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities.md`
   - `find packages/specs/docs/planning -name "*fit_matrix*" -print`
 - Results:
-  - Fit matrix file not found at specified path; mapping references codebase map pending fit matrix confirmation.
+  - Fit matrix file present; mapping references both fit matrix and codebase map.
 - Risks/unknowns:
   - PAR export schema not in repo; field mapping is placeholder pending schema verification.
 - Next task:
-  - Confirm fit-matrix touchpoints once the file is available.
+  - Confirm fit-matrix touchpoints against PAR export schema once that schema is available.
   - Acquire a PAR export schema/sample and replace placeholder field names in the mapping.

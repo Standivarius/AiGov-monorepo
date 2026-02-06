@@ -25,8 +25,7 @@ Extract CNIL PIA methodology patterns (workflow + question taxonomy) without imp
   - `tools/fixtures/validators/client_intake_v0_2_pass.json`
 
 ## Fit matrix status
-- **Missing**: `packages/specs/docs/planning/2026-02-06/m_intake_monorepo_fit_matrix_2026-02-06.md` was not present in the repo at the provided path.
-- Touchpoint paths below are grounded in the codebase map and intake runtime/tests; confirm once the fit matrix exists.
+- Fit matrix: Present — `packages/specs/docs/planning/2026-02-06/m_intake_monorepo_fit_matrix_2026-02-06.md`
 
 ---
 
@@ -54,8 +53,8 @@ The goal is to capture **question patterns** (not GPL code) and bind each to exi
 | Data flow & storage | “Where is data stored, transferred, or accessed?” | `client_intake_output_contract_v0_1.md` (context profile); evidence refs | Flow entries normalized; locations mapped to jurisdiction/sector |
 | Legal basis & purpose limitation | “What is the lawful basis and justification?” | `client_intake_output_contract_v0_1.md` + `policy_packs_v0.json` | Basis must map to policy packs; no free-form basis |
 | DSAR readiness | “How can data subjects submit requests?” | `dsar_channels_v0.json` + `client_intake_v0_2.schema.json` | Channels must be in allowlist; ordered list required |
-| Risk assessment | “What risks to rights and freedoms exist?” | `evidence_schema.md` (risk evidence) | Risks recorded as evidence artifacts with severity scale |
-| Mitigations & controls | “What measures reduce identified risks?” | `evidence_schema.md` + `client_intake_output_contract_v0_1.md` | Mitigations must include evidence artifact references |
+| Risk assessment | “What risks to rights and freedoms exist?” | Maps to Evidence Model B (Phase D contract): `packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md` | Risks recorded as evidence artifacts with severity scale |
+| Mitigations & controls | “What measures reduce identified risks?” | Maps to Evidence Model B (Phase D contract): `packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md` + `client_intake_output_contract_v0_1.md` | Mitigations must include evidence artifact references |
 | Residual risk & approval | “Who approves residual risk and when?” | `client_intake_output_contract_v0_1.md` (approval metadata) | Approval fields required for Gate pass |
 
 ---
@@ -68,7 +67,8 @@ The goal is to capture **question patterns** (not GPL code) and bind each to exi
 **Contract + schema anchors:**
 - `packages/specs/schemas/client_intake_v0_2.schema.json` — canonical schema for intake payloads (Ingest/Extract output).
 - `packages/specs/docs/contracts/intake/client_intake_output_contract_v0_1.md` — required fields for output (Reconcile/Gap/Gate output).
-- `packages/specs/docs/contracts/taxonomy/evidence_schema.md` — defines evidence artifacts required for Gate pass.
+- Maps to Evidence Model B (Phase D contract): `packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md`.
+- `packages/specs/docs/contracts/taxonomy/evidence_schema.md` is verdict/signal schema only.
 
 **PE gates + fixtures (evidence + regression):**
 - `packages/pe/tests/intake/test_intake_validation.py` — validation gate for schema + determinism.
