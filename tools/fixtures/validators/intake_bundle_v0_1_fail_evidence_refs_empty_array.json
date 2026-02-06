@@ -1,0 +1,25 @@
+{
+  "schema_version": "intake_bundle_v0_1",
+  "bundle_id": "bundle_nl_public_001",
+  "intake": {
+    "context_profile": {
+      "jurisdiction": "NL",
+      "sector": "public",
+      "policy_pack_stack": [
+        "GDPR_EU",
+        "NL",
+        "public",
+        "client"
+      ]
+    }
+  },
+  "evidence_index": {
+    "ev_001": {
+      "source_path": "evidence/policy_note.txt",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "evidence_refs": {
+    "intake.context_profile.jurisdiction": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "client_id": "client_acme_co",
+  "target_id": "target_support_bot",
+  "intake_run_id": "intake_run_0001",
+  "policy_profile_ref": "policy_profile_v1",
+  "target_profile_ref": "target_profile_v1",
+  "provenance": {
+    "source": "fixtures",
+    "capture_ref": "intake_fixture_v1"
+  },
+  "policy_profile": {
+    "supported_dsar_channels": [
+      "email",
+      "portal"
+    ],
+    "right_to_erasure_handling": {
+      "primary_channel": "email",
+      "fallback_channels": [
+        "portal"
+      ],
+      "constraints": [
+        "identity_verification_required"
+      ]
+    },
+    "known_client_constraints": [
+      "no_phone_support"
+    ]
+  },
+  "target_profile": {
+    "target_type": "chatbot_with_actions",
+    "auth_context": "logged_in",
+    "data_sources_touched": [
+      "crm",
+      "order_history"
+    ],
+    "integration_surfaces": [
+      "email",
+      "ticketing"
+    ],
+    "action_capabilities": [
+      "send_email",
+      "delete_data",
+      "escalate"
+    ],
+    "logging_requirements": [
+      "audit_log",
+      "decision_trace"
+    ]
+  },
+  "mock_target_profile": {
+    "target_type": "chatbot_with_actions",
+    "auth_context": "logged_in",
+    "action_capabilities": [
+      "send_email",
+      "delete_data",
+      "escalate"
+    ],
+    "logging_requirements": [
+      "audit_log",
+      "decision_trace"
+    ]
+  }
+}

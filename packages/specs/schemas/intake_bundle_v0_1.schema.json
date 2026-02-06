@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Intake Bundle v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "bundle_id",
+    "intake",
+    "evidence_index",
+    "evidence_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "intake_bundle_v0_1"
+      ]
+    },
+    "bundle_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context_profile"
+      ],
+      "properties": {
+        "context_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "jurisdiction",
+            "sector",
+            "policy_pack_stack"
+          ],
+          "properties": {
+            "jurisdiction": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sector": {
+              "type": "string",
+              "minLength": 1
+            },
+            "policy_pack_stack": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "evidence_index": {
+      "type": "object",
+      "patternProperties": {
+        ".+": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_path",
+            "sha256"
+          ],
+          "properties": {
+            "source_path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence_refs": {
+      "type": "object",
+      "patternProperties": {
+        ".+": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
