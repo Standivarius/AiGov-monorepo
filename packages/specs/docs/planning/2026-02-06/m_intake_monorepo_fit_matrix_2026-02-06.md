@@ -24,3 +24,6 @@ Scope: GDPR-only. This matrix maps existing repo touchpoints to M_Intake require
 | `OPA readiness policy (planned)` | Policy rule set | Forbid nondeterministic builtins including `opa.runtime()` | planned | OPA deny = hard fail when OPA path is enabled. |
 | `intake_bundle_v0_1 schema strictness (planned)` | Schema rule set | Require `additionalProperties: false` at root and nested objects | planned | Fail-closed schema baseline. |
 | `sha256 format rule (planned)` | Validator/schema rule set | Enforce lowercase hex pattern `^[a-f0-9]{64}$` | planned | Applies to Evidence Model B entries. |
+| `tools/validate_intake_bundle_v0_1.py` | Planned validator | Fail-closed validator for intake_bundle_v0_1 pass/fail fixtures | planned | Phase D deliverable. |
+| `tools/validate_planning_pack.py` (intake_bundle wiring) | Planned PR-gate wiring | Imports + runs intake bundle validator and fixture checks | planned | Moves bundle fixtures into active gating. |
+| `packages/pe/tests/intake/test_intake_bundle_validation.py` | Planned PE tests | Unit-level deterministic assertions for intake bundle validation | planned | Complements tools-level validator coverage. |

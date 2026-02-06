@@ -97,6 +97,9 @@ Define the M_Intake architecture (ingest → extract → reconcile → gap → r
 - Define `intake_bundle_v0_1.schema.json` under `packages/specs/schemas/`.
 - Create Evidence Model B contract doc: `packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md`
   - (Alternative: include the full Evidence Model B spec inside the intake_bundle_v0_1 contract doc; if so, be explicit in that doc.)
+- Add validator stub: `tools/validate_intake_bundle_v0_1.py`.
+- Add planning-pack wiring: `tools/validate_planning_pack.py` must import and execute the intake bundle validator against pass/fail fixtures.
+- Plan PE validation tests: `packages/pe/tests/intake/test_intake_bundle_validation.py`.
 - Patch `packages/ep/aigov_ep/intake/validate.py` to fail closed when **both** `context_profile` is absent **and** the `locale_context` key is absent. **Required** to satisfy fail-closed invariant.
   - Phase D is blocked until this patch is merged and `tools/fixtures/validators/intake_output_context_fail_missing_locale_and_context.json` fails as expected.
 

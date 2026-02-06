@@ -57,6 +57,8 @@ Define fixtures and tests that gate M_Intake safely before any implementation (e
   - Critical unknown blocks readiness (fail-closed).
   - **Phase 2 (blocked)** until readiness gate validator exists.
 
+Phase 2 fixtures move into Phase 1 gating when their corresponding validators exist under `tools/` and are wired into `tools/validate_planning_pack.py`.
+
 ---
 
 ## 2) Regression fixtures for intake OUTPUT boundary (explicit)
@@ -98,6 +100,10 @@ These protect existing intake output behavior and must fail-closed:
 - **Enforcement mechanism:** nondeterministic field checks require validator logic (schema alone cannot reliably detect timestamps/random IDs); use a rule that rejects forbidden field names (e.g., `*_timestamp`).
   - Scope: reject root-level generated timestamps (`processed_at`, `generated_at`, similar).
   - Allow evidence provenance timestamps inside `evidence_index` entries when they are excluded from canonical bundle hashing rules.
+  - See architecture plan deterministic rules section for the canonical forbidden root-level field list.
+
+## 6) Phase 2 candidates (non-blocking)
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_unsorted_evidence_index.json` (candidate): enforce deterministic ordering semantics once dedicated ordering validator exists.
 
 ---
 
