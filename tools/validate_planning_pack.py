@@ -130,6 +130,9 @@ INTAKE_BUNDLE_V0_1_FAIL_EXPECTED_SUBSTRINGS = {
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_bundle_id.json": "bundle_id",
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_source_path_traversal.json": "traversal source_path",
 }
+# Single-mode count checks are limited to fixtures where exactly one policy error
+# is contractually expected. Other fail fixtures assert the primary error via
+# substring but may accumulate additional schema-derived errors by design.
 INTAKE_BUNDLE_V0_1_SINGLE_MODE_FAIL_PATHS = {
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_timestamp_field.json",
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_jurisdiction.json",

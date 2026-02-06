@@ -40,10 +40,10 @@ def _validate_schema(value: Any, schema: dict[str, Any], path: str, errors: list
             return
         min_properties = schema.get("minProperties")
         if isinstance(min_properties, int) and len(value) < min_properties:
-            errors.append(f"{path} must contain at least {min_properties} propertie(s)")
+            errors.append(f"{path} must contain at least {min_properties} properties")
         max_properties = schema.get("maxProperties")
         if isinstance(max_properties, int) and len(value) > max_properties:
-            errors.append(f"{path} must contain at most {max_properties} propertie(s)")
+            errors.append(f"{path} must contain at most {max_properties} properties")
         required = schema.get("required", [])
         if isinstance(required, list):
             for key in required:
@@ -201,6 +201,7 @@ def _validate_evidence_refs(bundle: dict[str, Any], errors: list[str]) -> None:
     evidence_index = bundle.get("evidence_index")
     if not isinstance(evidence_index, dict):
         return
+    # Keep empty-index failures single-mode: schema minProperties already reports this.
     if not evidence_index:
         return
     evidence_keys = set(evidence_index.keys())
