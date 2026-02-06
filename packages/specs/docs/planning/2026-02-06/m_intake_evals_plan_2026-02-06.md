@@ -11,7 +11,7 @@ Define fixtures and tests that gate M_Intake safely before any implementation (e
 - Intake + taxonomy anchors:
   - `packages/specs/schemas/client_intake_v0_2.schema.json`
   - `packages/specs/docs/contracts/intake/client_intake_output_contract_v0_1.md`
-  - `packages/specs/docs/contracts/taxonomy/evidence_schema.md`
+  - `packages/specs/docs/contracts/taxonomy/evidence_schema.md` (verdict/signal schema only; NOT Evidence Model B)
   - `tools/fixtures/validators/intake_output_context_fail_locale_context_null.json`
 
 ## Fit matrix status
@@ -21,6 +21,7 @@ Define fixtures and tests that gate M_Intake safely before any implementation (e
 
 ## 1) Fixtures to add (names + locations)
 **Phase D minimal executable fixture set (Phase 1):** one `*_pass.json` plus single-mode `*_fail_<reason>.json` fixtures listed below.
+**Evidence Model B contract (Phase D):** create `packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md` (new contract; not provided by `evidence_schema.md`).
 
 ### 1.1 intake_bundle_v0_1 pass fixture
 - `tools/fixtures/validators/intake_bundle_v0_1_pass.json`
@@ -29,10 +30,13 @@ Define fixtures and tests that gate M_Intake safely before any implementation (e
 
 ### 1.2 intake_bundle_v0_1 fail fixtures
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_vocab.json`
-- `tools/fixtures/validators/intake_bundle_v0_1_fail_nondeterministic_field.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_timestamp_field.json`
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_missing_required.json`
-- `tools/fixtures/validators/intake_bundle_v0_1_fail_missing_evidence_ref.json`
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_dangling_evidence_ref.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_empty_evidence_refs.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_sha256_uppercase.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_extra_key.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_policy_pack.json`
   - **Naming convention:** `*_fail_<reason>.json` for single-mode failures.
 
 ### 1.3 Reconciliation conflict fixture
@@ -59,7 +63,8 @@ These protect existing intake output behavior and must fail-closed:
 - `tools/fixtures/validators/intake_output_context_fail_unknown_sector.json` (exists per codebase map).
 - `tools/fixtures/validators/intake_output_context_fail_pack_order.json` (exists per codebase map).
 - **Add new:** `tools/fixtures/validators/intake_output_context_fail_missing_locale_and_context.json` (both locale_context and context_profile missing).
-- **Live fail-open note:** current validator fails open when both `context_profile` and the `locale_context` key are absent; this needs an explicit validator patch (not covered by existing regression fixtures).
+  - **Does not exist yet:** requires Phase D validator patch to make it fail as intended.
+- **Live fail-open note:** current validator fails open when both `context_profile` and the `locale_context` key are absent; this requires an explicit validator patch (not covered by existing regression fixtures).
 
 ---
 
@@ -87,7 +92,7 @@ These protect existing intake output behavior and must fail-closed:
 - Sort order of `clarification_questions[]`, `conflicts[]`, and `evidence_index` must be deterministic.
 - Any nondeterministic fields (timestamps, random IDs) must cause failures.
 - No network dependencies in tests.
-- **Enforcement mechanism:** nondeterministic field checks require validator logic (schema alone cannot reliably detect timestamps/random IDs).
+- **Enforcement mechanism:** nondeterministic field checks require validator logic (schema alone cannot reliably detect timestamps/random IDs); use a rule that rejects forbidden field names (e.g., `*_timestamp`).
 
 ---
 
