@@ -38,6 +38,12 @@ def _validate_schema(value: Any, schema: dict[str, Any], path: str, errors: list
         if not isinstance(value, dict):
             errors.append(f"{path} must be an object")
             return
+        min_properties = schema.get("minProperties")
+        if isinstance(min_properties, int) and len(value) < min_properties:
+            errors.append(f"{path} must contain at least {min_properties} propertie(s)")
+        max_properties = schema.get("maxProperties")
+        if isinstance(max_properties, int) and len(value) > max_properties:
+            errors.append(f"{path} must contain at most {max_properties} propertie(s)")
         required = schema.get("required", [])
         if isinstance(required, list):
             for key in required:
@@ -147,19 +153,27 @@ def _validate_context_profile(
         return
 
     jurisdiction = context_profile.get("jurisdiction")
+    jurisdiction_valid = False
     if isinstance(jurisdiction, str):
-        if jurisdiction not in jurisdictions:
+        if jurisdiction in jurisdictions:
+            jurisdiction_valid = True
+        else:
             errors.append(
                 f"intake.context_profile.jurisdiction contains unknown value '{jurisdiction}'"
             )
 
     sector = context_profile.get("sector")
+    sector_valid = False
     if isinstance(sector, str):
-        if sector not in sectors:
+        if sector in sectors:
+            sector_valid = True
+        else:
             errors.append(f"intake.context_profile.sector contains unknown value '{sector}'")
 
     policy_pack_stack = context_profile.get("policy_pack_stack")
     if not isinstance(policy_pack_stack, list):
+        return
+    if not jurisdiction_valid or not sector_valid:
         return
     unknown_packs = sorted(
         {
@@ -173,19 +187,21 @@ def _validate_context_profile(
             "intake.context_profile.policy_pack_stack contains unknown value(s): "
             f"{unknown_packs}"
         )
+        return
 
-    if isinstance(jurisdiction, str) and isinstance(sector, str):
-        expected_stack = ["GDPR_EU", jurisdiction, sector, "client"]
-        if policy_pack_stack != expected_stack:
-            errors.append(
-                "intake.context_profile.policy_pack_stack must equal "
-                f"{expected_stack}"
-            )
+    expected_stack = ["GDPR_EU", jurisdiction, sector, "client"]
+    if policy_pack_stack != expected_stack:
+        errors.append(
+            "intake.context_profile.policy_pack_stack must equal "
+            f"{expected_stack}"
+        )
 
 
 def _validate_evidence_refs(bundle: dict[str, Any], errors: list[str]) -> None:
     evidence_index = bundle.get("evidence_index")
     if not isinstance(evidence_index, dict):
+        return
+    if not evidence_index:
         return
     evidence_keys = set(evidence_index.keys())
 
@@ -257,11 +273,20 @@ def validate_intake_bundle_fixture(path: Path) -> list[str]:
         return [f"{path}: invalid JSON ({exc})"]
 
     errors: list[str] = []
-    _validate_schema(payload, schema, "bundle", errors)
+    schema_errors: list[str] = []
+    _validate_schema(payload, schema, "bundle", schema_errors)
 
+    forbidden_fields_present: list[str] = []
     for field_name in sorted(FORBIDDEN_ROOT_FIELDS):
         if field_name in payload:
+            forbidden_fields_present.append(field_name)
             errors.append(f"bundle contains forbidden root-level nondeterministic field '{field_name}'")
+    if forbidden_fields_present:
+        for field_name in forbidden_fields_present:
+            schema_error = f"bundle has unexpected key '{field_name}'"
+            schema_errors = [error for error in schema_errors if error != schema_error]
+
+    errors.extend(schema_errors)
 
     _validate_context_profile(payload, jurisdictions, sectors, policy_packs, errors)
     _validate_evidence_refs(payload, errors)

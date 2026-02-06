@@ -60,6 +60,7 @@
     },
     "evidence_index": {
       "type": "object",
+      "minProperties": 1,
       "patternProperties": {
         ".+": {
           "type": "object",
@@ -84,6 +85,7 @@
     },
     "evidence_refs": {
       "type": "object",
+      "minProperties": 1,
       "patternProperties": {
         ".+": {
           "type": "array",

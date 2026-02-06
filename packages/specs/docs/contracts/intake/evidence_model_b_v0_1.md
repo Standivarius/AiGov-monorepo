@@ -8,8 +8,8 @@ Define deterministic, fail-closed evidence linkage for intake bundles.
 ## Contract Definition
 Evidence Model B is a pair of structures inside `intake_bundle_v0_1`:
 
-1. `evidence_index`: object mapping `evidence_id` to an evidence entry.
-2. `evidence_refs`: object mapping canonical `field_path` to a non-empty array of `evidence_id` values.
+1. `evidence_index`: non-empty object mapping `evidence_id` to an evidence entry.
+2. `evidence_refs`: non-empty object mapping canonical `field_path` to a non-empty array of `evidence_id` values.
 
 Evidence entry shape (exact):
 
@@ -38,6 +38,7 @@ Validator policy (fail-closed):
 - Schema-enforced:
   - Entry keys and types.
   - `sha256` pattern.
+  - `evidence_index` and `evidence_refs` each require at least one property.
   - `evidence_refs` arrays are non-empty.
 - Validator-enforced policy:
   - `source_path` safety checks (absolute/traversal rejection).

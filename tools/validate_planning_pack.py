@@ -102,6 +102,8 @@ INTAKE_BUNDLE_V0_1_PASS_PATH = (
 )
 INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_index.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_refs.json",
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_extra_key.json",
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_sha256_uppercase.json",
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_timestamp_field.json",
@@ -113,6 +115,27 @@ INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_bundle_id.json",
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_source_path_traversal.json",
 ]
+INTAKE_BUNDLE_V0_1_FAIL_EXPECTED_SUBSTRINGS = {
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json": "missing required key",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_index.json": "evidence_index",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_refs.json": "evidence_refs",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_extra_key.json": "unexpected key",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_sha256_uppercase.json": "sha256",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_timestamp_field.json": "forbidden root-level nondeterministic field",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_dangling_evidence_ref.json": "dangling reference",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_evidence_refs_empty_array.json": "must contain at least 1 item",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_jurisdiction.json": "unknown value 'FR'",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_sector.json": "unknown value 'finance'",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_policy_pack.json": "unknown value(s): ['enterprise']",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_bundle_id.json": "bundle_id",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_source_path_traversal.json": "traversal source_path",
+}
+INTAKE_BUNDLE_V0_1_SINGLE_MODE_FAIL_PATHS = {
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_timestamp_field.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_jurisdiction.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_sector.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_policy_pack.json",
+}
 PETRI_SEED_INSTRUCTIONS_FIXTURE = (
     ROOT / "tools" / "fixtures" / "validators" / "petri_seed_instructions_from_bundle_pass.json"
 )
@@ -727,6 +750,23 @@ def main() -> int:
                 "ERROR: intake bundle v0.1 fail fixture unexpectedly passed validation: "
                 f"{path}"
             )
+            return 1
+        expected_substring = INTAKE_BUNDLE_V0_1_FAIL_EXPECTED_SUBSTRINGS.get(path)
+        if expected_substring and not any(
+            expected_substring in error for error in intake_bundle_fail_errors
+        ):
+            print(
+                "ERROR: intake bundle v0.1 fail fixture missing expected failure mode "
+                f"'{expected_substring}': {path}"
+            )
+            return 1
+        if path in INTAKE_BUNDLE_V0_1_SINGLE_MODE_FAIL_PATHS and len(intake_bundle_fail_errors) != 1:
+            print(
+                "ERROR: intake bundle v0.1 fixture must be single-mode but returned "
+                f"{len(intake_bundle_fail_errors)} errors: {path}"
+            )
+            for error in intake_bundle_fail_errors:
+                print(f"  - {error}")
             return 1
         print(f"FAIL (as expected): intake bundle v0.1 fixture validated: {path}")
 

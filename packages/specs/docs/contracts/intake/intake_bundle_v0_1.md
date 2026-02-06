@@ -44,6 +44,7 @@ Canonicalization and hashing rules are pinned to:
 - Any schema mismatch fails validation.
 - Any unknown taxonomy value fails validation.
 - Any dangling evidence reference fails validation.
+- Empty `evidence_index` or empty `evidence_refs` fails validation.
 - Any unsafe `source_path` (absolute or traversal) fails validation.
 - Forbidden root-level nondeterministic fields (`generated_at`, `processed_at`) fail validation.
 
