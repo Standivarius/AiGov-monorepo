@@ -23,7 +23,7 @@ Run a minimal OPA experiment and document a deterministic, code-grounded integra
   - `tools/fixtures/validators/intake_output_context_fail_pack_order.json`
 
 ### Fit matrix status
-- **Missing**: `packages/specs/docs/planning/2026-02-06/m_intake_monorepo_fit_matrix_2026-02-06.md` was not present in the repo at the provided path. Seam mapping below is grounded in the codebase map and runtime locations; confirm once the fit matrix is available.
+- Fit matrix: Present — `packages/specs/docs/planning/2026-02-06/m_intake_monorepo_fit_matrix_2026-02-06.md`
 
 ---
 
@@ -169,6 +169,7 @@ Output (verbatim):
 - **Determinism controls:**
   - Pin OPA bundle (policy + data) by digest and store alongside artifacts.
   - Forbid Rego builtins that introduce nondeterminism (`time.now_ns`, `uuid`, `rand`, external HTTP calls).
+  - Canonical forbidden builtins list is defined in the architecture plan; keep this list in sync.
   - Normalize any unordered collections before emitting `reasons` (sort lexicographically).
 - **Audit/evidence handling (Model B compatible):**
   - Store a **policy decision artifact** as JSON with ordered keys.
