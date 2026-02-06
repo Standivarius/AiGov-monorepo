@@ -22,6 +22,7 @@ from validate_liverun_inspect_task_args_v0_1 import validate_inspect_task_args
 from validate_liverun_output_artifacts_envelope_v0_1 import (
     validate_liverun_output_artifacts_dir,
 )
+from validate_intake_bundle_v0_1 import validate_intake_bundle_fixture
 from validate_module_cards import validate_module_cards
 from validate_module_dashboard_snapshot import validate_module_dashboard_snapshot
 from validate_print_inspect_petri_run_command import validate_print_inspect_petri_run_command
@@ -89,6 +90,52 @@ INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_JURISDICTION_PATH = (
 INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_SECTOR_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_output_context_fail_unknown_sector.json"
 )
+INTAKE_OUTPUT_CONTEXT_FAIL_MISSING_LOCALE_AND_CONTEXT_PATH = (
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_output_context_fail_missing_locale_and_context.json"
+)
+INTAKE_BUNDLE_V0_1_PASS_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_pass.json"
+)
+INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_index.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_refs.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_extra_key.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_sha256_uppercase.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_timestamp_field.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_dangling_evidence_ref.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_evidence_refs_empty_array.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_jurisdiction.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_sector.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_policy_pack.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_bundle_id.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_source_path_traversal.json",
+]
+INTAKE_BUNDLE_V0_1_FAIL_EXPECTED_SUBSTRINGS = {
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json": "missing required key",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_index.json": "evidence_index",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_refs.json": "evidence_refs",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_extra_key.json": "unexpected key",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_sha256_uppercase.json": "sha256",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_timestamp_field.json": "forbidden root-level nondeterministic field",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_dangling_evidence_ref.json": "dangling reference",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_evidence_refs_empty_array.json": "must contain at least 1 item",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_jurisdiction.json": "unknown value 'FR'",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_sector.json": "unknown value 'finance'",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_policy_pack.json": "unknown value(s): ['enterprise']",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_bundle_id.json": "bundle_id",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_source_path_traversal.json": "traversal source_path",
+}
+INTAKE_BUNDLE_V0_1_SINGLE_MODE_FAIL_PATHS = {
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_timestamp_field.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_jurisdiction.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_sector.json",
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_unknown_policy_pack.json",
+}
 PETRI_SEED_INSTRUCTIONS_FIXTURE = (
     ROOT / "tools" / "fixtures" / "validators" / "petri_seed_instructions_from_bundle_pass.json"
 )
@@ -657,6 +704,71 @@ def main() -> int:
         "FAIL (as expected): intake output context fixture validated: "
         f"{INTAKE_OUTPUT_CONTEXT_FAIL_UNKNOWN_SECTOR_PATH}"
     )
+
+    intake_context_missing_locale_and_context_payload = _read_json(
+        INTAKE_OUTPUT_CONTEXT_FAIL_MISSING_LOCALE_AND_CONTEXT_PATH
+    )
+    if not isinstance(intake_context_missing_locale_and_context_payload, dict):
+        print(
+            "ERROR: intake output context fail fixture must be an object: "
+            f"{INTAKE_OUTPUT_CONTEXT_FAIL_MISSING_LOCALE_AND_CONTEXT_PATH}"
+        )
+        return 1
+    intake_context_missing_locale_and_context_errors = validate_intake_payload(
+        intake_context_missing_locale_and_context_payload
+    )
+    if not intake_context_missing_locale_and_context_errors:
+        print(
+            "ERROR: intake output context missing locale/context fixture unexpectedly passed validation."
+        )
+        return 1
+    if not any(
+        "locale_context" in error
+        for error in intake_context_missing_locale_and_context_errors
+    ):
+        print(
+            "ERROR: intake output context missing locale/context fixture missing locale_context error."
+        )
+        return 1
+    print(
+        "FAIL (as expected): intake output context fixture validated: "
+        f"{INTAKE_OUTPUT_CONTEXT_FAIL_MISSING_LOCALE_AND_CONTEXT_PATH}"
+    )
+
+    intake_bundle_pass_errors = validate_intake_bundle_fixture(INTAKE_BUNDLE_V0_1_PASS_PATH)
+    if intake_bundle_pass_errors:
+        print("ERROR: intake bundle v0.1 pass fixture failed validation:")
+        for error in intake_bundle_pass_errors:
+            print(f"  - {error}")
+        return 1
+    print(f"PASS: intake bundle v0.1 fixture validated: {INTAKE_BUNDLE_V0_1_PASS_PATH}")
+
+    for path in INTAKE_BUNDLE_V0_1_FAIL_PATHS:
+        intake_bundle_fail_errors = validate_intake_bundle_fixture(path)
+        if not intake_bundle_fail_errors:
+            print(
+                "ERROR: intake bundle v0.1 fail fixture unexpectedly passed validation: "
+                f"{path}"
+            )
+            return 1
+        expected_substring = INTAKE_BUNDLE_V0_1_FAIL_EXPECTED_SUBSTRINGS.get(path)
+        if expected_substring and not any(
+            expected_substring in error for error in intake_bundle_fail_errors
+        ):
+            print(
+                "ERROR: intake bundle v0.1 fail fixture missing expected failure mode "
+                f"'{expected_substring}': {path}"
+            )
+            return 1
+        if path in INTAKE_BUNDLE_V0_1_SINGLE_MODE_FAIL_PATHS and len(intake_bundle_fail_errors) != 1:
+            print(
+                "ERROR: intake bundle v0.1 fixture must be single-mode but returned "
+                f"{len(intake_bundle_fail_errors)} errors: {path}"
+            )
+            for error in intake_bundle_fail_errors:
+                print(f"  - {error}")
+            return 1
+        print(f"FAIL (as expected): intake bundle v0.1 fixture validated: {path}")
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
     if intake_errors:

@@ -236,7 +236,12 @@ def validate_intake_payload(payload: dict[str, Any]) -> list[str]:
                         "target_profile.locale_context must match context_profile.jurisdiction"
                     )
     else:
-        if isinstance(locale_context, str) and locale_context:
+        has_locale_context_key = isinstance(target_profile, dict) and "locale_context" in target_profile
+        if not has_locale_context_key:
+            errors.append(
+                "target_profile.locale_context is required when context_profile is absent"
+            )
+        elif isinstance(locale_context, str) and locale_context:
             if locale_context not in allowed_context_jurisdictions:
                 errors.append(
                     "target_profile.locale_context must be one of "
