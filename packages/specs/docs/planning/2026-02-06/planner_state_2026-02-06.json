@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "id": "aigov_planner_state_2026-02-06",
+    "created_utc": "2026-02-06",
+    "owner": "Marius",
+    "repo": "Standivarius/AiGov-monorepo",
+    "planner_chat_role": "AiGov Planner Copilot (planning/architecture/research; no PRs)",
+    "execution_mode": "Planner-only; implementation via Codex/Lead Developer runs + PRs",
+    "repo_head_main": {
+      "sha": "0983195d",
+      "note": "Head after Phase D merges (per operator report)."
+    }
+  },
+  "guiding_principles": {
+    "scope_constraint": "Planning/architecture/research only. No PRs authored by the Planner chat.",
+    "product_positioning_hypothesis": "Moat = canonical AiGov contracts + evidence model + deterministic workflow + audit-grade outputs. OSS are optional implementations behind adapters.",
+    "engineering_method": [
+      "Contract-first + fail-closed runtime validators",
+      "Evals-first/TDD via fixtures that gate behavior in CI",
+      "Determinism: byte-identical canonical outputs; stable ordering; stable error lists",
+      "Two-brain rule: Planner designs + scopes; Lead Dev/Codex implements"
+    ],
+    "repo_patterns_to_follow": {
+      "schemas": "packages/specs/schemas/",
+      "contract_docs": "packages/specs/docs/contracts/",
+      "taxonomy_allowlists": "packages/specs/docs/contracts/taxonomy/",
+      "runtime_intake_validation_ep": "packages/ep/aigov_ep/intake/",
+      "planning_pack_gate": "tools/validate_planning_pack.py + tools/fixtures/validators/",
+      "pr_gate": "bash tools/run_pr_gate_validators.sh",
+      "pe_tests": "packages/pe/tests/"
+    }
+  },
+  "streams": {
+    "stream_eu_programmes": {
+      "status": "deferred",
+      "note": "Do not expand EU programme research unless explicitly requested."
+    },
+    "stream_competition": {
+      "status": "deferred",
+      "note": "No competitor analysis unless explicitly requested."
+    },
+    "stream_oss_modules": {
+      "status": "active",
+      "module_focus_now": "M_Intake",
+      "oss_stitching_thesis": "Define ideal artifact contracts + deterministic workflow first; then evaluate OSS components and stitch via adapters with license isolation."
+    }
+  },
+  "decisions": {
+    "intake_philosophy": "Intake is evidence distillation + deterministic gap loop (not questionnaire-first UX).",
+    "context_stack": {
+      "source_of_truth": "context_profile",
+      "deterministic_policy_pack_stack_order": ["GDPR_EU", "<jurisdiction>", "<sector>", "client"],
+      "legacy_handling": "legacy locale_context-only derives context_profile deterministically with sector='unspecified'",
+      "mismatch_rule": "mismatch locale_context vs context_profile.jurisdiction fails closed"
+    },
+    "evidence_model": {
+      "chosen": "Model B",
+      "definition": "Global evidence_index + field->evidence_refs; referential integrity is mandatory and fail-closed."
+    },
+    "canonicalization_and_hashing": {
+      "reference": "packages/specs/docs/contracts/reporting/hash_canonicalization_v0_1.md",
+      "note": "Canonicalization rules are pinned by contract; validator enforces deterministic ordering and stable error outputs."
+    },
+    "taxonomy_source_of_truth": {
+      "chosen": "Standalone allowlists under packages/specs/docs/contracts/taxonomy/*.json",
+      "note": "Validation uses these allowlists; unknown values must fail-closed."
+    }
+  },
+  "implementation_status": {
+    "intake_output_context_stack": {
+      "status": "implemented",
+      "prs": {
+        "129": "Context stack implemented at Intake OUTPUT boundary (context_profile + deterministic policy_pack_stack + allowlists + mismatch fail-closed).",
+        "130": "Supporting tests/docs/ledger for context stack enforcement.",
+        "131": "Supporting tests/docs/ledger for context stack enforcement."
+      }
+    },
+    "phase_d_m_intake_gates": {
+      "status": "implemented_and_merged",
+      "prs": {
+        "148": {
+          "title": "Phase D: intake_bundle_v0_1 schema + fixtures + validators + fail-open patch",
+          "url": "https://github.com/Standivarius/AiGov-monorepo/pull/148",
+          "highlights": [
+            "Added intake_bundle_v0_1 schema + intake contracts (incl. Evidence Model B doc).",
+            "Added stdlib-only validate_intake_bundle_v0_1 (deterministic, fail-closed).",
+            "Added full pass/fail fixture set + legacy regression fixture.",
+            "Wired into validate_planning_pack.py and PR-gate.",
+            "Patched EP validate.py to fail when both context_profile missing AND target_profile.locale_context key missing (closed live fail-open)."
+          ]
+        },
+        "149": {
+          "title": "Phase D polish: clarify intake bundle validator messages and fixture intent",
+          "url": "https://github.com/Standivarius/AiGov-monorepo/pull/149",
+          "highlights": [
+            "Clarified validator messaging and fixture intent for single-mode gating.",
+            "Documented deliberate short-circuit behavior for deterministic single-mode fixtures."
+          ]
+        }
+      },
+      "gates": {
+        "validate_planning_pack": "PASS",
+        "run_pr_gate_validators": "PASS"
+      }
+    },
+    "known_edge_cases": {
+      "locale_context_null_fail_open": {
+        "status": "resolved",
+        "resolution": "Fail-open closed via EP validator patch + regression fixture gating."
+      }
+    }
+  },
+  "next_plan_for_M_Intake": {
+    "phase_d_contracts_and_gates": {
+      "status": "done",
+      "primary_artifacts": [
+        "packages/specs/schemas/intake_bundle_v0_1.schema.json",
+        "packages/specs/docs/contracts/intake/intake_bundle_v0_1.md",
+        "packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md",
+        "tools/validate_intake_bundle_v0_1.py",
+        "tools/fixtures/validators/intake_bundle_v0_1_*.json",
+        "tools/fixtures/validators/intake_output_context_fail_missing_locale_and_context.json"
+      ]
+    },
+    "phase_2_deterministic_workflow": {
+      "status": "next",
+      "goal": "Implement deterministic Extract→Reconcile→Gap Analysis→Readiness Gate around intake_bundle_v0_1 (tool-agnostic).",
+      "deliverables": [
+        "Contracts for draft bundle inputs (one or more draft formats) and deterministic merge output",
+        "Reconcile engine: deterministic merge + explicit conflicts[] (no silent resolution)",
+        "Gap analysis engine: policy_pack_stack-driven clarification_questions[] (ordered deterministically)",
+        "Readiness gate: SLA conditions for eval-ready; blocks on unresolved critical unknowns/conflicts",
+        "Fixtures + planning-pack gating for reconcile/gap/readiness behavior (no LLM dependency)"
+      ],
+      "explicitly_deferred": [
+        "OPA runtime gate (policy-as-code execution)",
+        "PAR import/export adapters beyond interface stubs",
+        "CNIL patterns integration beyond documented mapping"
+      ]
+    },
+    "phase_3_llm_council": {
+      "status": "deferred",
+      "note": "Only after Phase 2 is stable and fully gated."
+    },
+    "phase_4_oss_stitching": {
+      "status": "deferred",
+      "note": "Only after Phase 2 is stable; stitch OSS behind adapters with license isolation."
+    }
+  },
+  "repo_paths_for_saved_artifacts": {
+    "planning_state_target_dir": "packages/specs/docs/planning/2026-02-06/",
+    "archived_chat_prior": "packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities.md",
+    "archived_chat_followup_target": "packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities-2.md",
+    "phase_d_plans_dir": "packages/specs/docs/planning/2026-02-06/"
+  }
+}
