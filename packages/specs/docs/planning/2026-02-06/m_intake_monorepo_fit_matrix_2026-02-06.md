@@ -13,6 +13,14 @@ Scope: GDPR-only. This matrix maps existing repo touchpoints to M_Intake require
 | `packages/specs/schemas/intake_bundle_v0_1.schema.json` | Planned intake bundle schema | Canonical schema for intake_bundle_v0_1 | planned | Phase D deliverable. |
 | `packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md` | Planned Evidence Model B contract | Defines evidence_index + evidence_refs contract | planned | Phase D deliverable (new contract). |
 | `tools/fixtures/validators/intake_output_context_fail_missing_locale_and_context.json` | Planned regression fixture | Catch fail-open when both context_profile and locale_context key are absent | planned | Requires validator patch to fail. |
+| `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_jurisdiction.json` | Planned bundle fixture | Enforce jurisdiction allowlist split from generic unknown vocab checks | planned | Single-mode failure. |
+| `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_sector.json` | Planned bundle fixture | Enforce sector allowlist split from generic unknown vocab checks | planned | Single-mode failure. |
 | `tools/fixtures/validators/intake_bundle_v0_1_fail_sha256_uppercase.json` | Planned bundle fixture | Enforce lowercase sha256 requirement | planned | Single-mode failure. |
 | `tools/fixtures/validators/intake_bundle_v0_1_fail_extra_key.json` | Planned bundle fixture | Enforce additionalProperties fail-closed | planned | Single-mode failure. |
 | `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_policy_pack.json` | Planned bundle fixture | Enforce policy pack allowlist | planned | Single-mode failure. |
+| `tools/fixtures/validators/intake_bundle_v0_1_fail_empty_bundle_id.json` | Planned bundle fixture | Enforce `bundle_id` minLength 1 | planned | Single-mode failure. |
+| `tools/fixtures/validators/intake_bundle_v0_1_fail_source_path_traversal.json` | Planned bundle fixture | Reject `source_path` traversal (`../`) and absolute-path semantics | planned | Single-mode failure. |
+| `tools/fixtures/validators/intake_bundle_v0_1_fail_evidence_refs_empty_array.json` | Planned bundle fixture | Enforce required evidence refs are not empty arrays | planned | Distinct from dangling-reference mode. |
+| `OPA readiness policy (planned)` | Policy rule set | Forbid nondeterministic builtins including `opa.runtime()` | planned | OPA deny = hard fail when OPA path is enabled. |
+| `intake_bundle_v0_1 schema strictness (planned)` | Schema rule set | Require `additionalProperties: false` at root and nested objects | planned | Fail-closed schema baseline. |
+| `sha256 format rule (planned)` | Validator/schema rule set | Enforce lowercase hex pattern `^[a-f0-9]{64}$` | planned | Applies to Evidence Model B entries. |

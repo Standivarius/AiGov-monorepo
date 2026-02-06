@@ -35,6 +35,8 @@ Define the M_Intake architecture (ingest → extract → reconcile → gap → r
 - **Evidence Model B:** global `evidence_index` with field → `evidence_refs` pointers (per constitution).
   - Evidence Model B is a **new** Phase D contract; it is **not** defined by `evidence_schema.md`.
   - **Entry shape:** each `evidence_index` entry is `{source_path, sha256}` only (no timestamps or nondeterministic fields).
+  - **sha256 format:** lowercase hex, pattern `^[a-f0-9]{64}$`.
+  - **source_path semantics:** relative to bundle root; absolute paths and traversal (`../`) are rejected by validator rules.
   - **Pointer rules:** every `evidence_refs` entry must reference existing `evidence_index` keys.
 - **M_Intake scope:** produce a deterministic, schema-valid intake bundle that downstream EP runtime validation (`packages/ep/aigov_ep/`) and PE gates (`packages/pe/tests/`, `tools/fixtures/validators/`) can consume.
 - **Taxonomy allowlists:** single source of truth is `packages/specs/docs/contracts/taxonomy/*.json` (jurisdictions, sectors, policy packs, constraints).
@@ -85,6 +87,7 @@ Define the M_Intake architecture (ingest → extract → reconcile → gap → r
 - **Fail-closed validation:**
   - Unknown vocab (jurisdiction/sector/policy pack) is rejected.
   - Schema mismatch rejects the bundle.
+  - `intake_bundle_v0_1` schema must use `additionalProperties: false` at root and nested objects.
   - **Locale edge:** `locale_context: null` must fail closed (regression fixture enforced).
 - **Known live fail-open gap:** if **both** `context_profile` is absent **and** the `locale_context` key is absent, current intake output validation fails open; this requires a validator patch (do not treat as covered).
 
@@ -95,13 +98,14 @@ Define the M_Intake architecture (ingest → extract → reconcile → gap → r
 - Create Evidence Model B contract doc: `packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md`
   - (Alternative: include the full Evidence Model B spec inside the intake_bundle_v0_1 contract doc; if so, be explicit in that doc.)
 - Patch `packages/ep/aigov_ep/intake/validate.py` to fail closed when **both** `context_profile` is absent **and** the `locale_context` key is absent. **Required** to satisfy fail-closed invariant.
+  - Phase D is blocked until this patch is merged and `tools/fixtures/validators/intake_output_context_fail_missing_locale_and_context.json` fails as expected.
 
 ---
 
 ## 4) OSS seams (adapter boundaries only; no code)
 - **OPA readiness gate (optional):**
   - Embedded CLI, pinned bundle digest, offline evaluation only.
-  - Forbid nondeterministic builtins (time, uuid, rand, external HTTP).
+  - Forbid nondeterministic builtins (`time.*`, `uuid`, `rand`, `opa.runtime()`, external HTTP/`net.http.send`).
 - **PAR DPIA (optional UI):**
   - External UI → adapter boundary: `par_export.json → intake_bundle_v0_1`.
   - EUPL isolation required; no code copied into core `packages/ep` or `packages/pe`.
@@ -156,6 +160,7 @@ Define the M_Intake architecture (ingest → extract → reconcile → gap → r
   - `python3 tools/validate_planning_pack.py`
   - `bash tools/run_pr_gate_validators.sh`
 - Results:
+  - Latest run status: `PASS` for both commands.
   - `python3 tools/validate_planning_pack.py`:
     - ```
       PASS: evidence_pack_v0 fixture validated: /workspaces/AiGov-monorepo/tools/fixtures/validators/evidence_pack_v0_pass.json

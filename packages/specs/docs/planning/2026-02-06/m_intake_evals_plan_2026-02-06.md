@@ -29,14 +29,17 @@ Define fixtures and tests that gate M_Intake safely before any implementation (e
   - **Naming convention:** single `*_pass.json` file per contract version.
 
 ### 1.2 intake_bundle_v0_1 fail fixtures
-- `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_vocab.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_jurisdiction.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_sector.json`
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_timestamp_field.json`
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_missing_required.json`
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_dangling_evidence_ref.json`
-- `tools/fixtures/validators/intake_bundle_v0_1_fail_empty_evidence_refs.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_evidence_refs_empty_array.json`
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_sha256_uppercase.json`
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_extra_key.json`
 - `tools/fixtures/validators/intake_bundle_v0_1_fail_unknown_policy_pack.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_empty_bundle_id.json`
+- `tools/fixtures/validators/intake_bundle_v0_1_fail_source_path_traversal.json`
   - **Naming convention:** `*_fail_<reason>.json` for single-mode failures.
 
 ### 1.3 Reconciliation conflict fixture
@@ -93,6 +96,8 @@ These protect existing intake output behavior and must fail-closed:
 - Any nondeterministic fields (timestamps, random IDs) must cause failures.
 - No network dependencies in tests.
 - **Enforcement mechanism:** nondeterministic field checks require validator logic (schema alone cannot reliably detect timestamps/random IDs); use a rule that rejects forbidden field names (e.g., `*_timestamp`).
+  - Scope: reject root-level generated timestamps (`processed_at`, `generated_at`, similar).
+  - Allow evidence provenance timestamps inside `evidence_index` entries when they are excluded from canonical bundle hashing rules.
 
 ---
 
@@ -115,6 +120,7 @@ These protect existing intake output behavior and must fail-closed:
   - `python3 tools/validate_planning_pack.py`
   - `bash tools/run_pr_gate_validators.sh`
 - Results:
+  - Latest run status: `PASS` for both commands.
   - `python3 tools/validate_planning_pack.py`:
     - ```
       PASS: evidence_pack_v0 fixture validated: /workspaces/AiGov-monorepo/tools/fixtures/validators/evidence_pack_v0_pass.json
