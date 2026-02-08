@@ -1,5 +1,11 @@
 # M_Intake Phase 2 Open Items Report (2026-02-08)
 
+## Update (2026-02-08)
+- PR `#154` scope drift is resolved; it is now planning-only with 4 changed files.
+- Review-pack artifacts were moved to PR `#160` (`pr6-phase2-reviews`).
+- MUST count is `0`.
+- SHOULD polish items are addressed by PR `pr7-phase2-polish` (this docs/tracking slice).
+
 ## 1) Current State Summary
 - Branch inspected: `pr5-phase2-planning`
 - HEAD: `851b06a3357df57eedb4a1ce96a3369cb3a8d130`
