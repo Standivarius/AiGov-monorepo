@@ -24,6 +24,7 @@ from validate_liverun_output_artifacts_envelope_v0_1 import (
 )
 from validate_intake_bundle_v0_1 import (
     validate_intake_bundle_fixture,
+    validate_intake_bundle_gap_fixture,
     validate_intake_bundle_reconcile_fixture,
 )
 from validate_module_cards import validate_module_cards
@@ -105,6 +106,9 @@ INTAKE_BUNDLE_V0_1_PASS_PATH = (
 )
 INTAKE_BUNDLE_RECONCILE_CONFLICT_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_reconcile_conflict.json"
+)
+INTAKE_BUNDLE_GAP_QUESTIONS_ORDER_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_gap_questions_order.json"
 )
 INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json",
@@ -790,6 +794,19 @@ def main() -> int:
     print(
         "PASS: intake bundle reconcile fixture validated: "
         f"{INTAKE_BUNDLE_RECONCILE_CONFLICT_PATH}"
+    )
+
+    intake_bundle_gap_errors = validate_intake_bundle_gap_fixture(
+        INTAKE_BUNDLE_GAP_QUESTIONS_ORDER_PATH
+    )
+    if intake_bundle_gap_errors:
+        print("ERROR: intake bundle gap fixture failed validation:")
+        for error in intake_bundle_gap_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "PASS: intake bundle gap fixture validated: "
+        f"{INTAKE_BUNDLE_GAP_QUESTIONS_ORDER_PATH}"
     )
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
