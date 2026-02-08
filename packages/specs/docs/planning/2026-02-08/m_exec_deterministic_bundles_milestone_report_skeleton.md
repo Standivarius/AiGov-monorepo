@@ -29,7 +29,7 @@ Milestone: Execution consumes deterministic bundles (GDPR-only)
 - `schema_version == "0.1.0"`
 - `scenarios[*]` required keys: `scenario_id`, `scenario_instance_id`, `path`, `sha256`
 - `additionalProperties: false`
-- `bundle_hash` and `bundle_dir` treatment:
+- `bundle_hash` and `bundle_dir` treatment (optional, validated when present):
 - dual-manifest ambiguity behavior (`manifest.json` + `bundle_manifest.json`):
 
 ## 6) Fixture and Gate Coverage

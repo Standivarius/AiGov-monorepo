@@ -40,7 +40,7 @@ Make EP execution consume deterministic bundles through a contract-first, fail-c
   - root `schema_version == "0.1.0"`
   - root `scenarios[]`
   - each scenario requires `scenario_id`, `scenario_instance_id`, `path`, `sha256`
-- `bundle_hash` and `bundle_dir` must be represented and validated when present (target decision: required, matching current fixture reality).
+- `bundle_hash` and `bundle_dir` are optional but validated when present; do not require them in `v0_1_0` schema.
 - Schema strictness: `additionalProperties: false`.
 - Schema/policy boundary must be explicit:
   - schema: structural fields + strictness
@@ -85,6 +85,7 @@ Exact file list (`<=6`):
 Fixtures to add:
 - PASS (existing): `tools/fixtures/bundles/good`
 - FAIL (new): `tools/fixtures/bundles/fail_manifest_bad_schema_version`
+- FAIL fixture is manifest-only; gate asserts schema-fail and does not attempt scenario file verification for that fixture.
 
 Expected failure substring:
 - `schema_version must be \"0.1.0\"` (or equivalent deterministic schema-validation message agreed in implementation)
@@ -106,11 +107,13 @@ Status: Planned
 Exact file list (`<=6`):
 - `packages/ep/aigov_ep/cli.py` (if both manifests exist, print explicit error and exit `2`)
 - `tools/validate_ep_deterministic_bundle_manifest.py` (add deterministic ambiguity probe)
+- `tools/fixtures/bundles/fail_dual_manifest/manifest.json` (committed dual-manifest fixture)
+- `tools/fixtures/bundles/fail_dual_manifest/bundle_manifest.json` (committed dual-manifest fixture)
 - `tools/validate_planning_pack.py` (assert ambiguity failure path)
 - `packages/specs/docs/planning/2026-02-08/m_exec_deterministic_bundles_codex_roadmap.md` (status stamping)
 
 Fixtures to add:
-- no committed dual fixture required; derive temporary dual-manifest test setup from existing good fixture inside validator flow.
+- Add committed fixture `tools/fixtures/bundles/fail_dual_manifest/` containing both `manifest.json` and `bundle_manifest.json`; planning-pack asserts ambiguity fail.
 
 Acceptance criteria (test-first):
 - dual-manifest case fails closed deterministically with explicit message.
@@ -149,7 +152,7 @@ Proof commands:
 ## Definition of Done
 - [ ] Specs schema + contract exist for deterministic manifest `0.1.0` and match runtime shape.
 - [ ] Schema is strict (`additionalProperties: false`) and enforces scenario required fields.
-- [ ] `bundle_hash` + `bundle_dir` modeled and validated (required or explicit optional policy documented).
+- [ ] `bundle_hash` + `bundle_dir` modeled as optional and validated when present.
 - [ ] Tools validator validates `manifest.json` against Specs schema (stdlib-only path).
 - [ ] planning-pack gates deterministic bundle PASS + expected FAIL substring.
 - [ ] EP CLI fails closed on dual-manifest ambiguity with explicit error and exit code `2`.
