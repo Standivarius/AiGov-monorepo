@@ -33,7 +33,7 @@
   - Schemas are strict with `additionalProperties: false` and explicit `required`.
   - Validators are stdlib-only and return deterministic sorted error lists.
   - Planning-pack wiring uses explicit pass/expected-fail fixture checks with substring assertions.
-- Reserved Phase 2 stage fixtures are listed in plan docs and currently missing on disk.
+- Reserved Phase 2 stage fixtures are implemented on disk and wired in planning-pack validation.
 
 ## PR Roadmap (3-5 PRs)
 
@@ -131,40 +131,64 @@
   - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
 
 ## Completion Tracking
+Actual execution was split into stacked PR slices `#150` through `#160` for the `<=6 files/PR` guardrail.
 
-### PR1 Tracking
+### Reconcile Slice Tracking
 - **Status:** Done
-- **Branch:** `phase2-candidate-v0_1`
-- **PR #:** TBD
-- **Proof checklist:**
-  - [x] `python3 tools/validate_schema_strictness.py --schema-list tools/fixtures/validators/scenario_schema_list.json`
-- **Proof results:** strictness pass on existing schema list; strictness pass also verified for new stage schemas via `/tmp/m_intake_phase2_stage_schema_list.json`.
-
-### PR2 Tracking
-- **Status:** Done
-- **Branch:** `phase2-candidate-v0_1`
-- **PR #:** TBD
-- **Proof checklist:**
-  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_conflict.json`
-  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_questions_order.json`
-  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_blocked_unknown.json`
-- **Proof results:** all three reserved stage fixtures validated successfully via explicit stage modes.
-
-### PR3 Tracking
-- **Status:** Done
-- **Branch:** `phase2-candidate-v0_1`
-- **PR #:** TBD
-- **Proof checklist:**
-  - [x] `python3 tools/validate_planning_pack.py`
-  - [x] `bash tools/run_pr_gate_validators.sh`
-- **Proof results:** planning-pack and PR-gate validators passed with stage artifact checks wired.
-
-### PR4 Tracking
-- **Status:** Done
-- **Branch:** `phase2-candidate-v0_1`
-- **PR #:** TBD
+- **Branch:** `pr1-phase2-reconcile`
+- **PR #:** `#150`
 - **Proof checklist:**
   - [x] `python3 tools/validate_planning_pack.py`
   - [x] `bash tools/run_pr_gate_validators.sh`
   - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
-- **Proof results:** all three final proof commands passed; migration-smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260208_071955.log`.
+- **Proof results:** PASS in local and PR checks.
+
+### Gap Slice Tracking
+- **Status:** Done
+- **Branch:** `pr2-phase2-gap`
+- **PR #:** `#151`
+- **Proof checklist:**
+  - [x] `python3 tools/validate_planning_pack.py`
+  - [x] `bash tools/run_pr_gate_validators.sh`
+  - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+- **Proof results:** PASS in local and PR checks.
+
+### Readiness Slice Tracking
+- **Status:** Done
+- **Branch:** `pr3-phase2-readiness`
+- **PR #:** `#152`
+- **Proof checklist:**
+  - [x] `python3 tools/validate_planning_pack.py`
+  - [x] `bash tools/run_pr_gate_validators.sh`
+  - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+- **Proof results:** PASS in local and PR checks.
+
+### Docs Slice Tracking
+- **Status:** Done
+- **Branch:** `pr4-phase2-docs`
+- **PR #:** `#153`
+- **Proof checklist:**
+  - [x] `python3 tools/validate_planning_pack.py`
+  - [x] `bash tools/run_pr_gate_validators.sh`
+  - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+- **Proof results:** PASS in local and PR checks.
+
+### Planning Slice Tracking
+- **Status:** Done
+- **Branch:** `pr5-phase2-planning`
+- **PR #:** `#154`
+- **Proof checklist:**
+  - [x] `python3 tools/validate_planning_pack.py`
+  - [x] `bash tools/run_pr_gate_validators.sh`
+  - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+- **Proof results:** PASS in local and PR checks; planning-only scope restored to 4 files.
+
+### Review Pack Slice Tracking
+- **Status:** Done
+- **Branch:** `pr6-phase2-reviews`
+- **PR #:** `#160`
+- **Proof checklist:**
+  - [x] `python3 tools/validate_planning_pack.py`
+  - [x] `bash tools/run_pr_gate_validators.sh`
+  - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+- **Proof results:** PASS in local and PR checks; review-pack files isolated from planning slice.
