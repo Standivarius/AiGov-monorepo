@@ -108,12 +108,40 @@ INTAKE_BUNDLE_V0_1_PASS_PATH = (
 INTAKE_BUNDLE_RECONCILE_CONFLICT_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_reconcile_conflict.json"
 )
+INTAKE_BUNDLE_RECONCILE_FAIL_PATHS = [
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_bundle_reconcile_conflict_fail_no_critical.json",
+]
+INTAKE_BUNDLE_RECONCILE_FAIL_EXPECTED_SUBSTRINGS = {
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_bundle_reconcile_conflict_fail_no_critical.json": "must contain at least one critical conflict",
+}
 INTAKE_BUNDLE_GAP_QUESTIONS_ORDER_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_gap_questions_order.json"
 )
 INTAKE_BUNDLE_READINESS_BLOCKED_UNKNOWN_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_readiness_blocked_unknown.json"
 )
+INTAKE_BUNDLE_GAP_FAIL_PATHS = [
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_bundle_gap_questions_order_fail_unsorted.json",
+]
+INTAKE_BUNDLE_GAP_FAIL_EXPECTED_SUBSTRINGS = {
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_bundle_gap_questions_order_fail_unsorted.json": "must be sorted by question_id",
+}
 INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json",
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_index.json",
@@ -799,6 +827,24 @@ def main() -> int:
         "PASS: intake bundle reconcile fixture validated: "
         f"{INTAKE_BUNDLE_RECONCILE_CONFLICT_PATH}"
     )
+    for path in INTAKE_BUNDLE_RECONCILE_FAIL_PATHS:
+        intake_bundle_reconcile_fail_errors = validate_intake_bundle_reconcile_fixture(path)
+        if not intake_bundle_reconcile_fail_errors:
+            print(
+                "ERROR: intake bundle reconcile fail fixture unexpectedly passed validation: "
+                f"{path}"
+            )
+            return 1
+        expected_substring = INTAKE_BUNDLE_RECONCILE_FAIL_EXPECTED_SUBSTRINGS.get(path)
+        if expected_substring and not any(
+            expected_substring in error for error in intake_bundle_reconcile_fail_errors
+        ):
+            print(
+                "ERROR: intake bundle reconcile fail fixture missing expected failure mode "
+                f"'{expected_substring}': {path}"
+            )
+            return 1
+        print(f"FAIL (as expected): intake bundle reconcile fixture validated: {path}")
 
     intake_bundle_gap_errors = validate_intake_bundle_gap_fixture(
         INTAKE_BUNDLE_GAP_QUESTIONS_ORDER_PATH
@@ -812,6 +858,24 @@ def main() -> int:
         "PASS: intake bundle gap fixture validated: "
         f"{INTAKE_BUNDLE_GAP_QUESTIONS_ORDER_PATH}"
     )
+    for path in INTAKE_BUNDLE_GAP_FAIL_PATHS:
+        intake_bundle_gap_fail_errors = validate_intake_bundle_gap_fixture(path)
+        if not intake_bundle_gap_fail_errors:
+            print(
+                "ERROR: intake bundle gap fail fixture unexpectedly passed validation: "
+                f"{path}"
+            )
+            return 1
+        expected_substring = INTAKE_BUNDLE_GAP_FAIL_EXPECTED_SUBSTRINGS.get(path)
+        if expected_substring and not any(
+            expected_substring in error for error in intake_bundle_gap_fail_errors
+        ):
+            print(
+                "ERROR: intake bundle gap fail fixture missing expected failure mode "
+                f"'{expected_substring}': {path}"
+            )
+            return 1
+        print(f"FAIL (as expected): intake bundle gap fixture validated: {path}")
 
     intake_bundle_readiness_errors = validate_intake_bundle_readiness_fixture(
         INTAKE_BUNDLE_READINESS_BLOCKED_UNKNOWN_PATH
