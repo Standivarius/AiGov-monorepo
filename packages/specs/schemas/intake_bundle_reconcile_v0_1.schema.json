@@ -35,7 +35,7 @@
         "properties": {
           "conflict_id": {
             "type": "string",
-            "pattern": "^C-[0-9]{3,}$"
+            "pattern": "^C-[0-9]{3}$"
           },
           "field_path": {
             "type": "string",
