@@ -16,9 +16,9 @@ Deliver deterministic, fail-closed workflow-stage artifacts around the already-m
   - `tools/validate_intake_bundle_v0_1.py`
   - Added `--mode reconcile|gap|readiness` stage checks.
 - Added reserved Phase 2 fixtures:
-  - `tools/fixtures/validators/intake_bundle_reconcile_conflict.json`
-  - `tools/fixtures/validators/intake_bundle_gap_questions_order.json`
-  - `tools/fixtures/validators/intake_bundle_readiness_blocked_unknown.json`
+  - `tools/fixtures/validators/intake_bundle_reconcile_v0_1_pass_conflict.json`
+  - `tools/fixtures/validators/intake_bundle_gap_v0_1_pass_questions_order.json`
+  - `tools/fixtures/validators/intake_bundle_readiness_v0_1_pass_blocked_unknown.json`
 - Wired stage checks into planning pack:
   - `tools/validate_planning_pack.py`
 - Added stage schemas to strictness list:
@@ -34,9 +34,9 @@ Deliver deterministic, fail-closed workflow-stage artifacts around the already-m
 
 ## Proof Commands and Results
 - `python3 tools/validate_schema_strictness.py --schema-list tools/fixtures/validators/scenario_schema_list.json` -> PASS
-- `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_conflict.json` -> PASS
-- `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_questions_order.json` -> PASS
-- `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_blocked_unknown.json` -> PASS
+- `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_v0_1_pass_conflict.json` -> PASS
+- `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_v0_1_pass_questions_order.json` -> PASS
+- `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_v0_1_pass_blocked_unknown.json` -> PASS
 - `python3 tools/validate_planning_pack.py` -> PASS
 - `bash tools/run_pr_gate_validators.sh` -> PASS
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke` -> PASS
