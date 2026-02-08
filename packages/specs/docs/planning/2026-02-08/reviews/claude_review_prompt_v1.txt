@@ -1,0 +1,30 @@
+You are Claude Code in the AiGov devcontainer. This is a SECOND independent review in a Gemini-style mode (broad + adversarial), not implementation.
+
+Read first:
+- packages/specs/docs/planning/2026-02-08/reviews/claude_review_pack_v1.md
+- packages/specs/docs/planning/2026-02-08/reviews/claude_review_evidence_v1.md
+
+Review PR stack in strict order:
+- #150 -> #151 -> #152 -> #153 -> #154
+
+Focus areas:
+- fail-closed determinism
+- regression safety of canonical intake bundle validation
+- fixture gating correctness (stage fixtures validated by correct stage mode)
+- schema strictness vs future-proofing tradeoffs
+- contract/documentation consistency with validator behavior
+
+Run exactly:
+- python3 tools/validate_planning_pack.py
+- bash tools/run_pr_gate_validators.sh
+- NX_DAEMON=false npx nx run evalsets:migration-smoke
+
+Output format (required):
+1) MUST findings
+2) SHOULD findings
+3) COULD findings
+4) Merge readiness per PR (#150-#154): ✅ or ⚠️ + one-line reason
+5) Top 3 audit/determinism risks
+6) Command results (pass/fail)
+
+Do not implement fixes. Review only.
