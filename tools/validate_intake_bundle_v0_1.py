@@ -11,6 +11,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_v0_1.schema.json"
+RECONCILE_SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_reconcile_v0_1.schema.json"
 JURISDICTIONS_PATH = (
     ROOT / "packages" / "specs" / "docs" / "contracts" / "taxonomy" / "jurisdictions_v0.json"
 )
@@ -115,6 +116,23 @@ def _validate_schema(value: Any, schema: dict[str, Any], path: str, errors: list
         pattern = schema.get("pattern")
         if isinstance(pattern, str) and re.fullmatch(pattern, value) is None:
             errors.append(f"{path} must match pattern '{pattern}'")
+        return
+
+    if schema_type == "integer":
+        if not isinstance(value, int) or isinstance(value, bool):
+            errors.append(f"{path} must be an integer")
+            return
+        minimum = schema.get("minimum")
+        if isinstance(minimum, int) and value < minimum:
+            errors.append(f"{path} must be >= {minimum}")
+        maximum = schema.get("maximum")
+        if isinstance(maximum, int) and value > maximum:
+            errors.append(f"{path} must be <= {maximum}")
+        return
+
+    if schema_type == "boolean":
+        if not isinstance(value, bool):
+            errors.append(f"{path} must be a boolean")
         return
 
     errors.append(f"{path} has unsupported schema type '{schema_type}'")
@@ -250,6 +268,72 @@ def _validate_source_paths(bundle: dict[str, Any], errors: list[str]) -> None:
             )
 
 
+def _validate_stage_schema(path: Path, schema_path: Path, label: str) -> tuple[dict[str, Any] | None, list[str]]:
+    if not path.exists():
+        return None, [f"fixture not found: {path}"]
+    if not schema_path.exists():
+        return None, [f"{label} schema not found: {schema_path}"]
+
+    try:
+        schema = _ensure_dict(_load_json(schema_path), "schema")
+    except (json.JSONDecodeError, ValueError) as exc:
+        return None, [f"{label} schema invalid: {exc}"]
+
+    try:
+        payload = _ensure_dict(_load_json(path), str(path))
+    except (json.JSONDecodeError, ValueError) as exc:
+        return None, [f"{path}: invalid JSON ({exc})"]
+
+    errors: list[str] = []
+    _validate_schema(payload, schema, label, errors)
+    return payload, errors
+
+
+def _validate_reconcile_policy(payload: dict[str, Any], errors: list[str]) -> None:
+    conflicts = payload.get("conflicts")
+    if not isinstance(conflicts, list):
+        return
+
+    order_keys: list[tuple[str, str]] = []
+    has_unresolved = False
+    has_critical = False
+
+    for idx, conflict in enumerate(conflicts):
+        if not isinstance(conflict, dict):
+            continue
+        conflict_id = conflict.get("conflict_id")
+        field_path = conflict.get("field_path")
+        if isinstance(field_path, str) and isinstance(conflict_id, str):
+            order_keys.append((field_path, conflict_id))
+
+        severity = conflict.get("severity")
+        if severity == "critical":
+            has_critical = True
+
+        if conflict.get("resolution") == "unresolved":
+            has_unresolved = True
+
+        left_value = conflict.get("left_value")
+        right_value = conflict.get("right_value")
+        if isinstance(left_value, str) and isinstance(right_value, str) and left_value == right_value:
+            errors.append(f"reconcile.conflicts[{idx}] must capture disagreement (left_value != right_value)")
+
+        evidence_refs = conflict.get("evidence_refs")
+        if isinstance(evidence_refs, list):
+            refs = [item for item in evidence_refs if isinstance(item, str)]
+            if refs != sorted(refs):
+                errors.append(f"reconcile.conflicts[{idx}].evidence_refs must be sorted")
+            if len(refs) != len(set(refs)):
+                errors.append(f"reconcile.conflicts[{idx}].evidence_refs must be unique")
+
+    if order_keys and order_keys != sorted(order_keys):
+        errors.append("reconcile.conflicts must be sorted by (field_path, conflict_id)")
+    if conflicts and not has_critical:
+        errors.append("reconcile.conflicts must contain at least one critical conflict")
+    if conflicts and not has_unresolved:
+        errors.append("reconcile.conflicts must contain at least one unresolved conflict")
+
+
 def validate_intake_bundle_fixture(path: Path) -> list[str]:
     if not path.exists():
         return [f"fixture not found: {path}"]
@@ -296,18 +380,45 @@ def validate_intake_bundle_fixture(path: Path) -> list[str]:
     return sorted(errors)
 
 
+def validate_intake_bundle_reconcile_fixture(path: Path) -> list[str]:
+    payload, errors = _validate_stage_schema(path, RECONCILE_SCHEMA_PATH, "reconcile")
+    if payload is None:
+        return sorted(errors)
+    _validate_reconcile_policy(payload, errors)
+    return sorted(errors)
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate intake_bundle_v0_1 fixture.")
+    parser = argparse.ArgumentParser(description="Validate intake_bundle_v0_1 and reconcile fixture.")
+    parser.add_argument(
+        "--mode",
+        choices=("bundle", "reconcile"),
+        default="bundle",
+        help="Validation mode.",
+    )
     parser.add_argument("--fixture", required=True, help="Path to intake bundle fixture JSON")
     args = parser.parse_args()
 
-    errors = validate_intake_bundle_fixture(Path(args.fixture))
+    fixture_path = Path(args.fixture)
+    if args.mode == "bundle":
+        errors = validate_intake_bundle_fixture(fixture_path)
+        error_header = "ERROR: intake bundle v0.1 validation failed:"
+        success_message = "PASS: intake bundle v0.1 validated."
+    elif args.mode == "reconcile":
+        errors = validate_intake_bundle_reconcile_fixture(fixture_path)
+        error_header = "ERROR: intake bundle reconcile validation failed:"
+        success_message = "PASS: intake bundle reconcile fixture validated."
+    else:
+        errors = [f"unsupported mode: {args.mode}"]
+        error_header = "ERROR: intake bundle validation failed:"
+        success_message = ""
+
     if errors:
-        print("ERROR: intake bundle v0.1 validation failed:")
+        print(error_header)
         for error in errors:
             print(f"  - {error}")
         return 1
-    print("PASS: intake bundle v0.1 validated.")
+    print(success_message)
     return 0
 
 

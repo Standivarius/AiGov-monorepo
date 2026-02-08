@@ -22,7 +22,10 @@ from validate_liverun_inspect_task_args_v0_1 import validate_inspect_task_args
 from validate_liverun_output_artifacts_envelope_v0_1 import (
     validate_liverun_output_artifacts_dir,
 )
-from validate_intake_bundle_v0_1 import validate_intake_bundle_fixture
+from validate_intake_bundle_v0_1 import (
+    validate_intake_bundle_fixture,
+    validate_intake_bundle_reconcile_fixture,
+)
 from validate_module_cards import validate_module_cards
 from validate_module_dashboard_snapshot import validate_module_dashboard_snapshot
 from validate_print_inspect_petri_run_command import validate_print_inspect_petri_run_command
@@ -99,6 +102,9 @@ INTAKE_OUTPUT_CONTEXT_FAIL_MISSING_LOCALE_AND_CONTEXT_PATH = (
 )
 INTAKE_BUNDLE_V0_1_PASS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_pass.json"
+)
+INTAKE_BUNDLE_RECONCILE_CONFLICT_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_reconcile_conflict.json"
 )
 INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json",
@@ -772,6 +778,19 @@ def main() -> int:
                 print(f"  - {error}")
             return 1
         print(f"FAIL (as expected): intake bundle v0.1 fixture validated: {path}")
+
+    intake_bundle_reconcile_errors = validate_intake_bundle_reconcile_fixture(
+        INTAKE_BUNDLE_RECONCILE_CONFLICT_PATH
+    )
+    if intake_bundle_reconcile_errors:
+        print("ERROR: intake bundle reconcile fixture failed validation:")
+        for error in intake_bundle_reconcile_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "PASS: intake bundle reconcile fixture validated: "
+        f"{INTAKE_BUNDLE_RECONCILE_CONFLICT_PATH}"
+    )
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
     if intake_errors:
