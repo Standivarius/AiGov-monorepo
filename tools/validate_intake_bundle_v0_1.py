@@ -34,6 +34,9 @@ def _ensure_dict(value: Any, label: str) -> dict[str, Any]:
 
 
 def _validate_schema(value: Any, schema: dict[str, Any], path: str, errors: list[str]) -> None:
+    if "const" in schema and value != schema["const"]:
+        errors.append(f"{path} must equal constant {schema['const']!r}")
+
     schema_type = schema.get("type")
     if schema_type == "object":
         if not isinstance(value, dict):
