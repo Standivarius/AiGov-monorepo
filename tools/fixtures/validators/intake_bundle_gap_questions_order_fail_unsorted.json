@@ -1,0 +1,27 @@
+{
+  "schema_version": "intake_bundle_gap_v0_1",
+  "bundle_id": "bundle_nl_public_001",
+  "clarification_questions": [
+    {
+      "question_id": "Q-002",
+      "field_path": "intake.processor.subprocessor_list",
+      "question": "Which subprocessors handle personal-data export jobs?",
+      "priority": 2,
+      "blocking": false,
+      "evidence_refs": [
+        "E-002",
+        "E-003"
+      ]
+    },
+    {
+      "question_id": "Q-001",
+      "field_path": "intake.processing.retention_days",
+      "question": "What is the retention window for DSAR export artifacts?",
+      "priority": 1,
+      "blocking": true,
+      "evidence_refs": [
+        "E-001"
+      ]
+    }
+  ]
+}
