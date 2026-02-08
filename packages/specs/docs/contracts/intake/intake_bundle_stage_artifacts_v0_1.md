@@ -42,6 +42,7 @@ Canonical schemas:
 ## Fixture Naming Exception
 - Reserved fixtures `intake_bundle_reconcile_conflict.json`, `intake_bundle_gap_questions_order.json`, and `intake_bundle_readiness_blocked_unknown.json` are PASS fixtures by plan reservation.
 - They intentionally do not use the usual `_pass.json` suffix convention.
+- Canonical fixture naming remains `_pass/_fail` (for example `intake_bundle_v0_1_pass.json` and `intake_bundle_v0_1_fail_missing_required.json`).
 
 ## Fail-Closed Rules
 - Reconcile:
@@ -51,6 +52,7 @@ Canonical schemas:
   - At least one clarification question is required.
   - Priority must be integer and explicit.
 - Readiness:
+- If `blocking_unknowns` is non-empty (any severity), `status` MUST be `blocked`.
   - If any `blocking_unknowns` with `severity == "critical"` exist, `status` MUST be `blocked` and `allow_downstream` MUST be `false`.
   - If `unresolved_conflict_ids` is non-empty, `status` MUST be `blocked` and `allow_downstream` MUST be `false`.
   - If `status == "ready"`, both `blocking_unknowns` and `unresolved_conflict_ids` MUST be empty and `allow_downstream` MUST be `true`.
