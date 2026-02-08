@@ -1,0 +1,24 @@
+{
+  "schema_version": "intake_bundle_readiness_v0_1",
+  "bundle_id": "bundle_nl_public_001",
+  "status": "blocked",
+  "blocking_unknowns": [
+    {
+      "field_path": "intake.processing.retention_days",
+      "severity": "critical",
+      "question_id": "Q-001"
+    },
+    {
+      "field_path": "intake.processor.subprocessor_list",
+      "severity": "high",
+      "question_id": "Q-002"
+    }
+  ],
+  "unresolved_conflict_ids": [
+    "C-001"
+  ],
+  "allow_downstream": false,
+  "notes": [
+    "Critical unknowns remain unresolved; readiness gate must block."
+  ]
+}

@@ -3,5 +3,6 @@
   "packages/specs/schemas/client_scenario_override_v0.schema.json",
   "packages/specs/schemas/intake_bundle_v0_1.schema.json",
   "packages/specs/schemas/intake_bundle_reconcile_v0_1.schema.json",
-  "packages/specs/schemas/intake_bundle_gap_v0_1.schema.json"
+  "packages/specs/schemas/intake_bundle_gap_v0_1.schema.json",
+  "packages/specs/schemas/intake_bundle_readiness_v0_1.schema.json"
 ]

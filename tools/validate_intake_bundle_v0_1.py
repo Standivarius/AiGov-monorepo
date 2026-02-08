@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_v0_1.schema.json"
 RECONCILE_SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_reconcile_v0_1.schema.json"
 GAP_SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_gap_v0_1.schema.json"
+READINESS_SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_readiness_v0_1.schema.json"
 JURISDICTIONS_PATH = (
     ROOT / "packages" / "specs" / "docs" / "contracts" / "taxonomy" / "jurisdictions_v0.json"
 )
@@ -367,6 +368,62 @@ def _validate_gap_policy(payload: dict[str, Any], errors: list[str]) -> None:
         errors.append("gap.clarification_questions must contain at least one blocking question")
 
 
+def _validate_readiness_policy(payload: dict[str, Any], errors: list[str]) -> None:
+    status = payload.get("status")
+    allow_downstream = payload.get("allow_downstream")
+    blocking_unknowns = payload.get("blocking_unknowns")
+    unresolved_conflict_ids = payload.get("unresolved_conflict_ids")
+
+    unknown_keys: list[tuple[str, str]] = []
+    has_critical_unknown = False
+    has_unknowns = False
+    if isinstance(blocking_unknowns, list):
+        has_unknowns = bool(blocking_unknowns)
+        for idx, unknown in enumerate(blocking_unknowns):
+            if not isinstance(unknown, dict):
+                continue
+            field_path = unknown.get("field_path")
+            question_id = unknown.get("question_id")
+            if isinstance(field_path, str) and isinstance(question_id, str):
+                unknown_keys.append((field_path, question_id))
+            if unknown.get("severity") == "critical":
+                has_critical_unknown = True
+            if not isinstance(field_path, str):
+                errors.append(f"readiness.blocking_unknowns[{idx}].field_path must be a string")
+            if not isinstance(question_id, str):
+                errors.append(f"readiness.blocking_unknowns[{idx}].question_id must be a string")
+
+    has_unresolved_conflicts = False
+    if isinstance(unresolved_conflict_ids, list):
+        has_unresolved_conflicts = bool(unresolved_conflict_ids)
+        ids = [item for item in unresolved_conflict_ids if isinstance(item, str)]
+        if ids != sorted(ids):
+            errors.append("readiness.unresolved_conflict_ids must be sorted")
+        if len(ids) != len(set(ids)):
+            errors.append("readiness.unresolved_conflict_ids must be unique")
+
+    if unknown_keys and unknown_keys != sorted(unknown_keys):
+        errors.append("readiness.blocking_unknowns must be sorted by (field_path, question_id)")
+
+    has_blockers = has_unknowns or has_unresolved_conflicts
+    must_block = has_critical_unknown or has_unresolved_conflicts
+
+    if must_block:
+        if status != "blocked":
+            errors.append("readiness.status must be 'blocked' when critical unknowns/conflicts exist")
+        if allow_downstream is not False:
+            errors.append("readiness.allow_downstream must be false when blocked")
+        return
+
+    if status == "blocked" and not has_blockers:
+        errors.append("readiness.status 'blocked' requires blocking_unknowns or unresolved_conflict_ids")
+    if status == "ready":
+        if has_blockers:
+            errors.append("readiness.status 'ready' requires no blockers")
+        if allow_downstream is not True:
+            errors.append("readiness.allow_downstream must be true when status is 'ready'")
+
+
 def validate_intake_bundle_fixture(path: Path) -> list[str]:
     if not path.exists():
         return [f"fixture not found: {path}"]
@@ -429,11 +486,19 @@ def validate_intake_bundle_gap_fixture(path: Path) -> list[str]:
     return sorted(errors)
 
 
+def validate_intake_bundle_readiness_fixture(path: Path) -> list[str]:
+    payload, errors = _validate_stage_schema(path, READINESS_SCHEMA_PATH, "readiness")
+    if payload is None:
+        return sorted(errors)
+    _validate_readiness_policy(payload, errors)
+    return sorted(errors)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate intake_bundle_v0_1 and stage fixtures.")
     parser.add_argument(
         "--mode",
-        choices=("bundle", "reconcile", "gap"),
+        choices=("bundle", "reconcile", "gap", "readiness"),
         default="bundle",
         help="Validation mode.",
     )
@@ -454,9 +519,9 @@ def main() -> int:
         error_header = "ERROR: intake bundle gap validation failed:"
         success_message = "PASS: intake bundle gap fixture validated."
     else:
-        errors = [f"unsupported mode: {args.mode}"]
-        error_header = "ERROR: intake bundle validation failed:"
-        success_message = ""
+        errors = validate_intake_bundle_readiness_fixture(fixture_path)
+        error_header = "ERROR: intake bundle readiness validation failed:"
+        success_message = "PASS: intake bundle readiness fixture validated."
 
     if errors:
         print(error_header)
