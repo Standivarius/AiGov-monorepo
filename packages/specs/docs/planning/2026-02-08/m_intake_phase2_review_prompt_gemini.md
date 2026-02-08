@@ -29,9 +29,9 @@ Perform an adversarial review of M_Intake Phase 2 stage-boundary artifacts. Try 
   - verify stage layer did not introduce bypass around existing bundle-level evidence checks.
 
 ## Exact Commands
-- `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_conflict.json`
-- `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_questions_order.json`
-- `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_blocked_unknown.json`
+- `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_v0_1_pass_conflict.json`
+- `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_v0_1_pass_questions_order.json`
+- `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_v0_1_pass_blocked_unknown.json`
 - `python3 tools/validate_planning_pack.py`
 - `bash tools/run_pr_gate_validators.sh`
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`

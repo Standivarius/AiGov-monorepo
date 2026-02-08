@@ -4,9 +4,9 @@
 - Build deterministic, fail-closed workflow-stage artifacts around the existing `intake_bundle_v0_1` spine.
 - Add stage contracts/schemas, stdlib validator coverage, fixtures, and planning-pack gate wiring.
 - Unblock reserved Phase 2 stage fixtures:
-  - `tools/fixtures/validators/intake_bundle_reconcile_conflict.json`
-  - `tools/fixtures/validators/intake_bundle_gap_questions_order.json`
-  - `tools/fixtures/validators/intake_bundle_readiness_blocked_unknown.json`
+  - `tools/fixtures/validators/intake_bundle_reconcile_v0_1_pass_conflict.json`
+  - `tools/fixtures/validators/intake_bundle_gap_v0_1_pass_questions_order.json`
+  - `tools/fixtures/validators/intake_bundle_readiness_v0_1_pass_blocked_unknown.json`
 
 ## Non-Goals
 - No OPA execution runtime.
@@ -64,14 +64,14 @@
 - **Title:** Extend intake bundle validator for reconcile/gap/readiness and add reserved fixtures.
 - **Exact file list:**
   - `tools/validate_intake_bundle_v0_1.py`
-  - `tools/fixtures/validators/intake_bundle_reconcile_conflict.json`
-  - `tools/fixtures/validators/intake_bundle_gap_questions_order.json`
-  - `tools/fixtures/validators/intake_bundle_readiness_blocked_unknown.json`
+  - `tools/fixtures/validators/intake_bundle_reconcile_v0_1_pass_conflict.json`
+  - `tools/fixtures/validators/intake_bundle_gap_v0_1_pass_questions_order.json`
+  - `tools/fixtures/validators/intake_bundle_readiness_v0_1_pass_blocked_unknown.json`
   - `packages/specs/docs/planning/2026-02-08/m_intake_phase2_codex_roadmap.md`
 - **Fixtures:**
-  - `intake_bundle_reconcile_conflict.json`
-  - `intake_bundle_gap_questions_order.json`
-  - `intake_bundle_readiness_blocked_unknown.json`
+  - `intake_bundle_reconcile_v0_1_pass_conflict.json`
+  - `intake_bundle_gap_v0_1_pass_questions_order.json`
+  - `intake_bundle_readiness_v0_1_pass_blocked_unknown.json`
 - **Expected substrings:**
   - `PASS: intake bundle reconcile fixture validated.`
   - `PASS: intake bundle gap fixture validated.`
@@ -82,9 +82,9 @@
   - Gap fixture enforces ordered `clarification_questions`.
   - Readiness fixture enforces blocked status when critical unknowns remain.
 - **Proof commands:**
-  - `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_conflict.json`
-  - `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_questions_order.json`
-  - `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_blocked_unknown.json`
+  - `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_v0_1_pass_conflict.json`
+  - `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_v0_1_pass_questions_order.json`
+  - `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_v0_1_pass_blocked_unknown.json`
 
 ### PR3 — Planning-Pack Gate Wiring for Stage Artifacts
 - **Effort:** S
@@ -145,9 +145,9 @@
 - **Branch:** `phase2-candidate-v0_1`
 - **PR #:** TBD
 - **Proof checklist:**
-  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_conflict.json`
-  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_questions_order.json`
-  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_blocked_unknown.json`
+  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode reconcile --fixture tools/fixtures/validators/intake_bundle_reconcile_v0_1_pass_conflict.json`
+  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode gap --fixture tools/fixtures/validators/intake_bundle_gap_v0_1_pass_questions_order.json`
+  - [x] `python3 tools/validate_intake_bundle_v0_1.py --mode readiness --fixture tools/fixtures/validators/intake_bundle_readiness_v0_1_pass_blocked_unknown.json`
 - **Proof results:** all three reserved stage fixtures validated successfully via explicit stage modes.
 
 ### PR3 Tracking
