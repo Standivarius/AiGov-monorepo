@@ -106,7 +106,7 @@ INTAKE_BUNDLE_V0_1_PASS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_pass.json"
 )
 INTAKE_BUNDLE_RECONCILE_CONFLICT_PATH = (
-    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_reconcile_conflict.json"
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_reconcile_v0_1_pass_conflict.json"
 )
 INTAKE_BUNDLE_RECONCILE_FAIL_PATHS = [
     ROOT
@@ -123,10 +123,10 @@ INTAKE_BUNDLE_RECONCILE_FAIL_EXPECTED_SUBSTRINGS = {
     / "intake_bundle_reconcile_conflict_fail_no_critical.json": "must contain at least one critical conflict",
 }
 INTAKE_BUNDLE_GAP_QUESTIONS_ORDER_PATH = (
-    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_gap_questions_order.json"
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_gap_v0_1_pass_questions_order.json"
 )
 INTAKE_BUNDLE_READINESS_BLOCKED_UNKNOWN_PATH = (
-    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_readiness_blocked_unknown.json"
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_readiness_v0_1_pass_blocked_unknown.json"
 )
 INTAKE_BUNDLE_READINESS_FAIL_PATHS = [
     ROOT
