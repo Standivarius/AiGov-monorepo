@@ -1,0 +1,17 @@
+{
+  "schema_version": "intake_bundle_readiness_v0_1",
+  "bundle_id": "bundle_nl_public_001",
+  "status": "ready",
+  "blocking_unknowns": [
+    {
+      "field_path": "intake.processing.retention_days",
+      "severity": "critical",
+      "question_id": "Q-001"
+    }
+  ],
+  "unresolved_conflict_ids": [],
+  "allow_downstream": true,
+  "notes": [
+    "Invalid on purpose: critical unknown requires blocked readiness."
+  ]
+}

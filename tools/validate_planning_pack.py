@@ -25,6 +25,7 @@ from validate_liverun_output_artifacts_envelope_v0_1 import (
 from validate_intake_bundle_v0_1 import (
     validate_intake_bundle_fixture,
     validate_intake_bundle_gap_fixture,
+    validate_intake_bundle_readiness_fixture,
     validate_intake_bundle_reconcile_fixture,
 )
 from validate_module_cards import validate_module_cards
@@ -124,6 +125,23 @@ INTAKE_BUNDLE_RECONCILE_FAIL_EXPECTED_SUBSTRINGS = {
 INTAKE_BUNDLE_GAP_QUESTIONS_ORDER_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_gap_questions_order.json"
 )
+INTAKE_BUNDLE_READINESS_BLOCKED_UNKNOWN_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_readiness_blocked_unknown.json"
+)
+INTAKE_BUNDLE_READINESS_FAIL_PATHS = [
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_bundle_readiness_blocked_unknown_fail_status_ready.json",
+]
+INTAKE_BUNDLE_READINESS_FAIL_EXPECTED_SUBSTRINGS = {
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_bundle_readiness_blocked_unknown_fail_status_ready.json": "must be 'blocked'",
+}
 INTAKE_BUNDLE_GAP_FAIL_PATHS = [
     ROOT
     / "tools"
@@ -872,6 +890,37 @@ def main() -> int:
             )
             return 1
         print(f"FAIL (as expected): intake bundle gap fixture validated: {path}")
+
+    intake_bundle_readiness_errors = validate_intake_bundle_readiness_fixture(
+        INTAKE_BUNDLE_READINESS_BLOCKED_UNKNOWN_PATH
+    )
+    if intake_bundle_readiness_errors:
+        print("ERROR: intake bundle readiness fixture failed validation:")
+        for error in intake_bundle_readiness_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "PASS: intake bundle readiness fixture validated: "
+        f"{INTAKE_BUNDLE_READINESS_BLOCKED_UNKNOWN_PATH}"
+    )
+    for path in INTAKE_BUNDLE_READINESS_FAIL_PATHS:
+        intake_bundle_readiness_fail_errors = validate_intake_bundle_readiness_fixture(path)
+        if not intake_bundle_readiness_fail_errors:
+            print(
+                "ERROR: intake bundle readiness fail fixture unexpectedly passed validation: "
+                f"{path}"
+            )
+            return 1
+        expected_substring = INTAKE_BUNDLE_READINESS_FAIL_EXPECTED_SUBSTRINGS.get(path)
+        if expected_substring and not any(
+            expected_substring in error for error in intake_bundle_readiness_fail_errors
+        ):
+            print(
+                "ERROR: intake bundle readiness fail fixture missing expected failure mode "
+                f"'{expected_substring}': {path}"
+            )
+            return 1
+        print(f"FAIL (as expected): intake bundle readiness fixture validated: {path}")
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
     if intake_errors:
