@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Intake Bundle Readiness v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "bundle_id",
+    "status",
+    "blocking_unknowns",
+    "unresolved_conflict_ids",
+    "allow_downstream"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "intake_bundle_readiness_v0_1"
+    },
+    "bundle_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ready",
+        "blocked"
+      ]
+    },
+    "blocking_unknowns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field_path",
+          "severity",
+          "question_id"
+        ],
+        "properties": {
+          "field_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "question_id": {
+            "type": "string",
+            "pattern": "^Q-[0-9]{3}$"
+          }
+        }
+      }
+    },
+    "unresolved_conflict_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^C-[0-9]{3}$"
+      }
+    },
+    "allow_downstream": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
