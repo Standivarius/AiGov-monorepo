@@ -12,6 +12,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_v0_1.schema.json"
 RECONCILE_SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_reconcile_v0_1.schema.json"
+GAP_SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "intake_bundle_gap_v0_1.schema.json"
 JURISDICTIONS_PATH = (
     ROOT / "packages" / "specs" / "docs" / "contracts" / "taxonomy" / "jurisdictions_v0.json"
 )
@@ -337,6 +338,38 @@ def _validate_reconcile_policy(payload: dict[str, Any], errors: list[str]) -> No
         errors.append("reconcile.conflicts must contain at least one unresolved conflict")
 
 
+def _validate_gap_policy(payload: dict[str, Any], errors: list[str]) -> None:
+    questions = payload.get("clarification_questions")
+    if not isinstance(questions, list):
+        return
+
+    question_ids: list[str] = []
+    has_blocking = False
+
+    for idx, question in enumerate(questions):
+        if not isinstance(question, dict):
+            continue
+        question_id = question.get("question_id")
+        if isinstance(question_id, str):
+            question_ids.append(question_id)
+        if question.get("blocking") is True:
+            has_blocking = True
+        evidence_refs = question.get("evidence_refs")
+        if isinstance(evidence_refs, list):
+            refs = [item for item in evidence_refs if isinstance(item, str)]
+            if refs != sorted(refs):
+                errors.append(f"gap.clarification_questions[{idx}].evidence_refs must be sorted")
+            if len(refs) != len(set(refs)):
+                errors.append(f"gap.clarification_questions[{idx}].evidence_refs must be unique")
+
+    if question_ids and question_ids != sorted(question_ids):
+        errors.append("gap.clarification_questions must be sorted by question_id")
+    if question_ids and len(question_ids) != len(set(question_ids)):
+        errors.append("gap.clarification_questions question_id values must be unique")
+    if questions and not has_blocking:
+        errors.append("gap.clarification_questions must contain at least one blocking question")
+
+
 def validate_intake_bundle_fixture(path: Path) -> list[str]:
     if not path.exists():
         return [f"fixture not found: {path}"]
@@ -391,11 +424,19 @@ def validate_intake_bundle_reconcile_fixture(path: Path) -> list[str]:
     return sorted(errors)
 
 
+def validate_intake_bundle_gap_fixture(path: Path) -> list[str]:
+    payload, errors = _validate_stage_schema(path, GAP_SCHEMA_PATH, "gap")
+    if payload is None:
+        return sorted(errors)
+    _validate_gap_policy(payload, errors)
+    return sorted(errors)
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate intake_bundle_v0_1 and reconcile fixture.")
+    parser = argparse.ArgumentParser(description="Validate intake_bundle_v0_1 and stage fixtures.")
     parser.add_argument(
         "--mode",
-        choices=("bundle", "reconcile"),
+        choices=("bundle", "reconcile", "gap"),
         default="bundle",
         help="Validation mode.",
     )
@@ -411,6 +452,10 @@ def main() -> int:
         errors = validate_intake_bundle_reconcile_fixture(fixture_path)
         error_header = "ERROR: intake bundle reconcile validation failed:"
         success_message = "PASS: intake bundle reconcile fixture validated."
+    elif args.mode == "gap":
+        errors = validate_intake_bundle_gap_fixture(fixture_path)
+        error_header = "ERROR: intake bundle gap validation failed:"
+        success_message = "PASS: intake bundle gap fixture validated."
     else:
         errors = [f"unsupported mode: {args.mode}"]
         error_header = "ERROR: intake bundle validation failed:"
