@@ -1,0 +1,18 @@
+{
+  "schema_version": "intake_bundle_reconcile_v0_1",
+  "bundle_id": "bundle_nl_public_001",
+  "conflicts": [
+    {
+      "conflict_id": "C-001",
+      "field_path": "intake.processing.retention_days",
+      "severity": "medium",
+      "left_value": "30",
+      "right_value": "365",
+      "evidence_refs": [
+        "E-001",
+        "E-002"
+      ],
+      "resolution": "unresolved"
+    }
+  ]
+}
