@@ -19,6 +19,9 @@ Canonical schema:
 Evidence model contract:
 - `packages/specs/docs/contracts/intake/evidence_model_b_v0_1.md`
 
+Workflow-stage artifact contract:
+- `packages/specs/docs/contracts/intake/intake_bundle_stage_artifacts_v0_1.md`
+
 ## Relationship to Legacy Intake Output
 Legacy intake output contracts remain supported for intake collection flows.
 `intake_bundle_v0_1` is the canonical artifact for deterministic readiness/gating.
