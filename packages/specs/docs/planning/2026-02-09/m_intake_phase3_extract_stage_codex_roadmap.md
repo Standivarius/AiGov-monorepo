@@ -228,13 +228,13 @@ Status: In execution
 - If OSS integration pressure requires changing canonical AiGov artifact shapes, stop and escalate as architecture decision.
 
 ## 12) Execution Tracking
-- PR1 (`pr1-mintake3-extract-schema`) — Status: In progress
-  - PR: TBD
+- PR1 (`pr1-mintake3-extract-schema`) — Status: Done
+  - PR: `#168`
   - Proofs:
-    - [ ] `python3 tools/validate_planning_pack.py`
-    - [ ] `bash tools/run_pr_gate_validators.sh`
-    - [ ] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
-- PR2 (`pr2-mintake3-extract-gates`) — Status: Planned
+    - [x] `python3 tools/validate_planning_pack.py`
+    - [x] `bash tools/run_pr_gate_validators.sh`
+    - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+- PR2 (`pr2-mintake3-extract-gates`) — Status: In progress
   - PR: TBD
   - Proofs:
     - [ ] `python3 tools/validate_planning_pack.py`

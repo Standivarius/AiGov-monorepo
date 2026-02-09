@@ -6,16 +6,22 @@ GDPR-only scope.
 Define deterministic, fail-closed workflow-stage artifacts around the canonical `intake_bundle_v0_1` spine.
 
 ## Artifacts
+- `intake_bundle_extract_v0_1`
 - `intake_bundle_reconcile_v0_1`
 - `intake_bundle_gap_v0_1`
 - `intake_bundle_readiness_v0_1`
 
 Canonical schemas:
+- `packages/specs/schemas/intake_bundle_extract_v0_1.schema.json`
 - `packages/specs/schemas/intake_bundle_reconcile_v0_1.schema.json`
 - `packages/specs/schemas/intake_bundle_gap_v0_1.schema.json`
 - `packages/specs/schemas/intake_bundle_readiness_v0_1.schema.json`
 
 ## Deterministic Rules
+- Extract:
+  - `extracted_fields[]` MUST be sorted by `field_path`.
+  - `field_path` values MUST be unique.
+  - Each `evidence_refs[]` list MUST be sorted and contain unique IDs.
 - Reconcile:
   - `conflicts[]` MUST be sorted by `(field_path, conflict_id)`.
   - Each `evidence_refs[]` list MUST be sorted and contain unique IDs.
@@ -45,6 +51,10 @@ Canonical schemas:
 - Canonical fixture naming remains `_pass/_fail` (for example `intake_bundle_v0_1_pass.json` and `intake_bundle_v0_1_fail_missing_required.json`).
 
 ## Fail-Closed Rules
+- Extract:
+  - At least one extracted field is required.
+  - Missing required field keys fail validation.
+  - Unsorted field paths fail validation.
 - Reconcile:
   - At least one conflict is required.
   - Any unknown severity or missing evidence refs fails validation.
