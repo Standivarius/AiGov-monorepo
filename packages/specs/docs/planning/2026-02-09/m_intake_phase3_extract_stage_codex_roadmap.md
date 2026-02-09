@@ -246,9 +246,9 @@ Status: In execution
     - [x] `python3 tools/validate_planning_pack.py`
     - [x] `bash tools/run_pr_gate_validators.sh`
     - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
-- PR4 (`pr4-mintake3-closeout`) — Status: In progress
-  - PR: TBD
+- PR4 (`pr4-mintake3-closeout`) — Status: Done
+  - PR: `#171`
   - Proofs:
-    - [ ] `python3 tools/validate_planning_pack.py`
-    - [ ] `bash tools/run_pr_gate_validators.sh`
-    - [ ] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+    - [x] `python3 tools/validate_planning_pack.py`
+    - [x] `bash tools/run_pr_gate_validators.sh`
+    - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
