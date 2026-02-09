@@ -1,0 +1,34 @@
+You are Claude Code running an adversarial test review for AiGov monorepo milestone:
+M_Execution: Deterministic Bundle Consumption (GDPR-only).
+
+Target stack: #164 -> #165 -> #166 -> #167.
+
+Primary objective:
+Break fail-closed/deterministic assumptions and report gaps.
+
+Adversarial probes to attempt:
+- unknown keys vs additionalProperties:false
+- bad schema_version
+- missing required scenario fields
+- malformed sha256
+- path traversal / absolute paths
+- dual-manifest ambiguity fixture behavior
+- gate robustness of expected-fail substring assertions
+
+Rules:
+- You may create temporary local files for experiments, but do NOT commit temp artifacts.
+- Keep findings mapped to earliest affected PR.
+
+Run commands:
+1) python3 tools/validate_planning_pack.py
+2) bash tools/run_pr_gate_validators.sh
+3) NX_DAEMON=false npx nx run evalsets:migration-smoke
+
+Output format (strict):
+1) MUST FIX
+2) SHOULD FIX
+3) COULD
+4) Merge readiness per PR (#164/#165/#166/#167) with ✅ or ⚠️
+5) Top 3 adversarial/determinism risks
+6) Command results (PASS/FAIL)
+7) Suggested additional fixtures (only if they improve deterministic gate coverage)
