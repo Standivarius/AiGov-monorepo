@@ -271,6 +271,10 @@ BASE_SCENARIO_EMPTY_SIGNALS_PATH = (
 )
 BUNDLE_GOOD_DIR = ROOT / "tools" / "fixtures" / "bundles" / "good"
 BUNDLE_POISON_DIR = ROOT / "tools" / "fixtures" / "bundles" / "poison"
+BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_DIR = (
+    ROOT / "tools" / "fixtures" / "bundles" / "fail_manifest_bad_schema_version"
+)
+BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_EXPECTED_SUBSTRING = "must be '0.1.0'"
 SCENARIO_COMPILE_BASE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "base"
 SCENARIO_COMPILE_OVERRIDE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "overrides"
 SCHEMA_LIST_PATH = ROOT / "tools" / "fixtures" / "validators" / "scenario_schema_list.json"
@@ -992,6 +996,35 @@ def main() -> int:
             print(f"  - {error}")
         return 1
     print(f"PASS: deterministic bundle manifest validated: {BUNDLE_GOOD_DIR}")
+
+    # Schema-stage fail fixture is intentionally manifest-only; do not enforce
+    # scenario-path/hash checks for this fixture.
+    deterministic_manifest_fail_errors = validate_ep_deterministic_bundle_manifest(
+        BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_DIR,
+        verify_scenario_paths=False,
+    )
+    if not deterministic_manifest_fail_errors:
+        print(
+            "ERROR: deterministic bundle manifest fail fixture unexpectedly passed validation: "
+            f"{BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_DIR}"
+        )
+        return 1
+    if not any(
+        BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_EXPECTED_SUBSTRING in error
+        for error in deterministic_manifest_fail_errors
+    ):
+        print(
+            "ERROR: deterministic bundle manifest fail fixture missing expected "
+            f"substring '{BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_EXPECTED_SUBSTRING}': "
+            f"{BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_DIR}"
+        )
+        for error in deterministic_manifest_fail_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "FAIL (as expected): deterministic bundle manifest validated: "
+        f"{BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_DIR}"
+    )
 
     bundle_poison_errors = validate_bundle(BUNDLE_POISON_DIR)
     if not bundle_poison_errors:

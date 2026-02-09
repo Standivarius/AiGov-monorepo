@@ -80,7 +80,7 @@ Execution tracking:
 
 ### PR2 — Schema Validator + PASS/FAIL Fixture Gate
 Effort: M  
-Status: Planned
+Status: Done
 
 Exact file list (`<=6`):
 - `tools/validate_ep_deterministic_bundle_manifest.py` (extend to validate `manifest.json` against new Specs schema using stdlib-only schema helper patterns)
@@ -105,6 +105,12 @@ Proof commands:
 - `python3 tools/validate_planning_pack.py`
 - `bash tools/run_pr_gate_validators.sh`
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+
+Execution tracking:
+- Branch: `mexec-det-bundles-integration` (slice commit for later cherry-pick)
+- PR: TBD
+- Proofs: PASS (`python3 tools/validate_planning_pack.py`, `bash tools/run_pr_gate_validators.sh`, `NX_DAEMON=false npx nx run evalsets:migration-smoke`)
+- Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_075432.log`
 
 ### PR3 — EP CLI Ambiguity Hardening (Fail-Closed)
 Effort: M  
