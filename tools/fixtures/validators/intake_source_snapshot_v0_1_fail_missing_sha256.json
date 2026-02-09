@@ -1,0 +1,10 @@
+{
+  "schema_version": "intake_source_snapshot_v0_1",
+  "snapshot_id": "snapshot-001",
+  "source_type": "file_export",
+  "source_files": [
+    {
+      "source_path": "exports/context_profile.json"
+    }
+  ]
+}

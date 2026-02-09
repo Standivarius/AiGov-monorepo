@@ -1,0 +1,17 @@
+{
+  "schema_version": "intake_source_snapshot_v0_1",
+  "snapshot_id": "snapshot-001",
+  "source_type": "file_export",
+  "source_files": [
+    {
+      "source_path": "exports/context_profile.json",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "content_type": "application/json"
+    },
+    {
+      "source_path": "exports/policy_profile.json",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "content_type": "application/json"
+    }
+  ]
+}
