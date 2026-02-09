@@ -29,6 +29,7 @@ from validate_intake_bundle_v0_1 import (
     validate_intake_bundle_reconcile_fixture,
 )
 from validate_intake_bundle_extract_v0_1 import validate_intake_bundle_extract_fixture
+from validate_intake_source_snapshot_v0_1 import validate_intake_source_snapshot_fixture
 from validate_module_cards import validate_module_cards
 from validate_module_dashboard_snapshot import validate_module_dashboard_snapshot
 from validate_print_inspect_petri_run_command import validate_print_inspect_petri_run_command
@@ -183,6 +184,33 @@ INTAKE_BUNDLE_EXTRACT_FAIL_EXPECTED_SUBSTRINGS = {
     / "fixtures"
     / "validators"
     / "intake_bundle_extract_fail_unsorted_field_paths.json": "must be sorted by field_path",
+}
+INTAKE_SOURCE_SNAPSHOT_PASS_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_source_snapshot_v0_1_pass.json"
+)
+INTAKE_SOURCE_SNAPSHOT_FAIL_PATHS = [
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_source_snapshot_v0_1_fail_path_traversal.json",
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_source_snapshot_v0_1_fail_missing_sha256.json",
+]
+INTAKE_SOURCE_SNAPSHOT_FAIL_EXPECTED_SUBSTRINGS = {
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_source_snapshot_v0_1_fail_path_traversal.json": "must not contain traversal segments",
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_source_snapshot_v0_1_fail_missing_sha256.json": "missing required key 'sha256'",
 }
 INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json",
@@ -983,6 +1011,40 @@ def main() -> int:
                 print(f"  - {error}")
             return 1
         print(f"FAIL (as expected): intake bundle extract fixture validated: {path}")
+
+    intake_source_snapshot_errors = validate_intake_source_snapshot_fixture(
+        INTAKE_SOURCE_SNAPSHOT_PASS_PATH
+    )
+    if intake_source_snapshot_errors:
+        print("ERROR: intake source snapshot pass fixture failed validation:")
+        for error in intake_source_snapshot_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "PASS: intake source snapshot fixture validated: "
+        f"{INTAKE_SOURCE_SNAPSHOT_PASS_PATH}"
+    )
+
+    for path in INTAKE_SOURCE_SNAPSHOT_FAIL_PATHS:
+        intake_source_snapshot_fail_errors = validate_intake_source_snapshot_fixture(path)
+        if not intake_source_snapshot_fail_errors:
+            print(
+                "ERROR: intake source snapshot fail fixture unexpectedly passed validation: "
+                f"{path}"
+            )
+            return 1
+        expected_substring = INTAKE_SOURCE_SNAPSHOT_FAIL_EXPECTED_SUBSTRINGS.get(path)
+        if expected_substring and not any(
+            expected_substring in error for error in intake_source_snapshot_fail_errors
+        ):
+            print(
+                "ERROR: intake source snapshot fail fixture missing expected failure mode "
+                f"'{expected_substring}': {path}"
+            )
+            for error in intake_source_snapshot_fail_errors:
+                print(f"  - {error}")
+            return 1
+        print(f"FAIL (as expected): intake source snapshot fixture validated: {path}")
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
     if intake_errors:

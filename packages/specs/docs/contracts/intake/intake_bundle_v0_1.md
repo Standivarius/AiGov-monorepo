@@ -22,6 +22,10 @@ Evidence model contract:
 Workflow-stage artifact contract:
 - `packages/specs/docs/contracts/intake/intake_bundle_stage_artifacts_v0_1.md`
 
+Upstream deterministic ingestion/extract contracts:
+- `packages/specs/docs/contracts/intake/intake_source_snapshot_v0_1.md`
+- `packages/specs/docs/contracts/intake/intake_bundle_extract_v0_1.md`
+
 ## Relationship to Legacy Intake Output
 Legacy intake output contracts remain supported for intake collection flows.
 `intake_bundle_v0_1` is the canonical artifact for deterministic readiness/gating.

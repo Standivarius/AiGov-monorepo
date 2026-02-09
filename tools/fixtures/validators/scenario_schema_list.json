@@ -5,5 +5,6 @@
   "packages/specs/schemas/intake_bundle_reconcile_v0_1.schema.json",
   "packages/specs/schemas/intake_bundle_gap_v0_1.schema.json",
   "packages/specs/schemas/intake_bundle_readiness_v0_1.schema.json",
-  "packages/specs/schemas/intake_bundle_extract_v0_1.schema.json"
+  "packages/specs/schemas/intake_bundle_extract_v0_1.schema.json",
+  "packages/specs/schemas/intake_source_snapshot_v0_1.schema.json"
 ]
