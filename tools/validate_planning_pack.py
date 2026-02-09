@@ -197,7 +197,7 @@ INTAKE_BUNDLE_EXTRACT_FAIL_EXPECTED_SUBSTRINGS = {
     / "tools"
     / "fixtures"
     / "validators"
-    / "intake_bundle_extract_fail_duplicate_evidence_refs.json": "evidence_refs must be unique",
+    / "intake_bundle_extract_fail_duplicate_evidence_refs.json": "evidence_refs must contain unique items",
 }
 INTAKE_SOURCE_SNAPSHOT_PASS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_source_snapshot_v0_1_pass.json"
