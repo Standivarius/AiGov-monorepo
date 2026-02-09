@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
+
+from _schema_helpers import _validate_schema
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "packages" / "specs" / "schemas" / "aigov_dataset_jsonl_v0_1.schema.json"
@@ -22,64 +23,6 @@ def _ensure_dict(value: Any, label: str) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError(f"{label} must be an object")
     return value
-
-
-def _validate_schema(value: Any, schema: dict[str, Any], path: str, errors: list[str]) -> None:
-    schema_type = schema.get("type")
-    if schema_type == "object":
-        if not isinstance(value, dict):
-            errors.append(f"{path} must be an object")
-            return
-        required = schema.get("required", [])
-        if isinstance(required, list):
-            for key in required:
-                if key not in value:
-                    errors.append(f"{path} missing required key '{key}'")
-        properties = schema.get("properties", {})
-        if schema.get("additionalProperties") is False and isinstance(properties, dict):
-            extra = sorted(set(value.keys()) - set(properties.keys()))
-            for key in extra:
-                errors.append(f"{path} has unexpected key '{key}'")
-        if isinstance(properties, dict):
-            for key, prop_schema in properties.items():
-                if key in value and isinstance(prop_schema, dict):
-                    child_path = f"{path}.{key}" if path else key
-                    _validate_schema(value[key], prop_schema, child_path, errors)
-        return
-
-    if schema_type == "array":
-        if not isinstance(value, list):
-            errors.append(f"{path} must be an array")
-            return
-        min_items = schema.get("minItems")
-        if isinstance(min_items, int) and len(value) < min_items:
-            errors.append(f"{path} must contain at least {min_items} item(s)")
-        items_schema = schema.get("items")
-        if isinstance(items_schema, dict):
-            for idx, item in enumerate(value):
-                child_path = f"{path}[{idx}]"
-                _validate_schema(item, items_schema, child_path, errors)
-        return
-
-    if schema_type == "string":
-        if not isinstance(value, str):
-            errors.append(f"{path} must be a string")
-            return
-        min_length = schema.get("minLength")
-        if isinstance(min_length, int) and len(value) < min_length:
-            errors.append(f"{path} must be at least {min_length} character(s)")
-        if "const" in schema and value != schema.get("const"):
-            errors.append(f"{path} must be '{schema.get('const')}'")
-        enum = schema.get("enum")
-        if isinstance(enum, list) and value not in enum:
-            errors.append(f"{path} must be one of {enum}")
-        pattern = schema.get("pattern")
-        if isinstance(pattern, str):
-            if re.fullmatch(pattern, value) is None:
-                errors.append(f"{path} must match pattern '{pattern}'")
-        return
-
-    errors.append(f"{path} has unsupported schema type '{schema_type}'")
 
 
 def validate_dataset_jsonl(path: Path) -> list[tuple[int, str]]:
