@@ -1,0 +1,24 @@
+You are Claude Code reviewing a stacked PR series for AiGov monorepo milestone:
+M_Execution: Deterministic Bundle Consumption (GDPR-only).
+
+Review PRs in order: #164 -> #165 -> #166 -> #167.
+
+Focus:
+- Contract-first sequencing (schema/contract before runtime changes)
+- Schema-vs-policy boundary clarity
+- Fail-closed behavior (invalid + ambiguous inputs)
+- Deterministic gate behavior and stable expected-substring checks
+- Backward compatibility for legacy-only bundle_manifest.json
+
+Run commands:
+1) python3 tools/validate_planning_pack.py
+2) bash tools/run_pr_gate_validators.sh
+3) NX_DAEMON=false npx nx run evalsets:migration-smoke
+
+Output format (strict):
+1) MUST FIX
+2) SHOULD FIX
+3) COULD
+4) Merge readiness per PR (#164/#165/#166/#167) with ✅ or ⚠️
+5) Top 3 architecture/invariant risks
+6) Command results (PASS/FAIL)
