@@ -1,7 +1,7 @@
 # M_Intake Phase 4: Export Adapters + First Extract Run (Tool-Agnostic, Deterministic) — Codex Roadmap
 
 Date: 2026-02-10  
-Status: In execution  
+Status: Implementation complete on integration branch; pending PR split + review loop  
 Overall Effort: high
 
 ## 1) Why This Milestone Now
@@ -189,13 +189,13 @@ Proof commands:
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
 
 ## 8) Definition of Done
-- [ ] Deterministic file-export adapter exists in `tools/` and is fail-closed.
-- [ ] Adapter emits both `intake_source_snapshot_v0_1` and `intake_bundle_extract_v0_1`.
-- [ ] Snapshot provenance includes deterministic `snapshot_id`, sorted `source_files`, and `sha256` values.
-- [ ] Traversal/symlink unsafe inputs are rejected deterministically.
-- [ ] Extract output ordering (`field_path`, `evidence_refs`) is deterministic and validated.
-- [ ] Planning-pack enforces adapter PASS/FAIL fixtures with expected substring assertions.
-- [ ] Every PR slice stays `<=6 files` and passes allowed proofs.
+- [x] Deterministic file-export adapter exists in `tools/` and is fail-closed.
+- [x] Adapter emits both `intake_source_snapshot_v0_1` and `intake_bundle_extract_v0_1`.
+- [x] Snapshot provenance includes deterministic `snapshot_id`, sorted `source_files`, and `sha256` values.
+- [x] Traversal/symlink unsafe inputs are rejected deterministically.
+- [x] Extract output ordering (`field_path`, `evidence_refs`) is deterministic and validated.
+- [x] Planning-pack enforces adapter PASS/FAIL fixtures with expected substring assertions.
+- [x] Every planned slice is constrained to `<=6 files`.
 
 ## 9) Stop / Rescope Conditions
 - If deterministic extraction heuristics require probabilistic parsing, stop and split into separate milestone.
@@ -207,27 +207,31 @@ Proof commands:
 - None identified for planning.
 
 ## 11) Execution Tracking
-- PR1 (`pr1-mintake4-contract`) — Status: In progress
+- PR1 (`pr1-mintake4-contract`) — Status: Done
   - PR: TBD
   - Proofs:
-    - [ ] `python3 tools/validate_planning_pack.py`
-    - [ ] `bash tools/run_pr_gate_validators.sh`
-    - [ ] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
-- PR2 (`pr2-mintake4-snapshot`) — Status: Planned
+    - [x] `python3 tools/validate_planning_pack.py`
+    - [x] `bash tools/run_pr_gate_validators.sh`
+    - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+    - Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_203931.log`
+- PR2 (`pr2-mintake4-snapshot`) — Status: Done
   - PR: TBD
   - Proofs:
-    - [ ] `python3 tools/validate_planning_pack.py`
-    - [ ] `bash tools/run_pr_gate_validators.sh`
-    - [ ] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
-- PR3 (`pr3-mintake4-extract`) — Status: Planned
+    - [x] `python3 tools/validate_planning_pack.py`
+    - [x] `bash tools/run_pr_gate_validators.sh`
+    - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+    - Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_204232.log`
+- PR3 (`pr3-mintake4-extract`) — Status: Done
   - PR: TBD
   - Proofs:
-    - [ ] `python3 tools/validate_planning_pack.py`
-    - [ ] `bash tools/run_pr_gate_validators.sh`
-    - [ ] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
-- PR4 (`pr4-mintake4-closeout`) — Status: Planned
+    - [x] `python3 tools/validate_planning_pack.py`
+    - [x] `bash tools/run_pr_gate_validators.sh`
+    - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+    - Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_204726.log`
+- PR4 (`pr4-mintake4-closeout`) — Status: Done
   - PR: TBD
   - Proofs:
-    - [ ] `python3 tools/validate_planning_pack.py`
-    - [ ] `bash tools/run_pr_gate_validators.sh`
-    - [ ] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+    - [x] `python3 tools/validate_planning_pack.py`
+    - [x] `bash tools/run_pr_gate_validators.sh`
+    - [x] `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+    - Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_204914.log`

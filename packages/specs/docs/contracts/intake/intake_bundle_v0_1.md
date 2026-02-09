@@ -25,6 +25,12 @@ Workflow-stage artifact contract:
 Upstream deterministic ingestion/extract contracts:
 - `packages/specs/docs/contracts/intake/intake_source_snapshot_v0_1.md`
 - `packages/specs/docs/contracts/intake/intake_bundle_extract_v0_1.md`
+- `packages/specs/docs/contracts/intake/intake_export_file_adapter_v0_1.md`
+
+## Upstream Adapter Linkage
+- The file-export adapter (`tools/run_intake_export_file_adapter_v0_1.py`) is the deterministic producer for
+  `intake_source_snapshot_v0_1` and `intake_bundle_extract_v0_1`.
+- `intake_bundle_v0_1` remains the canonical composed intake artifact and is not directly emitted by the adapter in `v0_1`.
 
 ## Relationship to Legacy Intake Output
 Legacy intake output contracts remain supported for intake collection flows.
