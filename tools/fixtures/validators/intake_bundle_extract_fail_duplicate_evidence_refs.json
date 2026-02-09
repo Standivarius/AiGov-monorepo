@@ -1,0 +1,16 @@
+{
+  "schema_version": "intake_bundle_extract_v0_1",
+  "bundle_id": "bundle-extract-duplicate-evidence-001",
+  "source_snapshot_id": "snapshot-001",
+  "extracted_fields": [
+    {
+      "field_path": "intake.context_profile.jurisdiction",
+      "value": "NL",
+      "value_kind": "scalar",
+      "evidence_refs": [
+        "EV-001",
+        "EV-001"
+      ]
+    }
+  ]
+}

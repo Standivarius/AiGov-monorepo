@@ -172,6 +172,11 @@ INTAKE_BUNDLE_EXTRACT_FAIL_PATHS = [
     / "fixtures"
     / "validators"
     / "intake_bundle_extract_fail_unsorted_field_paths.json",
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_bundle_extract_fail_duplicate_evidence_refs.json",
 ]
 INTAKE_BUNDLE_EXTRACT_FAIL_EXPECTED_SUBSTRINGS = {
     ROOT
@@ -184,6 +189,11 @@ INTAKE_BUNDLE_EXTRACT_FAIL_EXPECTED_SUBSTRINGS = {
     / "fixtures"
     / "validators"
     / "intake_bundle_extract_fail_unsorted_field_paths.json": "must be sorted by field_path",
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_bundle_extract_fail_duplicate_evidence_refs.json": "evidence_refs must be unique",
 }
 INTAKE_SOURCE_SNAPSHOT_PASS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_source_snapshot_v0_1_pass.json"
