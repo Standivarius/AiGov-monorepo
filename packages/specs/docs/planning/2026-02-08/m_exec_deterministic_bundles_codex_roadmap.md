@@ -114,7 +114,7 @@ Execution tracking:
 
 ### PR3 — EP CLI Ambiguity Hardening (Fail-Closed)
 Effort: M  
-Status: Planned
+Status: Done
 
 Exact file list (`<=6`):
 - `packages/ep/aigov_ep/cli.py` (if both manifests exist, print explicit error and exit `2`)
@@ -136,6 +136,12 @@ Proof commands:
 - `python3 tools/validate_planning_pack.py`
 - `bash tools/run_pr_gate_validators.sh`
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+
+Execution tracking:
+- Branch: `mexec-det-bundles-integration` (slice commit for later cherry-pick)
+- PR: TBD
+- Proofs: PASS (`python3 tools/validate_planning_pack.py`, `bash tools/run_pr_gate_validators.sh`, `NX_DAEMON=false npx nx run evalsets:migration-smoke`)
+- Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_075617.log`
 
 ### PR4 — Closeout Docs + Review Prompts + Roadmap Stamping
 Effort: S  

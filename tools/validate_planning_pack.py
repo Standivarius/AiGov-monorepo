@@ -275,6 +275,8 @@ BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_DIR = (
     ROOT / "tools" / "fixtures" / "bundles" / "fail_manifest_bad_schema_version"
 )
 BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_EXPECTED_SUBSTRING = "must be '0.1.0'"
+BUNDLE_FAIL_DUAL_MANIFEST_DIR = ROOT / "tools" / "fixtures" / "bundles" / "fail_dual_manifest"
+BUNDLE_FAIL_DUAL_MANIFEST_EXPECTED_SUBSTRING = "both manifest.json and bundle_manifest.json"
 SCENARIO_COMPILE_BASE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "base"
 SCENARIO_COMPILE_OVERRIDE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "overrides"
 SCHEMA_LIST_PATH = ROOT / "tools" / "fixtures" / "validators" / "scenario_schema_list.json"
@@ -1024,6 +1026,32 @@ def main() -> int:
     print(
         "FAIL (as expected): deterministic bundle manifest validated: "
         f"{BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_DIR}"
+    )
+
+    deterministic_manifest_dual_errors = validate_ep_deterministic_bundle_manifest(
+        BUNDLE_FAIL_DUAL_MANIFEST_DIR
+    )
+    if not deterministic_manifest_dual_errors:
+        print(
+            "ERROR: deterministic dual-manifest fixture unexpectedly passed validation: "
+            f"{BUNDLE_FAIL_DUAL_MANIFEST_DIR}"
+        )
+        return 1
+    if not any(
+        BUNDLE_FAIL_DUAL_MANIFEST_EXPECTED_SUBSTRING in error
+        for error in deterministic_manifest_dual_errors
+    ):
+        print(
+            "ERROR: deterministic dual-manifest fixture missing expected "
+            f"substring '{BUNDLE_FAIL_DUAL_MANIFEST_EXPECTED_SUBSTRING}': "
+            f"{BUNDLE_FAIL_DUAL_MANIFEST_DIR}"
+        )
+        for error in deterministic_manifest_dual_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "FAIL (as expected): deterministic bundle manifest validated: "
+        f"{BUNDLE_FAIL_DUAL_MANIFEST_DIR}"
     )
 
     bundle_poison_errors = validate_bundle(BUNDLE_POISON_DIR)
