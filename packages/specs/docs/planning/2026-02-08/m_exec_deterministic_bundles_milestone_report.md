@@ -3,7 +3,7 @@
 Date: 2026-02-09  
 Milestone: Execution consumes deterministic bundles (GDPR-only)
 
-Status: In review (stack open #164 -> #167, MUST=0 / SHOULD=0).
+Status: In review (stack open #164 -> #167 with follow-up fixes, MUST=0 / SHOULD=0 / COULD=0).
 
 ## Delivered
 - PR1 `#164`: deterministic manifest Specs schema + contract baseline.  
@@ -22,7 +22,6 @@ Status: In review (stack open #164 -> #167, MUST=0 / SHOULD=0).
 - Latest migration-smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_080550.log`
 - CI status: all checks green on PRs `#164` through `#167` at time of this update.
 
-## Residual Risks (Deferred COULD)
-- Scenario list ordering/uniqueness policy is not enforced by schema (deferred to future policy layer if needed).
-- Schema intentionally validates shape only; filesystem policy checks remain runtime concerns.
-- Independent external adversarial review (Claude run using prepared prompts) can be repeated for additional assurance before merge.
+## Residual Risks
+- No blocking/open SHOULD/COULD items remain after follow-up closure pass.
+- Independent external adversarial review (Claude run using prepared prompts) can still be repeated for additional assurance before merge.

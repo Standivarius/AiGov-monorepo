@@ -46,6 +46,22 @@ Single source of truth for Claude review loop outcomes.
   - Optional additional fixture coverage for path policy edge-cases at schema-vs-policy boundary.
   - Optional independent external rerun via Claude prompts for extra audit redundancy.
 
+### Iteration 2 (Codex fix pass for SHOULD + COULD closure)
+- Date: 2026-02-09
+- MUST count: 0
+- SHOULD count: 0
+- COULD count: 0
+- Findings addressed:
+  - Shared schema helper introduced to eliminate divergent `_validate_schema` behavior between validators.
+  - Deterministic manifest contract now explicitly documents deterministic-validator scope vs legacy CLI fallback.
+  - Scenario ordering/uniqueness policy implemented and gated (schema + validator + runtime checks).
+  - Added deterministic fail fixtures for duplicate `scenario_instance_id` and unsorted `scenarios`.
+- Impacted PR(s): `#165`, `#166`, `#167` (follow-up updates on top of stack)
+- Required proof commands:
+  - `python3 tools/validate_planning_pack.py`: PASS
+  - `bash tools/run_pr_gate_validators.sh`: PASS
+  - `NX_DAEMON=false npx nx run evalsets:migration-smoke`: PASS (run after committing this fix pass)
+
 ## Working Rule
 - Iterate until MUST=0 and SHOULD=0.
 - Apply fixes at earliest impacted branch, then propagate to downstream stack branches.
