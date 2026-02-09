@@ -277,6 +277,18 @@ BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_DIR = (
 BUNDLE_FAIL_MANIFEST_SCHEMA_VERSION_EXPECTED_SUBSTRING = "must be '0.1.0'"
 BUNDLE_FAIL_DUAL_MANIFEST_DIR = ROOT / "tools" / "fixtures" / "bundles" / "fail_dual_manifest"
 BUNDLE_FAIL_DUAL_MANIFEST_EXPECTED_SUBSTRING = "both manifest.json and bundle_manifest.json"
+BUNDLE_FAIL_DUPLICATE_SCENARIO_INSTANCE_ID_DIR = (
+    ROOT / "tools" / "fixtures" / "bundles" / "fail_manifest_duplicate_scenario_instance_id"
+)
+BUNDLE_FAIL_DUPLICATE_SCENARIO_INSTANCE_ID_EXPECTED_SUBSTRING = (
+    "scenario_instance_id values must be unique"
+)
+BUNDLE_FAIL_UNSORTED_SCENARIOS_DIR = (
+    ROOT / "tools" / "fixtures" / "bundles" / "fail_manifest_unsorted_scenarios"
+)
+BUNDLE_FAIL_UNSORTED_SCENARIOS_EXPECTED_SUBSTRING = (
+    "must be sorted by scenario_instance_id"
+)
 SCENARIO_COMPILE_BASE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "base"
 SCENARIO_COMPILE_OVERRIDE_DIR = ROOT / "tools" / "fixtures" / "scenario_compile" / "overrides"
 SCHEMA_LIST_PATH = ROOT / "tools" / "fixtures" / "validators" / "scenario_schema_list.json"
@@ -1052,6 +1064,60 @@ def main() -> int:
     print(
         "FAIL (as expected): deterministic bundle manifest validated: "
         f"{BUNDLE_FAIL_DUAL_MANIFEST_DIR}"
+    )
+
+    deterministic_manifest_duplicate_errors = validate_ep_deterministic_bundle_manifest(
+        BUNDLE_FAIL_DUPLICATE_SCENARIO_INSTANCE_ID_DIR,
+        verify_scenario_paths=False,
+    )
+    if not deterministic_manifest_duplicate_errors:
+        print(
+            "ERROR: deterministic duplicate scenario_instance_id fixture unexpectedly passed "
+            f"validation: {BUNDLE_FAIL_DUPLICATE_SCENARIO_INSTANCE_ID_DIR}"
+        )
+        return 1
+    if not any(
+        BUNDLE_FAIL_DUPLICATE_SCENARIO_INSTANCE_ID_EXPECTED_SUBSTRING in error
+        for error in deterministic_manifest_duplicate_errors
+    ):
+        print(
+            "ERROR: deterministic duplicate scenario_instance_id fixture missing expected "
+            f"substring '{BUNDLE_FAIL_DUPLICATE_SCENARIO_INSTANCE_ID_EXPECTED_SUBSTRING}': "
+            f"{BUNDLE_FAIL_DUPLICATE_SCENARIO_INSTANCE_ID_DIR}"
+        )
+        for error in deterministic_manifest_duplicate_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "FAIL (as expected): deterministic bundle manifest validated: "
+        f"{BUNDLE_FAIL_DUPLICATE_SCENARIO_INSTANCE_ID_DIR}"
+    )
+
+    deterministic_manifest_unsorted_errors = validate_ep_deterministic_bundle_manifest(
+        BUNDLE_FAIL_UNSORTED_SCENARIOS_DIR,
+        verify_scenario_paths=False,
+    )
+    if not deterministic_manifest_unsorted_errors:
+        print(
+            "ERROR: deterministic unsorted scenarios fixture unexpectedly passed validation: "
+            f"{BUNDLE_FAIL_UNSORTED_SCENARIOS_DIR}"
+        )
+        return 1
+    if not any(
+        BUNDLE_FAIL_UNSORTED_SCENARIOS_EXPECTED_SUBSTRING in error
+        for error in deterministic_manifest_unsorted_errors
+    ):
+        print(
+            "ERROR: deterministic unsorted scenarios fixture missing expected "
+            f"substring '{BUNDLE_FAIL_UNSORTED_SCENARIOS_EXPECTED_SUBSTRING}': "
+            f"{BUNDLE_FAIL_UNSORTED_SCENARIOS_DIR}"
+        )
+        for error in deterministic_manifest_unsorted_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "FAIL (as expected): deterministic bundle manifest validated: "
+        f"{BUNDLE_FAIL_UNSORTED_SCENARIOS_DIR}"
     )
 
     bundle_poison_errors = validate_bundle(BUNDLE_POISON_DIR)

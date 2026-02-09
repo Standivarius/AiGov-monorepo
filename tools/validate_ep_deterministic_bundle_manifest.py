@@ -6,13 +6,15 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 EP_ROOT = ROOT / "packages" / "ep"
 sys.path.insert(0, str(EP_ROOT))
+sys.path.insert(0, str(ROOT / "tools"))
 
 from aigov_ep.scenario.bundle_manifest_v0_1_0 import load_and_validate_manifest
-from validate_aigov_dataset_jsonl_v0_1 import _validate_schema
+from _schema_helpers import _validate_schema
 
 
 SCHEMA_PATH = (
@@ -22,6 +24,59 @@ SCHEMA_PATH = (
 
 def _load_json(path: Path) -> object:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _validate_manifest_semantics(manifest: dict[str, Any]) -> list[str]:
+    scenarios = manifest.get("scenarios")
+    if not isinstance(scenarios, list):
+        return []
+
+    errors: list[str] = []
+    scenario_instance_ids: list[str] = []
+    order_ready = True
+
+    seen_scenario_ids: set[str] = set()
+    seen_scenario_instance_ids: set[str] = set()
+    seen_paths: set[str] = set()
+
+    for index, entry in enumerate(scenarios):
+        if not isinstance(entry, dict):
+            continue
+        scenario_id = entry.get("scenario_id")
+        scenario_instance_id = entry.get("scenario_instance_id")
+        scenario_path = entry.get("path")
+
+        if isinstance(scenario_id, str):
+            if scenario_id in seen_scenario_ids:
+                errors.append(
+                    "manifest.scenarios[*].scenario_id values must be unique "
+                    f"(duplicate {scenario_id!r} at index {index})"
+                )
+            seen_scenario_ids.add(scenario_id)
+
+        if isinstance(scenario_instance_id, str):
+            scenario_instance_ids.append(scenario_instance_id)
+            if scenario_instance_id in seen_scenario_instance_ids:
+                errors.append(
+                    "manifest.scenarios[*].scenario_instance_id values must be unique "
+                    f"(duplicate {scenario_instance_id!r} at index {index})"
+                )
+            seen_scenario_instance_ids.add(scenario_instance_id)
+        else:
+            order_ready = False
+
+        if isinstance(scenario_path, str):
+            if scenario_path in seen_paths:
+                errors.append(
+                    "manifest.scenarios[*].path values must be unique "
+                    f"(duplicate {scenario_path!r} at index {index})"
+                )
+            seen_paths.add(scenario_path)
+
+    if order_ready and scenario_instance_ids != sorted(scenario_instance_ids):
+        errors.append("manifest.scenarios must be sorted by scenario_instance_id")
+
+    return errors
 
 
 def _validate_manifest_schema(manifest_path: Path) -> list[str]:
@@ -46,6 +101,7 @@ def _validate_manifest_schema(manifest_path: Path) -> list[str]:
 
     errors: list[str] = []
     _validate_schema(manifest, schema, "manifest", errors)
+    errors.extend(_validate_manifest_semantics(manifest))
     return sorted(errors)
 
 

@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.1.0",
+  "scenarios": [
+    {
+      "scenario_id": "GDPR-001",
+      "scenario_instance_id": "GDPR-001__client-001",
+      "path": "scenarios/GDPR-001__client-001.json",
+      "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    },
+    {
+      "scenario_id": "GDPR-002",
+      "scenario_instance_id": "GDPR-001__client-001",
+      "path": "scenarios/GDPR-002.json",
+      "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+    }
+  ]
+}
