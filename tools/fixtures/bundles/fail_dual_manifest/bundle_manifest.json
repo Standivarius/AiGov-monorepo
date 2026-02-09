@@ -1,0 +1,7 @@
+{
+  "scenarios": [
+    {
+      "file_path": "scenarios/GDPR-001__client-001.json"
+    }
+  ]
+}

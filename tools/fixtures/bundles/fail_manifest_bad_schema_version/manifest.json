@@ -1,0 +1,11 @@
+{
+  "schema_version": "9.9.9",
+  "scenarios": [
+    {
+      "scenario_id": "GDPR-FAIL",
+      "scenario_instance_id": "GDPR-FAIL__client",
+      "path": "scenarios/GDPR-FAIL__client.json",
+      "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    }
+  ]
+}
