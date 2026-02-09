@@ -52,6 +52,10 @@ def _validate_extract_policy(payload: dict[str, Any], errors: list[str]) -> None
             errors.append(
                 f"extract.extracted_fields[{index}].evidence_refs must be sorted"
             )
+        if isinstance(evidence_refs, list) and len(evidence_refs) != len(set(evidence_refs)):
+            errors.append(
+                f"extract.extracted_fields[{index}].evidence_refs must be unique"
+            )
 
     if field_paths != sorted(field_paths):
         errors.append("extract.extracted_fields must be sorted by field_path")

@@ -35,6 +35,8 @@ Canonical schemas:
 - Stage artifact validators enforce stage-local shape, ordering, and known vocabulary.
 - If `evidence_refs[]` is present on a stage item, it MUST be sorted and contain unique IDs.
 - Cross-artifact referential integrity (stage `evidence_refs` membership in canonical `intake_bundle_v0_1.evidence_index`) is deferred to composition-level checks.
+- Evidence ref format is currently asymmetric in `v0_1`: extract constrains `EV-NNN`, while reconcile and gap currently accept any non-empty string.
+- A follow-up harmonization pass should align all stage artifacts to one canonical evidence-ref pattern.
 
 ## Empty-State Semantics
 - Stage schemas require non-empty item arrays when the artifact is emitted (`minItems: 1`).
