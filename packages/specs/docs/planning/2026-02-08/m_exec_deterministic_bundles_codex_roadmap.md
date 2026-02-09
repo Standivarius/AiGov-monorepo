@@ -50,7 +50,7 @@ Make EP execution consume deterministic bundles through a contract-first, fail-c
 
 ### PR1 — Specs Contract + Schema Baseline
 Effort: M  
-Status: Planned
+Status: Done
 
 Exact file list (`<=6`):
 - `packages/specs/schemas/deterministic_bundle_manifest_v0_1_0.schema.json` (new)
@@ -71,6 +71,12 @@ Proof commands:
 - `python3 tools/validate_planning_pack.py`
 - `bash tools/run_pr_gate_validators.sh`
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
+
+Execution tracking:
+- Branch: `mexec-det-bundles-integration` (slice commit for later cherry-pick)
+- PR: TBD
+- Proofs: PASS (`python3 tools/validate_planning_pack.py`, `bash tools/run_pr_gate_validators.sh`, `NX_DAEMON=false npx nx run evalsets:migration-smoke`)
+- Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_075225.log`
 
 ### PR2 — Schema Validator + PASS/FAIL Fixture Gate
 Effort: M  
