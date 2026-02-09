@@ -51,6 +51,12 @@ def _execute_handler(args: argparse.Namespace) -> int:
             bundle_dir = Path(args.bundle_dir)
             deterministic_manifest_path = bundle_dir / "manifest.json"
             legacy_manifest_path = bundle_dir / "bundle_manifest.json"
+            if deterministic_manifest_path.exists() and legacy_manifest_path.exists():
+                print(
+                    "ERROR: bundle contains both manifest.json and bundle_manifest.json; "
+                    "remove one manifest format."
+                )
+                return 2
             if deterministic_manifest_path.exists():
                 try:
                     scenario_paths = load_and_validate_manifest(bundle_dir)

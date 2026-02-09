@@ -48,15 +48,20 @@ def load_and_validate_manifest(bundle_dir: Path) -> list[Path]:
 
     bundle_root = bundle_dir.resolve()
     resolved_paths: list[Path] = []
+    scenario_entries: list[tuple[int, str, str]] = []
+
+    seen_scenario_ids: set[str] = set()
+    seen_scenario_instance_ids: set[str] = set()
+    seen_paths: set[str] = set()
 
     for index, entry in enumerate(scenarios):
         if not isinstance(entry, dict):
             raise ValueError(f"manifest.json scenarios[{index}] must be an object")
-        _require_nonempty_str(
+        scenario_id = _require_nonempty_str(
             entry.get("scenario_id"),
             f"manifest.json scenarios[{index}] missing scenario_id",
         )
-        _require_nonempty_str(
+        scenario_instance_id = _require_nonempty_str(
             entry.get("scenario_instance_id"),
             f"manifest.json scenarios[{index}] missing scenario_instance_id",
         )
@@ -64,6 +69,38 @@ def load_and_validate_manifest(bundle_dir: Path) -> list[Path]:
             entry.get("path"),
             f"manifest.json scenarios[{index}] missing path",
         )
+        _ensure_lowercase_hex_sha256(
+            entry.get("sha256"),
+            f"manifest.json scenarios[{index}] missing sha256",
+        )
+        if scenario_id in seen_scenario_ids:
+            raise ValueError(
+                "manifest.json scenarios[*].scenario_id values must be unique "
+                f"(duplicate {scenario_id!r})"
+            )
+        seen_scenario_ids.add(scenario_id)
+        if scenario_instance_id in seen_scenario_instance_ids:
+            raise ValueError(
+                "manifest.json scenarios[*].scenario_instance_id values must be unique "
+                f"(duplicate {scenario_instance_id!r})"
+            )
+        seen_scenario_instance_ids.add(scenario_instance_id)
+        if rel_path in seen_paths:
+            raise ValueError(
+                "manifest.json scenarios[*].path values must be unique "
+                f"(duplicate {rel_path!r})"
+            )
+        seen_paths.add(rel_path)
+        scenario_entries.append((index, scenario_instance_id, rel_path))
+
+    ordered_instance_ids = [instance_id for _, instance_id, _ in scenario_entries]
+    if ordered_instance_ids != sorted(ordered_instance_ids):
+        raise ValueError("manifest.json scenarios must be sorted by scenario_instance_id")
+
+    for index, _, rel_path in scenario_entries:
+        entry = scenarios[index]
+        if not isinstance(entry, dict):
+            raise ValueError(f"manifest.json scenarios[{index}] must be an object")
         expected_sha256 = _ensure_lowercase_hex_sha256(
             entry.get("sha256"),
             f"manifest.json scenarios[{index}] missing sha256",
