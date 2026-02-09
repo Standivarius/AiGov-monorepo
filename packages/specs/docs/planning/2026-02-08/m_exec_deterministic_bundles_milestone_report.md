@@ -1,22 +1,28 @@
 # M_Execution Deterministic Bundles — Milestone Report
 
-Date: TBS  
+Date: 2026-02-09  
 Milestone: Execution consumes deterministic bundles (GDPR-only)
 
-Status: Draft placeholder (to finalize after stacked PRs merge and Claude review loop reaches MUST=0 / SHOULD=0).
+Status: In review (stack open #164 -> #167, MUST=0 / SHOULD=0).
 
-## Delivered (Placeholder)
-- PR1: Specs schema + contract baseline.
-- PR2: Manifest schema validator + PASS/FAIL fixture gating in planning-pack.
-- PR3: EP execute dual-manifest ambiguity hardening (fail closed) + committed dual-manifest fixture.
-- PR4: Closeout docs + review pack + open-items tracking.
+## Delivered
+- PR1 `#164`: deterministic manifest Specs schema + contract baseline.  
+  https://github.com/Standivarius/AiGov-monorepo/pull/164
+- PR2 `#165`: stdlib schema validator extension + manifest PASS/FAIL planning-pack gates.  
+  https://github.com/Standivarius/AiGov-monorepo/pull/165
+- PR3 `#166`: EP CLI dual-manifest ambiguity hardening (fail closed) + committed dual-manifest fixture.  
+  https://github.com/Standivarius/AiGov-monorepo/pull/166
+- PR4 `#167`: closeout docs + review prompts + open-items tracker.  
+  https://github.com/Standivarius/AiGov-monorepo/pull/167
 
-## Proofs (Placeholder)
+## Proofs
 - `python3 tools/validate_planning_pack.py`: PASS
 - `bash tools/run_pr_gate_validators.sh`: PASS
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`: PASS
-- Log references: TBS
+- Latest migration-smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_080550.log`
+- CI status: all checks green on PRs `#164` through `#167` at time of this update.
 
-## Residual Risks (Placeholder)
-- COULD items only; MUST/SHOULD targeted to zero via review loop.
-- Final deferred risk list to be copied from `m_exec_det_bundles_open_items.md` at close.
+## Residual Risks (Deferred COULD)
+- Scenario list ordering/uniqueness policy is not enforced by schema (deferred to future policy layer if needed).
+- Schema intentionally validates shape only; filesystem policy checks remain runtime concerns.
+- Independent external adversarial review (Claude run using prepared prompts) can be repeated for additional assurance before merge.

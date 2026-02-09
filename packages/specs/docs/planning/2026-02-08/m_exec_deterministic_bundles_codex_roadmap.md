@@ -1,7 +1,7 @@
 # M_Execution: Deterministic Bundle Consumption (GDPR-only)
 
 Date: 2026-02-08  
-Status: Planned (planning-first)
+Status: In review (stack open: #164 -> #167)
 
 ## Objective
 Make EP execution consume deterministic bundles through a contract-first, fail-closed boundary:
@@ -73,8 +73,8 @@ Proof commands:
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
 
 Execution tracking:
-- Branch: `mexec-det-bundles-integration` (slice commit for later cherry-pick)
-- PR: TBD
+- Branch: `pr1-mexec-schema`
+- PR: `#164` (base `main`)
 - Proofs: PASS (`python3 tools/validate_planning_pack.py`, `bash tools/run_pr_gate_validators.sh`, `NX_DAEMON=false npx nx run evalsets:migration-smoke`)
 - Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_075225.log`
 
@@ -107,8 +107,8 @@ Proof commands:
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
 
 Execution tracking:
-- Branch: `mexec-det-bundles-integration` (slice commit for later cherry-pick)
-- PR: TBD
+- Branch: `pr2-mexec-gates`
+- PR: `#165` (base `pr1-mexec-schema`)
 - Proofs: PASS (`python3 tools/validate_planning_pack.py`, `bash tools/run_pr_gate_validators.sh`, `NX_DAEMON=false npx nx run evalsets:migration-smoke`)
 - Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_075432.log`
 
@@ -138,8 +138,8 @@ Proof commands:
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
 
 Execution tracking:
-- Branch: `mexec-det-bundles-integration` (slice commit for later cherry-pick)
-- PR: TBD
+- Branch: `pr3-mexec-ambiguity`
+- PR: `#166` (base `pr2-mexec-gates`)
 - Proofs: PASS (`python3 tools/validate_planning_pack.py`, `bash tools/run_pr_gate_validators.sh`, `NX_DAEMON=false npx nx run evalsets:migration-smoke`)
 - Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_075617.log`
 
@@ -168,22 +168,22 @@ Proof commands:
 - `NX_DAEMON=false npx nx run evalsets:migration-smoke`
 
 Execution tracking:
-- Branch: `mexec-det-bundles-integration` (slice commit for later cherry-pick)
-- PR: TBD
+- Branch: `pr4-mexec-closeout`
+- PR: `#167` (base `pr3-mexec-ambiguity`)
 - Proofs: PASS (`python3 tools/validate_planning_pack.py`, `bash tools/run_pr_gate_validators.sh`, `NX_DAEMON=false npx nx run evalsets:migration-smoke`)
 - Smoke log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260209_075617.log`
 
 ## Definition of Done
-- [ ] Specs schema + contract exist for deterministic manifest `0.1.0` and match runtime shape.
-- [ ] Schema is strict (`additionalProperties: false`) and enforces scenario required fields.
-- [ ] `bundle_hash` + `bundle_dir` modeled as optional and validated when present.
-- [ ] Tools validator validates `manifest.json` against Specs schema (stdlib-only path).
-- [ ] planning-pack gates deterministic bundle PASS + expected FAIL substring.
-- [ ] EP CLI fails closed on dual-manifest ambiguity with explicit error and exit code `2`.
-- [ ] Legacy-only `bundle_manifest.json` flow remains operational.
-- [ ] Every PR in milestone is `<=6` files.
-- [ ] Allowed proof commands pass for each slice.
-- [ ] Closeout docs and review prompts are published.
+- [x] Specs schema + contract exist for deterministic manifest `0.1.0` and match runtime shape.
+- [x] Schema is strict (`additionalProperties: false`) and enforces scenario required fields.
+- [x] `bundle_hash` + `bundle_dir` modeled as optional and validated when present.
+- [x] Tools validator validates `manifest.json` against Specs schema (stdlib-only path).
+- [x] planning-pack gates deterministic bundle PASS + expected FAIL substring.
+- [x] EP CLI fails closed on dual-manifest ambiguity with explicit error and exit code `2`.
+- [x] Legacy-only `bundle_manifest.json` flow remains operational.
+- [x] Every PR in milestone is `<=6` files.
+- [x] Allowed proof commands pass for each slice.
+- [x] Closeout docs and review prompts are published.
 
 ## Stop Conditions / Rescope Triggers
 - If schema requirements diverge from actual runtime manifest shape, pause and resolve contract/schema first.
