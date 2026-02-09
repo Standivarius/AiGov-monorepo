@@ -64,7 +64,7 @@ Canonical schemas:
   - At least one clarification question is required.
   - Priority must be integer and explicit.
 - Readiness:
-- If `blocking_unknowns` is non-empty (any severity), `status` MUST be `blocked`.
+  - If `blocking_unknowns` is non-empty (any severity), `status` MUST be `blocked`.
   - If any `blocking_unknowns` with `severity == "critical"` exist, `status` MUST be `blocked` and `allow_downstream` MUST be `false`.
   - If `unresolved_conflict_ids` is non-empty, `status` MUST be `blocked` and `allow_downstream` MUST be `false`.
   - If `status == "ready"`, both `blocking_unknowns` and `unresolved_conflict_ids` MUST be empty and `allow_downstream` MUST be `true`.
