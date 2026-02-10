@@ -21,7 +21,8 @@
     "source_type": {
       "type": "string",
       "enum": [
-        "file_export"
+        "file_export",
+        "github_export_pack"
       ]
     },
     "source_files": {
