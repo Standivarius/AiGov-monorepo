@@ -263,10 +263,21 @@ def validate_export_adapter_extract_fail_empty(fail_fixture: Path) -> list[str]:
         return [f"{fail_fixture}: invalid JSON ({exc})"]
 
     fixture_dir_raw = fixture.get("fixture_dir")
+    inject_path = fixture.get("inject_path")
+    inject_from_fixture = fixture.get("inject_from_fixture")
+    inject_contents = fixture.get("inject_contents")
     expected_substring = fixture.get("expected_error_substring")
 
     if not isinstance(fixture_dir_raw, str) or not fixture_dir_raw:
         return [f"{fail_fixture}: fixture_dir must be a non-empty string"]
+    if inject_path is not None and (not isinstance(inject_path, str) or not inject_path):
+        return [f"{fail_fixture}: inject_path must be a non-empty string when provided"]
+    if inject_from_fixture is not None and (
+        not isinstance(inject_from_fixture, str) or not inject_from_fixture
+    ):
+        return [f"{fail_fixture}: inject_from_fixture must be a non-empty string when provided"]
+    if inject_contents is not None and not isinstance(inject_contents, str):
+        return [f"{fail_fixture}: inject_contents must be a string when provided"]
     if not isinstance(expected_substring, str) or not expected_substring:
         return [f"{fail_fixture}: expected_error_substring must be a non-empty string"]
 
@@ -276,11 +287,27 @@ def validate_export_adapter_extract_fail_empty(fail_fixture: Path) -> list[str]:
 
     with tempfile.TemporaryDirectory() as temp_dir_str:
         temp_dir = Path(temp_dir_str)
+        copied_dir = temp_dir / "export_input"
+        shutil.copytree(fixture_dir, copied_dir)
+
+        if isinstance(inject_path, str):
+            injected_file = copied_dir / inject_path
+            injected_file.parent.mkdir(parents=True, exist_ok=True)
+            if isinstance(inject_from_fixture, str):
+                inject_source = ROOT / inject_from_fixture
+                if not inject_source.exists() or not inject_source.is_file():
+                    return [
+                        f"{fail_fixture}: inject_from_fixture not found: {inject_source}"
+                    ]
+                injected_file.write_bytes(inject_source.read_bytes())
+            else:
+                injected_file.write_text(inject_contents or "{}", encoding="utf-8")
+
         snapshot_out = temp_dir / "snapshot.json"
         extract_out = temp_dir / "extract.json"
 
         try:
-            emit_snapshot_and_extract(fixture_dir, snapshot_out, extract_out)
+            emit_snapshot_and_extract(copied_dir, snapshot_out, extract_out)
         except ValueError as exc:
             message = str(exc)
             if expected_substring not in message:
@@ -291,6 +318,10 @@ def validate_export_adapter_extract_fail_empty(fail_fixture: Path) -> list[str]:
             return []
 
     return [f"extract fail fixture unexpectedly passed adapter execution: {fail_fixture}"]
+
+
+def validate_export_adapter_extract_fail_bad_shape(fail_fixture: Path) -> list[str]:
+    return validate_export_adapter_extract_fail_empty(fail_fixture)
 
 
 def main() -> int:
