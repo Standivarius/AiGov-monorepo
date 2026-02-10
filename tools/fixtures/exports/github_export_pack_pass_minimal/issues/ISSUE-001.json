@@ -1,0 +1,9 @@
+{
+  "issue_number": 101,
+  "title": "Retention period for logs needs clarification",
+  "state": "open",
+  "labels": [
+    "gdpr",
+    "retention"
+  ]
+}

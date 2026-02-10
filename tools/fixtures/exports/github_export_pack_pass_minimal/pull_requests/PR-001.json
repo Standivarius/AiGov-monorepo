@@ -1,0 +1,8 @@
+{
+  "pr_number": 77,
+  "title": "Mask personal email fields in audit output",
+  "state": "open",
+  "changed_paths": [
+    "src/audit/redaction.py"
+  ]
+}
