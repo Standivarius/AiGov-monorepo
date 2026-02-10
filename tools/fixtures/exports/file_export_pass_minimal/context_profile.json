@@ -1,0 +1,9 @@
+{
+  "context_profile": {
+    "jurisdiction": "NL",
+    "sector": "public"
+  },
+  "policy_profile": {
+    "retention_days": 30
+  }
+}
