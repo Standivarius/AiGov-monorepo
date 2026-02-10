@@ -130,6 +130,60 @@ def validate_export_adapter_snapshot_fail_symlink(fail_fixture: Path) -> list[st
     ]
 
 
+def validate_export_adapter_snapshot_fail_unsupported_ext(fail_fixture: Path) -> list[str]:
+    if not fail_fixture.exists():
+        return [f"snapshot unsupported-ext fail fixture not found: {fail_fixture}"]
+
+    try:
+        fixture = _ensure_dict(_load_json(fail_fixture), str(fail_fixture))
+    except (json.JSONDecodeError, ValueError) as exc:
+        return [f"{fail_fixture}: invalid JSON ({exc})"]
+
+    fixture_dir_raw = fixture.get("fixture_dir")
+    inject_path = fixture.get("inject_path")
+    inject_contents = fixture.get("inject_contents")
+    expected_substring = fixture.get("expected_error_substring")
+
+    if not isinstance(fixture_dir_raw, str) or not fixture_dir_raw:
+        return [f"{fail_fixture}: fixture_dir must be a non-empty string"]
+    if inject_path is not None and (not isinstance(inject_path, str) or not inject_path):
+        return [f"{fail_fixture}: inject_path must be a non-empty string when provided"]
+    if inject_contents is not None and not isinstance(inject_contents, str):
+        return [f"{fail_fixture}: inject_contents must be a string when provided"]
+    if not isinstance(expected_substring, str) or not expected_substring:
+        return [f"{fail_fixture}: expected_error_substring must be a non-empty string"]
+
+    fixture_dir = ROOT / fixture_dir_raw
+    if not fixture_dir.exists() or not fixture_dir.is_dir():
+        return [f"{fail_fixture}: fixture_dir not found: {fixture_dir}"]
+
+    with tempfile.TemporaryDirectory() as temp_dir_str:
+        temp_dir = Path(temp_dir_str)
+        copied_dir = temp_dir / "export_input"
+        shutil.copytree(fixture_dir, copied_dir)
+
+        if isinstance(inject_path, str):
+            injected_file = copied_dir / inject_path
+            injected_file.parent.mkdir(parents=True, exist_ok=True)
+            injected_file.write_text(inject_contents or "invalid: true\n", encoding="utf-8")
+
+        try:
+            emit_source_snapshot(copied_dir, temp_dir / "snapshot.json")
+        except ValueError as exc:
+            message = str(exc)
+            if expected_substring not in message:
+                return [
+                    "snapshot unsupported-ext fail fixture missing expected failure mode "
+                    f"'{expected_substring}': {message}"
+                ]
+            return []
+
+    return [
+        "snapshot unsupported-ext fail fixture unexpectedly passed adapter execution: "
+        f"{fail_fixture}"
+    ]
+
+
 def validate_export_adapter_extract_pass(
     export_dir: Path,
     expected_extract_fixture: Path,

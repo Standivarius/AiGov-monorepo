@@ -9,6 +9,8 @@ import os
 from pathlib import Path
 from typing import Any
 
+GITHUB_EXPORT_TOP_LEVEL_DIRS = ("repo", "issues", "pull_requests", "comments")
+
 
 def canonical_json_bytes(payload: Any) -> bytes:
     return (
@@ -97,12 +99,117 @@ def _snapshot_id(source_files: list[dict[str, str]]) -> str:
     return f"snapshot-{digest[:16]}"
 
 
+def _detect_source_type(export_root: Path) -> str:
+    top_level_entries = sorted(
+        [entry.name for entry in export_root.iterdir()],
+    )
+    github_expected = set(GITHUB_EXPORT_TOP_LEVEL_DIRS)
+    github_seen = github_expected.intersection(top_level_entries)
+
+    if not github_seen:
+        return "file_export"
+
+    extra = sorted(name for name in top_level_entries if name not in github_expected)
+    missing = sorted(name for name in github_expected if name not in top_level_entries)
+    if extra or missing:
+        raise ValueError(
+            "github export pack top-level entries must be exactly "
+            "repo/, issues/, pull_requests/, comments/"
+        )
+
+    for dirname in GITHUB_EXPORT_TOP_LEVEL_DIRS:
+        dir_path = export_root / dirname
+        if dir_path.is_symlink():
+            raise ValueError(
+                f"github export pack top-level entry must not be a symlink: {dirname}"
+            )
+        if not dir_path.is_dir():
+            raise ValueError(
+                "github export pack top-level entry must be a directory: "
+                f"{dirname}"
+            )
+    return "github_export_pack"
+
+
+def _load_json_object_for_path(path: Path, rel_path: str) -> dict[str, Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"github export pack JSON parse error in {rel_path}: {exc.msg}"
+        ) from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"github export pack file must be a JSON object: {rel_path}")
+    return payload
+
+
+def _validate_github_export_pack(root: Path, source_files: list[dict[str, str]]) -> None:
+    if not source_files:
+        raise ValueError("github export pack contains no regular files")
+
+    seen_paths: set[str] = set()
+    has_issue = False
+    has_pr = False
+    has_comment = False
+
+    for entry in source_files:
+        rel_path = entry.get("source_path")
+        if not isinstance(rel_path, str) or not rel_path:
+            raise ValueError("github export pack source_path must be a non-empty string")
+        seen_paths.add(rel_path)
+
+        rel = Path(rel_path)
+        if len(rel.parts) < 2:
+            raise ValueError(
+                "github export pack files must be under repo/, issues/, "
+                f"pull_requests/, or comments/: {rel_path}"
+            )
+        top = rel.parts[0]
+        if top not in GITHUB_EXPORT_TOP_LEVEL_DIRS:
+            raise ValueError(f"github export pack has unsupported top-level path: {rel_path}")
+        if rel.suffix.lower() != ".json":
+            raise ValueError(f"github export pack only supports .json files: {rel_path}")
+        if len(rel.parts) != 2:
+            raise ValueError(
+                "github export pack nested paths are not supported in v0.1: "
+                f"{rel_path}"
+            )
+
+        file_path = root / rel_path
+        _load_json_object_for_path(file_path, rel_path)
+
+        if top == "issues":
+            has_issue = True
+        elif top == "pull_requests":
+            has_pr = True
+        elif top == "comments":
+            has_comment = True
+        elif rel_path != "repo/metadata.json":
+            raise ValueError(
+                "github export pack repo directory only allows metadata.json: "
+                f"{rel_path}"
+            )
+
+    if "repo/metadata.json" not in seen_paths:
+        raise ValueError("github export pack missing required file: repo/metadata.json")
+    if not has_issue:
+        raise ValueError("github export pack requires at least one issues/*.json file")
+    if not has_pr:
+        raise ValueError("github export pack requires at least one pull_requests/*.json file")
+    if not has_comment:
+        raise ValueError("github export pack requires at least one comments/*.json file")
+
+
 def build_source_snapshot(export_dir: Path) -> dict[str, Any]:
+    root = export_dir.resolve(strict=True)
+    source_type = _detect_source_type(root)
     source_files = _collect_source_files(export_dir)
+    if source_type == "github_export_pack":
+        _validate_github_export_pack(root, source_files)
     return {
         "schema_version": "intake_source_snapshot_v0_1",
         "snapshot_id": _snapshot_id(source_files),
-        "source_type": "file_export",
+        "source_type": source_type,
         "source_files": source_files,
     }
 
