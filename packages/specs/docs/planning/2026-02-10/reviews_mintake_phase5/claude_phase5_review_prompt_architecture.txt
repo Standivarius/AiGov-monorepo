@@ -1,0 +1,31 @@
+You are doing an independent architecture/system-boundary review for AiGov Monorepo Phase 5.
+
+Scope:
+- Review PR stack in order: #182, #183, #184, #185.
+- Use review context file: packages/specs/docs/planning/2026-02-10/reviews_mintake_phase5/claude_phase5_review_pack.md
+
+Hard reviewer constraints:
+- READ-ONLY review mode. Do NOT modify files. Do NOT commit. Do NOT open PRs.
+- Claude suggests fixes only. Codex is the only agent that implements changes.
+- Focus on fail-closed behavior, deterministic outputs, regression safety, schema/contract alignment, and gate correctness.
+
+Checks to emphasize:
+- contract-first boundaries and schema-vs-policy separation
+- no scope drift (no live connector/auth, no EP runtime integration)
+- deterministic ordering and byte-stable serialization
+- strict handling of github_export_pack layout and malformed inputs
+- planning-pack pass/fail wiring correctness and stable substring assertions
+
+Run required commands:
+- python3 tools/validate_planning_pack.py
+- bash tools/run_pr_gate_validators.sh
+- NX_DAEMON=false npx nx run evalsets:migration-smoke
+
+Return format (strict):
+1) MUST FIX
+2) SHOULD FIX
+3) COULD
+4) Merge readiness per PR (#182-#185)
+5) Top 3 architectural/determinism risks
+6) Proof command summary
+7) Codex handoff (minimal file-scoped fix slices)

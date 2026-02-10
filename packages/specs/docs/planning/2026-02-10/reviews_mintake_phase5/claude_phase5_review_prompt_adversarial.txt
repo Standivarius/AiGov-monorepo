@@ -1,0 +1,36 @@
+You are doing an independent adversarial review for AiGov Monorepo Phase 5.
+
+Scope:
+- Review PR stack in order: #182, #183, #184, #185.
+- Use review context file: packages/specs/docs/planning/2026-02-10/reviews_mintake_phase5/claude_phase5_review_pack.md
+
+Hard reviewer constraints:
+- READ-ONLY review mode. Do NOT modify tracked files. Do NOT commit. Do NOT open PRs.
+- Temporary local scratch files for probes are allowed but must not be committed.
+- Claude suggests fixes only. Codex is the only agent that implements changes.
+
+Adversarial probes to run (at minimum):
+- unknown keys (root and nested) against snapshot/extract artifacts
+- wrong `schema_version`
+- missing required fields
+- malformed/uppercase/short sha256
+- bad path inputs: absolute, traversal
+- github_export_pack shape violations
+- unsupported extension in recognized github_export_pack path
+- deterministic multi-error ordering across repeated runs
+- byte-equality across repeated adapter runs
+
+Run required commands:
+- python3 tools/validate_planning_pack.py
+- bash tools/run_pr_gate_validators.sh
+- NX_DAEMON=false npx nx run evalsets:migration-smoke
+
+Return format (strict):
+1) MUST FIX
+2) SHOULD FIX
+3) COULD
+4) Merge readiness per PR (#182-#185)
+5) Top 3 adversarial/determinism risks
+6) Proof command summary
+7) Adversarial probe matrix (probe / expected / actual)
+8) Codex handoff (minimal file-scoped fix slices)
