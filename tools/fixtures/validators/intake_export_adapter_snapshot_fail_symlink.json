@@ -1,0 +1,6 @@
+{
+  "fixture_dir": "tools/fixtures/exports/file_export_fail_symlink",
+  "symlink_name": "linked/context_profile_link.json",
+  "symlink_target": "../context_profile.json",
+  "expected_error_substring": "symlink entry not allowed"
+}

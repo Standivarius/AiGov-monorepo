@@ -30,6 +30,10 @@ from validate_intake_bundle_v0_1 import (
 )
 from validate_intake_bundle_extract_v0_1 import validate_intake_bundle_extract_fixture
 from validate_intake_source_snapshot_v0_1 import validate_intake_source_snapshot_fixture
+from validate_intake_export_file_adapter_v0_1 import (
+    validate_export_adapter_snapshot_fail_symlink,
+    validate_export_adapter_snapshot_pass,
+)
 from validate_module_cards import validate_module_cards
 from validate_module_dashboard_snapshot import validate_module_dashboard_snapshot
 from validate_print_inspect_petri_run_command import validate_print_inspect_petri_run_command
@@ -193,7 +197,7 @@ INTAKE_BUNDLE_EXTRACT_FAIL_EXPECTED_SUBSTRINGS = {
     / "tools"
     / "fixtures"
     / "validators"
-    / "intake_bundle_extract_fail_duplicate_evidence_refs.json": "evidence_refs must be unique",
+    / "intake_bundle_extract_fail_duplicate_evidence_refs.json": "evidence_refs must contain unique items",
 }
 INTAKE_SOURCE_SNAPSHOT_PASS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_source_snapshot_v0_1_pass.json"
@@ -222,6 +226,13 @@ INTAKE_SOURCE_SNAPSHOT_FAIL_EXPECTED_SUBSTRINGS = {
     / "validators"
     / "intake_source_snapshot_v0_1_fail_missing_sha256.json": "missing required key 'sha256'",
 }
+INTAKE_EXPORT_ADAPTER_PASS_DIR = ROOT / "tools" / "fixtures" / "exports" / "file_export_pass_minimal"
+INTAKE_EXPORT_ADAPTER_SNAPSHOT_PASS_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_export_adapter_snapshot_pass.json"
+)
+INTAKE_EXPORT_ADAPTER_SNAPSHOT_FAIL_SYMLINK_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_export_adapter_snapshot_fail_symlink.json"
+)
 INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json",
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_empty_evidence_index.json",
@@ -1073,6 +1084,33 @@ def main() -> int:
                 print(f"  - {error}")
             return 1
         print(f"FAIL (as expected): intake source snapshot fixture validated: {path}")
+
+    export_adapter_snapshot_errors = validate_export_adapter_snapshot_pass(
+        INTAKE_EXPORT_ADAPTER_PASS_DIR,
+        INTAKE_EXPORT_ADAPTER_SNAPSHOT_PASS_PATH,
+    )
+    if export_adapter_snapshot_errors:
+        print("ERROR: intake export adapter snapshot pass fixture failed validation:")
+        for error in export_adapter_snapshot_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "PASS: intake export adapter snapshot fixture validated: "
+        f"{INTAKE_EXPORT_ADAPTER_SNAPSHOT_PASS_PATH}"
+    )
+
+    export_adapter_snapshot_fail_errors = validate_export_adapter_snapshot_fail_symlink(
+        INTAKE_EXPORT_ADAPTER_SNAPSHOT_FAIL_SYMLINK_PATH
+    )
+    if export_adapter_snapshot_fail_errors:
+        print("ERROR: intake export adapter symlink fail fixture failed validation:")
+        for error in export_adapter_snapshot_fail_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "FAIL (as expected): intake export adapter snapshot fixture validated: "
+        f"{INTAKE_EXPORT_ADAPTER_SNAPSHOT_FAIL_SYMLINK_PATH}"
+    )
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)
     if intake_errors:
