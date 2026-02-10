@@ -31,6 +31,7 @@ from validate_intake_bundle_v0_1 import (
 from validate_intake_bundle_extract_v0_1 import validate_intake_bundle_extract_fixture
 from validate_intake_source_snapshot_v0_1 import validate_intake_source_snapshot_fixture
 from validate_intake_export_file_adapter_v0_1 import (
+    validate_export_adapter_snapshot_fail_unsupported_ext,
     validate_export_adapter_extract_fail_empty,
     validate_export_adapter_extract_pass,
     validate_export_adapter_snapshot_fail_symlink,
@@ -229,11 +230,24 @@ INTAKE_SOURCE_SNAPSHOT_FAIL_EXPECTED_SUBSTRINGS = {
     / "intake_source_snapshot_v0_1_fail_missing_sha256.json": "missing required key 'sha256'",
 }
 INTAKE_EXPORT_ADAPTER_PASS_DIR = ROOT / "tools" / "fixtures" / "exports" / "file_export_pass_minimal"
+INTAKE_EXPORT_ADAPTER_GITHUB_PASS_DIR = (
+    ROOT / "tools" / "fixtures" / "exports" / "github_export_pack_pass_minimal"
+)
 INTAKE_EXPORT_ADAPTER_SNAPSHOT_PASS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_export_adapter_snapshot_pass.json"
 )
 INTAKE_EXPORT_ADAPTER_SNAPSHOT_FAIL_SYMLINK_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_export_adapter_snapshot_fail_symlink.json"
+)
+INTAKE_EXPORT_ADAPTER_SNAPSHOT_GITHUB_PASS_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_export_adapter_snapshot_pass_github_pack.json"
+)
+INTAKE_EXPORT_ADAPTER_SNAPSHOT_GITHUB_FAIL_UNSUPPORTED_EXT_PATH = (
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_export_adapter_snapshot_fail_github_unsupported_ext.json"
 )
 INTAKE_EXPORT_ADAPTER_EXTRACT_PASS_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_export_adapter_extract_pass.json"
@@ -1118,6 +1132,33 @@ def main() -> int:
     print(
         "FAIL (as expected): intake export adapter snapshot fixture validated: "
         f"{INTAKE_EXPORT_ADAPTER_SNAPSHOT_FAIL_SYMLINK_PATH}"
+    )
+
+    export_adapter_snapshot_github_errors = validate_export_adapter_snapshot_pass(
+        INTAKE_EXPORT_ADAPTER_GITHUB_PASS_DIR,
+        INTAKE_EXPORT_ADAPTER_SNAPSHOT_GITHUB_PASS_PATH,
+    )
+    if export_adapter_snapshot_github_errors:
+        print("ERROR: intake export adapter github snapshot pass fixture failed validation:")
+        for error in export_adapter_snapshot_github_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "PASS: intake export adapter github snapshot fixture validated: "
+        f"{INTAKE_EXPORT_ADAPTER_SNAPSHOT_GITHUB_PASS_PATH}"
+    )
+
+    export_adapter_snapshot_github_fail_errors = validate_export_adapter_snapshot_fail_unsupported_ext(
+        INTAKE_EXPORT_ADAPTER_SNAPSHOT_GITHUB_FAIL_UNSUPPORTED_EXT_PATH
+    )
+    if export_adapter_snapshot_github_fail_errors:
+        print("ERROR: intake export adapter github snapshot fail fixture failed validation:")
+        for error in export_adapter_snapshot_github_fail_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "FAIL (as expected): intake export adapter github snapshot fixture validated: "
+        f"{INTAKE_EXPORT_ADAPTER_SNAPSHOT_GITHUB_FAIL_UNSUPPORTED_EXT_PATH}"
     )
 
     export_adapter_extract_errors = validate_export_adapter_extract_pass(

@@ -1,0 +1,6 @@
+{
+  "fixture_dir": "tools/fixtures/exports/github_export_pack_pass_minimal",
+  "inject_path": "repo/metadata.yaml",
+  "inject_contents": "repository_full_name: acme/privacy-service\n",
+  "expected_error_substring": "github export pack only supports .json files"
+}
