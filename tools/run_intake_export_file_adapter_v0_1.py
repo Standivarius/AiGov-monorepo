@@ -120,6 +120,10 @@ def _detect_source_type(export_root: Path) -> str:
 
     for dirname in GITHUB_EXPORT_TOP_LEVEL_DIRS:
         dir_path = export_root / dirname
+        if dir_path.is_symlink():
+            raise ValueError(
+                f"github export pack top-level entry must not be a symlink: {dirname}"
+            )
         if not dir_path.is_dir():
             raise ValueError(
                 "github export pack top-level entry must be a directory: "
