@@ -31,6 +31,7 @@ from validate_intake_bundle_v0_1 import (
 from validate_intake_bundle_extract_v0_1 import validate_intake_bundle_extract_fixture
 from validate_intake_source_snapshot_v0_1 import validate_intake_source_snapshot_fixture
 from validate_intake_export_file_adapter_v0_1 import (
+    validate_export_adapter_extract_fail_bad_shape,
     validate_export_adapter_snapshot_fail_unsupported_ext,
     validate_export_adapter_extract_fail_empty,
     validate_export_adapter_extract_pass,
@@ -254,6 +255,16 @@ INTAKE_EXPORT_ADAPTER_EXTRACT_PASS_PATH = (
 )
 INTAKE_EXPORT_ADAPTER_EXTRACT_FAIL_EMPTY_PATH = (
     ROOT / "tools" / "fixtures" / "validators" / "intake_export_adapter_extract_fail_empty.json"
+)
+INTAKE_EXPORT_ADAPTER_EXTRACT_GITHUB_PASS_PATH = (
+    ROOT / "tools" / "fixtures" / "validators" / "intake_export_adapter_extract_pass_github_pack.json"
+)
+INTAKE_EXPORT_ADAPTER_EXTRACT_GITHUB_FAIL_BAD_SHAPE_PATH = (
+    ROOT
+    / "tools"
+    / "fixtures"
+    / "validators"
+    / "intake_export_adapter_extract_fail_github_bad_shape.json"
 )
 INTAKE_BUNDLE_V0_1_FAIL_PATHS = [
     ROOT / "tools" / "fixtures" / "validators" / "intake_bundle_v0_1_fail_missing_required.json",
@@ -1186,6 +1197,33 @@ def main() -> int:
     print(
         "FAIL (as expected): intake export adapter extract fixture validated: "
         f"{INTAKE_EXPORT_ADAPTER_EXTRACT_FAIL_EMPTY_PATH}"
+    )
+
+    export_adapter_extract_github_errors = validate_export_adapter_extract_pass(
+        INTAKE_EXPORT_ADAPTER_GITHUB_PASS_DIR,
+        INTAKE_EXPORT_ADAPTER_EXTRACT_GITHUB_PASS_PATH,
+    )
+    if export_adapter_extract_github_errors:
+        print("ERROR: intake export adapter github extract pass fixture failed validation:")
+        for error in export_adapter_extract_github_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "PASS: intake export adapter github extract fixture validated: "
+        f"{INTAKE_EXPORT_ADAPTER_EXTRACT_GITHUB_PASS_PATH}"
+    )
+
+    export_adapter_extract_github_fail_errors = validate_export_adapter_extract_fail_bad_shape(
+        INTAKE_EXPORT_ADAPTER_EXTRACT_GITHUB_FAIL_BAD_SHAPE_PATH
+    )
+    if export_adapter_extract_github_fail_errors:
+        print("ERROR: intake export adapter github extract fail fixture failed validation:")
+        for error in export_adapter_extract_github_fail_errors:
+            print(f"  - {error}")
+        return 1
+    print(
+        "FAIL (as expected): intake export adapter github extract fixture validated: "
+        f"{INTAKE_EXPORT_ADAPTER_EXTRACT_GITHUB_FAIL_BAD_SHAPE_PATH}"
     )
 
     intake_errors = validate_client_intake_to_bundle(SCENARIO_COMPILE_BASE_DIR, CLIENT_INTAKE_FIXTURE)

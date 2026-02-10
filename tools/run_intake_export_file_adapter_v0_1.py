@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -248,8 +249,11 @@ def build_extract_bundle(
 ) -> dict[str, Any]:
     source_files = snapshot.get("source_files")
     snapshot_id = snapshot.get("snapshot_id")
+    source_type = snapshot.get("source_type")
     if not isinstance(source_files, list) or not isinstance(snapshot_id, str) or not snapshot_id:
         raise ValueError("snapshot payload missing source_files or snapshot_id")
+    if source_type not in {"file_export", "github_export_pack"}:
+        raise ValueError("snapshot payload has unsupported source_type for extract adapter")
 
     root = export_dir.resolve(strict=True)
     candidates: dict[str, dict[str, Any]] = {}
@@ -259,6 +263,29 @@ def build_extract_bundle(
         ("context_profile", "sector", "intake.context_profile.sector"),
         ("policy_profile", "retention_days", "intake.policy_profile.retention_days"),
     ]
+
+    def _merge_candidate(field_path: str, raw_value: Any, evidence_ref: str) -> None:
+        value = _canonical_value_string(raw_value)
+        value_kind = _value_kind(raw_value)
+
+        if field_path in candidates:
+            existing = candidates[field_path]
+            if existing["value"] != value:
+                raise ValueError(
+                    "conflicting values for extracted field "
+                    f"{field_path!r} from multiple source files"
+                )
+            refs = set(existing["evidence_refs"])
+            refs.add(evidence_ref)
+            existing["evidence_refs"] = sorted(refs)
+            return
+
+        candidates[field_path] = {
+            "field_path": field_path,
+            "value": value,
+            "value_kind": value_kind,
+            "evidence_refs": [evidence_ref],
+        }
 
     for index, entry in enumerate(source_files):
         if not isinstance(entry, dict):
@@ -275,9 +302,79 @@ def build_extract_bundle(
             raise ValueError(f"source file escapes export root: {source_path}") from exc
 
         if source_file_path.suffix.lower() != ".json":
+            if source_type == "github_export_pack":
+                raise ValueError(f"github export pack only supports .json files: {source_path}")
             continue
 
-        payload = _load_json_object(source_file_path)
+        if source_type == "github_export_pack":
+            payload = _load_json_object_for_path(source_file_path, source_path)
+        else:
+            payload = _load_json_object(source_file_path)
+
+        if source_type == "github_export_pack":
+            top = Path(source_path).parts[0] if Path(source_path).parts else ""
+            if top == "repo":
+                jurisdiction = payload.get("jurisdiction")
+                if isinstance(jurisdiction, str) and jurisdiction:
+                    _merge_candidate(
+                        "intake.context_profile.jurisdiction",
+                        jurisdiction.upper(),
+                        evidence_ref,
+                    )
+                sector = payload.get("sector")
+                if isinstance(sector, str) and sector:
+                    _merge_candidate(
+                        "intake.context_profile.sector",
+                        sector.lower(),
+                        evidence_ref,
+                    )
+                retention_days = payload.get("retention_days")
+                if (
+                    isinstance(retention_days, (int, float, str))
+                    and not isinstance(retention_days, bool)
+                ):
+                    _merge_candidate(
+                        "intake.policy_profile.retention_days",
+                        str(retention_days),
+                        evidence_ref,
+                    )
+                continue
+
+            text_parts: list[str] = []
+            for key in ("title", "body", "comment", "description"):
+                value = payload.get(key)
+                if isinstance(value, str) and value:
+                    text_parts.append(value)
+
+            labels = payload.get("labels")
+            if isinstance(labels, list):
+                for label in labels:
+                    if isinstance(label, str) and label:
+                        text_parts.append(label)
+
+            normalized = " ".join(text_parts).lower()
+            if normalized:
+                if " nl " in f" {normalized} ":
+                    _merge_candidate(
+                        "intake.context_profile.jurisdiction",
+                        "NL",
+                        evidence_ref,
+                    )
+                if "public-sector" in normalized or "public sector" in normalized:
+                    _merge_candidate(
+                        "intake.context_profile.sector",
+                        "public",
+                        evidence_ref,
+                    )
+
+                retention_match = re.search(r"\b(\d+)\s+days?\b", normalized)
+                if retention_match:
+                    _merge_candidate(
+                        "intake.policy_profile.retention_days",
+                        retention_match.group(1),
+                        evidence_ref,
+                    )
+            continue
 
         for section, key, field_path in mapping:
             section_payload = payload.get(section)
@@ -285,27 +382,7 @@ def build_extract_bundle(
                 continue
 
             raw_value = section_payload[key]
-            value = _canonical_value_string(raw_value)
-            value_kind = _value_kind(raw_value)
-
-            if field_path in candidates:
-                existing = candidates[field_path]
-                if existing["value"] != value:
-                    raise ValueError(
-                        "conflicting values for extracted field "
-                        f"{field_path!r} from multiple source files"
-                    )
-                refs = set(existing["evidence_refs"])
-                refs.add(evidence_ref)
-                existing["evidence_refs"] = sorted(refs)
-                continue
-
-            candidates[field_path] = {
-                "field_path": field_path,
-                "value": value,
-                "value_kind": value_kind,
-                "evidence_refs": [evidence_ref],
-            }
+            _merge_candidate(field_path, raw_value, evidence_ref)
 
     extracted_fields = sorted(candidates.values(), key=lambda item: item["field_path"])
     if not extracted_fields:

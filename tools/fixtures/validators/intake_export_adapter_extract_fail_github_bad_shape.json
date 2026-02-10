@@ -1,0 +1,6 @@
+{
+  "fixture_dir": "tools/fixtures/exports/github_export_pack_pass_minimal",
+  "inject_path": "issues/ISSUE-001.json",
+  "inject_from_fixture": "tools/fixtures/exports/github_export_pack_fail_bad_shape/issues/ISSUE-001.json",
+  "expected_error_substring": "github export pack file must be a JSON object"
+}
