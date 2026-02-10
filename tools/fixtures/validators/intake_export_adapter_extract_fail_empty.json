@@ -1,0 +1,4 @@
+{
+  "fixture_dir": "tools/fixtures/exports/file_export_fail_empty_payload",
+  "expected_error_substring": "no extractable fields found in export payloads"
+}

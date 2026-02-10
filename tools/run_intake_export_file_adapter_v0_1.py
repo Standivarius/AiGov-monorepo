@@ -99,13 +99,12 @@ def _snapshot_id(source_files: list[dict[str, str]]) -> str:
 
 def build_source_snapshot(export_dir: Path) -> dict[str, Any]:
     source_files = _collect_source_files(export_dir)
-    snapshot = {
+    return {
         "schema_version": "intake_source_snapshot_v0_1",
         "snapshot_id": _snapshot_id(source_files),
         "source_type": "file_export",
         "source_files": source_files,
     }
-    return snapshot
 
 
 def emit_source_snapshot(export_dir: Path, snapshot_out: Path) -> dict[str, Any]:
@@ -114,14 +113,153 @@ def emit_source_snapshot(export_dir: Path, snapshot_out: Path) -> dict[str, Any]
     return snapshot
 
 
+def _canonical_value_string(value: Any) -> str:
+    if isinstance(value, str):
+        return value
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+
+def _value_kind(value: Any) -> str:
+    if isinstance(value, dict):
+        return "object"
+    if isinstance(value, list):
+        return "array"
+    return "scalar"
+
+
+def _load_json_object(path: Path) -> dict[str, Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"invalid JSON export file {path}: {exc.msg}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"export JSON file must be an object: {path}")
+    return payload
+
+
+def build_extract_bundle(
+    export_dir: Path,
+    snapshot: dict[str, Any],
+    *,
+    bundle_id: str | None = None,
+) -> dict[str, Any]:
+    source_files = snapshot.get("source_files")
+    snapshot_id = snapshot.get("snapshot_id")
+    if not isinstance(source_files, list) or not isinstance(snapshot_id, str) or not snapshot_id:
+        raise ValueError("snapshot payload missing source_files or snapshot_id")
+
+    root = export_dir.resolve(strict=True)
+    candidates: dict[str, dict[str, Any]] = {}
+
+    mapping = [
+        ("context_profile", "jurisdiction", "intake.context_profile.jurisdiction"),
+        ("context_profile", "sector", "intake.context_profile.sector"),
+        ("policy_profile", "retention_days", "intake.policy_profile.retention_days"),
+    ]
+
+    for index, entry in enumerate(source_files):
+        if not isinstance(entry, dict):
+            continue
+        source_path = entry.get("source_path")
+        if not isinstance(source_path, str) or not source_path:
+            continue
+        evidence_ref = f"EV-{index + 1:03d}"
+
+        source_file_path = (root / source_path).resolve(strict=True)
+        try:
+            source_file_path.relative_to(root)
+        except ValueError as exc:
+            raise ValueError(f"source file escapes export root: {source_path}") from exc
+
+        if source_file_path.suffix.lower() != ".json":
+            continue
+
+        payload = _load_json_object(source_file_path)
+
+        for section, key, field_path in mapping:
+            section_payload = payload.get(section)
+            if not isinstance(section_payload, dict) or key not in section_payload:
+                continue
+
+            raw_value = section_payload[key]
+            value = _canonical_value_string(raw_value)
+            value_kind = _value_kind(raw_value)
+
+            if field_path in candidates:
+                existing = candidates[field_path]
+                if existing["value"] != value:
+                    raise ValueError(
+                        "conflicting values for extracted field "
+                        f"{field_path!r} from multiple source files"
+                    )
+                refs = set(existing["evidence_refs"])
+                refs.add(evidence_ref)
+                existing["evidence_refs"] = sorted(refs)
+                continue
+
+            candidates[field_path] = {
+                "field_path": field_path,
+                "value": value,
+                "value_kind": value_kind,
+                "evidence_refs": [evidence_ref],
+            }
+
+    extracted_fields = sorted(candidates.values(), key=lambda item: item["field_path"])
+    if not extracted_fields:
+        raise ValueError("no extractable fields found in export payloads")
+
+    final_bundle_id = bundle_id or f"bundle-{snapshot_id}"
+    return {
+        "schema_version": "intake_bundle_extract_v0_1",
+        "bundle_id": final_bundle_id,
+        "source_snapshot_id": snapshot_id,
+        "extracted_fields": extracted_fields,
+    }
+
+
+def emit_snapshot_and_extract(
+    export_dir: Path,
+    snapshot_out: Path,
+    extract_out: Path,
+    *,
+    bundle_id: str | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    snapshot = build_source_snapshot(export_dir)
+    extract = build_extract_bundle(export_dir, snapshot, bundle_id=bundle_id)
+    write_canonical_json(snapshot_out, snapshot)
+    write_canonical_json(extract_out, extract)
+    return snapshot, extract
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run intake export file adapter v0.1")
     parser.add_argument("--export-dir", required=True, help="Path to file export directory")
     parser.add_argument("--snapshot-out", required=True, help="Path to output source snapshot JSON")
+    parser.add_argument(
+        "--extract-out",
+        help="Optional path to output extract JSON (when omitted, snapshot-only mode is used)",
+    )
+    parser.add_argument("--bundle-id", help="Optional bundle_id override for extract output")
     args = parser.parse_args()
 
+    export_dir = Path(args.export_dir)
+    snapshot_out = Path(args.snapshot_out)
+
     try:
-        snapshot = emit_source_snapshot(Path(args.export_dir), Path(args.snapshot_out))
+        if args.extract_out:
+            snapshot, extract = emit_snapshot_and_extract(
+                export_dir,
+                snapshot_out,
+                Path(args.extract_out),
+                bundle_id=args.bundle_id,
+            )
+            print(
+                "PASS: intake export adapter emitted snapshot+extract "
+                f"(snapshot_id={snapshot['snapshot_id']}, bundle_id={extract['bundle_id']})"
+            )
+            return 0
+
+        snapshot = emit_source_snapshot(export_dir, snapshot_out)
     except ValueError as exc:
         print(f"ERROR: {exc}")
         return 1
