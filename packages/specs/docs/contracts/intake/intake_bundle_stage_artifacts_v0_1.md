@@ -38,6 +38,12 @@ Canonical schemas:
 - Evidence ref format is currently asymmetric in `v0_1`: extract constrains `EV-NNN`, while reconcile and gap currently accept any non-empty string.
 - A follow-up harmonization pass should align all stage artifacts to one canonical evidence-ref pattern.
 
+## Export Adapter Boundary
+- The Phase 4 export/file adapter emits only stage-boundary artifacts (`intake_source_snapshot_v0_1` and `intake_bundle_extract_v0_1`).
+- The adapter does not emit reconcile/gap/readiness artifacts and does not execute policy runtime.
+- Adapter output must be deterministic and fail-closed before downstream stage artifacts are constructed.
+- OSS integration remains behind file-export adapter boundaries only (no live connectors in `v0_1`).
+
 ## Empty-State Semantics
 - Stage schemas require non-empty item arrays when the artifact is emitted (`minItems: 1`).
 - Empty states are represented by artifact absence (or equivalent upstream "no conflicts/no gaps/no blockers" signal), not by emitting empty artifacts in `v0_1`.
