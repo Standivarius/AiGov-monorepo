@@ -39,10 +39,11 @@ Canonical schemas:
 - A follow-up harmonization pass should align all stage artifacts to one canonical evidence-ref pattern.
 
 ## Export Adapter Boundary
-- The Phase 4 export/file adapter emits only stage-boundary artifacts (`intake_source_snapshot_v0_1` and `intake_bundle_extract_v0_1`).
+- The Phase 4/5 export adapter emits only stage-boundary artifacts (`intake_source_snapshot_v0_1` and `intake_bundle_extract_v0_1`).
 - The adapter does not emit reconcile/gap/readiness artifacts and does not execute policy runtime.
 - Adapter output must be deterministic and fail-closed before downstream stage artifacts are constructed.
 - OSS integration remains behind file-export adapter boundaries only (no live connectors in `v0_1`).
+- `github_export_pack` ingestion remains tools-only and file-based with explicit fail-closed path/shape rules in the adapter contract.
 
 ## Empty-State Semantics
 - Stage schemas require non-empty item arrays when the artifact is emitted (`minItems: 1`).
