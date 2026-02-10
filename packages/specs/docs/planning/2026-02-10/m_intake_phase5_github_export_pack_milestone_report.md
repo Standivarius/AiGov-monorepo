@@ -2,7 +2,7 @@
 
 Date: 2026-02-10  
 Milestone: M_Intake Phase 5 (GitHub export pack, file-based deterministic ingestion, GDPR-only)  
-Status: In progress (stack split pending)
+Status: In progress (stack opened; review loop pending)
 
 ## 1) Objective and Scope
 - Objective: extend tools-only deterministic intake export adapter coverage to a strict `github_export_pack` layout and deterministic extract heuristics.
@@ -27,10 +27,10 @@ Status: In progress (stack split pending)
   - `intake_bundle_stage_artifacts_v0_1.md`
 
 ## 3) PR Ledger (Planned Stack)
-- PR1 / `pr1-mintake5-contract`: contract + schema enum + GitHub pass fixture seed (`42c1a10`)
-- PR2 / `pr2-mintake5-snapshot`: snapshot runtime/validator/gates (`5469cd9`)
-- PR3 / `pr3-mintake5-extract`: extract runtime/validator/gates (`b7574eb`)
-- PR4 / `pr4-mintake5-closeout`: contract linkage + roadmap/report closeout (current slice)
+- PR1 / `pr1-mintake5-contract`: [#182](https://github.com/Standivarius/AiGov-monorepo/pull/182) — contract + schema enum + GitHub pass fixture seed (`be39e26`)
+- PR2 / `pr2-mintake5-snapshot`: [#183](https://github.com/Standivarius/AiGov-monorepo/pull/183) — snapshot runtime/validator/gates (`6c7372b`)
+- PR3 / `pr3-mintake5-extract`: [#184](https://github.com/Standivarius/AiGov-monorepo/pull/184) — extract runtime/validator/gates (`481d3da`)
+- PR4 / `pr4-mintake5-closeout`: [#185](https://github.com/Standivarius/AiGov-monorepo/pull/185) — contract linkage + roadmap/report closeout (`f6e7053`)
 
 ## 4) Deterministic / Fail-Closed Invariants
 - GitHub pack layout: root entries must be exactly `repo/`, `issues/`, `pull_requests/`, `comments/`.
@@ -62,7 +62,7 @@ Status: In progress (stack split pending)
   - `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260210_074620.log`
 
 ## 7) Review Loop Results (Claude)
-- Pending after stacked PRs are opened.
+- Pending architecture and adversarial review loop on stack head.
 
 ## 8) Residual Risks (Current)
 - Merge-order conflict risk on shared planning-pack fixture wiring blocks.

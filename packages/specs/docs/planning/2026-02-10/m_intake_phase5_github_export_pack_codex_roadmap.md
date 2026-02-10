@@ -214,10 +214,10 @@ Proof commands:
 ### Slice Status
 | Slice | Title | Branch (planned) | Status |
 | --- | --- | --- | --- |
-| PR1 | Contract + snapshot source-type + GitHub pack seed | `pr1-mintake5-contract` | Done on integration commit `42c1a10` |
-| PR2 | Snapshot adapter support + unsupported-extension gate | `pr2-mintake5-snapshot` | Done on integration commit `5469cd9` |
-| PR3 | GitHub extract heuristics + bad-shape gate | `pr3-mintake5-extract` | Done on integration commit `b7574eb` |
-| PR4 | Contract linkage + closeout docs | `pr4-mintake5-closeout` | In progress |
+| PR1 | Contract + snapshot source-type + GitHub pack seed | `pr1-mintake5-contract` | Open: [#182](https://github.com/Standivarius/AiGov-monorepo/pull/182) |
+| PR2 | Snapshot adapter support + unsupported-extension gate | `pr2-mintake5-snapshot` | Open: [#183](https://github.com/Standivarius/AiGov-monorepo/pull/183) |
+| PR3 | GitHub extract heuristics + bad-shape gate | `pr3-mintake5-extract` | Open: [#184](https://github.com/Standivarius/AiGov-monorepo/pull/184) |
+| PR4 | Contract linkage + closeout docs | `pr4-mintake5-closeout` | Open: [#185](https://github.com/Standivarius/AiGov-monorepo/pull/185) |
 
 ### Proof Log Stamps
 - PR1 local proof run:
@@ -235,3 +235,8 @@ Proof commands:
   - `bash tools/run_pr_gate_validators.sh` PASS
   - `NX_DAEMON=false npx nx run evalsets:migration-smoke` PASS
   - log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260210_074620.log`
+- PR4 local proof run:
+  - `python3 tools/validate_planning_pack.py` PASS
+  - `bash tools/run_pr_gate_validators.sh` PASS
+  - `NX_DAEMON=false npx nx run evalsets:migration-smoke` PASS
+  - log: `docs/logs/EVALSET-MIGRATION-SMOKE-v1_20260210_075335.log`
