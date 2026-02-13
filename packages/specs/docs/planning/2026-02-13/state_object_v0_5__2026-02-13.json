@@ -1,0 +1,181 @@
+{
+  "schema_version": "aigov_planner_state_v0_5",
+  "generated_at": "2026-02-13",
+  "repo": {
+    "name": "Standivarius/AiGov-monorepo",
+    "default_branch": "main",
+    "planning_root": "packages/specs/docs/planning",
+    "artifacts_root": "packages/specs/docs/artifacts",
+    "contracts_root": "packages/specs/docs/contracts",
+    "schemas_root": "packages/specs/schemas",
+    "tools_root": "tools",
+    "ep_root": "packages/ep/aigov_ep",
+    "pe_root": "packages/pe"
+  },
+  "people_and_roles": {
+    "human_owner": {
+      "name": "Marius",
+      "role": "Product owner / final decision maker / runs Claude review prompts / approves merges"
+    },
+    "chatgpt": {
+      "role": "Strategic planning surface + plan convergence + guardrails enforcement (no PRs, no implementation)"
+    },
+    "codex": {
+      "role": "Primary implementer + repo researcher + PR-slice planner/executor under guardrails (produces PRs)"
+    },
+    "claude": {
+      "role": "Independent architecture reviewer + adversarial tester (MUST/SHOULD findings loop) via provided prompts"
+    },
+    "environment": {
+      "role": "VS Code + devcontainer (current), with optional future move to Codex app/macOS or cloud tasks"
+    }
+  },
+  "operating_principles": [
+    "Two-brain rule: ChatGPT does planning; Codex/Lead Dev implements PRs.",
+    "Contract-first + fail-closed: new capabilities must be represented as schemas/contracts in packages/specs; validators fail-closed.",
+    "Eval-first/TDD: fixtures/tests gate behavior; reuse existing monorepo patterns.",
+    "OSS stitching: OSS tools behind adapters; moat is canonical contracts + deterministic workflow + audit-grade outputs.",
+    "Do not block on fetching: planning proceeds from verified truth; milestone closeout includes updating state JSON as a separate upload."
+  ],
+  "workflow_contract": {
+    "planning_execution_loop": [
+      "1) Codex planning-only: reads repo + writes roadmap + report skeleton; no code/PR.",
+      "2) ChatGPT plan convergence: reviews Codex plan vs guardrails; outputs final direction and execution prompt.",
+      "3) Codex executes: stacked PRs, <=6 files/PR, runs allowed proofs per slice, updates roadmap.",
+      "4) Claude review loop: architecture + adversarial prompts run at milestone end; Codex fixes until MUST=0 and SHOULD=0; COULD tracked with explicit deferral rationale.",
+      "5) Milestone closeout: final report + residual risks; update state JSON as separate non-PR upload."
+    ],
+    "guardrails": {
+      "pr_size_cap_files": 6,
+      "allowed_proof_commands": [
+        "python3 tools/validate_planning_pack.py",
+        "bash tools/run_pr_gate_validators.sh",
+        "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+      ],
+      "scope_control": [
+        "No OPA execution, no PAR adapter implementation, no LLM council work unless explicitly in-scope for the milestone.",
+        "Prefer tools/ + specs-first until contracts are stable; introduce EP runtime only when boundary contracts are locked."
+      ]
+    }
+  },
+  "compliance_blueprint": {
+    "intent": "Develop AiGov as Compliance-as-Code: repository+issue tracker as evidence for ISO/IEC 42001 PDCA; engineering posture aligned with EU AI Act transparency/logging; GDPR Article 25 privacy-by-design (data minimization + PII scrubbing).",
+    "iso_42001": {
+      "goal": "Use repo artifacts (plans, risks, evals, reviews, logs) as evidence for clauses 4-10; produce auditable documentation over 200+ hours toward Lead Implementer readiness.",
+      "expected_repo_evidence_types": [
+        "Risk register",
+        "Change logs / ADRs",
+        "Operational controls in AGENTS.md",
+        "Review packs and closure reports",
+        "Evaluation artifacts and regression logs"
+      ]
+    },
+    "eu_ai_act_posture": {
+      "goal": "Design for audit-grade technical documentation and traceability (structured telemetry/logs for non-deterministic steps).",
+      "note": "Exact legal obligations depend on final classification; posture is 'build as if high-risk' for enterprise credibility."
+    },
+    "gdpr_article_25": {
+      "goal": "Data minimization by design; deterministic PII scrubbing layer before any LLM/scorer use; evidence model references rather than raw PII."
+    },
+    "inspect_mapping": {
+      "datasets": "Red-teaming scenarios with documented lineage and mapping to legal clauses.",
+      "solvers": "Agentic loop that must include deterministic pre-processing for PII scrubbing; immutable audit log appends.",
+      "scorers": "Model-graded evaluation requires human-in-the-loop override; log non-deterministic decisions."
+    }
+  },
+  "naming_and_taxonomy": {
+    "module_prefix_convention": "All major modules must use M_<Name> canonical naming in planning and docs (e.g., M_Intake, M_Execution).",
+    "taxonomy_requirement": "Maintain a full project vocabulary (machine + human friendly). Codex should scan codebase to extract existing terms (EP/PE, solver/scorer/dataset, bundle/manifest, evidence, stages) and propose canonical definitions + naming conventions to prevent drift."
+  },
+  "current_verified_status_snapshot": {
+    "intake_phase_d": {
+      "status": "merged",
+      "highlights": [
+        "intake_bundle_v0_1 schema + contract docs exist and are strict (fail-closed).",
+        "Evidence Model B chosen and documented.",
+        "Stdlib-only validator exists; fixtures wired into planning-pack gates.",
+        "Legacy fail-open bug fixed (both-missing locale/context fails)."
+      ]
+    },
+    "intake_phase_2": {
+      "status": "implemented (historical)",
+      "highlights": [
+        "Stage boundary artifacts introduced (reconcile/gap/readiness schemas/fixtures and validator modes).",
+        "PR slicing discipline established with stacked PRs and Claude review loop patterns."
+      ]
+    },
+    "execution_milestone_deterministic_bundles": {
+      "status": "implemented and process-compliant (historical)",
+      "highlights": [
+        "Deterministic bundle manifest contracts + ambiguity fail-closed behavior; restacked to satisfy <=6 files/PR."
+      ]
+    },
+    "intake_phase_3_extract_stage": {
+      "status": "implemented (historical)",
+      "highlights": [
+        "Extract-stage schema/contract + dedicated validator + fixtures + planning-pack gates; source snapshot artifacts introduced."
+      ]
+    },
+    "intake_phase_4_export_adapter": {
+      "status": "merged",
+      "highlights": [
+        "Tools-only deterministic file-export adapter emits snapshot+extract; determinism validator + planning-pack gating."
+      ]
+    },
+    "intake_phase_5_github_export_pack": {
+      "status": "executed with stacked PRs (merge status may vary by branch state)",
+      "highlights": [
+        "GitHub export pack v0.1 (file-based, deterministic) implemented behind tools-only adapter; PASS/FAIL fixtures and gates.",
+        "Claude review loop produced MUST=0, SHOULD=0 for the stack; carryover COULD items tracked."
+      ]
+    },
+    "intake_phase_6_jira_export_pack": {
+      "status": "planned (planning-only docs created)",
+      "highlights": [
+        "Jira export pack v0.1 plan exists, designed to reuse adapter + deterministic gates; includes enum/source_type expansion and PASS/FAIL fixtures."
+      ]
+    }
+  },
+  "strategic_problem_statement": {
+    "core_issue": "The overall AiGov codebase is large with likely dead/duplicative code and unclear product-level PRD structure; M_Intake progress alone does not make the whole product finishable.",
+    "agreed_direction": [
+      "Create a new proper PRD with clear scope, business concept, features, use cases, and module connectivity.",
+      "Adopt a PRD stack (Program PRD → Module PRDs → Contracts/ADRs/Evals) that is both human and machine friendly for Codex.",
+      "Create a comprehensive taxonomy/vocabulary artifact via codebase scan (effort low) to prevent naming drift and enforce M_ naming.",
+      "Encode roles, processes, and compliance-as-code requirements into hierarchical AGENTS.md / directory overrides before major refactors."
+    ]
+  },
+  "immediate_next_actions": [
+    {
+      "action": "Create process definition and governance scaffolding (no refactor yet)",
+      "effort": "medium",
+      "deliverables": [
+        "Machine+human-friendly PRD stack templates and indexing rules (no product content yet).",
+        "Taxonomy extraction plan + initial vocabulary artifact generation method (Codex-driven).",
+        "AGENTS.md overhaul plan: roles, loop process, compliance-as-code requirements, directory overrides strategy."
+      ]
+    },
+    {
+      "action": "Research best practices (Feb 2026) for large repo refactors + docs-as-code governance",
+      "effort": "medium",
+      "deliverables": [
+        "Curated research summary with citations and applicability to AiGov constraints.",
+        "Recommended process sequencing (what to do first: governance docs, taxonomy, PRD skeleton, then refactor program)."
+      ]
+    }
+  ],
+  "open_questions": [
+    "Decide the canonical locations and file naming scheme for the new PRD stack (and deprecate/relocate existing PRD-like docs).",
+    "Decide whether to enforce taxonomy compliance via CI gates immediately or after initial taxonomy artifact stabilizes.",
+    "Decide the desired automation level for Codex↔Claude loop (manual file handoff vs tool integration via CLI/MCP).",
+    "Decide whether to keep all planning in ChatGPT or run planning in parallel with Codex 5.3 (recommended: parallel with repo docs as source of truth)."
+  ],
+  "references": {
+    "new_state_object_target_path": "packages/specs/docs/planning/2026-02-13/state_object_v0_5__2026-02-13.json",
+    "chat_archive_target_path": "packages/specs/docs/artifacts/2026-02-13_OSS_EU_Opportunities-3.md",
+    "prior_known_artifacts": [
+      "packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities.md",
+      "packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities-2.md"
+    ]
+  }
+}
