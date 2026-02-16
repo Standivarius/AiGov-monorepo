@@ -1,0 +1,199 @@
+{
+  "schema_version": "state_object_v0.4",
+  "date": "2026-02-13",
+  "repo": {
+    "name": "Standivarius/AiGov-monorepo",
+    "default_branch_source_of_truth": "main"
+  },
+
+  "scope": {
+    "in_scope": [
+      "GDPR-only MVP (judge selection + eval design for a GDPR judge LLM)"
+    ],
+    "out_of_scope": [
+      "Non-GDPR frameworks unless explicitly requested",
+      "Unprompted / free-form 'GDPR advice' evaluation that ignores provided client policy + scoped GDPR articles + audit context"
+    ]
+  },
+
+  "hard_rules": {
+    "workflow": [
+      "Durable source of truth is Git; chats are not. Chats become artifacts only when saved into packages/specs/docs/artifacts/.",
+      "Do not execute code in planning chats; output paste-ready Codex prompts only when implementation is requested.",
+      "Always separate TO DOS vs SUGGESTIONS.",
+      "Always label effort: low / medium / high / xhigh.",
+      "Prompts must be single-outcome.",
+      "Keep PRs small; split if >6 files.",
+      "PR-gate must remain fast/deterministic; allowed verification commands only: python3 tools/validate_planning_pack.py; bash tools/run_pr_gate_validators.sh; NX_DAEMON=false npx nx run evalsets:migration-smoke.",
+      "Prefer adding checks under tools/validate_planning_pack.py rather than wiring new things into tools/run_pr_gate_validators.sh unless strictly necessary.",
+      "Be explicit about schema vs policy; validators may enforce policy beyond schema.",
+      "Do not invent new schema fields; add a contract/schema PR first if needed.",
+      "Internal judge prompts/inputs/outputs and GDPR logic must remain English-only; translation happens only at ingestion/egress edges.",
+      "Golden sets / gold evals are defensibility assets and eval-only; do not use them as runtime retrieval knowledge."
+    ],
+    "judge_selection_specific": [
+      "Schema adherence is mandatory for the judge output; first elimination is strict schema pass-rate under realistic context size.",
+      "The GDPR judge is always run with explicit context: violation name, conversation transcript, client policy conditions, relevant GDPR articles, target scope expectations, and auditor guidance. Eval design must match this prompted setup.",
+      "Evaluation must include evidence localization (turn IDs / spans) and fail closed when evidence is missing for a claimed violation.",
+      "Cost is not a primary constraint; prioritize correctness, auditability, robustness, and determinism."
+    ]
+  },
+
+  "problem_statement": {
+    "summary": "Select and validate the best LLM judge configuration (model + prompt/context packing + decoding constraints + schema enforcement) for detecting a single clearly-defined GDPR violation at a time in auditor↔target chatbot conversation logs.",
+    "target_judge_contract": [
+      "Input: violation name + transcript + client internal GDPR policy conditions + relevant GDPR articles + target scope + auditing guidance and rules-of-engagement.",
+      "Output: strict machine-ingestable schema suitable for an automated reporting module.",
+      "Task form: binary classification with abstain option (violation / non-violation / unsure), plus evidence localization."
+    ],
+    "key_user_constraints": [
+      "Avoid over-engineering; final correctness is benchmarked against human experts for GDPR cases.",
+      "Bake-off should allow each candidate model to use its best available prompting/context format (per model/system card guidance), but evaluation scenarios and scoring remain constant.",
+      "First elimination: strict schema adherence (must be essentially perfect)."
+    ]
+  },
+
+  "current_state_summary": [
+    "We clarified that the judge problem is closer to: rule-grounded classification + evidence extraction + long-context needle-in-haystack, rather than general GDPR Q&A.",
+    "We identified the primary eval dimensions: (1) schema pass rate, (2) verdict correctness vs expert gold, (3) evidence localization quality, (4) abstention/calibration behavior, (5) robustness to manipulation inside transcripts, (6) stability under paraphrase/order/verbosity perturbations.",
+    "We agreed that public benchmarks are only proxy signals; the real decision requires a custom gold set aligned to your prompted setup."
+  ],
+
+  "milestones": [
+    {
+      "name": "Judge-selection evals: problem framing + evaluation dimensions",
+      "status": "done",
+      "what_changed": [
+        "Locked the judge framing to prompted, single-violation detection with strict schema output and evidence localization.",
+        "Captured a minimal but robust evaluation dimension set (schema, correctness, evidence, abstain, robustness, stability)."
+      ],
+      "why": "Without a stable framing, benchmark selection and bake-off design drift toward generic LLM QA rather than audit-grade classification."
+    },
+    {
+      "name": "Judge-selection evals: candidate benchmark shortlist + custom gold-set blueprint",
+      "status": "in_progress",
+      "what_changed": [
+        "Planned to use public benchmarks as secondary proxies for rule-application and long-context retrieval, while focusing on a custom GDPR gold set that matches the prompted judge setup.",
+        "Planned a human benchmark baseline via multi-expert labeling + agreement measurement on a representative subset."
+      ],
+      "why": "Public benchmarks rarely match the exact prompted context, evidence requirements, and audit constraints of your judge."
+    }
+  ],
+
+  "evaluation_blueprint_v0": {
+    "unit_under_test": "Judge configuration = (model, system prompt, context packing strategy, decoding params, schema enforcement mechanism, optional retry policy).",
+    "dataset_profile": {
+      "client_assessment_run_size_assumption": {
+        "scenarios": 300,
+        "repeats_per_scenario": 10,
+        "approx_words_per_transcript": 1000,
+        "note": "Cost is not the primary constraint; focus on correctness and auditability."
+      },
+      "gold_set_construction": [
+        "Create a representative labeled set with positives, near-miss negatives, and ambiguous cases.",
+        "For each scenario label: verdict + evidence spans (turn IDs/spans) + minimal rationale code (optional).",
+        "Include transcript-length stress (short/medium/long) and adversarial transcript variants."
+      ],
+      "split_protocol": [
+        "Prompt-dev split (used to tune prompt/context packing per model)",
+        "Locked test split (never used during prompt tuning)",
+        "Optional holdout for regression (future guardrail suite)"
+      ]
+    },
+    "gating_and_metrics": {
+      "gate_0_schema": [
+        "Schema pass rate under realistic loads (target ~100% with strict enforcement).",
+        "No silent coercion: if the model cannot comply, it must fail closed or return a defined error object per schema."
+      ],
+      "primary_metrics": [
+        "Verdict: precision/recall/F1 (macro + per-violation where applicable), with special attention to false negatives.",
+        "Evidence localization: span/turn match (e.g., contains-gold-span rate; span-F1 if you have reliable span gold).",
+        "Abstention: accuracy vs coverage curves; policy threshold for auto-accept vs escalate.",
+        "Stability: verdict variance across repeats at fixed decoding (temp=0 or equivalent deterministic settings).",
+        "Robustness: performance under transcript perturbations and injection attempts."
+      ],
+      "reporting_outputs": [
+        "Per-model scorecard (schema compliance, correctness, evidence, abstain, robustness, stability).",
+        "Failure taxonomy (common false negative / false positive patterns).",
+        "Recommendation: candidate shortlist + escalation policy (small judge → strong judge → human)."
+      ]
+    }
+  },
+
+  "candidate_models_and_strategy_v0": {
+    "selection_principles": [
+      "Start from models that can reliably enforce strict structured outputs (tool/JSON-schema enforcement) and handle long context.",
+      "Allow per-model best prompt/context format in bake-off, but keep scenarios/scoring fixed.",
+      "Use a two-tier or three-tier escalation design only if needed; avoid premature multi-agent complexity."
+    ],
+    "notes": [
+      "GPT 'Pro' tier is not required to design the eval plan; reserve it for unusually complex synthesis, adversarial generation, or tie-breaker critique."
+    ]
+  },
+
+  "open_risks_and_mitigations": [
+    {
+      "risk": "Schema drift between judge output and reporting module ingestion",
+      "status": "open",
+      "mitigation_plan": "Define a single canonical JSON schema for judge output + add strict validator + fixtures; treat as gate_0. Ensure no model-specific deviations leak into the pipeline."
+    },
+    {
+      "risk": "Overfitting prompts to the evaluation set (prompt-overfitting) during bake-off",
+      "status": "open",
+      "mitigation_plan": "Strict prompt-dev vs locked-test split; locked-test never used for prompt iteration. Record all prompt versions with hashes."
+    },
+    {
+      "risk": "Human gold labels not consistent enough to be a reliable target",
+      "status": "open",
+      "mitigation_plan": "Run multi-expert labeling on a subset; measure agreement; adjudicate disagreements; document label guidelines and ambiguity rules."
+    },
+    {
+      "risk": "Transcript injection manipulates the judge (auditor or target attempts to steer evaluation)",
+      "status": "open",
+      "mitigation_plan": "Include injection and obfuscation variants in robustness suite; require judge to ignore transcript instructions and follow system rubric."
+    }
+  ],
+
+  "next_steps": [
+    {
+      "id": "JUDGE_SCHEMA_V0",
+      "title": "Define judge output schema v0 + strict validator fixtures",
+      "effort": "medium",
+      "single_outcome": "A strict, versioned JSON schema for the judge result + fixtures + validator (fail-closed) to serve as gate_0 in all bake-offs.",
+      "verification_commands": [
+        "python3 tools/validate_planning_pack.py"
+      ]
+    },
+    {
+      "id": "GOLDSET_LABEL_GUIDE_V0",
+      "title": "Draft GDPR judge labeling guide (verdict + evidence spans + abstain rules)",
+      "effort": "medium",
+      "single_outcome": "A short, auditable labeling guide that humans and LLM judges both follow; includes examples of near-miss and ambiguous cases."
+    },
+    {
+      "id": "HUMAN_BASELINE_PILOT",
+      "title": "Pilot human baseline agreement study",
+      "effort": "high",
+      "single_outcome": "2–3 GDPR experts label a representative subset; compute agreement; adjudicate; produce initial gold set."
+    },
+    {
+      "id": "BAKEOFF_PROTOCOL_V0",
+      "title": "Lock bake-off protocol (prompt-dev vs locked-test; scoring; reporting)",
+      "effort": "medium",
+      "single_outcome": "A written protocol plus a scoring spec that supports per-model best prompting while keeping evaluation fair and reproducible."
+    }
+  ],
+
+  "handoff": {
+    "transcript_to_save": "2026-02-13_judge-selection-evals.md",
+    "recommended_repo_paths": {
+      "state_object": "packages/specs/docs/planning/2026-02-13/state_object_v0_4__2026-02-13.json",
+      "chat_transcript": "packages/specs/docs/artifacts/2026-02-13_judge-selection-evals.md",
+      "related_context": [
+        "AGENTS.md",
+        ".codex/skills/end-chat/end_chat_rules.md",
+        "packages/specs/docs/planning/2026-02-13/state_object_v0_3__2026-02-13.json"
+      ]
+    }
+  }
+}
