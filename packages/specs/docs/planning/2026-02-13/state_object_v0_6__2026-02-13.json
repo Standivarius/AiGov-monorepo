@@ -1,0 +1,249 @@
+{
+  "schema_version": "aigov_planner_state_v0_6",
+  "generated_at": "2026-02-13",
+  "repo": {
+    "name": "Standivarius/AiGov-monorepo",
+    "default_branch": "main",
+    "planning_root": "packages/specs/docs/planning",
+    "artifacts_root": "packages/specs/docs/artifacts",
+    "contracts_root": "packages/specs/docs/contracts",
+    "schemas_root": "packages/specs/schemas",
+    "tools_root": "tools",
+    "ep_root": "packages/ep/aigov_ep",
+    "pe_root": "packages/pe"
+  },
+  "people_and_roles": {
+    "human_owner": {
+      "name": "Marius",
+      "role": "Founder / product owner / final decision maker"
+    },
+    "assistant_role": {
+      "role": "EU-programs copilot for AiGov: identify, prioritize, and operationalize EU-funded/EU-facilitated opportunities that accelerate adoption/validation (NOT fundraising/investors)"
+    }
+  },
+  "operating_constraints": {
+    "scope": {
+      "include_only": [
+        "EU-funded or EU-facilitated opportunities that accelerate adoption/validation of AiGov",
+        "AI Act regulatory sandboxes and sandbox-adjacent mechanisms",
+        "TEFs (Testing and Experimentation Facilities)",
+        "EDIHs (European Digital Innovation Hubs)",
+        "AI Factories (EuroHPC) if they provide meaningful human support / credibility",
+        "Digital Europe / Horizon Europe / EIC only if realistic for current phase"
+      ],
+      "exclude": [
+        "Investors",
+        "Generic GTM strategy not anchored in EU program mechanisms",
+        "Non-EU opportunities"
+      ]
+    },
+    "economics_and_friction": {
+      "compute_cost_is_not_a_constraint": true,
+      "monthly_inference_budget_usd": 300,
+      "priority_over_compute": [
+        "human expert support",
+        "regulatory-grade validation of outputs",
+        "access to pilot hosts / real-world environments",
+        "credible external narrative and artifacts"
+      ],
+      "avoid_if": [
+        "administrative burden is high with low validation/adoption upside",
+        "program primarily offers infrastructure/compute without people or credibility",
+        "long lead-times without near-term pilot/validation benefit"
+      ]
+    },
+    "company_status": {
+      "incorporated": false,
+      "can_incorporate_fast_days": 2,
+      "note": "Incorporation is not assumed necessary for EUSAiR advice/guidance, but likely needed for many funded service calls or formal contracting. Incorporation can be done quickly if needed."
+    },
+    "founder_context": {
+      "phase": "very early",
+      "time_in_project_months": 2,
+      "solo_founder_right_now": true,
+      "note": "Solo now is not a long-term constraint; team expansion depends on traction and needs."
+    }
+  },
+  "aigov_product_summary_for_external_programs": {
+    "one_liner": "AiGov is a compliance evaluation pipeline for AI systems (especially chatbots/agents) that converts regulatory requirements into repeatable scenario tests and produces traceable, audit-friendly evidence packs and reports.",
+    "core_capabilities": [
+      "Scenario library (GDPR-first MVP) and deterministic compilation into bundles",
+      "Client intake and context/policy pack stacking (jurisdiction/sector/client context)",
+      "Execution + judgment (in progress / evolving) with evidence pack emission",
+      "Reporting layers designed to be audit-friendly (in progress / evolving)"
+    ],
+    "differentiator": {
+      "evidence_boundary_model": {
+        "T1_transcript_evidence": "What can be justified directly from behavior in transcripts and artifacts produced by scenarios",
+        "T2_process_evidence": "What requires documented organizational process, controls, and human oversight",
+        "T3_system_evidence": "What requires system architecture, data governance, logs, and operational controls"
+      },
+      "value": "AiGov explicitly separates what is provable from transcripts vs what requires additional governance/system proofs, improving defensibility and reducing overclaiming."
+    },
+    "positioning_hypothesis": [
+      "Organizations want defensible evidence packs and repeatable test protocols for AI Act / GDPR accountability",
+      "AiGov can become a reusable 'evidence engine' across frameworks (GDPR now; others later) via modular policy/scenario packs"
+    ]
+  },
+  "eusair_engagement_state": {
+    "status": "invited_to_initial_meeting",
+    "pilot_types_offered": [
+      "Advice and guidance",
+      "Digital sandboxing (limited capacity)",
+      "Real-world testing (limited capacity)"
+    ],
+    "current_email_summary": {
+      "meeting_purpose": "1-hour scoping meeting to discuss use case, regulatory challenges, identify critical scrutiny aspects, and decide how to proceed (including whether digital/real-world testing is feasible).",
+      "post_meeting_process_advice_guidance": [
+        "Upload documentation to dedicated SharePoint",
+        "EUSAiR reviews docs",
+        "2-3 follow-up meetings (up to 2h each) to address technical issues",
+        "EUSAiR delivers analysis and recommendations"
+      ],
+      "scarcity_note": "EUSAiR states digital sandboxing and real-world testing capacity is limited; first meeting is a likely gate for these modalities."
+    },
+    "founder_main_uncertainties_to_resolve": [
+      "Can EUSAiR provide regulator-grade feedback (or connect to practitioners/auditors) validating AiGov outputs beyond ChatGPT-style reasoning?",
+      "What exactly is 'digital sandboxing' operationally (environment, supervised methodology, partners, deliverables) vs normal AWS/Azure deployment?",
+      "What is the true bottleneck behind 'limited capacity' (human expert time vs technical constraints)?",
+      "Is it realistic that EUSAiR can broker access to real-world environments, or should founder assume customer discovery must be done independently?"
+    ],
+    "meeting_success_criteria": [
+      "Clear definition of each pilot modality (advice vs digital sandbox vs real-world), with what EUSAiR actually does and delivers",
+      "Decision (or conditional decision) on whether AiGov can get digital sandboxing / real-world testing slot, with explicit criteria",
+      "Agreement on 2-3 scrutiny aspects to focus on and a concrete documentation checklist",
+      "A realistic pathway to real-world pilot hosts or a clear statement that EUSAiR does not provide them"
+    ],
+    "recommended_pre_read_pack": {
+      "max_pages": 2,
+      "appendices": [
+        "One-page architecture + data flow diagram",
+        "One anonymized sample output: scenario card + report excerpt with evidence-boundary labeling"
+      ],
+      "primary_message": "AiGov is an evidence engine and evaluation harness; goal is to align outputs with what regulators/auditors find credible and to standardize test protocols."
+    },
+    "oss_open_core_note": {
+      "intent": "Consider open-sourcing core evidence schema / scenario format / reference runner to enable harmonization across sandboxes and build trust via inspectable methodology.",
+      "meeting_guidance": "Mention only after scope/scrutiny aspects are established; frame OSS as 'harmonization + inspectability + portability', not ideology."
+    }
+  },
+  "eu_opportunities_shortlist_state": {
+    "evaluation_criteria": [
+      "Time-to-validation (weeks, not months)",
+      "Admin/eligibility friction",
+      "Human support intensity (real experts, not just compute)",
+      "Adoption leverage (direct path to pilot hosts/buyers)",
+      "Economic value primarily via subsidized services/human support (compute is secondary)"
+    ],
+    "current_prioritization_hypothesis": [
+      {
+        "rank": 1,
+        "item": "EUSAiR pilots (Advice & Guidance) + attempt to qualify for Digital sandboxing",
+        "why": "Fast regulatory framing; chance to shape evidence packs and positioning; low admin; potential credibility if digital/real-world slots obtained."
+      },
+      {
+        "rank": 2,
+        "item": "EDIH beneficiary services/pilots (Romania + cross-border where possible)",
+        "why": "Best near-term path to pilot hosts and subsidized human support; variable throughput due to national co-funding pipelines; still high leverage."
+      },
+      {
+        "rank": 3,
+        "item": "TEFs (defer until TRL is credible for selected sector)",
+        "why": "High value via subsidized testing/validation experts but often TRL>=6; founder currently believes not there yet."
+      },
+      {
+        "rank": 4,
+        "item": "AI Factories (optional)",
+        "why": "Use only if it provides meaningful onboarding/expert help or credibility; compute savings alone is not valuable."
+      }
+    ],
+    "known_risks_and_local_constraints": {
+      "romania_agency_hiccup_risk": "EDIH co-funding and national agency processes can introduce delays and friction; treat Romania EDIHs as valuable but plan for variability.",
+      "mitigation": [
+        "Prefer EU-level programs (EUSAiR) for early validation",
+        "Use EDIHs primarily for pilot host brokerage and services, not as a single critical path"
+      ]
+    }
+  },
+  "sector_strategy_state": {
+    "question": "Stay horizontal (GDPR-general) vs go deep in 1-2 industries for credibility and then expand via adjacent compliance frameworks.",
+    "current_working_strategy": {
+      "core": "Keep AiGov core horizontal: evidence schema + scenario runner + reporting + multi-framework capability via policy/scenario packs.",
+      "reference_vertical": "Pick one reference vertical for packaging and credibility (leaning public-sector AI Act evidence packs; healthcare ops as secondary).",
+      "avoid_early_trap": "Avoid healthcare clinical claims that pull into medical device territory; focus on admin/governance contexts first if entering healthcare."
+    },
+    "framework_multiplexing_note": "AiGov is conceptually multi-framework; GDPR is interchangeable with other frameworks in architecture (e.g., NIS2, AI Act, sector-specific). Strategy is to stabilize evidence schema and scenario methodology so additional frameworks are incremental packs rather than rewrites."
+  },
+  "skills_and_partnering_state": {
+    "skills_that_unlock_partners": [
+      {
+        "skill": "Regulatory translation",
+        "why": "Explaining AiGov in sandbox/regulator language makes EUSAiR and ecosystem actors comfortable introducing it."
+      },
+      {
+        "skill": "Stakeholder mapping + value-per-stakeholder pitch",
+        "why": "Different partners (regulators, EDIHs/TEFs, deployers) need different 1-sentence benefits."
+      },
+      {
+        "skill": "Pilot packaging",
+        "why": "Make the 'ask' small, safe, concrete: 2-week pilot, synthetic data OK, clear outputs and responsibilities."
+      },
+      {
+        "skill": "Light compliance literacy",
+        "why": "Enough to avoid credibility potholes; not full auditor expertise."
+      },
+      {
+        "skill": "Relationship ops discipline",
+        "why": "Partner acquisition is a pipeline; follow-ups and intros matter."
+      }
+    ],
+    "founder_skill_gaps_acknowledged": [
+      "Limited prior coding experience (rapid learning underway)",
+      "Limited prior GDPR experience (rapid learning underway)",
+      "Needs structured external validation to avoid 'ChatGPT-shaped compliance' risk"
+    ]
+  },
+  "immediate_next_actions": [
+    {
+      "action": "Prepare EUSAiR 1-hour meeting 'clarity script' and decision checklist",
+      "effort": "low",
+      "deliverables": [
+        "10 questions that force clarity on sandboxing, bottlenecks, deliverables, and access to practitioners",
+        "60-minute agenda with explicit 'decision points'"
+      ]
+    },
+    {
+      "action": "Create 2-page pre-read + 2 appendices for EUSAiR",
+      "effort": "medium",
+      "deliverables": [
+        "2-page concept + evidence boundary explanation",
+        "architecture/data-flow diagram",
+        "sample scenario + sample report excerpt"
+      ]
+    },
+    {
+      "action": "Parallel: identify 2 Romanian EDIHs + 1 cross-border EDIH for pilot host brokerage",
+      "effort": "medium",
+      "deliverables": [
+        "Short list with contact points + next call dates + what 'services' are realistically available to a very early-stage SME"
+      ]
+    },
+    {
+      "action": "Evaluate AI-on-demand / AIoD (aiod.eu) for AiGov (technical + business)",
+      "effort": "medium",
+      "deliverables": [
+        "How AiGov could integrate (datasets, benchmarking, registry, experiments, resources)",
+        "Whether it creates adoption/credibility leverage and how to operationalize"
+      ]
+    }
+  ],
+  "references": {
+    "new_state_object_target_path": "packages/specs/docs/planning/2026-02-13/state_object_v0_6__2026-02-13.json",
+    "chat_archive_target_path": "packages/specs/docs/artifacts/2026-02-13_EU-Opportunities.md",
+    "prior_known_artifacts": [
+      "packages/specs/docs/planning/2026-02-13/state_object_v0_5__2026-02-13.json",
+      "packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities.md",
+      "packages/specs/docs/artifacts/2026-02-05_OSS_EU_Opportunities-2.md"
+    ]
+  }
+}
