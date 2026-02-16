@@ -1,0 +1,168 @@
+{
+  "schema_version": "state_object_v0_3",
+  "generated_at_utc": "2026-02-13T00:00:00Z",
+  "run_name": "golden-sets-chat-run-1",
+  "repo": "Standivarius/AiGov-monorepo",
+
+  "non_negotiables_locked": {
+    "mvp_scope": "GDPR-only. Anything non-GDPR is out of scope for MVP.",
+    "internal_language_rule": "All internal reasoning, judge inputs/outputs, and GDPR logic remain exclusively in English. Translation happens at ingestion/egress edges only.",
+    "pr_gate_must_be_fast_and_deterministic": true,
+    "allowed_verification_commands_only": [
+      "python3 tools/validate_planning_pack.py",
+      "bash tools/run_pr_gate_validators.sh",
+      "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+    ],
+    "golden_set_firewall": "Golden sets are defensibility assets and eval-only. They must be firewalled from runtime retrieval/AKG and never used as production knowledge."
+  },
+
+  "process_rules_locked": {
+    "always_separate_todos_vs_suggestions": true,
+    "effort_label_required": true,
+    "prompts_must_be_single_outcome": true,
+    "explicit_merge_instructions_per_pr": true,
+    "verification_commands_must_be_exact": true,
+    "ban_repo_wide_pytest_in_verification": true,
+    "ban_pytest_fallback_or_operator": true,
+    "prefer_closed_questions_when_needed": true,
+    "discovery_first_no_trimming": "For discovery/import phases, keep all candidate sources/items. Do not trim or filter early; tag instead.",
+    "golden_sets_multi_purpose": [
+      "judge_selection",
+      "judge_client_demo",
+      "system_e2e_regression"
+    ]
+  },
+
+  "repo_source_of_truth_paths": {
+    "agents_guide": "AGENTS.md",
+
+    "planning_root": "packages/specs/docs/planning/",
+    "this_state_object_path": "packages/specs/docs/planning/2026-02-13/state_object_v0_3__2026-02-13.json",
+
+    "artifacts_root": "packages/specs/docs/artifacts/",
+    "this_chat_artifact_path": "packages/specs/docs/artifacts/2026-02-13_golden-sets.md",
+
+    "planning_pack_primary": "packages/specs/docs/planning/2026-01-22-run/",
+    "planning_pack_validator": "tools/validate_planning_pack.py",
+    "eval_registry": "packages/specs/docs/planning/2026-01-22-run/eval_registry.yaml",
+    "evalsets_registry": "packages/specs/docs/planning/2026-01-22-run/evalsets_registry.yaml",
+
+    "existing_pe_golden_sets_dir": "packages/pe/golden_set/",
+    "existing_pe_cases_dir": "packages/pe/cases/",
+    "existing_pe_calibration_cases_dir": "packages/pe/cases/calibration/",
+
+    "golden_set_importer": "packages/pe/tools/import_golden_set.py",
+    "golden_set_importer_tests": "packages/pe/tests/test_import_golden_set.py",
+
+    "scenario_system_root": "packages/specs/scenarios/",
+    "scenario_library_root": "packages/specs/scenarios/library/",
+    "scenario_traceability_sources_example": "packages/specs/scenarios/library/base/gdpr/SOURCES.md"
+  },
+
+  "current_ci_pr_gate_definition": {
+    "must_run_fast": true,
+    "commands": [
+      "python3 tools/validate_planning_pack.py",
+      "bash tools/run_pr_gate_validators.sh",
+      "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+    ],
+    "principle": "PR-gate remains deterministic and fixture-only; heavy checks move to nightly/release/audit packs."
+  },
+
+  "golden_sets_program": {
+    "objective": "Build a library of GDPR golden sets to support judge selection, judge performance demos, and system end-to-end regression, without early trimming. Convert discovered public/cheap sources into deterministic QA and judge-ranking eval items.",
+    "english_only_internal": true,
+    "first_pass_policy": "Discovery + structured inventory first; keep all items; tag quality signals; defer trimming/selection to later pass.",
+    "primary_task_views": [
+      "deterministic_qa",
+      "scenario_to_structured_outcome",
+      "policy_span_grounded_qa",
+      "judge_ranking_preference"
+    ],
+    "key_source_categories": [
+      "regulator quizzes/checklists/toolkits",
+      "enforcement and fines databases",
+      "academic datasets/benchmarks (QA, classification, mappings)",
+      "policy corpora + annotations convertible to goldens"
+    ],
+    "representative_seed_sources": [
+      "GDPRhub decisions + summaries",
+      "GDPR fines/enforcement trackers",
+      "CNIL L’Atelier RGPD MOOC quizzes",
+      "ICO self-assessment / accountability materials",
+      "PrivacyQA / PrivacyGLUE / PolicyQA-style datasets",
+      "OPP-115 + GDPR mapping datasets",
+      "HuggingFace GDPR eval datasets",
+      "GitHub datasets mapping policy segments to GDPR requirements"
+    ],
+    "conversion_principle": "One lossless golden-item record should yield multiple derived 'views' (deterministic QA + judge-ranking) suitable for multiple eval contexts."
+  },
+
+  "milestones": [
+    {
+      "name": "Golden-sets discovery + inventory prompt definition",
+      "status": "done",
+      "notes": "Discovery spec and inventory approach captured in artifacts/2026-02-13_golden-sets.md."
+    },
+    {
+      "name": "Repo baseline assessment for existing PE goldens",
+      "status": "done",
+      "notes": "Existing golden-set importer and test harness identified; current golden-set/case outputs exist under packages/pe/."
+    },
+    {
+      "name": "Design direction: golden library -> derived eval cases",
+      "status": "in_progress",
+      "notes": "Plan to store lossless goldens in a library (scenario-library style) and compile into runnable cases for evalsets; keep views for judge selection + deterministic QA."
+    }
+  ],
+
+  "known_repo_realities": {
+    "golden_importer_prefers_structured_json": "Existing GoldenSetImporter supports JSON input; PDF parsing is not implemented and warns users to supply structured JSON input.",
+    "existing_golden_shape": "Current PE golden items include item_id + metadata + case_description + questions with expected_verdict/signals/citations/rationale; importer compiles each question into an executable case with expected_outcome and citation links."
+  },
+
+  "next_major_modules_queue": [
+    {
+      "module": "Golden library v1 (lossless) + compiler to runnable cases",
+      "goal": "Define a repo-native golden library structure (like scenario library) and a deterministic compiler that emits runnable cases (deterministic QA + judge-ranking views) into packages/pe/cases/ (or a parallel judge/ directory).",
+      "effort": "high",
+      "dependencies": [
+        "packages/pe/tools/import_golden_set.py",
+        "packages/pe/tests/test_import_golden_set.py",
+        "tools/validate_planning_pack.py"
+      ]
+    },
+    {
+      "module": "Tagging + purpose classification for goldens",
+      "goal": "Introduce minimal orthogonal tagging: purpose_tags (judge_selection / judge_client_demo / system_e2e_regression), task_tags, domain_tags. Ensure tags survive compilation into runnable cases.",
+      "effort": "medium"
+    },
+    {
+      "module": "Initial source conversions (top leverage sources)",
+      "goal": "Convert a first batch from enforcement DBs + regulator quizzes/checklists + policy QA/annotations into goldens, preserving provenance and generating both deterministic QA and judge-ranking views.",
+      "effort": "xhigh"
+    },
+    {
+      "module": "Evalset integration for judge selection and judge performance reporting",
+      "goal": "Wire new golden-derived cases into existing evalset registry patterns; produce stable client-demo packs and judge-selection packs with deterministic scoring.",
+      "effort": "high"
+    }
+  ],
+
+  "global_stop_conditions": [
+    "Do NOT expand PR-gate beyond the allowed commands list.",
+    "Do NOT suggest repo-wide pytest or any fallback operators.",
+    "Do NOT mix non-English into internal golden prompts/expected outputs; keep English-only internal.",
+    "Do NOT trim discovery-derived sources/items early; tag and keep.",
+    "Do NOT introduce new runtime dependencies or non-deterministic checks for PR-gate.",
+    "Do NOT copy large copyrighted text into repo artifacts; keep examples short and rely on provenance links."
+  ],
+
+  "project_tracking": {
+    "notes": "This run is documented by the state object + the saved chat artifact; further tasks will converge with judge-evals planning work.",
+    "artifact_links": [
+      "packages/specs/docs/artifacts/2026-02-13_golden-sets.md",
+      "packages/specs/docs/planning/2026-02-13/state_object_v0_3__2026-02-13.json"
+    ]
+  }
+}
