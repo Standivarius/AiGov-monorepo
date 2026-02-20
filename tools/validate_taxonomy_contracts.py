@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -65,6 +66,11 @@ def main() -> int:
         action="store_true",
         help="Do not fail when schema rating enums differ from taxonomy canonical verdicts.",
     )
+    parser.add_argument(
+        "--skip-module-registry-check",
+        action="store_true",
+        help="Skip module registry/cards validation hook.",
+    )
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parent.parent
@@ -80,6 +86,9 @@ def main() -> int:
     case_glob = root / "packages/pe/cases/calibration"
     all_cases_dir = root / "packages/pe/cases"
     golden_set_dir = root / "packages/pe/golden_set"
+    module_registry_path = root / "packages/specs/docs/contracts/modules/module_registry_v0.yaml"
+    module_cards_dir = root / "packages/specs/docs/contracts/modules/cards"
+    module_cards_validator = root / "tools/validate_module_cards.py"
 
     problems: list[str] = []
     warnings: list[str] = []
@@ -188,6 +197,31 @@ def main() -> int:
                     )
     else:
         warnings.append(f"Golden set directory not found: {golden_set_dir}")
+
+    if not args.skip_module_registry_check:
+        if (
+            module_registry_path.exists()
+            and module_cards_dir.exists()
+            and module_cards_validator.exists()
+        ):
+            cmd = [
+                sys.executable,
+                str(module_cards_validator),
+                "--cards-dir",
+                str(module_cards_dir),
+            ]
+            run = subprocess.run(cmd, capture_output=True, text=True)
+            if run.returncode != 0:
+                detail = (run.stdout or run.stderr or "").strip()
+                problems.append(
+                    "Module registry gate failed via validate_module_cards.py"
+                    + (f": {detail}" if detail else "")
+                )
+        else:
+            warnings.append(
+                "Module registry gate skipped: missing one or more required paths "
+                f"({module_registry_path}, {module_cards_dir}, {module_cards_validator})."
+            )
 
     for w in warnings:
         print(f"WARN: {w}")

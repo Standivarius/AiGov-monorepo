@@ -44,8 +44,9 @@ This inventory captures the current vocabulary used across:
 - Existing requested code-style format from founder direction: `M_*` (example: `M_Intake`).
 - Current repo state:
   - module registry is now tracked at `packages/specs/docs/contracts/modules/module_registry_v0.yaml`
-  - canonical IDs in registry: `M_Library`, `M_Intake`, `M_BespokePrep`, `M_TestTarget`, `M_Judge`, `M_Reporting`
-  - enforcement in validators/CI is not yet wired
+  - active IDs in registry/tooling: `M_Library`, `M_Intake`, `M_Bundle`, `M_LiveRun`, `M_Judge`, `M_Report`, `M_Dashboard`
+  - enforcement is wired through taxonomy gate:
+    - `tools/validate_taxonomy_contracts.py` -> calls `tools/validate_module_cards.py`
 
 ### 3) Verdict vocabulary
 
