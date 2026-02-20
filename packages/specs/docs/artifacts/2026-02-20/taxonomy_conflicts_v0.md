@@ -36,15 +36,23 @@ Status:
 
 - Registry file now exists:
   - `packages/specs/docs/contracts/modules/module_registry_v0.yaml`
-- No planning validator/CI check currently enforces use of its `M_*` IDs.
+- Taxonomy validator now executes module card/registry validation hook:
+  - `python tools/validate_taxonomy_contracts.py`
+  - internally runs `python tools/validate_module_cards.py --cards-dir packages/specs/docs/contracts/modules/cards`
 
 Impact:
 
-- Naming can still drift if contributors skip the registry.
+- Reduced drift risk for module IDs in module cards; unknown module IDs now fail the taxonomy contract gate.
+
+Status:
+
+- Resolved in this update.
 
 ### C-003 Module ID taxonomy migration aliases are not yet normalized in existing docs
 
 - Registry locks canonical IDs, but historical docs still use mixed terms (`Bundle`, `LiveRun`, `Report`) without `M_*` first-token convention.
+- ADR stub created to force explicit decision path:
+  - `packages/specs/docs/decisions/ADR-006-module-id-canonical-migration-v0.1.md`
 
 Impact:
 

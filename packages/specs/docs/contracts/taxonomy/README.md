@@ -21,4 +21,6 @@ Related contract anchors:
 
 ## Validation command
 - Strict: `python tools/validate_taxonomy_contracts.py`
+  - Also enforces module registry/card consistency through `tools/validate_module_cards.py`.
 - Transition override (only for planned migrations): `python tools/validate_taxonomy_contracts.py --allow-verdict-drift`
+- Local bypass (only when debugging registry tooling): `python tools/validate_taxonomy_contracts.py --skip-module-registry-check`

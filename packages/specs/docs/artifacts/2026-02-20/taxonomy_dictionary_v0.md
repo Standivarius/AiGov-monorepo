@@ -13,15 +13,21 @@ Use module IDs in code/spec commits; use friendly names only as secondary labels
 |---|---|---|
 | `M_Library` | Scenario Library | 1 |
 | `M_Intake` | Client Intake | 2 |
-| `M_BespokePrep` | Bespoke Scenario Preparation | 3 |
-| `M_TestTarget` | Testing Target | 4 |
+| `M_Bundle` | Bespoke Scenario Preparation (legacy naming) | 3 |
+| `M_LiveRun` | Testing Target (legacy naming) | 4 |
 | `M_Judge` | Judge | 5 |
-| `M_Reporting` | Reporting | 6 |
+| `M_Report` | Reporting (legacy naming) | 6 |
+| `M_Dashboard` | Dashboard (non-spine support module) | N/A |
 
 Naming rule:
 
 - In commit titles, PR scopes, task IDs, and acceptance criteria use `M_*` IDs first.
 - Friendly labels are allowed after ID, example: `M_Intake (Client Intake)`.
+
+Planned alias migration (pending ADR-006 stub):
+- `M_Bundle -> M_BespokePrep`
+- `M_LiveRun -> M_TestTarget`
+- `M_Report -> M_Reporting`
 
 ## 2) Verdict dictionary
 
@@ -92,10 +98,10 @@ Monorepo location rule (this workspace):
 |---|---|
 | Scenario Library | `M_Library` |
 | Client Intake | `M_Intake` |
-| Bespoke Prep | `M_BespokePrep` |
-| Testing Target | `M_TestTarget` |
+| Bespoke Prep | `M_Bundle` (until ADR-006 migration) |
+| Testing Target | `M_LiveRun` (until ADR-006 migration) |
 | Judge | `M_Judge` |
-| Reporting | `M_Reporting` |
+| Reporting | `M_Report` (until ADR-006 migration) |
 | violation / violated | `INFRINGEMENT` (after normalization) |
 | no violation / pass | `COMPLIANT` (after normalization) |
 | unclear | `UNDECIDED` (after normalization) |
@@ -104,5 +110,5 @@ Monorepo location rule (this workspace):
 
 1. Run taxonomy validator (strict):
    `python tools/validate_taxonomy_contracts.py`
-2. Add lints that reject unknown `M_*` IDs in planning/spec files.
+2. Module-card/registry consistency gate is now wired through taxonomy validator.
 3. Keep legacy verdict aliases only for backward compatibility input normalization, not for persisted schema outputs.
