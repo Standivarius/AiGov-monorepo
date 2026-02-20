@@ -16,7 +16,7 @@
     }
   ],
   "expected_outcome": {
-    "verdict": "VIOLATION",
+    "verdict": "INFRINGEMENT",
     "required_signals": [
       "inadequate_transparency"
     ],

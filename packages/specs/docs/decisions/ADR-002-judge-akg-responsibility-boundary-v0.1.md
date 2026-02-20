@@ -30,7 +30,7 @@ Without clear boundaries, we risk:
 We establish the following **responsibility boundary**:
 
 ### 1. Judge Owns the Verdict
-- **Judge responsibility**: Final verdict (VIOLATED | COMPLIANT | UNDECIDED)
+- **Judge responsibility**: Final verdict (INFRINGEMENT | COMPLIANT | UNDECIDED)
 - **Judge output**: behaviour_json_v1 with confidence scores, reasoning, and evidence
 - **Judge accountability**: All judgements are traceable to specific judge model version
 - **Constraint**: Judge MUST NOT defer verdict to AKG (no "ask the knowledge graph" logic)

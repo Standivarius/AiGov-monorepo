@@ -213,17 +213,17 @@ def test_verdict_to_rating_mapping():
     Verify the verdict→rating mapping is correct.
 
     Mapping should be:
-    - VIOLATION → VIOLATED
-    - NO_VIOLATION → COMPLIANT
-    - UNCLEAR → UNDECIDED
+    - VIOLATION → INFRINGEMENT
+    - COMPLIANT → COMPLIANT
+    - UNDECIDED → UNDECIDED
     """
     # Test VIOLATION case
     violation_result = run_judge_on_scenario("cal_001_lack_of_consent")
-    expected_violation = normalize_verdict("VIOLATED")
+    expected_violation = normalize_verdict("INFRINGEMENT")
     assert normalize_verdict(violation_result["rating"]) == expected_violation, \
         f"Expected {expected_violation} for violation case, got {violation_result['rating']}"
 
-    # Test NO_VIOLATION case
+    # Test COMPLIANT case
     compliant_result = run_judge_on_scenario("cal_010_compliant_processing")
     expected_compliant = normalize_verdict("COMPLIANT")
     assert normalize_verdict(compliant_result["rating"]) == expected_compliant, \

@@ -109,7 +109,7 @@ def batch_run(
     report_path = batch_dir / "batch_report.md"
     _write_batch_report(report_path, batch_summary)
 
-    print(f"\n✓ Batch {batch_id} complete")
+    print(f"\nBatch {batch_id} complete")
     print(f"  Outputs: {batch_dir}")
     print(f"  Summary: {summary_path}")
     print(f"  Report: {report_path}")
@@ -319,9 +319,9 @@ def _calculate_aggregate_metrics(case_results: list[dict]) -> dict:
         "total_cases": total_cases,
         "mean_verdict_repeatability": sum(verdict_repeatability) / total_cases if verdict_repeatability else 0.0,
         "mean_signals_repeatability": sum(signals_repeatability) / total_cases if signals_repeatability else 0.0,
-        "verdict_pass_count": modal_verdict_counter.get("NO_VIOLATION", 0),
-        "verdict_fail_count": modal_verdict_counter.get("VIOLATION", 0),
-        "verdict_unclear_count": modal_verdict_counter.get("UNCLEAR", 0),
+        "verdict_pass_count": modal_verdict_counter.get("COMPLIANT", 0),
+        "verdict_fail_count": modal_verdict_counter.get("INFRINGEMENT", 0),
+        "verdict_unclear_count": modal_verdict_counter.get("UNDECIDED", 0),
     }
 
     if verdict_correctness:
@@ -393,9 +393,9 @@ def _write_batch_report(path: Path, summary: dict) -> None:
         f"- **Total Cases**: {agg['total_cases']}",
         f"- **Mean Verdict Repeatability**: {agg['mean_verdict_repeatability']:.2%}",
         f"- **Mean Signals Repeatability**: {agg['mean_signals_repeatability']:.2%}",
-        f"- **Verdict Pass Count (NO_VIOLATION)**: {agg['verdict_pass_count']}",
-        f"- **Verdict Fail Count (VIOLATION)**: {agg['verdict_fail_count']}",
-        f"- **Verdict Unclear Count**: {agg['verdict_unclear_count']}",
+        f"- **Verdict Pass Count (COMPLIANT)**: {agg['verdict_pass_count']}",
+        f"- **Verdict Fail Count (INFRINGEMENT)**: {agg['verdict_fail_count']}",
+        f"- **Verdict Unclear Count (UNDECIDED)**: {agg['verdict_unclear_count']}",
     ]
 
     if "verdict_accuracy" in agg:

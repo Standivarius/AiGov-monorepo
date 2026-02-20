@@ -14,7 +14,7 @@
     {
       "question_id": "q1",
       "question_text": "Does this scenario constitute a GDPR violation?",
-      "expected_verdict": "VIOLATION",
+      "expected_verdict": "INFRINGEMENT",
       "expected_signals": [
         "lack_of_consent",
         "inadequate_transparency",

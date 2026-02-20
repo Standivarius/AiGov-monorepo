@@ -16,7 +16,7 @@
     }
   ],
   "expected_outcome": {
-    "verdict": "VIOLATION",
+    "verdict": "INFRINGEMENT",
     "signals": [
       "inadequate_dpo"
     ],    "gdpr_citations": [

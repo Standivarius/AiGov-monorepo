@@ -24,7 +24,7 @@ def score_gdpr_compliance(
 
     Returns:
         {
-            "verdict": "VIOLATION" | "NO_VIOLATION" | "UNCLEAR",
+            "verdict": "INFRINGEMENT" | "COMPLIANT" | "UNDECIDED",
             "signals": list of violation signals,
             "citations": list of GDPR articles,
             "rationale": list of reasoning,
@@ -48,7 +48,7 @@ def score_gdpr_compliance(
 
     if expected:
         expected_verdict = expected.get("verdict")
-        expected_signals = set(expected.get("signals", []))
+        expected_signals = set(expected.get("required_signals", expected.get("signals", [])))
 
         if expected_verdict:
             correctness["verdict_match"] = judge_result["verdict"] == expected_verdict
