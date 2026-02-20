@@ -1,0 +1,118 @@
+{
+  "report_meta": {
+    "generated_at": "2026-02-20T16:24:21.0063005+02:00",
+    "generated_by": "codex",
+    "repo_commit": "cccc644c3902637a3fae3a2cf769ee9e796a4f56",
+    "purpose": "Factory experiment starting point briefing for Sonnet/Antigravity"
+  },
+  "canonical_vocabulary": {
+    "verdict_values": [
+      "INFRINGEMENT",
+      "COMPLIANT",
+      "UNDECIDED"
+    ],
+    "module_names": [
+      "Standard Scenario Library",
+      "Client Intake",
+      "Bespoke Scenario Preparation",
+      "Testing Target",
+      "Judge",
+      "Reporting"
+    ],
+    "phase_names": [
+      "Stage A",
+      "Stage B",
+      "Stage C"
+    ]
+  },
+  "packages": [
+    {
+      "name": "specs",
+      "role": "Canonical contracts, schemas, planning artifacts, and taxonomy source of truth.",
+      "implementation_status": "spec-only",
+      "key_files": [
+        "packages/specs/docs/contracts/terminology.md",
+        "packages/specs/docs/contracts/taxonomy/verdicts.json",
+        "packages/specs/schemas/behaviour_json_v0_phase0.schema.json",
+        "packages/specs/docs/specs/phase2-index.md",
+        "packages/specs/docs/planning/2026-01-22-run/evalsets_registry.yaml"
+      ]
+    },
+    {
+      "name": "ep",
+      "role": "Client-facing execution product pipeline (intake, execute, judge, reporting).",
+      "implementation_status": "partial",
+      "key_files": [
+        "packages/ep/aigov_ep/cli.py",
+        "packages/ep/aigov_ep/execute/runner.py",
+        "packages/ep/aigov_ep/judge/judge.py",
+        "packages/ep/aigov_ep/reporting/generate.py",
+        "packages/ep/aigov_ep/intake/validate.py"
+      ]
+    },
+    {
+      "name": "pe",
+      "role": "Evaluation and regression harness validating EP behavior with calibration and golden sets.",
+      "implementation_status": "partial",
+      "key_files": [
+        "packages/pe/aigov_eval/cli.py",
+        "packages/pe/aigov_eval/batch_runner.py",
+        "packages/pe/aigov_eval/judge.py",
+        "packages/pe/tests/batch_calibration/test_batch_runner.py",
+        "packages/pe/golden_set/gs_001.json"
+      ]
+    }
+  ],
+  "specs_summary": {
+    "total_spec_files": 13,
+    "implemented_specs": null,
+    "spec_only": null,
+    "key_unimplemented": [
+      "packages/specs/docs/contracts/intake/client_intake_output_contract_v0_1.md",
+      "packages/specs/docs/contracts/intake/intake_bundle_readiness_v0_1.md"
+    ]
+  },
+  "evals_summary": {
+    "evalsets_defined": 4,
+    "evalsets_implemented": null,
+    "golden_set_exists": true,
+    "eval_harness_status": "partial"
+  },
+  "known_issues": [
+    {
+      "severity": "high",
+      "description": "Intake validation contract is documented but runtime validator remains a NotImplementedError stub.",
+      "affected_files": [
+        "packages/ep/aigov_ep/intake/validate.py",
+        "packages/specs/docs/contracts/intake/client_intake_output_contract_v0_1.md"
+      ]
+    },
+    {
+      "severity": "medium",
+      "description": "Module ID vocabulary is not fully normalized and requires a formal migration decision.",
+      "affected_files": [
+        "packages/specs/docs/contracts/modules/module_registry_v0.yaml",
+        "packages/specs/docs/decisions/ADR-006-module-id-canonical-migration-v0.1.md",
+        "packages/specs/docs/artifacts/2026-02-20/taxonomy_conflicts_v0.md"
+      ]
+    },
+    {
+      "severity": "medium",
+      "description": "Behavior schema is duplicated across specs, EP, and PE, which increases drift risk.",
+      "affected_files": [
+        "packages/specs/schemas/behaviour_json_v0_phase0.schema.json",
+        "packages/ep/aigov_ep/contracts/behaviour_json_v0_phase0.schema.json",
+        "packages/pe/aigov_eval/contracts/behaviour_json_v0_phase0.schema.json"
+      ]
+    }
+  ],
+  "factory_readiness": {
+    "cleanest_module_to_start_with": "Judge",
+    "reason": "Judge flow now uses canonical verdict vocabulary with explicit mappings and has the most direct deterministic validation coverage in PE.",
+    "blockers": [
+      "Pre-PRD discovery pack is not yet approved as the planning gate for PRD drafting.",
+      "ADR-006 (module ID canonical migration) is unresolved.",
+      "Intake runtime validation remains unimplemented relative to intake contracts."
+    ]
+  }
+}
