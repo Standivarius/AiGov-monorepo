@@ -1,0 +1,37 @@
+{
+  "manifest_version": "v1",
+  "generated_at": "2026-02-20",
+  "purpose": "Input artifact manifest for GPT Pro discovery run focused on M_Intake and M_Judge",
+  "required_files": [
+    "packages/specs/docs/planning/2026-02-20-method/METHOD_SELECTION_MEMO_v1.md",
+    "packages/specs/docs/planning/2026-02-20-method/AIGOV_FACTORY_METHOD_v1.md",
+    "packages/specs/docs/planning/2026-02-20-method/METHOD_EXECUTION_PLAN_v1.md",
+    "packages/specs/docs/planning/2026-02-20-method/PRE_PRD_DISCOVERY_PACK_v0.md",
+    "packages/specs/docs/planning/2026-02-20-method/PRE_PRD_CHECKLIST_v0.md",
+    "packages/specs/docs/planning/2026-02-20-method/PRE_PRD_EXAMPLE_MAP_TEMPLATE_v0.md",
+    "packages/specs/docs/planning/2026-02-20-method/PRE_PRD_SCENARIO_PACK_SPEC_v0.md",
+    "packages/specs/docs/planning/2026-02-20-method/GITHUB_EXECUTION_BOARD_v1.md",
+    "packages/specs/docs/planning/2026-02-20-method/RETRIEVAL_STRATEGY_M_INTAKE_M_JUDGE_v1.md",
+    "packages/specs/docs/contracts/modules/cards/M_Intake.card.json",
+    "packages/specs/docs/contracts/modules/cards/M_Judge.card.json",
+    "packages/specs/docs/contracts/modules/module_registry_v0.yaml",
+    "packages/specs/docs/contracts/taxonomy/verdicts.json",
+    "packages/specs/docs/decisions/ADR-005-verdict-label-canonicalization-v0.1.md",
+    "packages/specs/docs/decisions/ADR-006-module-id-canonical-migration-v0.1.md",
+    "packages/specs/docs/artifacts/2026-01-29__alpha__client-intake-bundles.md",
+    "packages/specs/docs/artifacts/2026-02-03_GDPR_Execution_Planning.md",
+    "packages/specs/docs/artifacts/2026-02-05_GDPR_Execution_Planning.md",
+    "packages/specs/docs/artifacts/2026-02-20/taxonomy_inventory_v0.md",
+    "packages/specs/docs/artifacts/2026-02-20/taxonomy_conflicts_v0.md",
+    "packages/specs/docs/artifacts/2026-02-20/taxonomy_progress_status_v1.md",
+    "packages/specs/docs/artifacts/2026-02-20__codex_briefing__factory-start.json",
+    "AGENTS.md"
+  ],
+  "expected_outputs": [
+    "packages/specs/docs/artifacts/2026-02-20/retrieval_index_v1.json",
+    "packages/specs/docs/artifacts/2026-02-20/m_intake_dossier_v1.md",
+    "packages/specs/docs/artifacts/2026-02-20/m_judge_dossier_v1.md",
+    "packages/specs/docs/artifacts/2026-02-20/retrieval_conflicts_v1.md",
+    "packages/specs/docs/artifacts/2026-02-20/open_decisions_for_adr_v1.md"
+  ]
+}

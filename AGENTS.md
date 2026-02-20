@@ -20,11 +20,31 @@ The durable source of truth is Git; chats are not.
 4) End session: run `$end-chat`
 
 ## Execution Contract
-- ChatGPT: planning, review, audit, decision support (no code execution)
-- Codex (VS Code): execution, edits, commits
-- All git commands run ONLY in VS Code terminal (WSL/Codespaces/devcontainer)
+- ChatGPT: optional external research and idea pressure-testing.
+- Codex: primary surface for planning + execution.
+- Codex may execute from Codex app shell or VS Code/devcontainer shell.
 - Small PRs, auditable diffs, one concern per PR
 - Every Codex work order MUST include an **EFFORT** label: low / medium / high / xhigh
+
+## PM/EX operating rule
+- Default mode is PM (planning/discovery/gates).
+- EX mode requires explicit user instruction with scope.
+- No coding milestones start before G0-G4 method gates are satisfied.
+
+## Canonical execution board
+- Canonical whiteboard is GitHub Project: `AiGov_Factory_Execution_Board`.
+- URL: `https://github.com/users/Standivarius/projects/5`
+- Method gates are tracked as issues:
+  - G0 `#194`
+  - G1 `#195`
+  - G2 `#196`
+  - G3 `#197`
+  - G4 `#198`
+- Pre-PRD discovery tasks are tracked as:
+  - `#199` M_Intake dossier extraction
+  - `#200` M_Judge dossier extraction
+  - `#201` retrieval index + conflict policy
+  - `#202` GPT Pro deep run + ingestion
 
 ## Scrutiny principle
 Operate at auditor/enterprise-level scrutiny: deterministic, fail-closed, contract-first; but do not overdo process—prefer the smallest check that gives high confidence.
