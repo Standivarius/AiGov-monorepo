@@ -1,7 +1,7 @@
 # AiGov Factory Method v1
 
 Date: `2026-02-20`  
-Status: `Proposed-for-use`  
+Status: `Selected`  
 Type: `Method + gates only (no build kickoff)`
 
 ## 1) Source-of-Truth Order
@@ -54,6 +54,7 @@ Goal:
 - Convert PRD claims into enforceable contracts and gates.
 
 Required artifacts:
+- `PRD-E` baseline
 - Schema/contract index + validators
 - ADR set for contested decisions
 - Test/eval registry with gate tags
@@ -106,11 +107,15 @@ Mandatory approval points:
 - [ ] Open decisions moved to ADR stubs
 
 ### Gate G3 (Truth Pack)
+- [ ] PRD-E baseline approved
 - [ ] Contracts/schemas indexed
 - [ ] Validators defined
 - [ ] Eval/test gate tags defined
 
 ### Gate G4 (Build readiness)
+- [ ] PRD-P approved
+- [ ] PRD-M approved
+- [ ] PRD-E approved
 - [ ] First build slice chosen
 - [ ] Acceptance and proof commands locked
 - [ ] Approval to enter implementation
@@ -124,4 +129,3 @@ Canonical migration to spine-aligned IDs is tracked via:
 Method usage rule until ADR-006 is resolved:
 - Use existing registry IDs in enforcement artifacts.
 - Include friendly spine labels in parentheses for clarity.
-
