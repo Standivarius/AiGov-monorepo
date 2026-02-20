@@ -1,108 +1,119 @@
-# Terminology Lock (PE vs EP) — Canonical definitions and boundary rules
+# Terminology Lock (EP vs PE) — Canonical Definitions and Boundary Rules
 
-**Canonical file:** `AiGov-specs/docs/contracts/terminology.md`  
-**Applies to:** all repos (`AiGov-specs`, `aigov-mvp`, `aigov-evals`)
+**Canonical file:** `packages/specs/docs/contracts/terminology.md`  
+**Applies to:** this monorepo (`packages/specs`, `packages/ep`, `packages/pe`)
 
 ---
 
-## PE vs EP (locked)
+## EP vs PE (locked)
 
 ### EP — Evals-as-Product / Evaluation Product
-**Definition:** The client-run evaluation system we deliver. EP performs: intake → scenario compilation → transcript capture → offline judgement → evidence packs → reporting/exports.
+**Definition:** Client-run product pipeline for audit delivery. EP performs: intake -> bespoke preparation -> target execution -> judgement -> reporting/exports.
 
 **Is**
 - Runtime pipeline executed for a client audit engagement.
-- Stage A + Stage B + Stage C pipeline (see Phase2 specs: `AiGov-specs/docs/specs/phase2-index.md`).
-- Includes target adapters (scripted/mock/http/live), offline judge, manifests, and report generation.
+- Stage A + Stage B + Stage C flow (execution, judgement, reporting).
+- Includes target adapters, judge orchestration, manifests, and report generation.
 
 **Is not**
-- The internal regression harness used to test EP correctness/stability.
+- Internal regression harness validating EP correctness and repeatability.
 
-**Repo placement**
-- EP **must live in `aigov-mvp`**.
+**Monorepo placement**
+- EP implementation lives under `packages/ep`.
 
 ---
 
-### PE — Product Evaluations (evaluate the EP/MVP)
-**Definition:** The evaluation suites and infrastructure that test/regress the EP runtime (QA/benchmarking). PE measures correctness, repeatability, stability, and contract compliance of EP outputs.
+### PE — Product Evaluations
+**Definition:** Evaluation suites and infrastructure that test/regress EP runtime behavior. PE measures correctness, repeatability, stability, and contract compliance.
 
 **Is**
-- Calibration case sets, regression suites, CI eval runs, analysis notebooks, datasets used to validate EP, evaluation infrastructure for validating the MVP.
-- Examples (current repo reality):
-  - `aigov-evals/cases/calibration/*.json`
-  - `aigov-evals/tests/**`
+- Calibration case sets, regression suites, CI eval runs, and analysis support used to validate EP behavior.
+- Examples in this workspace:
+  - `packages/pe/cases/calibration/*.json`
+  - `packages/pe/tests/**`
 
 **Is not**
-- The client-deliverable evaluation pipeline or report generator.
+- The client-deliverable runtime pipeline or client report generator.
 
-**Repo placement**
-- PE **must live in `aigov-evals`**.
+**Monorepo placement**
+- PE implementation lives under `packages/pe`.
 
 ---
 
 ### Target System (customer system under audit)
-**Definition:** The system being evaluated (chatbot/agent/RAG service).  
-**Naming rule:** Do **not** call the customer system “PE” (reserved for Product Evaluations). Use **Target System** or **Customer Target**.
-
-Examples:
-- TargetLab sandbox service: `aigov-mvp/services/targetlab_rag/app.py`
-- HTTP adapter currently in evals repo (to be moved to EP): `aigov-evals/aigov_eval/targets/http_target.py`
+**Definition:** The external chatbot/agent system being evaluated.  
+**Naming rule:** Do **not** call the customer system "PE". Use **Target System** or **Customer Target**.
 
 ---
 
-## Boundary rule (repo system-of-record)
+## Boundary rule (system-of-record)
 
-- **AiGov-specs**: canonical definitions, schemas, taxonomy, traceability contracts  
-  Examples:
-  - `AiGov-specs/schemas/behaviour_json_v0_phase0.schema.json`
-  - `AiGov-specs/docs/specs/phase2-artefact-model-v0.1.md`
-  - Canonical taxonomy contracts live at `AiGov-specs/docs/contracts/taxonomy/`
-- **aigov-mvp**: EP runtime product implementation (client-run)
-- **aigov-evals**: PE regression suites, datasets, CI eval harness
+- **`packages/specs`**: canonical definitions, schemas, taxonomy, traceability contracts.
+- **`packages/ep`**: EP runtime product implementation.
+- **`packages/pe`**: PE regression and evaluation harness.
 
-**Boundary rule:** “Required for a client run?” ⇒ EP ⇒ `aigov-mvp`; otherwise ⇒ PE ⇒ `aigov-evals`.
+**Rule:** "Required for a client run?" => EP (`packages/ep`); otherwise => PE (`packages/pe`).
+
+---
+
+## Module ID terms (locked)
+
+Canonical module IDs are defined in:
+
+- `packages/specs/docs/contracts/modules/module_registry_v0.yaml`
+
+Use `M_*` IDs as first token in planning and PR language (example: `M_Intake`).
 
 ---
 
 ## Pipeline terms (locked)
 
 ### Stage A — Execution / Transcript capture
-- Runs scenarios against target adapters and captures transcripts and raw run artefacts.
-- **No scoring, no judge calls** (offline judgement is separate).
+- Runs scenarios against target adapters and captures run artifacts.
+- No scoring and no judge artifacts in Stage A output contract.
 
 ### Stage B — Offline judgement
-- Consumes Stage A artefacts and produces schema-valid findings.
-- Fail-closed: schema invalid → judgement fails.
+- Consumes Stage A artifacts and produces schema-valid findings.
+- Fail-closed: schema invalid -> judgement fails.
 
 ### Stage C — Aggregation / Reporting / Exports
-- Generates L1/L2/L3 outputs, plus any GRC exports.
+- Produces L1/L2/L3 outputs and structured exports from validated inputs.
 
 ---
 
 ## Verdict labels (canonical + mapping)
 
-### Canonical rating enum (TARGET BEHAVIOR)
-**Canonical:** `INFRINGEMENT | COMPLIANT | UNDECIDED`
+### Canonical verdict enum (contract authority)
+`INFRINGEMENT | COMPLIANT | UNDECIDED`
 
-### Required migration rule
-- `VIOLATION` or `VIOLATED` → `INFRINGEMENT`
-- `NO_VIOLATION` or `COMPLIANT` → `COMPLIANT`
-- `UNCLEAR` or `UNDECIDED` → `UNDECIDED`
+### Required migration map
+- `VIOLATION` or `VIOLATED` -> `INFRINGEMENT`
+- `NO_VIOLATION` or `PASS` -> `COMPLIANT`
+- `UNCLEAR` -> `UNDECIDED`
 
 ### Schema versioning requirement
-Because `AiGov-specs/schemas/behaviour_json_v0_phase0.schema.json` may currently use `VIOLATED`, migration must be explicit:
-- Either update the enum and bump schema version, OR
-- Introduce `behaviour_json_v1_phase0.schema.json` with canonical enum and mark v0 as deprecated.
+If behaviour schema enum differs from canonical verdict labels, migration must be explicit:
+- update enum and bump schema version, or
+- introduce a new schema version and deprecate prior enum.
 
 ---
 
 ## Stable IDs
 - Requirements: `REQ-###`
-- Evals: `EVAL-###`
+- Evals/tests: `EVAL-###`
 - Evidence artifacts: `EVID-###`
 
 ---
 
 ## Evidence vs telemetry (two-lane model)
-- **Evidence lane**: artefacts needed to defend the audit result (transcripts, manifests, judge outputs, checksums).
-- **Telemetry lane**: optional runtime traces for debugging (token usage, retrieval traces).
+- **Evidence lane:** persisted artifacts required for audit defense.
+- **Telemetry lane:** operational traces used for debugging/monitoring.
+- Raw chain-of-thought persistence is forbidden.
+
+---
+
+## Evidence maturity ladder terms
+
+- **T0**: Transcript-only deterministic evidence.
+- **T1**: Process-backed evidence (for example SOP/ticket/SLA support).
+- **T2**: System-backed evidence (for example logs, retention/deletion enforcement).

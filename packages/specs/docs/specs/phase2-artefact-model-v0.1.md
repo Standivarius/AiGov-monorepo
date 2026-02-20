@@ -425,7 +425,7 @@ Lock judge model version for reproducible scoring.
       "transcript_file": "../run_a3f5e8c2_550e8400/transcripts/GDPR-001_transcript.json",
       "score_file": "./scores/GDPR-001_score.json",
       "judged_at": "2025-12-28T15:02:00Z",
-      "rating": "VIOLATED",
+      "rating": "INFRINGEMENT",
       "confidence": 0.95
     }
   ]

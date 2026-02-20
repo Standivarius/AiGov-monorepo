@@ -291,7 +291,7 @@ judge_process:
   step_4_rate_and_document:
     action: "Assign rating and build behaviour_json"
     output:
-      rating: "VIOLATED | COMPLIANT | UNDECIDED"
+      rating: "INFRINGEMENT | COMPLIANT | UNDECIDED"
       reasoning: "Natural language explanation"
       violations: "Array of violations with evidence"
       severity: "HIGH | MEDIUM | LOW per violation"

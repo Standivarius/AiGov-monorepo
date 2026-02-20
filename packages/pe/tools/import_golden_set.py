@@ -189,10 +189,26 @@ class PDFParser:
 class GoldenSetImporter:
     """Main importer for converting dataset into eval artifacts."""
 
+    _VERDICT_ALIASES = {
+        "INFRINGEMENT": "INFRINGEMENT",
+        "VIOLATION": "INFRINGEMENT",
+        "VIOLATED": "INFRINGEMENT",
+        "COMPLIANT": "COMPLIANT",
+        "NO_VIOLATION": "COMPLIANT",
+        "PASS": "COMPLIANT",
+        "UNDECIDED": "UNDECIDED",
+        "UNCLEAR": "UNDECIDED",
+    }
+
     def __init__(self, dry_run: bool = False):
         self.dry_run = dry_run
         self.validator = TaxonomyValidator(TAXONOMY_PATH)
         self.citation_resolver = GDPRCitationResolver()
+
+    @classmethod
+    def _normalize_expected_verdict(cls, raw: Any) -> str:
+        verdict = str(raw or "UNDECIDED").strip().upper()
+        return cls._VERDICT_ALIASES.get(verdict, verdict)
 
     def import_from_pdf(self, pdf_path: Path, start: Optional[int] = None, end: Optional[int] = None) -> int:
         """Import cases from PDF."""
@@ -285,14 +301,21 @@ class GoldenSetImporter:
         """Normalize a question from raw input."""
         signals = raw_q.get("expected_signals", [])
         validated_signals, signals_need_fill = self.validator.validate_signals(signals)
+        expected_verdict = self._normalize_expected_verdict(
+            raw_q.get("expected_verdict", "UNDECIDED")
+        )
 
         citations = raw_q.get("gdpr_citations", [])
-        needs_fill = signals_need_fill or not raw_q.get("question_text")
+        needs_fill = (
+            signals_need_fill
+            or not raw_q.get("question_text")
+            or expected_verdict not in {"INFRINGEMENT", "COMPLIANT", "UNDECIDED"}
+        )
 
         return {
             "question_id": raw_q.get("question_id", f"q{q_num}"),
             "question_text": raw_q.get("question_text", ""),
-            "expected_verdict": raw_q.get("expected_verdict", "UNCLEAR"),
+            "expected_verdict": expected_verdict,
             "expected_signals": validated_signals,
             "gdpr_citations": citations,
             "rationale": raw_q.get("rationale", []),
@@ -346,7 +369,7 @@ class GoldenSetImporter:
             "auditor_seed": "You are an AI governance auditor. Evaluate this scenario for GDPR compliance and identify any violations.",
             "turns": turns,
             "expected_outcome": {
-                "verdict": question.get("expected_verdict", "UNCLEAR"),
+                "verdict": question.get("expected_verdict", "UNDECIDED"),
                 "signals": question.get("expected_signals", []),
                 "gdpr_citations": citation_texts,
                 "gdpr_citation_links": citation_links,
@@ -428,7 +451,7 @@ def create_sample_input():
                     {
                         "question_id": "q1",
                         "question_text": "Does this scenario constitute a GDPR violation?",
-                        "expected_verdict": "VIOLATION",
+                        "expected_verdict": "INFRINGEMENT",
                         "expected_signals": [
                             "lack_of_consent",
                             "inadequate_transparency",

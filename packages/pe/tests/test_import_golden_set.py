@@ -166,7 +166,7 @@ class TestGoldenSetImporter:
                         {
                             "question_id": "q1",
                             "question_text": "Is this a violation?",
-                            "expected_verdict": "VIOLATION",
+                            "expected_verdict": "INFRINGEMENT",
                             "expected_signals": ["lack_of_consent"],
                             "gdpr_citations": ["Art. 6"],
                             "rationale": ["Test rationale"]
@@ -189,7 +189,7 @@ class TestGoldenSetImporter:
         importer = GoldenSetImporter(dry_run=True)
         raw_question = {
             "question_text": "Test question?",
-            "expected_verdict": "VIOLATION",
+            "expected_verdict": "INFRINGEMENT",
             "expected_signals": ["lack_of_consent"],
             "gdpr_citations": ["Art. 6"],
             "rationale": ["Test reason"]
@@ -199,7 +199,7 @@ class TestGoldenSetImporter:
 
         assert normalized["question_id"] == "q1"
         assert normalized["question_text"] == "Test question?"
-        assert normalized["expected_verdict"] == "VIOLATION"
+        assert normalized["expected_verdict"] == "INFRINGEMENT"
         assert "lack_of_consent" in normalized["expected_signals"]
 
     def test_build_golden_set_item(self):
@@ -215,7 +215,7 @@ class TestGoldenSetImporter:
             "questions": [
                 {
                     "question_text": "Test?",
-                    "expected_verdict": "VIOLATION",
+                    "expected_verdict": "INFRINGEMENT",
                     "expected_signals": ["lack_of_consent"],
                     "gdpr_citations": ["Art. 6"],
                     "rationale": []
@@ -245,7 +245,7 @@ class TestGoldenSetImporter:
         question = {
             "question_id": "q1",
             "question_text": "Is this a violation?",
-            "expected_verdict": "VIOLATION",
+            "expected_verdict": "INFRINGEMENT",
             "expected_signals": ["lack_of_consent"],
             "gdpr_citations": ["Art. 6"],
             "rationale": ["Missing consent"]
@@ -258,7 +258,7 @@ class TestGoldenSetImporter:
         assert case["framework"] == "GDPR"
         assert case["golden_set_ref"] == "gs_001"
         assert len(case["turns"]) == 2
-        assert case["expected_outcome"]["verdict"] == "VIOLATION"
+        assert case["expected_outcome"]["verdict"] == "INFRINGEMENT"
         assert "lack_of_consent" in case["expected_outcome"]["signals"]
         assert len(case["expected_outcome"]["gdpr_citation_links"]) > 0
 
@@ -273,7 +273,7 @@ class TestGoldenSetImporter:
         question = {
             "question_id": "q1",
             "question_text": "Test?",
-            "expected_verdict": "VIOLATION",
+            "expected_verdict": "INFRINGEMENT",
             "expected_signals": [],
             "gdpr_citations": ["Art. 5(1)(a)", "Recital 39"],
             "rationale": []
@@ -314,7 +314,7 @@ class TestGoldenSetImporter:
             "questions": [
                 {
                     "question_text": "Test?",
-                    "expected_verdict": "VIOLATION",
+                    "expected_verdict": "INFRINGEMENT",
                     "expected_signals": [],
                     "gdpr_citations": [],
                     "rationale": []
@@ -346,7 +346,7 @@ class TestIntegration:
                         {
                             "question_id": "q1",
                             "question_text": "Does this violate GDPR?",
-                            "expected_verdict": "VIOLATION",
+                            "expected_verdict": "INFRINGEMENT",
                             "expected_signals": ["lack_of_consent", "inadequate_transparency"],
                             "gdpr_citations": ["Art. 6", "Art. 13"],
                             "rationale": [
@@ -415,7 +415,7 @@ class TestIntegration:
             assert case["scenario_id"] == "gs_001__q1"
             assert case["category"] == "GDPR_COMPLIANCE"
             assert len(case["turns"]) == 2
-            assert case["expected_outcome"]["verdict"] == "VIOLATION"
+            assert case["expected_outcome"]["verdict"] == "INFRINGEMENT"
 
             # Verify the case can be loaded by aigov_eval loader
             # (We'll just verify it's valid JSON with required fields)

@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import Any
 
 from .judge_output_mapper import map_and_validate
-from .taxonomy import get_allowed_signal_ids, validate_signals
+from .taxonomy import get_allowed_signal_ids, normalize_verdict, validate_signals
 
 
 def generate_judge_output(fixture_path: Path) -> dict[str, Any]:
@@ -40,7 +40,7 @@ def generate_judge_output(fixture_path: Path) -> dict[str, Any]:
     Returns:
         Internal judge output dictionary:
         {
-            "verdict": "VIOLATION" | "NO_VIOLATION" | "UNCLEAR",
+                "verdict": "INFRINGEMENT" | "COMPLIANT" | "UNDECIDED",
             "signals": ["signal1", "signal2", ...],
             "citations": ["Art. 5(1)(a)", ...],
             "rationale": ["reason1", "reason2", ...],
@@ -67,7 +67,7 @@ def generate_judge_output(fixture_path: Path) -> dict[str, Any]:
     expected_outcome = fixture.get("expected_outcome", {})
 
     # Extract verdict
-    verdict = expected_outcome.get("verdict", "NO_VIOLATION")
+    verdict = normalize_verdict(expected_outcome.get("verdict", "COMPLIANT"))
 
     # Extract signals - support both v2 (required_signals + allowed_extra_signals) and legacy formats
     signals = []

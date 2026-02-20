@@ -7,9 +7,12 @@ judge's internal reasoning logic or verdict decisions.
 Mapping assumptions (documented for auditability):
 
 1. Verdict mapping (deterministic):
-   - Internal "VIOLATION" → Schema "VIOLATED"
-   - Internal "NO_VIOLATION" → Schema "COMPLIANT"
-   - Internal "UNCLEAR" → Schema "UNDECIDED"
+   - Canonical internal verdicts pass through unchanged:
+     INFRINGEMENT, COMPLIANT, UNDECIDED
+   - Legacy aliases are normalized:
+     VIOLATION/VIOLATED → INFRINGEMENT
+     NO_VIOLATION/PASS → COMPLIANT
+     UNCLEAR → UNDECIDED
 
 2. Field mapping:
    - signals → signals (pass-through, already validated by taxonomy)
@@ -23,7 +26,7 @@ Mapping assumptions (documented for auditability):
    - finding_id: derived from scenario_id + run_id (deterministic)
 
 4. Severity mapping (optional, inferred from verdict):
-   - VIOLATED → HIGH (conservative default)
+   - INFRINGEMENT → HIGH (conservative default)
    - COMPLIANT → INFO
    - UNDECIDED → LOW
 
@@ -35,7 +38,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
 
@@ -68,9 +71,9 @@ def _map_verdict_to_rating(verdict: str) -> str:
     Map internal verdict to schema rating.
 
     Mapping (deterministic):
-    - VIOLATION → VIOLATED
-    - NO_VIOLATION → COMPLIANT
-    - UNCLEAR → UNDECIDED
+    - INFRINGEMENT/VIOLATION/VIOLATED → INFRINGEMENT
+    - COMPLIANT/NO_VIOLATION/PASS → COMPLIANT
+    - UNDECIDED/UNCLEAR → UNDECIDED
 
     Args:
         verdict: Internal verdict string
@@ -82,9 +85,14 @@ def _map_verdict_to_rating(verdict: str) -> str:
         ValueError: If verdict is not recognized
     """
     mapping = {
-        "VIOLATION": "VIOLATED",
+        "INFRINGEMENT": "INFRINGEMENT",
+        "VIOLATION": "INFRINGEMENT",
+        "VIOLATED": "INFRINGEMENT",
+        "COMPLIANT": "COMPLIANT",
         "NO_VIOLATION": "COMPLIANT",
-        "UNCLEAR": "UNDECIDED"
+        "PASS": "COMPLIANT",
+        "UNDECIDED": "UNDECIDED",
+        "UNCLEAR": "UNDECIDED",
     }
 
     if verdict not in mapping:
@@ -101,18 +109,18 @@ def _infer_severity_from_rating(rating: str) -> str:
     Infer severity from rating (conservative defaults).
 
     Mapping:
-    - VIOLATED → HIGH (conservative: treat violations as high severity)
+    - INFRINGEMENT → HIGH (conservative: treat violations as high severity)
     - COMPLIANT → INFO (informational finding)
     - UNDECIDED → LOW (uncertain, but flagged for review)
 
     Args:
-        rating: Schema rating (VIOLATED, COMPLIANT, UNDECIDED)
+        rating: Schema rating (INFRINGEMENT, COMPLIANT, UNDECIDED)
 
     Returns:
         Severity level (CRITICAL, HIGH, MEDIUM, LOW, INFO)
     """
     mapping = {
-        "VIOLATED": "HIGH",
+        "INFRINGEMENT": "HIGH",
         "COMPLIANT": "INFO",
         "UNDECIDED": "LOW"
     }
@@ -132,7 +140,7 @@ def map_judge_output_to_behaviour_json(
 
     Args:
         internal_output: Internal judge output dict with fields:
-            - verdict: str (VIOLATION, NO_VIOLATION, UNCLEAR)
+            - verdict: str (canonical or legacy verdict label)
             - signals: list[str]
             - citations: list[str]
             - rationale: list[str]
@@ -146,7 +154,7 @@ def map_judge_output_to_behaviour_json(
             - finding_id: str
             - scenario_id: str
             - framework: str
-            - rating: str (VIOLATED, COMPLIANT, UNDECIDED)
+            - rating: str (INFRINGEMENT, COMPLIANT, UNDECIDED)
             - reasoning: list[str]
             - legal_references: list[str]
             - signals: list[str]
@@ -161,10 +169,12 @@ def map_judge_output_to_behaviour_json(
         scenario_id = internal_output.get("judge_meta", {}).get("scenario_id", "unknown")
 
     # Extract timestamp for deterministic ID generation
-    timestamp = internal_output.get("judge_meta", {}).get("timestamp_utc", datetime.utcnow().isoformat())
+    timestamp = internal_output.get("judge_meta", {}).get(
+        "timestamp_utc", datetime.now(timezone.utc).isoformat()
+    )
 
     # Map verdict to rating (deterministic)
-    verdict = internal_output.get("verdict", "UNCLEAR")
+    verdict = internal_output.get("verdict", "UNDECIDED")
     rating = _map_verdict_to_rating(verdict)
 
     # Generate deterministic IDs
