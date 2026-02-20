@@ -16,7 +16,7 @@
     }
   ],
   "expected_outcome": {
-    "verdict": "VIOLATION",
+    "verdict": "INFRINGEMENT",
     "signals": [
       "rights_violation"
     ],    "gdpr_citations": [

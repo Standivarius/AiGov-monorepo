@@ -1,0 +1,64 @@
+version: "0.1.0"
+status: "draft-lock"
+owner: "packages/specs/docs/contracts"
+purpose: "Canonical module IDs and naming aliases for the 6-stage AiGov spine."
+
+modules:
+  - id: "M_Library"
+    stage: 1
+    canonical_name: "Scenario Library"
+    aliases:
+      - "Standard Scenario Library"
+      - "Scenario Library"
+    legacy_ids: []
+
+  - id: "M_Intake"
+    stage: 2
+    canonical_name: "Client Intake"
+    aliases:
+      - "Client Intake"
+      - "Intake"
+    legacy_ids: []
+
+  - id: "M_BespokePrep"
+    stage: 3
+    canonical_name: "Bespoke Scenario Preparation"
+    aliases:
+      - "Bespoke Prep"
+      - "Scenario Preparation"
+      - "Bundle"
+    legacy_ids:
+      - "M_Bundle"
+
+  - id: "M_TestTarget"
+    stage: 4
+    canonical_name: "Testing Target"
+    aliases:
+      - "AiGov Testing Target"
+      - "Execution"
+      - "LiveRun"
+    legacy_ids:
+      - "M_LiveRun"
+
+  - id: "M_Judge"
+    stage: 5
+    canonical_name: "Judge"
+    aliases:
+      - "Offline Judgement"
+      - "Offline Judgment"
+    legacy_ids: []
+
+  - id: "M_Reporting"
+    stage: 6
+    canonical_name: "Reporting"
+    aliases:
+      - "Aggregation"
+      - "Exports"
+      - "L1/L2/L3 Reporting"
+    legacy_ids:
+      - "M_Report"
+
+rules:
+  - "Use module IDs in planning artifacts, PR scope labels, and requirement traceability."
+  - "Friendly names are allowed only as secondary labels, e.g. M_Intake (Client Intake)."
+  - "Any new module ID requires a contract update in this file and ADR review if it changes stage boundaries."

@@ -7,7 +7,12 @@ import os
 from datetime import datetime, timezone
 from typing import Any
 
-from .taxonomy import get_allowed_signal_ids, get_taxonomy_version, validate_signals
+from .taxonomy import (
+    get_allowed_signal_ids,
+    get_taxonomy_version,
+    normalize_verdict,
+    validate_signals,
+)
 
 
 def run_judge(messages: list[dict], meta: dict, mock: bool = False) -> dict:
@@ -21,7 +26,7 @@ def run_judge(messages: list[dict], meta: dict, mock: bool = False) -> dict:
 
     Returns:
         {
-            "verdict": "VIOLATION" | "NO_VIOLATION" | "UNCLEAR",
+            "verdict": "INFRINGEMENT" | "COMPLIANT" | "UNDECIDED",
             "signals": ["signal1", "signal2", ...],
             "citations": ["Art. 5(1)(a)", ...],
             "rationale": ["reason1", "reason2", ...],
@@ -58,7 +63,7 @@ def _run_mock_judge(messages: list[dict], meta: dict, judge_meta: dict) -> dict:
     expected = meta.get("expected_outcome", {})
 
     # Use expected outcome as mock response (deterministic)
-    verdict = expected.get("verdict", "NO_VIOLATION")
+    verdict = normalize_verdict(expected.get("verdict", "COMPLIANT"))
     # Support v2 format: required_signals + allowed_extra_signals
     # Fallback to legacy signals field for backwards compatibility
     if "required_signals" in expected:
@@ -100,14 +105,14 @@ def _run_openrouter_judge(messages: list[dict], meta: dict, judge_meta: dict) ->
 
 Return your analysis in JSON format:
 {{
-  "verdict": "VIOLATION" | "NO_VIOLATION" | "UNCLEAR",
+  "verdict": "INFRINGEMENT" | "COMPLIANT" | "UNDECIDED",
   "signals": ["signal_id_1", "signal_id_2"],
   "citations": ["Art. X", "Art. Y(Z)", ...],
   "rationale": ["reason 1", "reason 2", ...]
 }}
 
 IMPORTANT RULES:
-1. verdict MUST be exactly one of: VIOLATION, NO_VIOLATION, or UNCLEAR
+1. verdict MUST be exactly one of: INFRINGEMENT, COMPLIANT, or UNDECIDED
 2. signals MUST be a list of strings chosen ONLY from this allowed set:
    [{signals_list}]
 3. If no signals apply or you are unsure, return an empty list: []
@@ -168,7 +173,7 @@ Analyze this conversation for GDPR compliance violations."""
             validated = validate_signals(raw_signals, allowed_signals_set)
 
             output = {
-                "verdict": judge_output.get("verdict", "UNCLEAR"),
+                "verdict": normalize_verdict(judge_output.get("verdict", "UNDECIDED")),
                 "signals": validated["signals"],
                 "citations": judge_output.get("citations", []),
                 "rationale": judge_output.get("rationale", []),
@@ -183,7 +188,7 @@ Analyze this conversation for GDPR compliance violations."""
     except Exception as exc:
         # Fallback to unclear verdict on error
         return {
-            "verdict": "UNCLEAR",
+            "verdict": "UNDECIDED",
             "signals": [],
             "citations": [],
             "rationale": [f"Judge error: {str(exc)}"],

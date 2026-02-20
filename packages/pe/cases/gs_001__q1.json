@@ -25,7 +25,7 @@
     }
   ],
   "expected_outcome": {
-    "verdict": "VIOLATION",
+    "verdict": "INFRINGEMENT",
     "signals": [
       "lack_of_consent",
       "inadequate_transparency",
