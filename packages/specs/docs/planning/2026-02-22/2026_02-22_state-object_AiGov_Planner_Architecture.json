@@ -1,0 +1,110 @@
+{
+  "schema_version": "aigov_planner_state_v0_7",
+  "generated_at": "2026-02-22",
+  "run_name": "AiGov_Planner_Architecture_reset",
+  "repo": {
+    "name": "Standivarius/AiGov-monorepo",
+    "default_branch": "main",
+    "planning_root": "packages/specs/docs/planning",
+    "artifacts_root": "packages/specs/docs/artifacts",
+    "contracts_root": "packages/specs/docs/contracts",
+    "schemas_root": "packages/specs/schemas",
+    "tools_root": "tools",
+    "ep_root": "packages/ep/aigov_ep",
+    "pe_root": "packages/pe"
+  },
+  "positioning": {
+    "product_posture": "Pre-audit / pre-assessment tool; no legal binding. Optimize for reproducibility and explainability with minimal storage/ceremony.",
+    "simplification_stance": "Prefer Inspect-style run logs + strict schemas; avoid heavy audit-grade tamper-proofing unless explicitly demanded by customers."
+  },
+  "people_and_roles": {
+    "human_owner": {
+      "name": "Marius",
+      "role": "Founder / product owner / final decision maker"
+    },
+    "codex": {
+      "role": "Primary thinking surface (PM mode default) + primary executor (execution mode only when explicitly requested). Orchestrates Claude/Gemini reviews."
+    },
+    "claude": {
+      "role": "Architecture + adversarial reviewer (delta-based MUST/SHOULD/COULD). Called via Codex when needed."
+    },
+    "gemini": {
+      "role": "Secondary reviewer for blind spots and sanity checks (delta-based). Called via Codex when needed."
+    },
+    "chatgpt": {
+      "role": "Support tool for research/synthesis and prompt drafting; not the primary planning surface."
+    }
+  },
+  "source_of_truth_order": [
+    "Pipeline image (6-stage spine) + approved Discovery Pack",
+    "Approved PRD-P + PRD-M",
+    "PRD-E (contracts/schemas + ADRs + eval/test plans)",
+    "Code"
+  ],
+  "product_spine": {
+    "stages": [
+      "Scenario Library",
+      "Client Intake",
+      "Bespoke Scenario Preparation",
+      "Testing Target",
+      "Judge",
+      "Reporting"
+    ],
+    "reporting_levels_note": "Reporting uses L1/L2/L3 terminology internally (Exec/Compliance-Legal/CISO-Cyber). PRD stack must not use L1/L2/L3 labels."
+  },
+  "versioning": {
+    "slice_v0_1": "One deterministic end-to-end scenario across all stages (walking skeleton). No live LLM required by default.",
+    "mvp_v1_0": "GDPR-only MVP for Netherlands + Healthcare reference vertical; LLM-enabled behavior allowed behind clear boundaries."
+  },
+  "methodology_reset": {
+    "core_problem": "Drift due to missing SDLC method and premature architecture/refactor focus.",
+    "required_method_chain": [
+      "Business scope -> feature map -> requirements IDs",
+      "Discovery Pack (Story Map + Example Maps + Scenario Pack)",
+      "PRD-P and PRD-M compiled from Discovery Pack (not invented from vibes)",
+      "PRD-E (schemas/contracts + ADR triggers + eval/test tiers)",
+      "Implementation in small PR slices with deterministic gates"
+    ],
+    "software_factory_inspiration": {
+      "use_as_inspiration_only": true,
+      "note": "Adopt scenario-first validation discipline; do not commit to heavy DTU/tamper-proofing in early phases."
+    }
+  },
+  "logging_and_artifacts": {
+    "default_storage_model": "Inspect-style log directory and per-run artifacts. Minimal run metadata; schema-first stage outputs; debug logs opt-in.",
+    "anti_tamper_default": "None (pre-audit stance). Optional single-digest later if demanded.",
+    "privacy_rules": [
+      "Data minimization by default",
+      "No raw chain-of-thought persistence",
+      "Store only what is needed to reproduce/explain the run"
+    ]
+  },
+  "operating_rules": {
+    "mode_switching": {
+      "default_mode": "PM",
+      "switch_phrase": "Switch to EXECUTION MODE for <task>",
+      "pm_mode_requirements": [
+        "Explain thinking in plain English",
+        "Explore options with pros/cons",
+        "Maintain Decision Log (Decided/Open/Needs evidence)",
+        "Ask max 5 closed-ended questions per cycle"
+      ]
+    },
+    "pr_guardrails": {
+      "pr_size_cap_files": 6,
+      "allowed_proof_commands": [
+        "python3 tools/validate_planning_pack.py",
+        "bash tools/run_pr_gate_validators.sh",
+        "NX_DAEMON=false npx nx run evalsets:migration-smoke"
+      ]
+    }
+  },
+  "references": {
+    "this_state_object_target_path": "packages/specs/docs/planning/2026-02-22/2026_02-22_state-object_AiGov_Planner_Architecture.json",
+    "this_chat_archive_target_path": "packages/specs/docs/artifacts/2026-02-22_AiGov_Planner_Architecture.md",
+    "prior_canonical_state_examples": [
+      "packages/specs/docs/planning/2026-02-13/state_object_v0_5__2026-02-13.json",
+      "packages/specs/docs/planning/2026-02-13/state_object_v0_6__2026-02-13.json"
+    ]
+  }
+}
