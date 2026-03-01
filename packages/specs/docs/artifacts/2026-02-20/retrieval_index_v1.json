@@ -1,0 +1,280 @@
+{
+  "schema_version": "v1",
+  "generated_at": "2026-02-20",
+  "scope": [
+    "M_Intake",
+    "M_Judge"
+  ],
+  "sources_scanned": [
+    "packages/specs/docs/contracts/modules/cards/M_Intake.card.json",
+    "packages/specs/docs/contracts/modules/cards/M_Judge.card.json",
+    "packages/specs/docs/contracts/intake/client_intake_output_contract_v0_1.md",
+    "packages/specs/docs/contracts/intake/intake_bundle_v0_1.md",
+    "packages/specs/docs/contracts/interfaces/I_Ledger.md",
+    "packages/specs/docs/contracts/judgements/judgments_v0.schema.json",
+    "packages/specs/docs/contracts/judgements/stage_b_determinism_v0_1.md",
+    "packages/specs/docs/contracts/taxonomy/verdicts.json",
+    "packages/specs/docs/decisions/ADR-005-verdict-label-canonicalization-v0.1.md",
+    "packages/specs/docs/decisions/ADR-006-module-id-canonical-migration-v0.1.md",
+    "packages/specs/docs/artifacts/2026-01-29__alpha__client-intake-bundles.md",
+    "packages/specs/docs/artifacts/2026-02-03_GDPR_Execution_Planning.md",
+    "packages/specs/docs/specs/data-contracts-v0.1.md",
+    "packages/specs/docs/artifacts/2026-02-05_GDPR_Execution_Planning.md",
+    "packages/specs/docs/artifacts/2026-02-20/taxonomy_inventory_v0.md",
+    "packages/specs/docs/artifacts/2026-02-20/taxonomy_conflicts_v0.md",
+    "packages/specs/docs/artifacts/2026-02-20/taxonomy_progress_status_v1.md",
+    "packages/specs/docs/artifacts/2026-02-20__codex_briefing__factory-start.json",
+    "packages/specs/docs/artifacts/2026-02-20__gptpro__artifact-manifest_v1.json",
+    "packages/specs/docs/planning/2026-02-20-method/AIGOV_FACTORY_METHOD_v1.md",
+    "packages/ep/aigov_ep/intake/validate.py",
+    "packages/ep/aigov_ep/judge/judge.py",
+    "packages/pe/aigov_eval/judge_output_mapper.py",
+    "packages/pe/aigov_eval/offline_judge_runner.py",
+    "packages/pe/tests/minimal_loop/test_ep_cli_judge_smoke.py",
+    "packages/pe/tests/judge/README.md",
+    "packages/pe/tests/judge/test_j02_schema.py",
+    "packages/pe/tests/judge/test_j03_accuracy.py"
+  ],
+  "claims": [
+    {
+      "module_id": "M_Intake",
+      "claim_type": "scope",
+      "claim_text": "M_Intake validates GDPR intake output payloads with context_profile treated as authoritative.",
+      "source_path": "packages/specs/docs/contracts/modules/cards/M_Intake.card.json",
+      "source_date": "2026-02-20",
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_scope_authority"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "input_contract",
+      "claim_text": "Input contract for M_Intake is client_intake_output_contract_v0_1.md.",
+      "source_path": "packages/specs/docs/contracts/modules/cards/M_Intake.card.json",
+      "source_date": "2026-02-20",
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_input_contract_ref"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "output_contract",
+      "claim_text": "Output boundary is validated intake output aligned to client_intake_output_contract_v0_1.md.",
+      "source_path": "packages/specs/docs/contracts/modules/cards/M_Intake.card.json",
+      "source_date": "2026-02-20",
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_output_contract_ref"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "invariant",
+      "claim_text": "policy_pack_stack must equal ['GDPR_EU', jurisdiction, sector, 'client'] with strict ordering.",
+      "source_path": "packages/ep/aigov_ep/intake/validate.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_policy_stack_order"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "invariant",
+      "claim_text": "If locale_context and context_profile.jurisdiction both exist, mismatch fails closed.",
+      "source_path": "packages/ep/aigov_ep/intake/validate.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_locale_context_mismatch_rule"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "failure_mode",
+      "claim_text": "If context_profile is absent and target_profile.locale_context key is also absent, validation fails.",
+      "source_path": "packages/ep/aigov_ep/intake/validate.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_missing_context_fail_closed"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "security",
+      "claim_text": "Jurisdiction, sector, and policy packs are allowlist-enforced; unknown values fail validation.",
+      "source_path": "packages/specs/docs/contracts/intake/intake_bundle_v0_1.md",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_allowlist_enforcement"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "evidence",
+      "claim_text": "Canonical deterministic intake artifact for downstream gating is intake_bundle_v0_1 with evidence_index and evidence_refs.",
+      "source_path": "packages/specs/docs/contracts/intake/intake_bundle_v0_1.md",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_canonical_artifact"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "test_eval",
+      "claim_text": "Planning-pack fixtures enforce pass/fail intake context behaviors including null locale_context and missing context cases.",
+      "source_path": "packages/specs/docs/artifacts/2026-02-05_GDPR_Execution_Planning.md",
+      "source_date": "2026-02-05",
+      "source_kind": "planning",
+      "confidence": "medium",
+      "conflict_key": "intake_fixture_gate_coverage"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "telemetry",
+      "claim_text": "Runtime intake validator emits deterministic error strings and non-zero exit code for invalid payloads.",
+      "source_path": "packages/ep/aigov_ep/intake/validate.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "intake_runtime_telemetry_surface"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "privacy",
+      "claim_text": "No raw chain-of-thought persistence is a method-level hard rule and intake contracts remain structured/profile-based.",
+      "source_path": "packages/specs/docs/planning/2026-02-20-method/AIGOV_FACTORY_METHOD_v1.md",
+      "source_date": "2026-02-20",
+      "source_kind": "planning",
+      "confidence": "medium",
+      "conflict_key": "intake_no_raw_cot_rule"
+    },
+    {
+      "module_id": "M_Intake",
+      "claim_type": "open_decision",
+      "claim_text": "Long-term boundary for locale_context (required legacy key vs context_profile-only future) remains unresolved for future milestones.",
+      "source_path": "packages/specs/docs/artifacts/2026-02-05_GDPR_Execution_Planning.md",
+      "source_date": "2026-02-05",
+      "source_kind": "planning",
+      "confidence": "medium",
+      "conflict_key": "intake_locale_deprecation_policy"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "scope",
+      "claim_text": "M_Judge scores audit runs and emits structured outputs used by reporting.",
+      "source_path": "packages/specs/docs/contracts/modules/cards/M_Judge.card.json",
+      "source_date": "2026-02-20",
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_scope_statement"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "input_contract",
+      "claim_text": "Module card points M_Judge input contract to data-contracts-v0.1 transcript-based inputs.",
+      "source_path": "packages/specs/docs/contracts/modules/cards/M_Judge.card.json",
+      "source_date": "2026-02-20",
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_input_contract_ref"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "output_contract",
+      "claim_text": "Runtime judge pipeline emits scores.json, evidence_pack.json, evidence_pack_v0.json, judgments.json, and behaviour_json_v0_phase0.json.",
+      "source_path": "packages/ep/aigov_ep/judge/judge.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_runtime_output_set"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "invariant",
+      "claim_text": "Persisted verdict labels are canonicalized to INFRINGEMENT | COMPLIANT | UNDECIDED before artifact persistence.",
+      "source_path": "packages/specs/docs/decisions/ADR-005-verdict-label-canonicalization-v0.1.md",
+      "source_date": "2026-02-20",
+      "source_kind": "decision",
+      "confidence": "high",
+      "conflict_key": "judge_verdict_canonicalization"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "invariant",
+      "claim_text": "Unknown signal IDs are rejected during canonical signal validation when building judgments.",
+      "source_path": "packages/ep/aigov_ep/judge/judge.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_unknown_signal_rejection"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "failure_mode",
+      "claim_text": "Live judge mode requires OPENROUTER_API_KEY; deterministic fallback path uses mock mode or returns UNDECIDED on judge-call errors.",
+      "source_path": "packages/ep/aigov_ep/judge/judge.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_live_mode_failure_behavior"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "evidence",
+      "claim_text": "judgments.json includes evidence_ids linked to transcript/evidence artifacts and verification labels.",
+      "source_path": "packages/specs/docs/contracts/judgements/judgments_v0.schema.json",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_evidence_linkage"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "test_eval",
+      "claim_text": "Schema compliance flow is implemented through offline judge runner + mapper + J02 tests over calibration cases.",
+      "source_path": "packages/pe/tests/judge/test_j02_schema.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_schema_eval_coverage"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "test_eval",
+      "claim_text": "Pattern accuracy test J03 remains placeholder because run_judge_on_scenario is NotImplemented.",
+      "source_path": "packages/pe/tests/judge/test_j03_accuracy.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_accuracy_eval_status"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "acceptance",
+      "claim_text": "EP smoke test requires scores.json, evidence_pack.json, and schema-valid behaviour_json_v0_phase0 output.",
+      "source_path": "packages/pe/tests/minimal_loop/test_ep_cli_judge_smoke.py",
+      "source_date": null,
+      "source_kind": "contract",
+      "confidence": "high",
+      "conflict_key": "judge_smoke_acceptance_contract"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "privacy",
+      "claim_text": "No raw chain-of-thought persistence is a method-level hard rule; judge artifacts use structured outputs.",
+      "source_path": "packages/specs/docs/planning/2026-02-20-method/AIGOV_FACTORY_METHOD_v1.md",
+      "source_date": "2026-02-20",
+      "source_kind": "planning",
+      "confidence": "medium",
+      "conflict_key": "judge_no_raw_cot_rule"
+    },
+    {
+      "module_id": "M_Judge",
+      "claim_type": "open_decision",
+      "claim_text": "Canonical persisted judge contract remains contested between legacy behaviour_json_v1 narrative contract and current behaviour_json_v0_phase0 + judgments_v0 artifacts.",
+      "source_path": "packages/specs/docs/specs/data-contracts-v0.1.md",
+      "source_date": "2025-12-14",
+      "source_kind": "contract",
+      "confidence": "medium",
+      "conflict_key": "judge_canonical_output_contract"
+    }
+  ]
+}
