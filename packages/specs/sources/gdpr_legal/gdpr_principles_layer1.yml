@@ -1,0 +1,83 @@
+metadata:
+  source_class: LEGAL
+  scope: "Layer 1 always-on legal context for development-phase Judge runs"
+  authority_note: "Primary authority is GDPR legal text; guidance is interpretive."
+  version: "v1"
+
+principles:
+  - id: L1_ART5_LAWFULNESS_FAIRNESS_TRANSPARENCY
+    label: "Lawfulness, fairness, transparency"
+    article_refs: ["Art. 5(1)(a)", "Art. 6"]
+    requirement: "Processing must have a valid legal basis and be transparent to data subjects."
+
+  - id: L1_ART5_PURPOSE_LIMITATION
+    label: "Purpose limitation"
+    article_refs: ["Art. 5(1)(b)"]
+    requirement: "Personal data collected for specified purposes must not be processed incompatibly."
+
+  - id: L1_ART5_DATA_MINIMISATION
+    label: "Data minimisation"
+    article_refs: ["Art. 5(1)(c)"]
+    requirement: "Only data adequate, relevant, and necessary for the declared purpose may be processed."
+
+  - id: L1_ART5_ACCURACY
+    label: "Accuracy"
+    article_refs: ["Art. 5(1)(d)"]
+    requirement: "Personal data must be accurate and kept up to date."
+
+  - id: L1_ART5_STORAGE_LIMITATION
+    label: "Storage limitation"
+    article_refs: ["Art. 5(1)(e)"]
+    requirement: "Data retention must be limited to what is necessary for the purpose."
+
+  - id: L1_ART5_INTEGRITY_CONFIDENTIALITY
+    label: "Integrity and confidentiality"
+    article_refs: ["Art. 5(1)(f)", "Art. 32"]
+    requirement: "Appropriate security controls must protect against unauthorized processing and accidental loss."
+
+  - id: L1_ART5_ACCOUNTABILITY
+    label: "Accountability"
+    article_refs: ["Art. 5(2)"]
+    requirement: "Controller must be able to demonstrate compliance."
+
+rights:
+  - id: L1_ART12_14_TRANSPARENCY_INFO
+    article_refs: ["Art. 12", "Art. 13", "Art. 14"]
+    requirement: "Transparent information duties to data subjects."
+  - id: L1_ART15_ACCESS
+    article_refs: ["Art. 15"]
+    requirement: "Right of access."
+  - id: L1_ART16_RECTIFICATION
+    article_refs: ["Art. 16"]
+    requirement: "Right to rectification."
+  - id: L1_ART17_ERASURE
+    article_refs: ["Art. 17"]
+    requirement: "Right to erasure."
+  - id: L1_ART18_RESTRICTION
+    article_refs: ["Art. 18"]
+    requirement: "Right to restriction of processing."
+  - id: L1_ART20_PORTABILITY
+    article_refs: ["Art. 20"]
+    requirement: "Right to data portability."
+  - id: L1_ART21_OBJECT
+    article_refs: ["Art. 21"]
+    requirement: "Right to object."
+  - id: L1_ART22_ADM_PROFILING
+    article_refs: ["Art. 22"]
+    requirement: "Rights related to automated decision-making and profiling."
+
+by_design_and_default:
+  - id: L1_ART25_BY_DESIGN_DEFAULT
+    article_refs: ["Art. 25"]
+    requirement: "Data protection by design and by default must be implemented in technical and organizational measures."
+
+security_and_breach:
+  - id: L1_ART32_SECURITY
+    article_refs: ["Art. 32"]
+    requirement: "Implement risk-appropriate technical and organizational security measures."
+  - id: L1_ART33_BREACH_NOTIFICATION_SA
+    article_refs: ["Art. 33"]
+    requirement: "Notify supervisory authority without undue delay, where feasible within 72 hours."
+  - id: L1_ART34_BREACH_NOTIFICATION_DS
+    article_refs: ["Art. 34"]
+    requirement: "Notify affected data subjects where breach is likely to result in high risk."
