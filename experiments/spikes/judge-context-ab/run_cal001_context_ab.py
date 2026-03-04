@@ -29,6 +29,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 CALIBRATION_DIR = REPO_ROOT / "packages" / "pe" / "cases" / "calibration"
 TASK_A_MAPPING_PATH = REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "calibration_to_edpb_rules.json"
 MASTER_RULES_PATH = REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "master_audit_rules.json"
+MASTER_GDPR_RULES_PATH = REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "master_audit_rules_gdpr_v1.json"
 CRITERIA_PATH = REPO_ROOT / "packages" / "specs" / "schemas" / "evaluation_criteria" / "gdpr-evaluation-criteria-v1.0.yaml"
 LOCALE_PATH = REPO_ROOT / "packages" / "specs" / "docs" / "artifacts" / "2026-03-02__nl-uavg-ap__chatbot-testing-mapping_v1.md"
 
@@ -132,47 +133,100 @@ def _extract_yaml_block(yaml_text: str, key: str) -> str:
     return "\n".join(lines[start:end]).strip()
 
 
-def _build_edpb_context(case_id: str) -> str:
-    mapping = _parse_json_file(TASK_A_MAPPING_PATH)
-    master = _parse_json_file(MASTER_RULES_PATH)
-    rule_ids = mapping.get(case_id, [])
-    rules_by_id = {r.get("id"): r for r in master.get("rules", [])}
+def _rule_index(master_payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    out: dict[str, dict[str, Any]] = {}
+    for rule in master_payload.get("rules", []):
+        rid = str(rule.get("id", "")).strip()
+        if rid:
+            out[rid] = rule
+    return out
+
+
+def _unpack_mapping_entry(entry: Any) -> tuple[list[str], list[str], list[str]]:
+    # Backward-compatible shape: case -> ["RULE_1", "RULE_2"]
+    if isinstance(entry, list):
+        ids = [str(x) for x in entry]
+        return ids, [], ids
+
+    # New dual-pack shape:
+    # case -> { legal_rule_ids: [...], procedural_rule_ids: [...], combined_rule_ids: [...] }
+    if isinstance(entry, dict):
+        legal = [str(x) for x in (entry.get("legal_rule_ids", []) or [])]
+        procedural = [str(x) for x in (entry.get("procedural_rule_ids", []) or [])]
+        combined = [str(x) for x in (entry.get("combined_rule_ids", []) or [])]
+        if not combined:
+            combined = list(dict.fromkeys(legal + procedural))
+        return legal, procedural, combined
+
+    return [], [], []
+
+
+def _build_rules_context(
+    case_id: str,
+    mapping_path: Path,
+    legal_rules_path: Path,
+    procedural_rules_path: Path,
+) -> tuple[list[str], str]:
+    mapping_raw = _parse_json_file(mapping_path)
+    # Support wrapped mapping payload: {"cases": {...}}
+    if "cases" in mapping_raw and isinstance(mapping_raw["cases"], dict):
+        entry = mapping_raw["cases"].get(case_id, {})
+    else:
+        entry = mapping_raw.get(case_id, [])
+
+    legal_ids, procedural_ids, combined_ids = _unpack_mapping_entry(entry)
+    legal_master = _parse_json_file(legal_rules_path)
+    legal_by_id = _rule_index(legal_master)
+
+    procedural_by_id: dict[str, dict[str, Any]] = {}
+    if procedural_rules_path.exists():
+        procedural_master = _parse_json_file(procedural_rules_path)
+        procedural_by_id = _rule_index(procedural_master)
 
     rows: list[str] = []
-    for rid in rule_ids:
-        r = rules_by_id.get(rid)
-        if not r:
+
+    for rid in legal_ids:
+        rule = legal_by_id.get(rid)
+        if not rule:
             continue
-        requirement = str(r.get("requirement", "")).strip()
-        audit_proc = r.get("audit_procedure", [])[:3]
-        finding = r.get("finding_criteria", [])[:1]
+        requirement = str(rule.get("requirement", "")).strip()
+        audit_proc = rule.get("audit_procedure", [])[:2]
+        finding = rule.get("finding_criteria", [])[:1]
         proc_text = "; ".join([str(step.get("instruction", "")).strip() for step in audit_proc if isinstance(step, dict)])
         finding_text = "; ".join(
-            [
-                f"IF {fc.get('if_condition', '')} THEN {fc.get('then_outcome', '')}"
-                for fc in finding
-                if isinstance(fc, dict)
-            ]
+            [f"IF {fc.get('if_condition', '')} THEN {fc.get('then_outcome', '')}" for fc in finding if isinstance(fc, dict)]
         )
         rows.append(
-            f"- {rid}: requirement={requirement}\n"
+            f"- [LEGAL] {rid}: requirement={requirement}\n"
             f"  audit_procedure={proc_text}\n"
             f"  finding_criteria={finding_text}"
         )
 
+    for rid in procedural_ids:
+        rule = procedural_by_id.get(rid)
+        if not rule:
+            continue
+        requirement = str(rule.get("requirement", "")).strip()
+        audit_proc = rule.get("audit_procedure", [])[:2]
+        proc_text = "; ".join([str(step.get("instruction", "")).strip() for step in audit_proc if isinstance(step, dict)])
+        rows.append(
+            f"- [PROCEDURAL] {rid}: requirement={requirement}\n"
+            f"  audit_procedure={proc_text}"
+        )
+
     if not rows:
-        return "No EDPB rules mapped for this case."
-    return "\n".join(rows)
+        return combined_ids, "No mapped rules found for this case."
+    return combined_ids, "\n".join(rows)
 
 
-def _build_criteria_context() -> str:
-    txt = _read_text(CRITERIA_PATH)
+def _build_criteria_context(criteria_path: Path) -> str:
+    txt = _read_text(criteria_path)
     block = _extract_yaml_block(txt, "lawfulness_fairness_transparency")
     return block or "No matching criteria block found."
 
 
-def _build_locale_context() -> str:
-    txt = _read_text(LOCALE_PATH)
+def _build_locale_context(locale_path: Path) -> str:
+    txt = _read_text(locale_path)
     # For consent-focused case, use Dutch municipality consent section.
     section = _extract_md_section(txt, "### B2. Consent in public-authority context")
     return section or "No Dutch municipality consent context found."
@@ -429,6 +483,31 @@ def main() -> None:
     parser.add_argument("--case-id", default="cal_001_lack_of_consent", help="Calibration case id (without .json)")
     parser.add_argument("--openrouter-model", default="", help="Explicit OpenRouter model override for this run.")
     parser.add_argument("--openai-model", default="", help="Explicit OpenAI model override for this run.")
+    parser.add_argument(
+        "--mapping-path",
+        default=str(TASK_A_MAPPING_PATH),
+        help="Path to case->rules mapping JSON (flat or dual-pack shape).",
+    )
+    parser.add_argument(
+        "--legal-rules-path",
+        default=str(MASTER_RULES_PATH),
+        help="Path to legal rules JSON file.",
+    )
+    parser.add_argument(
+        "--procedural-rules-path",
+        default=str(MASTER_RULES_PATH),
+        help="Path to procedural rules JSON file.",
+    )
+    parser.add_argument(
+        "--criteria-path",
+        default=str(CRITERIA_PATH),
+        help="Path to evaluation criteria YAML.",
+    )
+    parser.add_argument(
+        "--locale-path",
+        default=str(LOCALE_PATH),
+        help="Path to locale context markdown file.",
+    )
     args = parser.parse_args()
 
     # Fallback for local desktop setup where OpenRouter env exists in sibling workspace.
@@ -449,11 +528,20 @@ def main() -> None:
     allowed_signals = sorted(taxonomy_signals)
     user_prompt = _build_user_prompt(case)
 
-    rule_map = _parse_json_file(TASK_A_MAPPING_PATH)
-    edpb_rule_ids = list(rule_map.get(case_id, []))
-    edpb_context = _build_edpb_context(case_id)
-    criteria_context = _build_criteria_context()
-    locale_context = _build_locale_context()
+    mapping_path = Path(args.mapping_path)
+    legal_rules_path = Path(args.legal_rules_path)
+    procedural_rules_path = Path(args.procedural_rules_path)
+    criteria_path = Path(args.criteria_path)
+    locale_path = Path(args.locale_path)
+
+    edpb_rule_ids, edpb_context = _build_rules_context(
+        case_id=case_id,
+        mapping_path=mapping_path,
+        legal_rules_path=legal_rules_path,
+        procedural_rules_path=procedural_rules_path,
+    )
+    criteria_context = _build_criteria_context(criteria_path)
+    locale_context = _build_locale_context(locale_path)
 
     generic_system = _build_generic_system_prompt(allowed_signals)
     enriched_system = _build_enriched_system_prompt(

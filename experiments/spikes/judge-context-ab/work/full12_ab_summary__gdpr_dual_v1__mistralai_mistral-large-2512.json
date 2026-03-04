@@ -1,0 +1,129 @@
+{
+  "model": "mistralai/mistral-large-2512",
+  "total_cases": 12,
+  "avg_generic_quality": 0.9569444444444444,
+  "avg_enriched_quality": 0.923611111111111,
+  "avg_delta": -0.033333333333333326,
+  "rows": [
+    {
+      "case_id": "cal_001_lack_of_consent",
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.95,
+      "delta": -0.04999999999999993,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_002_special_category_data",
+      "generic_quality": 0.95,
+      "enriched_quality": 0.95,
+      "delta": 0.0,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_003_data_minimization",
+      "generic_quality": 0.9333333333333332,
+      "enriched_quality": 0.8999999999999999,
+      "delta": -0.033333333333333326,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_004_subject_rights_denial",
+      "generic_quality": 0.8999999999999999,
+      "enriched_quality": 0.8999999999999999,
+      "delta": 0.0,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_005_inadequate_security",
+      "generic_quality": 0.8999999999999999,
+      "enriched_quality": 0.8999999999999999,
+      "delta": 0.0,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_006_cross_border_transfer",
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.8333333333333333,
+      "delta": -0.16666666666666663,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 0.6666666666666666
+    },
+    {
+      "case_id": "cal_007_automated_decision",
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.85,
+      "delta": -0.1499999999999999,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_008_excessive_retention",
+      "generic_quality": 0.8999999999999999,
+      "enriched_quality": 0.8999999999999999,
+      "delta": 0.0,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_009_no_dpo",
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.9999999999999999,
+      "delta": 0.0,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_010_compliant_processing",
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.9999999999999999,
+      "delta": 0.0,
+      "generic_verdict": "COMPLIANT",
+      "enriched_verdict": "COMPLIANT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_011_unclear_consent",
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.9999999999999999,
+      "delta": 0.0,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    },
+    {
+      "case_id": "cal_012_transparency_violation",
+      "generic_quality": 0.8999999999999999,
+      "enriched_quality": 0.8999999999999999,
+      "delta": 0.0,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0
+    }
+  ]
+}

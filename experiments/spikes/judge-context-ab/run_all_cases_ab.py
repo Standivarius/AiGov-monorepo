@@ -55,6 +55,45 @@ def _run_case(case_id: str, model_id: str) -> dict[str, Any]:
     return _load_json(result_path)
 
 
+def _run_case_with_context(
+    case_id: str,
+    model_id: str,
+    mapping_path: str,
+    legal_rules_path: str,
+    procedural_rules_path: str,
+    criteria_path: str,
+    locale_path: str,
+) -> dict[str, Any]:
+    cmd = [
+        sys.executable,
+        str(ONE_CASE_RUNNER),
+        "--case-id",
+        case_id,
+        "--openrouter-model",
+        model_id,
+        "--mapping-path",
+        mapping_path,
+        "--legal-rules-path",
+        legal_rules_path,
+        "--procedural-rules-path",
+        procedural_rules_path,
+        "--criteria-path",
+        criteria_path,
+        "--locale-path",
+        locale_path,
+    ]
+    run = subprocess.run(cmd, capture_output=True, text=True)
+    if run.returncode != 0:
+        raise RuntimeError(
+            f"Case {case_id} failed.\nSTDOUT:\n{run.stdout}\nSTDERR:\n{run.stderr}"
+        )
+
+    result_path = WORK_DIR / f"{case_id}_ab_result.json"
+    if not result_path.exists():
+        raise FileNotFoundError(f"Missing expected result file: {result_path}")
+    return _load_json(result_path)
+
+
 def _to_row(payload: dict[str, Any]) -> dict[str, Any]:
     generic = payload["generic"]["score"]
     enriched = payload["enriched"]["score"]
@@ -70,11 +109,11 @@ def _to_row(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _write_outputs(model_id: str, rows: list[dict[str, Any]]) -> tuple[Path, Path]:
+def _write_outputs(model_id: str, rows: list[dict[str, Any]], output_tag: str) -> tuple[Path, Path]:
     WORK_DIR.mkdir(parents=True, exist_ok=True)
     model_safe = _model_safe_name(model_id)
-    json_path = WORK_DIR / f"full12_ab_summary__{model_safe}.json"
-    md_path = WORK_DIR / f"full12_ab_summary__{model_safe}.md"
+    json_path = WORK_DIR / f"full12_ab_summary__{output_tag}__{model_safe}.json"
+    md_path = WORK_DIR / f"full12_ab_summary__{output_tag}__{model_safe}.md"
 
     avg_generic = sum(r["generic_quality"] for r in rows) / len(rows)
     avg_enriched = sum(r["enriched_quality"] for r in rows) / len(rows)
@@ -116,6 +155,36 @@ def main() -> None:
         default="mistralai/mistral-large-2512",
         help="OpenRouter model ID for all runs.",
     )
+    parser.add_argument(
+        "--mapping-path",
+        default=str(REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "calibration_to_edpb_rules.json"),
+        help="Path to mapping JSON used by one-case runner.",
+    )
+    parser.add_argument(
+        "--legal-rules-path",
+        default=str(REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "master_audit_rules.json"),
+        help="Path to legal rules JSON file.",
+    )
+    parser.add_argument(
+        "--procedural-rules-path",
+        default=str(REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "master_audit_rules.json"),
+        help="Path to procedural rules JSON file.",
+    )
+    parser.add_argument(
+        "--criteria-path",
+        default=str(REPO_ROOT / "packages" / "specs" / "schemas" / "evaluation_criteria" / "gdpr-evaluation-criteria-v1.0.yaml"),
+        help="Path to evaluation criteria YAML.",
+    )
+    parser.add_argument(
+        "--locale-path",
+        default=str(REPO_ROOT / "packages" / "specs" / "docs" / "artifacts" / "2026-03-02__nl-uavg-ap__chatbot-testing-mapping_v1.md"),
+        help="Path to locale context markdown file.",
+    )
+    parser.add_argument(
+        "--output-tag",
+        default="legacy",
+        help="Tag included in output filename to separate benchmark variants.",
+    )
     args = parser.parse_args()
 
     case_ids = _collect_case_ids()
@@ -123,10 +192,18 @@ def main() -> None:
     rows = []
     for i, case_id in enumerate(case_ids, start=1):
         print(f"[{i}/{len(case_ids)}] {case_id}")
-        payload = _run_case(case_id=case_id, model_id=args.openrouter_model)
+        payload = _run_case_with_context(
+            case_id=case_id,
+            model_id=args.openrouter_model,
+            mapping_path=args.mapping_path,
+            legal_rules_path=args.legal_rules_path,
+            procedural_rules_path=args.procedural_rules_path,
+            criteria_path=args.criteria_path,
+            locale_path=args.locale_path,
+        )
         rows.append(_to_row(payload))
 
-    json_path, md_path = _write_outputs(model_id=args.openrouter_model, rows=rows)
+    json_path, md_path = _write_outputs(model_id=args.openrouter_model, rows=rows, output_tag=args.output_tag)
     print(f"OK: wrote {json_path}")
     print(f"OK: wrote {md_path}")
 

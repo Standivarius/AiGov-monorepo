@@ -1,0 +1,65 @@
+{
+  "pack_id": "gdpr_audit_pack_eu_2016_679_v1",
+  "pack_name": "GDPR audit pack (legal-only ruleset)",
+  "pack_version": "1.0.0",
+  "generated_at": "2026-03-04",
+  "raw_rule_count": 255,
+  "testable_rule_count": 248,
+  "required_fields": [
+    "rule_id",
+    "article",
+    "paragraph",
+    "canonical_obligation_text",
+    "trigger_condition",
+    "minimum_evidence_expectation",
+    "deterministic_failure_test",
+    "source_refs",
+    "duty_holder"
+  ],
+  "missing_fields_count": 4,
+  "missing_fields": [
+    {
+      "rule_id": "GDPR-ART16-0-rectification-without-delay",
+      "missing": [
+        "paragraph"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART16-0-complete-incomplete-data",
+      "missing": [
+        "paragraph"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART44-0-chapter-v-compliance-for-transfers",
+      "missing": [
+        "paragraph"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART48-0-foreign-authority-requests-international-agreement",
+      "missing": [
+        "paragraph"
+      ]
+    }
+  ],
+  "duplicate_rule_id_count": 0,
+  "duplicate_rule_ids": [],
+  "excluded_non_testable_count": 7,
+  "excluded_non_testable_rule_ids": [
+    "GDPR-ART28-7-commission-may-adopt-standard-clauses",
+    "GDPR-ART28-8-sa-may-adopt-standard-clauses",
+    "GDPR-ART35-6-consistency-mechanism-for-lists",
+    "GDPR-ART36-4-sa-provide-advice",
+    "GDPR-ART36-5-member-state-consult-sa-legislation",
+    "GDPR-ART45-3-monitor-review-adequacy",
+    "GDPR-ART47-3-consistency-mechanism-approval"
+  ],
+  "draft_marker_count": 3,
+  "draft_marker_rule_ids": [
+    "GDPR-ART21-1-object-to-e-f-processing",
+    "GDPR-ART6-1(b)-contract-basis",
+    "GDPR-ART6-1(f)-legitimate-interests-basis"
+  ],
+  "source_register_count": 13
+}

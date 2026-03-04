@@ -1,0 +1,5134 @@
+{
+  "generated_at_utc": "2026-03-04T17:15:57.056925+00:00",
+  "total_rules": 248,
+  "status_counts": {
+    "direct": 248,
+    "derived": 0,
+    "manual_required": 0
+  },
+  "rows": [
+    {
+      "rule_id": "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+      "article_numbers": [
+        "12",
+        "13",
+        "14",
+        "5",
+        "6"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:transparen->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART5-1(b)-purpose-limitation",
+      "article_numbers": [
+        "13",
+        "14",
+        "5",
+        "6"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART5-1(c)-data-minimisation",
+      "article_numbers": [
+        "25",
+        "30",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:25->accountability_breach",
+        "article:25->data_minimization_breach",
+        "article:30->accountability_breach",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:minimis->data_minimization_breach",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART5-1(d)-accuracy",
+      "article_numbers": [
+        "16",
+        "17",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:16->accuracy_violation",
+        "article:16->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:erase->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART5-1(e)-storage-limitation",
+      "article_numbers": [
+        "25",
+        "30",
+        "32",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:25->accountability_breach",
+        "article:25->data_minimization_breach",
+        "article:30->accountability_breach",
+        "article:32->inadequate_security",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach",
+        "keyword:retention->retention_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART5-1(f)-integrity-confidentiality",
+      "article_numbers": [
+        "32",
+        "33",
+        "34",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "breach_notification_failure",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:33->breach_notification_failure",
+        "article:34->breach_notification_failure",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART5-2-accountability",
+      "article_numbers": [
+        "24",
+        "30",
+        "32",
+        "35",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "missing_dpia",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:30->accountability_breach",
+        "article:32->inadequate_security",
+        "article:35->missing_dpia",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-1-general-lawfulness-condition",
+      "article_numbers": [
+        "5",
+        "6",
+        "7",
+        "9"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-1(a)-consent-basis",
+      "article_numbers": [
+        "13",
+        "6",
+        "7"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "keyword:consent->lack_of_consent",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-1(b)-contract-basis",
+      "article_numbers": [
+        "13",
+        "21",
+        "6"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:21->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-1(c)-legal-obligation-basis",
+      "article_numbers": [
+        "30",
+        "6"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-1(d)-vital-interests-basis",
+      "article_numbers": [
+        "49",
+        "6",
+        "9"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-1(e)-public-task-basis",
+      "article_numbers": [
+        "21",
+        "6"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:21->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-1(f)-legitimate-interests-basis",
+      "article_numbers": [
+        "13",
+        "14",
+        "21",
+        "6",
+        "8"
+      ],
+      "signal_ids": [
+        "children_data_violation",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:21->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:8->children_data_violation",
+        "article:8->lack_of_consent",
+        "keyword:child->children_data_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-2-member-state-specific-provisions",
+      "article_numbers": [
+        "6"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-3-legal-basis-requirements-for-c-e",
+      "article_numbers": [
+        "13",
+        "14",
+        "5",
+        "6"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART6-4-compatibility-test-for-further-processing",
+      "article_numbers": [
+        "13",
+        "14",
+        "5",
+        "6"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:consent->lack_of_consent",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART7-1-demonstrate-consent",
+      "article_numbers": [
+        "13",
+        "6",
+        "7",
+        "9"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:consent->lack_of_consent"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART7-2-consent-request-distinguishable",
+      "article_numbers": [
+        "12",
+        "6",
+        "7"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "keyword:access->rights_violation",
+        "keyword:consent->lack_of_consent"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART7-3-withdraw-consent",
+      "article_numbers": [
+        "13",
+        "14",
+        "6",
+        "7"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "keyword:consent->lack_of_consent",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART7-4-freely-given-assessment-conditionality",
+      "article_numbers": [
+        "6",
+        "7"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "keyword:consent->lack_of_consent"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART8-1-child-consent-iss",
+      "article_numbers": [
+        "6",
+        "7",
+        "8"
+      ],
+      "signal_ids": [
+        "children_data_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "article:8->children_data_violation",
+        "article:8->lack_of_consent",
+        "keyword:child->children_data_violation",
+        "keyword:consent->lack_of_consent"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART8-2-verify-parental-consent",
+      "article_numbers": [
+        "5",
+        "7",
+        "8"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "children_data_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:7->lack_of_consent",
+        "article:8->children_data_violation",
+        "article:8->lack_of_consent",
+        "keyword:child->children_data_violation",
+        "keyword:consent->lack_of_consent"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART8-3-contract-law-without-prejudice",
+      "article_numbers": [
+        "6",
+        "8"
+      ],
+      "signal_ids": [
+        "children_data_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:8->children_data_violation",
+        "article:8->lack_of_consent",
+        "keyword:child->children_data_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-1-special-categories-prohibition",
+      "article_numbers": [
+        "6",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(a)-explicit-consent",
+      "article_numbers": [
+        "6",
+        "7",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:consent->lack_of_consent",
+        "keyword:purpose->purpose_limitation_breach",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(b)-employment-social-protection-law",
+      "article_numbers": [
+        "6",
+        "88",
+        "9"
+      ],
+      "signal_ids": [
+        "inadequate_security",
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:security->inadequate_security",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(c)-vital-interests",
+      "article_numbers": [
+        "6",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:consent->lack_of_consent",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(d)-not-for-profit-bodies",
+      "article_numbers": [
+        "6",
+        "7",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:consent->lack_of_consent",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(e)-made-public-by-data-subject",
+      "article_numbers": [
+        "6",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(f)-legal-claims-and-courts",
+      "article_numbers": [
+        "49",
+        "6",
+        "9"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(g)-substantial-public-interest",
+      "article_numbers": [
+        "6",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(h)-health-and-social-care",
+      "article_numbers": [
+        "32",
+        "9"
+      ],
+      "signal_ids": [
+        "inadequate_security",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(i)-public-health",
+      "article_numbers": [
+        "6",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-2(j)-research-archiving-statistics",
+      "article_numbers": [
+        "89",
+        "9"
+      ],
+      "signal_ids": [
+        "purpose_limitation_breach",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-3-professional-secrecy",
+      "article_numbers": [
+        "32",
+        "9"
+      ],
+      "signal_ids": [
+        "inadequate_security",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART9-4-member-state-further-conditions",
+      "article_numbers": [
+        "9"
+      ],
+      "signal_ids": [
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART12-1-transparent-communication",
+      "article_numbers": [
+        "12",
+        "13",
+        "14",
+        "15",
+        "34"
+      ],
+      "signal_ids": [
+        "breach_notification_failure",
+        "children_data_violation",
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "article:34->breach_notification_failure",
+        "keyword:access->rights_violation",
+        "keyword:child->children_data_violation",
+        "keyword:transparen->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART12-2-facilitate-rights-exercise",
+      "article_numbers": [
+        "12",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART12-3-respond-within-one-month",
+      "article_numbers": [
+        "12",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART12-4-inform-when-not-acting",
+      "article_numbers": [
+        "12",
+        "77",
+        "79"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART12-5-free-of-charge-and-manifestly-unfounded",
+      "article_numbers": [
+        "12",
+        "15",
+        "34"
+      ],
+      "signal_ids": [
+        "breach_notification_failure",
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:15->rights_violation",
+        "article:34->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART12-6-identity-verification",
+      "article_numbers": [
+        "11",
+        "12"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART12-8-electronic-response-default",
+      "article_numbers": [
+        "12",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-1(a)-controller-identity-contact",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-1(b)-dpo-contact",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-1(c)-purposes-legal-basis",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-1(d)-legitimate-interests-info",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-1(e)-recipients",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-1(f)-transfers-info",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "international_transfer_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-2(a)-retention-period",
+      "article_numbers": [
+        "12",
+        "13",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-2(b)-rights-summary",
+      "article_numbers": [
+        "12",
+        "13",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation",
+        "keyword:object->rights_violation",
+        "keyword:portability->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-2(c)-withdraw-consent-info",
+      "article_numbers": [
+        "12",
+        "13",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:consent->lack_of_consent"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-2(d)-complaint-right",
+      "article_numbers": [
+        "12",
+        "13",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-2(e)-data-provision-requirement",
+      "article_numbers": [
+        "12",
+        "13",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-2(f)-automated-decisionmaking-info",
+      "article_numbers": [
+        "12",
+        "13",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:automated decision->profiling_without_safeguards",
+        "keyword:profil->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-3-further-processing-new-purpose",
+      "article_numbers": [
+        "13",
+        "5",
+        "6"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART13-4-exception-already-has-info",
+      "article_numbers": [
+        "12",
+        "13"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-1(a)-controller-identity-contact",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-1(b)-dpo-contact",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-1(c)-purposes-legal-basis",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-1(d)-categories-of-data",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-1(e)-recipients",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-1(f)-transfers-info",
+      "article_numbers": [
+        "12",
+        "13",
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "international_transfer_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-2(a)-retention-period",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-2(b)-legitimate-interests-info",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-2(c)-rights-summary",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation",
+        "keyword:object->rights_violation",
+        "keyword:portability->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-2(d)-withdraw-consent-info",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:consent->lack_of_consent"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-2(e)-complaint-right",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-2(f)-data-source-info",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-2(g)-automated-decisionmaking-info",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:automated decision->profiling_without_safeguards",
+        "keyword:profil->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-3(a)-provide-within-one-month",
+      "article_numbers": [
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-3(b)-provide-at-first-communication",
+      "article_numbers": [
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-3(c)-provide-at-first-disclosure",
+      "article_numbers": [
+        "14"
+      ],
+      "signal_ids": [
+        "inadequate_transparency"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-4-further-processing-new-purpose",
+      "article_numbers": [
+        "14",
+        "5",
+        "6"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:14->inadequate_transparency",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-5(a)-exception-already-has-info",
+      "article_numbers": [
+        "14",
+        "89"
+      ],
+      "signal_ids": [
+        "inadequate_transparency"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-5(b)-exception-impossible-disproportionate-effort",
+      "article_numbers": [
+        "14",
+        "89"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:14->inadequate_transparency",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-5(c)-exception-laid-down-by-law",
+      "article_numbers": [
+        "14",
+        "89"
+      ],
+      "signal_ids": [
+        "inadequate_transparency"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART14-5(d)-exception-professional-secrecy",
+      "article_numbers": [
+        "14",
+        "89"
+      ],
+      "signal_ids": [
+        "inadequate_transparency"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:14->inadequate_transparency"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1-access-confirmation-and-data",
+      "article_numbers": [
+        "12",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1(a)-purposes",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1(b)-categories",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1(c)-recipients",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1(d)-retention",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1(e)-rights-info",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation",
+        "keyword:object->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1(f)-complaint-right",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1(g)-source-info",
+      "article_numbers": [
+        "12",
+        "14",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-1(h)-automated-decisionmaking-info",
+      "article_numbers": [
+        "12",
+        "15",
+        "22"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:15->rights_violation",
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "keyword:access->rights_violation",
+        "keyword:automated decision->profiling_without_safeguards",
+        "keyword:profil->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-2-transfer-safeguards-info",
+      "article_numbers": [
+        "15",
+        "44"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:15->rights_violation",
+        "article:44->international_transfer_violation",
+        "keyword:access->rights_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-3-provide-copy",
+      "article_numbers": [
+        "12",
+        "15"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART15-4-rights-of-others-limit",
+      "article_numbers": [
+        "15",
+        "63"
+      ],
+      "signal_ids": [
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:15->rights_violation",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART16-0-rectification-without-delay",
+      "article_numbers": [
+        "12",
+        "16",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:16->accuracy_violation",
+        "article:16->rights_violation",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART16-0-complete-incomplete-data",
+      "article_numbers": [
+        "16",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:16->accuracy_violation",
+        "article:16->rights_violation",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-1(a)-erase-ground",
+      "article_numbers": [
+        "12",
+        "17",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:erase->rights_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-1(b)-erase-ground",
+      "article_numbers": [
+        "12",
+        "17",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:consent->lack_of_consent",
+        "keyword:erase->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-1(c)-erase-ground",
+      "article_numbers": [
+        "12",
+        "17",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:erase->rights_violation",
+        "keyword:object->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-1(d)-erase-ground",
+      "article_numbers": [
+        "12",
+        "17",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:erase->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-1(e)-erase-ground",
+      "article_numbers": [
+        "12",
+        "17",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:erase->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-1(f)-erase-ground",
+      "article_numbers": [
+        "12",
+        "17",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:erase->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-2-inform-other-controllers-where-made-public",
+      "article_numbers": [
+        "17",
+        "19"
+      ],
+      "signal_ids": [
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "keyword:erase->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-3(a)-erasure-exception",
+      "article_numbers": [
+        "12",
+        "17",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:21->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-3(b)-erasure-exception",
+      "article_numbers": [
+        "12",
+        "17",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:21->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-3(c)-erasure-exception",
+      "article_numbers": [
+        "12",
+        "17",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:21->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-3(d)-erasure-exception",
+      "article_numbers": [
+        "12",
+        "17",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:21->rights_violation",
+        "keyword:object->rights_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART17-3(e)-erasure-exception",
+      "article_numbers": [
+        "12",
+        "17",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:21->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART18-1(a)-restriction-ground",
+      "article_numbers": [
+        "12",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:accuracy->accuracy_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART18-1(b)-restriction-ground",
+      "article_numbers": [
+        "12",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART18-1(c)-restriction-ground",
+      "article_numbers": [
+        "12",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART18-1(d)-restriction-ground",
+      "article_numbers": [
+        "12",
+        "18",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "keyword:object->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART18-2-processing-while-restricted",
+      "article_numbers": [
+        "18",
+        "21",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "rights_violation",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:consent->lack_of_consent",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART18-3-inform-before-lifting",
+      "article_numbers": [
+        "12",
+        "18"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:18->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART20-1-portability-conditions-and-format",
+      "article_numbers": [
+        "12",
+        "20",
+        "6",
+        "7"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:20->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "article:7->lack_of_consent",
+        "keyword:consent->lack_of_consent",
+        "keyword:portability->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART20-2-direct-transmission-where-feasible",
+      "article_numbers": [
+        "20"
+      ],
+      "signal_ids": [
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:20->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART20-3-rights-of-others-and-public-task-exclusion",
+      "article_numbers": [
+        "12",
+        "20",
+        "6"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:20->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:portability->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART20-4-no-prejudice-to-erasure",
+      "article_numbers": [
+        "17",
+        "20"
+      ],
+      "signal_ids": [
+        "retention_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:17->retention_violation",
+        "article:17->rights_violation",
+        "article:20->rights_violation",
+        "keyword:portability->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART21-1-object-to-e-f-processing",
+      "article_numbers": [
+        "18",
+        "21",
+        "6"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:18->rights_violation",
+        "article:21->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:object->rights_violation",
+        "keyword:profil->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART21-2-object-to-direct-marketing",
+      "article_numbers": [
+        "21"
+      ],
+      "signal_ids": [
+        "profiling_without_safeguards",
+        "purpose_limitation_breach",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:21->rights_violation",
+        "keyword:object->rights_violation",
+        "keyword:profil->profiling_without_safeguards",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART21-3-stop-direct-marketing-after-objection",
+      "article_numbers": [
+        "21"
+      ],
+      "signal_ids": [
+        "purpose_limitation_breach",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:21->rights_violation",
+        "keyword:object->rights_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART21-4-inform-right-to-object",
+      "article_numbers": [
+        "12",
+        "13",
+        "14",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:21->rights_violation",
+        "keyword:object->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART21-5-object-by-automated-means",
+      "article_numbers": [
+        "12",
+        "21"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:21->rights_violation",
+        "keyword:object->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART21-6-object-to-research-statistics",
+      "article_numbers": [
+        "21",
+        "6",
+        "89"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:21->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:object->rights_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+      "article_numbers": [
+        "13",
+        "14",
+        "15",
+        "22"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:15->rights_violation",
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "keyword:automated decision->profiling_without_safeguards",
+        "keyword:profil->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART22-2(a)-exception-contract-necessity",
+      "article_numbers": [
+        "22",
+        "6"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:automated decision->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART22-2(b)-exception-authorised-by-law",
+      "article_numbers": [
+        "22",
+        "6"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:automated decision->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART22-2(c)-exception-explicit-consent",
+      "article_numbers": [
+        "22",
+        "7",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "article:7->lack_of_consent",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:automated decision->profiling_without_safeguards",
+        "keyword:consent->lack_of_consent"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART22-3-safeguards-human-intervention",
+      "article_numbers": [
+        "12",
+        "15",
+        "22"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:15->rights_violation",
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "keyword:automated decision->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART22-4-special-categories-limit",
+      "article_numbers": [
+        "22",
+        "9"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:automated decision->profiling_without_safeguards",
+        "keyword:consent->lack_of_consent",
+        "keyword:profil->profiling_without_safeguards",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART24-1-appropriate-measures-and-demonstrate",
+      "article_numbers": [
+        "24",
+        "25",
+        "32",
+        "35",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "missing_dpia",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:25->accountability_breach",
+        "article:25->data_minimization_breach",
+        "article:32->inadequate_security",
+        "article:35->missing_dpia",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART24-2-data-protection-policies-where-proportionate",
+      "article_numbers": [
+        "24",
+        "25",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:25->accountability_breach",
+        "article:25->data_minimization_breach",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART24-3-codes-certification-as-demonstration-elements",
+      "article_numbers": [
+        "24",
+        "40",
+        "42"
+      ],
+      "signal_ids": [
+        "accountability_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART25-1-by-design-measures",
+      "article_numbers": [
+        "24",
+        "25",
+        "32",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:25->accountability_breach",
+        "article:25->data_minimization_breach",
+        "article:32->inadequate_security",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART25-2-by-default-minimise",
+      "article_numbers": [
+        "25",
+        "32",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:25->accountability_breach",
+        "article:25->data_minimization_breach",
+        "article:32->inadequate_security",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:access->rights_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART25-3-certification-as-demonstration-element",
+      "article_numbers": [
+        "25",
+        "42"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "data_minimization_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:25->accountability_breach",
+        "article:25->data_minimization_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-1-use-only-sufficient-guarantees",
+      "article_numbers": [
+        "24",
+        "28",
+        "32"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "inadequate_security",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:32->inadequate_security",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-2-subprocessor-authorisation",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:object->rights_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3-contract-minimum-terms",
+      "article_numbers": [
+        "28",
+        "30",
+        "32"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "inadequate_security",
+        "processor_contract_violation",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:30->accountability_breach",
+        "article:32->inadequate_security",
+        "keyword:processor->processor_contract_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3(a)-instructions-and-transfers",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3(b)-confidentiality",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3(c)-security-measures",
+      "article_numbers": [
+        "28",
+        "32"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "inadequate_security",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:32->inadequate_security",
+        "keyword:processor->processor_contract_violation",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3(d)-subprocessing-conditions",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3(e)-assist-rights-requests",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3(f)-assist-security-breach-dpia",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3(g)-delete-or-return",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3(h)-audit-and-information",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-3-inform-controller-infringing-instructions",
+      "article_numbers": [
+        "28",
+        "29"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-4-flow-down-obligations-to-subprocessor",
+      "article_numbers": [
+        "28",
+        "82"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-5-codes-certification-demonstrate-guarantees",
+      "article_numbers": [
+        "28",
+        "40",
+        "42"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-6-standard-contractual-clauses-option",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-9-contract-in-writing",
+      "article_numbers": [
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART28-10-processor-becomes-controller-if-determines-purposes-means",
+      "article_numbers": [
+        "24",
+        "26",
+        "28"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "keyword:processor->processor_contract_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-1-maintain-ropa-controller",
+      "article_numbers": [
+        "24",
+        "30",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:30->accountability_breach",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-1(a)-ropa-identity-contacts",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-1(b)-ropa-purposes",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-1(c)-ropa-categories",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-1(d)-ropa-recipients",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-1(e)-ropa-transfers",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-1(g)-ropa-security-measures",
+      "article_numbers": [
+        "30",
+        "32"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "inadequate_security"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:32->inadequate_security",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-2-maintain-ropa-processor",
+      "article_numbers": [
+        "28",
+        "30",
+        "32"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "inadequate_security",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:30->accountability_breach",
+        "article:32->inadequate_security",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-2(a)-processor-record-identity-contacts",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-2(b)-processor-record-categories",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-2(c)-processor-record-transfers",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "international_transfer_violation",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation",
+        "keyword:processor->processor_contract_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-2(d)-processor-record-security-measures",
+      "article_numbers": [
+        "30",
+        "44"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "inadequate_security",
+        "international_transfer_violation",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:44->international_transfer_violation",
+        "keyword:processor->processor_contract_violation",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-3-records-in-writing",
+      "article_numbers": [
+        "30",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-4-make-available-to-sa",
+      "article_numbers": [
+        "30",
+        "58"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART30-5-derogation-under-250-conditions",
+      "article_numbers": [
+        "10",
+        "30",
+        "9"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:30->accountability_breach",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART32-1-implement-appropriate-security",
+      "article_numbers": [
+        "24",
+        "32",
+        "5"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:32->inadequate_security",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART32-1(a)-pseudonymisation-encryption",
+      "article_numbers": [
+        "32",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART32-1(b)-cia-resilience",
+      "article_numbers": [
+        "32",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART32-1(c)-restore-availability",
+      "article_numbers": [
+        "32",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:access->rights_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART32-1(d)-regular-testing-evaluation",
+      "article_numbers": [
+        "32",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART32-2-risk-assessment",
+      "article_numbers": [
+        "32",
+        "35"
+      ],
+      "signal_ids": [
+        "inadequate_security",
+        "missing_dpia",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:35->missing_dpia",
+        "keyword:access->rights_violation",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART32-3-codes-certification-security",
+      "article_numbers": [
+        "32",
+        "40",
+        "42"
+      ],
+      "signal_ids": [
+        "inadequate_security"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART32-4-process-only-on-instructions",
+      "article_numbers": [
+        "28",
+        "29",
+        "32"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "inadequate_security",
+        "processor_contract_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:32->inadequate_security",
+        "keyword:access->rights_violation",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART33-1-notify-sa-within-72h",
+      "article_numbers": [
+        "32",
+        "33",
+        "34"
+      ],
+      "signal_ids": [
+        "breach_notification_failure",
+        "inadequate_security"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:33->breach_notification_failure",
+        "article:34->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART33-2-processor-notify-controller",
+      "article_numbers": [
+        "28",
+        "33"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "breach_notification_failure",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:33->breach_notification_failure",
+        "keyword:breach->breach_notification_failure",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART33-3(a)-breach-nature-and-counts",
+      "article_numbers": [
+        "33"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART33-3(b)-contact-point",
+      "article_numbers": [
+        "33"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART33-3(c)-likely-consequences",
+      "article_numbers": [
+        "33"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART33-3(d)-measures-and-mitigation",
+      "article_numbers": [
+        "33"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART33-4-provide-info-in-phases",
+      "article_numbers": [
+        "33"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART33-5-document-breaches",
+      "article_numbers": [
+        "32",
+        "33",
+        "5"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "breach_notification_failure",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:33->breach_notification_failure",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART34-1-communicate-high-risk-breach",
+      "article_numbers": [
+        "33",
+        "34"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "article:34->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART34-2-communication-content",
+      "article_numbers": [
+        "33",
+        "34"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "article:34->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART34-3(a)-exception-encryption-unintelligible",
+      "article_numbers": [
+        "33",
+        "34"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "article:34->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART34-3(b)-exception-subsequent-measures",
+      "article_numbers": [
+        "33",
+        "34"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "article:34->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART34-3(c)-exception-disproportionate-effort-public-communication",
+      "article_numbers": [
+        "33",
+        "34"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:33->breach_notification_failure",
+        "article:34->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART34-4-sa-may-require-communication",
+      "article_numbers": [
+        "34",
+        "58"
+      ],
+      "signal_ids": [
+        "breach_notification_failure"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:34->breach_notification_failure",
+        "keyword:breach->breach_notification_failure"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-1-dpia-when-likely-high-risk",
+      "article_numbers": [
+        "24",
+        "25",
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "data_minimization_breach",
+        "missing_dpia",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:25->accountability_breach",
+        "article:25->data_minimization_breach",
+        "article:35->missing_dpia",
+        "article:36->missing_dpia",
+        "keyword:dpia->missing_dpia",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-2-seek-dpo-advice",
+      "article_numbers": [
+        "35",
+        "37",
+        "39"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "article:37->inadequate_dpo",
+        "keyword:dpia->missing_dpia",
+        "keyword:dpo->inadequate_dpo"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+      "article_numbers": [
+        "10",
+        "22",
+        "35",
+        "9"
+      ],
+      "signal_ids": [
+        "missing_dpia",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "article:35->missing_dpia",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:dpia->missing_dpia",
+        "keyword:profil->profiling_without_safeguards"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+      "article_numbers": [
+        "10",
+        "22",
+        "35",
+        "9"
+      ],
+      "signal_ids": [
+        "missing_dpia",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "article:35->missing_dpia",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:dpia->missing_dpia",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+      "article_numbers": [
+        "10",
+        "22",
+        "35",
+        "9"
+      ],
+      "signal_ids": [
+        "missing_dpia",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "special_category_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:22->profiling_without_safeguards",
+        "article:22->rights_violation",
+        "article:35->missing_dpia",
+        "article:9->special_category_violation",
+        "article:9->unlawful_processing",
+        "keyword:access->rights_violation",
+        "keyword:dpia->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-4-check-sa-dpia-list",
+      "article_numbers": [
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "article:36->missing_dpia",
+        "keyword:dpia->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-5-check-sa-no-dpia-list",
+      "article_numbers": [
+        "35"
+      ],
+      "signal_ids": [
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "keyword:dpia->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-7(a)-dpia-content-description-and-purposes",
+      "article_numbers": [
+        "35",
+        "6"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "missing_dpia",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:dpia->missing_dpia",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-7(b)-dpia-content-necessity-proportionality",
+      "article_numbers": [
+        "32",
+        "35"
+      ],
+      "signal_ids": [
+        "inadequate_security",
+        "missing_dpia",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:35->missing_dpia",
+        "keyword:dpia->missing_dpia",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-7(c)-dpia-content-risk-assessment",
+      "article_numbers": [
+        "32",
+        "35"
+      ],
+      "signal_ids": [
+        "inadequate_security",
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:35->missing_dpia",
+        "keyword:dpia->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-7(d)-dpia-content-measures-and-safeguards",
+      "article_numbers": [
+        "32",
+        "35"
+      ],
+      "signal_ids": [
+        "inadequate_security",
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:32->inadequate_security",
+        "article:35->missing_dpia",
+        "keyword:dpia->missing_dpia",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-8-take-into-account-codes-of-conduct",
+      "article_numbers": [
+        "35",
+        "40"
+      ],
+      "signal_ids": [
+        "missing_dpia",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "keyword:dpia->missing_dpia",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-9-seek-views-of-data-subjects",
+      "article_numbers": [
+        "12",
+        "35"
+      ],
+      "signal_ids": [
+        "inadequate_security",
+        "inadequate_transparency",
+        "missing_dpia",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:12->inadequate_transparency",
+        "article:12->rights_violation",
+        "article:35->missing_dpia",
+        "keyword:dpia->missing_dpia",
+        "keyword:security->inadequate_security"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-10-legal-basis-impact-assessment-exemption",
+      "article_numbers": [
+        "35",
+        "6"
+      ],
+      "signal_ids": [
+        "lack_of_consent",
+        "missing_dpia",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:dpia->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART35-11-review-dpia-when-necessary",
+      "article_numbers": [
+        "24",
+        "32",
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "inadequate_security",
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:24->accountability_breach",
+        "article:32->inadequate_security",
+        "article:35->missing_dpia",
+        "article:36->missing_dpia",
+        "keyword:dpia->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART36-1-consult-sa-when-high-risk-unmitigated",
+      "article_numbers": [
+        "35",
+        "36",
+        "58"
+      ],
+      "signal_ids": [
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "article:36->missing_dpia",
+        "keyword:dpia->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART36-2-provide-info-to-sa",
+      "article_numbers": [
+        "36"
+      ],
+      "signal_ids": [
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:36->missing_dpia",
+        "keyword:dpia->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART36-3(a)-consultation-info-responsibilities",
+      "article_numbers": [
+        "28",
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "missing_dpia",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:35->missing_dpia",
+        "article:36->missing_dpia",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART36-3(b)-consultation-info-purposes-means",
+      "article_numbers": [
+        "28",
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "missing_dpia",
+        "processor_contract_violation",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:35->missing_dpia",
+        "article:36->missing_dpia",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART36-3(c)-consultation-info-measures-safeguards",
+      "article_numbers": [
+        "28",
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "missing_dpia",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:35->missing_dpia",
+        "article:36->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART36-3(d)-consultation-info-dpo-contact",
+      "article_numbers": [
+        "28",
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "missing_dpia",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:35->missing_dpia",
+        "article:36->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART36-3(e)-consultation-info-dpia",
+      "article_numbers": [
+        "28",
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "missing_dpia",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:35->missing_dpia",
+        "article:36->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART36-3(f)-consultation-info-other-info",
+      "article_numbers": [
+        "28",
+        "35",
+        "36"
+      ],
+      "signal_ids": [
+        "accountability_breach",
+        "missing_dpia",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:28->accountability_breach",
+        "article:28->processor_contract_violation",
+        "article:35->missing_dpia",
+        "article:36->missing_dpia"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-1(a)-public-authority-dpo",
+      "article_numbers": [
+        "35",
+        "37"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "missing_dpia"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "article:37->inadequate_dpo",
+        "keyword:dpo->inadequate_dpo"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-1(b)-regular-systematic-monitoring-dpo",
+      "article_numbers": [
+        "35",
+        "37"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "missing_dpia",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "article:37->inadequate_dpo",
+        "keyword:dpo->inadequate_dpo",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-1(c)-large-scale-sensitive-dpo",
+      "article_numbers": [
+        "35",
+        "37"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "missing_dpia",
+        "special_category_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:35->missing_dpia",
+        "article:37->inadequate_dpo",
+        "keyword:dpo->inadequate_dpo",
+        "keyword:special categor->special_category_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-2-group-undertakings-single-dpo",
+      "article_numbers": [
+        "37"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:37->inadequate_dpo",
+        "keyword:access->rights_violation",
+        "keyword:dpo->inadequate_dpo"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-3-public-authorities-single-dpo",
+      "article_numbers": [
+        "37"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:37->inadequate_dpo",
+        "keyword:dpo->inadequate_dpo",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-4-dpo-employee-or-service-contract",
+      "article_numbers": [
+        "37",
+        "38",
+        "39"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:37->inadequate_dpo",
+        "keyword:dpo->inadequate_dpo",
+        "keyword:processor->processor_contract_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-5-dpo-professional-qualities",
+      "article_numbers": [
+        "37",
+        "39"
+      ],
+      "signal_ids": [
+        "inadequate_dpo"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:37->inadequate_dpo",
+        "keyword:dpo->inadequate_dpo"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-6-no-conflict-of-interests",
+      "article_numbers": [
+        "37",
+        "38"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:37->inadequate_dpo",
+        "keyword:dpo->inadequate_dpo",
+        "keyword:purpose->purpose_limitation_breach"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART37-7-publish-and-notify-contact-details",
+      "article_numbers": [
+        "13",
+        "14",
+        "37"
+      ],
+      "signal_ids": [
+        "inadequate_dpo",
+        "inadequate_transparency"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:37->inadequate_dpo",
+        "keyword:dpo->inadequate_dpo"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART44-0-chapter-v-compliance-for-transfers",
+      "article_numbers": [
+        "44",
+        "45",
+        "46",
+        "48",
+        "49"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:45->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "article:48->international_transfer_violation",
+        "article:49->international_transfer_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART45-1-transfer-on-adequacy",
+      "article_numbers": [
+        "13",
+        "14",
+        "44",
+        "45"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:44->international_transfer_violation",
+        "article:45->international_transfer_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-1-appropriate-safeguards-and-remedies",
+      "article_numbers": [
+        "44",
+        "46",
+        "49"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "article:49->international_transfer_violation",
+        "keyword:processor->processor_contract_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-2(a)-safeguard-tool-public-authority-instrument",
+      "article_numbers": [
+        "40",
+        "46"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:46->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-2(b)-safeguard-tool-bcr",
+      "article_numbers": [
+        "46",
+        "47"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:46->international_transfer_violation",
+        "article:47->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-2(c)-safeguard-tool-commission-scc",
+      "article_numbers": [
+        "40",
+        "46"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:46->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-2(d)-safeguard-tool-sa-scc",
+      "article_numbers": [
+        "40",
+        "46"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:46->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-2(e)-safeguard-tool-code-of-conduct",
+      "article_numbers": [
+        "40",
+        "46"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:46->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-2(f)-safeguard-tool-certification",
+      "article_numbers": [
+        "40",
+        "46"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:46->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-3(a)-sa-authorisation-required",
+      "article_numbers": [
+        "44",
+        "46"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "keyword:processor->processor_contract_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-3(b)-sa-authorisation-required",
+      "article_numbers": [
+        "44",
+        "46"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-INTERP-01-2020-six-step-roadmap",
+      "article_numbers": [
+        "44",
+        "46",
+        "49"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "article:49->international_transfer_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART46-INTERP-02-2020-essential-guarantees-assessment",
+      "article_numbers": [
+        "44",
+        "46"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "rights_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "keyword:access->rights_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART47-1-use-bcr-only-if-approved-and-binding",
+      "article_numbers": [
+        "46",
+        "47"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:46->international_transfer_violation",
+        "article:47->international_transfer_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART47-2-bcr-minimum-content",
+      "article_numbers": [
+        "46",
+        "47"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "purpose_limitation_breach"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:46->international_transfer_violation",
+        "article:47->international_transfer_violation",
+        "keyword:purpose->purpose_limitation_breach",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART48-0-foreign-authority-requests-international-agreement",
+      "article_numbers": [
+        "44",
+        "46",
+        "48",
+        "49"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "processor_contract_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "article:48->international_transfer_violation",
+        "article:49->international_transfer_violation",
+        "keyword:processor->processor_contract_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART48-INTERP-02-2024-foreign-requests-chapter-v-assessment",
+      "article_numbers": [
+        "44",
+        "48",
+        "5",
+        "6"
+      ],
+      "signal_ids": [
+        "accuracy_violation",
+        "data_minimization_breach",
+        "inadequate_security",
+        "inadequate_transparency",
+        "international_transfer_violation",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "retention_violation",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:48->international_transfer_violation",
+        "article:5->accuracy_violation",
+        "article:5->data_minimization_breach",
+        "article:5->inadequate_security",
+        "article:5->inadequate_transparency",
+        "article:5->purpose_limitation_breach",
+        "article:5->retention_violation",
+        "article:5->unlawful_processing",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-1-derogations-only-when-no-adequacy-or-safeguards",
+      "article_numbers": [
+        "44",
+        "45",
+        "46",
+        "49"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:45->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "article:49->international_transfer_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-1(a)-derogation-explicit-consent-informed-risks",
+      "article_numbers": [
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:consent->lack_of_consent",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-1(b)-derogation-contract-with-data-subject",
+      "article_numbers": [
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-1(c)-derogation-contract-in-interest-of-data-subject",
+      "article_numbers": [
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-1(d)-derogation-important-public-interest",
+      "article_numbers": [
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-1(e)-derogation-legal-claims",
+      "article_numbers": [
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-1(f)-derogation-vital-interests-incapable",
+      "article_numbers": [
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:consent->lack_of_consent",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-1(g)-derogation-public-register",
+      "article_numbers": [
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-2-compelling-legitimate-interests-residual",
+      "article_numbers": [
+        "13",
+        "14",
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "inadequate_transparency",
+        "international_transfer_violation",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:13->inadequate_transparency",
+        "article:14->inadequate_transparency",
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:purpose->purpose_limitation_breach",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-3-public-authorities-limitation",
+      "article_numbers": [
+        "45",
+        "46",
+        "49",
+        "6"
+      ],
+      "signal_ids": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:45->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "article:49->international_transfer_violation",
+        "article:6->lack_of_consent",
+        "article:6->unlawful_processing",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    },
+    {
+      "rule_id": "GDPR-ART49-INTERP-01-2020-derogations-restrictive",
+      "article_numbers": [
+        "44",
+        "45",
+        "46",
+        "49"
+      ],
+      "signal_ids": [
+        "international_transfer_violation"
+      ],
+      "mapping_status": "direct",
+      "reasons": [
+        "article:44->international_transfer_violation",
+        "article:45->international_transfer_violation",
+        "article:46->international_transfer_violation",
+        "article:49->international_transfer_violation",
+        "keyword:transfer->international_transfer_violation"
+      ]
+    }
+  ]
+}

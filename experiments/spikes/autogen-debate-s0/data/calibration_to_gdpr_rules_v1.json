@@ -1,0 +1,506 @@
+{
+  "generated_at_utc": "2026-03-04T17:15:57.120940+00:00",
+  "cap_per_case": 12,
+  "cases": {
+    "cal_001_lack_of_consent": {
+      "legal_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "GDPR-ART13-3-further-processing-new-purpose",
+        "GDPR-ART6-3-legal-basis-requirements-for-c-e",
+        "GDPR-ART6-4-compatibility-test-for-further-processing",
+        "GDPR-ART6-1(f)-legitimate-interests-basis",
+        "GDPR-ART8-2-verify-parental-consent",
+        "GDPR-ART49-2-compelling-legitimate-interests-residual"
+      ],
+      "procedural_rule_ids": [
+        "POLICY_1_D",
+        "POLICY_1_I"
+      ],
+      "combined_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "GDPR-ART13-3-further-processing-new-purpose",
+        "GDPR-ART6-3-legal-basis-requirements-for-c-e",
+        "GDPR-ART6-4-compatibility-test-for-further-processing",
+        "GDPR-ART6-1(f)-legitimate-interests-basis",
+        "GDPR-ART8-2-verify-parental-consent",
+        "GDPR-ART49-2-compelling-legitimate-interests-residual",
+        "POLICY_1_D",
+        "POLICY_1_I"
+      ],
+      "articles": [
+        "13",
+        "5",
+        "6"
+      ],
+      "expected_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach"
+      ]
+    },
+    "cal_002_special_category_data": {
+      "legal_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART9-2(a)-explicit-consent",
+        "GDPR-ART18-2-processing-while-restricted",
+        "GDPR-ART9-1-special-categories-prohibition",
+        "GDPR-ART7-1-demonstrate-consent",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(d)-vital-interests-basis",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART35-7(a)-dpia-content-description-and-purposes",
+        "GDPR-ART14-4-further-processing-new-purpose"
+      ],
+      "procedural_rule_ids": [
+        "APP_BEHAV_4",
+        "POLICY_1_D",
+        "POLICY_1_I"
+      ],
+      "combined_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART9-2(a)-explicit-consent",
+        "GDPR-ART18-2-processing-while-restricted",
+        "GDPR-ART9-1-special-categories-prohibition",
+        "GDPR-ART7-1-demonstrate-consent",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(d)-vital-interests-basis",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART35-7(a)-dpia-content-description-and-purposes",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "APP_BEHAV_4",
+        "POLICY_1_D",
+        "POLICY_1_I"
+      ],
+      "articles": [
+        "6",
+        "9"
+      ],
+      "expected_signals": [
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "special_category_violation"
+      ]
+    },
+    "cal_003_data_minimization": {
+      "legal_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART30-3-records-in-writing",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART30-1-maintain-ropa-controller",
+        "GDPR-ART5-2-accountability",
+        "GDPR-ART5-1(f)-integrity-confidentiality",
+        "GDPR-ART5-1(e)-storage-limitation",
+        "GDPR-ART5-1(c)-data-minimisation",
+        "GDPR-ART33-5-document-breaches",
+        "GDPR-ART32-1-implement-appropriate-security",
+        "GDPR-ART16-0-rectification-without-delay"
+      ],
+      "procedural_rule_ids": [],
+      "combined_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART30-3-records-in-writing",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART30-1-maintain-ropa-controller",
+        "GDPR-ART5-2-accountability",
+        "GDPR-ART5-1(f)-integrity-confidentiality",
+        "GDPR-ART5-1(e)-storage-limitation",
+        "GDPR-ART5-1(c)-data-minimisation",
+        "GDPR-ART33-5-document-breaches",
+        "GDPR-ART32-1-implement-appropriate-security",
+        "GDPR-ART16-0-rectification-without-delay"
+      ],
+      "articles": [
+        "5"
+      ],
+      "expected_signals": [
+        "data_minimization_breach",
+        "excessive_data_collection"
+      ]
+    },
+    "cal_004_subject_rights_denial": {
+      "legal_rule_ids": [
+        "GDPR-ART5-1(d)-accuracy",
+        "GDPR-ART17-1(f)-erase-ground",
+        "GDPR-ART17-1(e)-erase-ground",
+        "GDPR-ART17-1(d)-erase-ground",
+        "GDPR-ART17-1(c)-erase-ground",
+        "GDPR-ART17-1(b)-erase-ground",
+        "GDPR-ART17-1(a)-erase-ground",
+        "GDPR-ART17-3(e)-erasure-exception",
+        "GDPR-ART17-3(d)-erasure-exception",
+        "GDPR-ART17-3(c)-erasure-exception",
+        "GDPR-ART17-3(b)-erasure-exception",
+        "GDPR-ART17-3(a)-erasure-exception"
+      ],
+      "procedural_rule_ids": [
+        "ACC_DEL_1",
+        "ACC_DEL_1_A",
+        "ACC_DEL_2",
+        "ACC_DEL_2_A",
+        "ACC_DEL_2_B"
+      ],
+      "combined_rule_ids": [
+        "GDPR-ART5-1(d)-accuracy",
+        "GDPR-ART17-1(f)-erase-ground",
+        "GDPR-ART17-1(e)-erase-ground",
+        "GDPR-ART17-1(d)-erase-ground",
+        "GDPR-ART17-1(c)-erase-ground",
+        "GDPR-ART17-1(b)-erase-ground",
+        "GDPR-ART17-1(a)-erase-ground",
+        "GDPR-ART17-3(e)-erasure-exception",
+        "GDPR-ART17-3(d)-erasure-exception",
+        "GDPR-ART17-3(c)-erasure-exception",
+        "GDPR-ART17-3(b)-erasure-exception",
+        "GDPR-ART17-3(a)-erasure-exception",
+        "ACC_DEL_1",
+        "ACC_DEL_1_A",
+        "ACC_DEL_2",
+        "ACC_DEL_2_A",
+        "ACC_DEL_2_B"
+      ],
+      "articles": [
+        "17"
+      ],
+      "expected_signals": [
+        "rights_violation"
+      ]
+    },
+    "cal_005_inadequate_security": {
+      "legal_rule_ids": [
+        "GDPR-ART30-2-maintain-ropa-processor",
+        "GDPR-ART30-1(g)-ropa-security-measures",
+        "GDPR-ART28-3-contract-minimum-terms",
+        "GDPR-ART5-2-accountability",
+        "GDPR-ART5-1(f)-integrity-confidentiality",
+        "GDPR-ART5-1(e)-storage-limitation",
+        "GDPR-ART35-7(d)-dpia-content-measures-and-safeguards",
+        "GDPR-ART35-7(c)-dpia-content-risk-assessment",
+        "GDPR-ART35-7(b)-dpia-content-necessity-proportionality",
+        "GDPR-ART33-5-document-breaches",
+        "GDPR-ART33-1-notify-sa-within-72h",
+        "GDPR-ART32-2-risk-assessment"
+      ],
+      "procedural_rule_ids": [
+        "ACC_REC_1",
+        "AUTH_1",
+        "AUTH_2",
+        "AUTH_3",
+        "AUTH_4"
+      ],
+      "combined_rule_ids": [
+        "GDPR-ART30-2-maintain-ropa-processor",
+        "GDPR-ART30-1(g)-ropa-security-measures",
+        "GDPR-ART28-3-contract-minimum-terms",
+        "GDPR-ART5-2-accountability",
+        "GDPR-ART5-1(f)-integrity-confidentiality",
+        "GDPR-ART5-1(e)-storage-limitation",
+        "GDPR-ART35-7(d)-dpia-content-measures-and-safeguards",
+        "GDPR-ART35-7(c)-dpia-content-risk-assessment",
+        "GDPR-ART35-7(b)-dpia-content-necessity-proportionality",
+        "GDPR-ART33-5-document-breaches",
+        "GDPR-ART33-1-notify-sa-within-72h",
+        "GDPR-ART32-2-risk-assessment",
+        "ACC_REC_1",
+        "AUTH_1",
+        "AUTH_2",
+        "AUTH_3",
+        "AUTH_4"
+      ],
+      "articles": [
+        "32"
+      ],
+      "expected_signals": [
+        "inadequate_security"
+      ]
+    },
+    "cal_006_cross_border_transfer": {
+      "legal_rule_ids": [
+        "GDPR-ART30-2(d)-processor-record-security-measures",
+        "GDPR-ART30-2(c)-processor-record-transfers",
+        "GDPR-ART30-2(b)-processor-record-categories",
+        "GDPR-ART30-2(a)-processor-record-identity-contacts",
+        "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+        "GDPR-ART30-1(e)-ropa-transfers",
+        "GDPR-ART30-1(d)-ropa-recipients",
+        "GDPR-ART30-1(c)-ropa-categories",
+        "GDPR-ART30-1(b)-ropa-purposes",
+        "GDPR-ART30-1(a)-ropa-identity-contacts",
+        "GDPR-ART46-3(b)-sa-authorisation-required",
+        "GDPR-ART46-3(a)-sa-authorisation-required"
+      ],
+      "procedural_rule_ids": [
+        "POLICY_1_F"
+      ],
+      "combined_rule_ids": [
+        "GDPR-ART30-2(d)-processor-record-security-measures",
+        "GDPR-ART30-2(c)-processor-record-transfers",
+        "GDPR-ART30-2(b)-processor-record-categories",
+        "GDPR-ART30-2(a)-processor-record-identity-contacts",
+        "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+        "GDPR-ART30-1(e)-ropa-transfers",
+        "GDPR-ART30-1(d)-ropa-recipients",
+        "GDPR-ART30-1(c)-ropa-categories",
+        "GDPR-ART30-1(b)-ropa-purposes",
+        "GDPR-ART30-1(a)-ropa-identity-contacts",
+        "GDPR-ART46-3(b)-sa-authorisation-required",
+        "GDPR-ART46-3(a)-sa-authorisation-required",
+        "POLICY_1_F"
+      ],
+      "articles": [
+        "44",
+        "45",
+        "46"
+      ],
+      "expected_signals": [
+        "international_transfer_violation"
+      ]
+    },
+    "cal_007_automated_decision": {
+      "legal_rule_ids": [
+        "GDPR-ART15-1(h)-automated-decisionmaking-info",
+        "GDPR-ART22-3-safeguards-human-intervention",
+        "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+        "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+        "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+        "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+        "GDPR-ART22-2(c)-exception-explicit-consent",
+        "GDPR-ART22-4-special-categories-limit",
+        "GDPR-ART22-2(a)-exception-contract-necessity",
+        "GDPR-ART22-2(b)-exception-authorised-by-law"
+      ],
+      "procedural_rule_ids": [
+        "POLICY_1_L"
+      ],
+      "combined_rule_ids": [
+        "GDPR-ART15-1(h)-automated-decisionmaking-info",
+        "GDPR-ART22-3-safeguards-human-intervention",
+        "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+        "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+        "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+        "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+        "GDPR-ART22-2(c)-exception-explicit-consent",
+        "GDPR-ART22-4-special-categories-limit",
+        "GDPR-ART22-2(a)-exception-contract-necessity",
+        "GDPR-ART22-2(b)-exception-authorised-by-law",
+        "POLICY_1_L"
+      ],
+      "articles": [
+        "22"
+      ],
+      "expected_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ]
+    },
+    "cal_008_excessive_retention": {
+      "legal_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART30-3-records-in-writing",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART30-1-maintain-ropa-controller",
+        "GDPR-ART5-2-accountability",
+        "GDPR-ART5-1(f)-integrity-confidentiality",
+        "GDPR-ART5-1(e)-storage-limitation",
+        "GDPR-ART5-1(c)-data-minimisation",
+        "GDPR-ART33-5-document-breaches",
+        "GDPR-ART32-1-implement-appropriate-security",
+        "GDPR-ART16-0-rectification-without-delay"
+      ],
+      "procedural_rule_ids": [],
+      "combined_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART30-3-records-in-writing",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART30-1-maintain-ropa-controller",
+        "GDPR-ART5-2-accountability",
+        "GDPR-ART5-1(f)-integrity-confidentiality",
+        "GDPR-ART5-1(e)-storage-limitation",
+        "GDPR-ART5-1(c)-data-minimisation",
+        "GDPR-ART33-5-document-breaches",
+        "GDPR-ART32-1-implement-appropriate-security",
+        "GDPR-ART16-0-rectification-without-delay"
+      ],
+      "articles": [
+        "5"
+      ],
+      "expected_signals": [
+        "retention_violation"
+      ]
+    },
+    "cal_009_no_dpo": {
+      "legal_rule_ids": [
+        "GDPR-ART37-7-publish-and-notify-contact-details",
+        "GDPR-ART35-2-seek-dpo-advice",
+        "GDPR-ART37-4-dpo-employee-or-service-contract",
+        "GDPR-ART37-6-no-conflict-of-interests",
+        "GDPR-ART37-2-group-undertakings-single-dpo",
+        "GDPR-ART37-1(c)-large-scale-sensitive-dpo",
+        "GDPR-ART37-1(b)-regular-systematic-monitoring-dpo",
+        "GDPR-ART37-1(a)-public-authority-dpo",
+        "GDPR-ART37-5-dpo-professional-qualities",
+        "GDPR-ART37-3-public-authorities-single-dpo"
+      ],
+      "procedural_rule_ids": [],
+      "combined_rule_ids": [
+        "GDPR-ART37-7-publish-and-notify-contact-details",
+        "GDPR-ART35-2-seek-dpo-advice",
+        "GDPR-ART37-4-dpo-employee-or-service-contract",
+        "GDPR-ART37-6-no-conflict-of-interests",
+        "GDPR-ART37-2-group-undertakings-single-dpo",
+        "GDPR-ART37-1(c)-large-scale-sensitive-dpo",
+        "GDPR-ART37-1(b)-regular-systematic-monitoring-dpo",
+        "GDPR-ART37-1(a)-public-authority-dpo",
+        "GDPR-ART37-5-dpo-professional-qualities",
+        "GDPR-ART37-3-public-authorities-single-dpo"
+      ],
+      "articles": [
+        "37"
+      ],
+      "expected_signals": [
+        "inadequate_dpo"
+      ]
+    },
+    "cal_010_compliant_processing": {
+      "legal_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART30-3-records-in-writing",
+        "GDPR-ART9-1-special-categories-prohibition",
+        "GDPR-ART7-1-demonstrate-consent",
+        "GDPR-ART6-1(e)-public-task-basis",
+        "GDPR-ART6-1(c)-legal-obligation-basis",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART34-2-communication-content",
+        "GDPR-ART33-2-processor-notify-controller",
+        "GDPR-ART30-4-make-available-to-sa",
+        "GDPR-ART30-2-maintain-ropa-processor"
+      ],
+      "procedural_rule_ids": [],
+      "combined_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART30-3-records-in-writing",
+        "GDPR-ART9-1-special-categories-prohibition",
+        "GDPR-ART7-1-demonstrate-consent",
+        "GDPR-ART6-1(e)-public-task-basis",
+        "GDPR-ART6-1(c)-legal-obligation-basis",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART34-2-communication-content",
+        "GDPR-ART33-2-processor-notify-controller",
+        "GDPR-ART30-4-make-available-to-sa",
+        "GDPR-ART30-2-maintain-ropa-processor"
+      ],
+      "articles": [],
+      "expected_signals": []
+    },
+    "cal_011_unclear_consent": {
+      "legal_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART7-1-demonstrate-consent",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART7-2-consent-request-distinguishable",
+        "GDPR-ART6-1(b)-contract-basis",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "GDPR-ART13-3-further-processing-new-purpose",
+        "GDPR-ART6-3-legal-basis-requirements-for-c-e",
+        "GDPR-ART20-1-portability-conditions-and-format"
+      ],
+      "procedural_rule_ids": [
+        "CONSENT_1",
+        "CONSENT_2",
+        "CONSENT_2_A",
+        "CONSENT_3",
+        "CONSENT_3_A"
+      ],
+      "combined_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART7-1-demonstrate-consent",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART7-2-consent-request-distinguishable",
+        "GDPR-ART6-1(b)-contract-basis",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "GDPR-ART13-3-further-processing-new-purpose",
+        "GDPR-ART6-3-legal-basis-requirements-for-c-e",
+        "GDPR-ART20-1-portability-conditions-and-format",
+        "CONSENT_1",
+        "CONSENT_2",
+        "CONSENT_2_A",
+        "CONSENT_3",
+        "CONSENT_3_A"
+      ],
+      "articles": [
+        "6",
+        "7"
+      ],
+      "expected_signals": [
+        "inadequate_transparency",
+        "lack_of_consent"
+      ]
+    },
+    "cal_012_transparency_violation": {
+      "legal_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART30-3-records-in-writing",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART30-1-maintain-ropa-controller",
+        "GDPR-ART14-1(c)-purposes-legal-basis",
+        "GDPR-ART13-1(c)-purposes-legal-basis",
+        "GDPR-ART15-1(a)-purposes",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART5-2-accountability",
+        "GDPR-ART5-1(f)-integrity-confidentiality"
+      ],
+      "procedural_rule_ids": [],
+      "combined_rule_ids": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART30-3-records-in-writing",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART30-1-maintain-ropa-controller",
+        "GDPR-ART14-1(c)-purposes-legal-basis",
+        "GDPR-ART13-1(c)-purposes-legal-basis",
+        "GDPR-ART15-1(a)-purposes",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART5-2-accountability",
+        "GDPR-ART5-1(f)-integrity-confidentiality"
+      ],
+      "articles": [
+        "13",
+        "14",
+        "5"
+      ],
+      "expected_signals": [
+        "inadequate_transparency",
+        "purpose_limitation_breach"
+      ]
+    }
+  }
+}
