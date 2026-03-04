@@ -1,0 +1,1119 @@
+{
+  "cases": [
+    "cal_001_lack_of_consent",
+    "cal_006_cross_border_transfer",
+    "cal_007_automated_decision"
+  ],
+  "models": [
+    "mistralai/mistral-large-2512",
+    "qwen/qwen3.5-plus-02-15",
+    "openai/gpt-5.3-chat",
+    "anthropic/claude-opus-4.6"
+  ],
+  "rows": [
+    {
+      "model": "mistralai/mistral-large-2512",
+      "case_id": "cal_001_lack_of_consent",
+      "delta": -0.04999999999999993,
+      "generic_quality": 0.9666666666666666,
+      "enriched_quality": 0.9166666666666666,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach"
+      ],
+      "enriched_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "expected_required_signals": [
+        "lack_of_consent"
+      ],
+      "expected_citations": [
+        "Art. 5(1)(a)",
+        "Art. 6",
+        "Art. 13"
+      ],
+      "generic_citation_recall": 0.6666666666666666,
+      "enriched_citation_recall": 0.6666666666666666,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 1.0,
+      "enriched_signal_precision_allowed": 0.75,
+      "rule_count": 8,
+      "dominant_regression_reason": "signal_precision_drop",
+      "rules_used": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "POLICY_1_D",
+        "POLICY_1_I"
+      ]
+    },
+    {
+      "model": "mistralai/mistral-large-2512",
+      "case_id": "cal_006_cross_border_transfer",
+      "delta": 0.0,
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.9999999999999999,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "international_transfer_violation"
+      ],
+      "enriched_signals": [
+        "international_transfer_violation"
+      ],
+      "expected_required_signals": [
+        "international_transfer_violation"
+      ],
+      "expected_citations": [
+        "Art. 44",
+        "Art. 45",
+        "Art. 46"
+      ],
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 1.0,
+      "enriched_signal_precision_allowed": 1.0,
+      "rule_count": 7,
+      "dominant_regression_reason": "no_regression_or_improved",
+      "rules_used": [
+        "GDPR-ART30-2(d)-processor-record-security-measures",
+        "GDPR-ART30-2(c)-processor-record-transfers",
+        "GDPR-ART30-2(b)-processor-record-categories",
+        "GDPR-ART30-2(a)-processor-record-identity-contacts",
+        "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+        "GDPR-ART30-1(e)-ropa-transfers",
+        "POLICY_1_F"
+      ]
+    },
+    {
+      "model": "mistralai/mistral-large-2512",
+      "case_id": "cal_007_automated_decision",
+      "delta": -0.1499999999999999,
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.85,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "enriched_signals": [
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "expected_required_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards"
+      ],
+      "expected_citations": [
+        "Art. 22"
+      ],
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 0.5,
+      "generic_signal_precision_allowed": 1.0,
+      "enriched_signal_precision_allowed": 1.0,
+      "rule_count": 7,
+      "dominant_regression_reason": "required_signal_miss",
+      "rules_used": [
+        "GDPR-ART15-1(h)-automated-decisionmaking-info",
+        "GDPR-ART22-3-safeguards-human-intervention",
+        "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+        "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+        "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+        "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+        "POLICY_1_L"
+      ]
+    },
+    {
+      "model": "qwen/qwen3.5-plus-02-15",
+      "case_id": "cal_001_lack_of_consent",
+      "delta": 0.0,
+      "generic_quality": 0.9666666666666666,
+      "enriched_quality": 0.9666666666666666,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach"
+      ],
+      "enriched_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach"
+      ],
+      "expected_required_signals": [
+        "lack_of_consent"
+      ],
+      "expected_citations": [
+        "Art. 5(1)(a)",
+        "Art. 6",
+        "Art. 13"
+      ],
+      "generic_citation_recall": 0.6666666666666666,
+      "enriched_citation_recall": 0.6666666666666666,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 1.0,
+      "enriched_signal_precision_allowed": 1.0,
+      "rule_count": 8,
+      "dominant_regression_reason": "no_regression_or_improved",
+      "rules_used": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "POLICY_1_D",
+        "POLICY_1_I"
+      ]
+    },
+    {
+      "model": "qwen/qwen3.5-plus-02-15",
+      "case_id": "cal_006_cross_border_transfer",
+      "delta": -0.033333333333333326,
+      "generic_quality": 0.9666666666666666,
+      "enriched_quality": 0.9333333333333332,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "international_transfer_violation"
+      ],
+      "enriched_signals": [
+        "international_transfer_violation"
+      ],
+      "expected_required_signals": [
+        "international_transfer_violation"
+      ],
+      "expected_citations": [
+        "Art. 44",
+        "Art. 45",
+        "Art. 46"
+      ],
+      "generic_citation_recall": 0.6666666666666666,
+      "enriched_citation_recall": 0.3333333333333333,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 1.0,
+      "enriched_signal_precision_allowed": 1.0,
+      "rule_count": 7,
+      "dominant_regression_reason": "citation_recall_drop",
+      "rules_used": [
+        "GDPR-ART30-2(d)-processor-record-security-measures",
+        "GDPR-ART30-2(c)-processor-record-transfers",
+        "GDPR-ART30-2(b)-processor-record-categories",
+        "GDPR-ART30-2(a)-processor-record-identity-contacts",
+        "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+        "GDPR-ART30-1(e)-ropa-transfers",
+        "POLICY_1_F"
+      ]
+    },
+    {
+      "model": "qwen/qwen3.5-plus-02-15",
+      "case_id": "cal_007_automated_decision",
+      "delta": -0.06666666666666665,
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.9333333333333332,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "enriched_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "unlawful_processing"
+      ],
+      "expected_required_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards"
+      ],
+      "expected_citations": [
+        "Art. 22"
+      ],
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 1.0,
+      "enriched_signal_precision_allowed": 0.6666666666666666,
+      "rule_count": 7,
+      "dominant_regression_reason": "signal_precision_drop",
+      "rules_used": [
+        "GDPR-ART15-1(h)-automated-decisionmaking-info",
+        "GDPR-ART22-3-safeguards-human-intervention",
+        "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+        "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+        "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+        "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+        "POLICY_1_L"
+      ]
+    },
+    {
+      "model": "openai/gpt-5.3-chat",
+      "case_id": "cal_001_lack_of_consent",
+      "delta": -0.033333333333333326,
+      "generic_quality": 0.95,
+      "enriched_quality": 0.9166666666666666,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "enriched_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "expected_required_signals": [
+        "lack_of_consent"
+      ],
+      "expected_citations": [
+        "Art. 5(1)(a)",
+        "Art. 6",
+        "Art. 13"
+      ],
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 0.6666666666666666,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 0.75,
+      "enriched_signal_precision_allowed": 0.75,
+      "rule_count": 8,
+      "dominant_regression_reason": "citation_recall_drop",
+      "rules_used": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "POLICY_1_D",
+        "POLICY_1_I"
+      ]
+    },
+    {
+      "model": "openai/gpt-5.3-chat",
+      "case_id": "cal_006_cross_border_transfer",
+      "delta": 0.0,
+      "generic_quality": 0.8666666666666666,
+      "enriched_quality": 0.8666666666666666,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "international_transfer_violation",
+        "unlawful_processing"
+      ],
+      "enriched_signals": [
+        "international_transfer_violation",
+        "unlawful_processing"
+      ],
+      "expected_required_signals": [
+        "international_transfer_violation"
+      ],
+      "expected_citations": [
+        "Art. 44",
+        "Art. 45",
+        "Art. 46"
+      ],
+      "generic_citation_recall": 0.6666666666666666,
+      "enriched_citation_recall": 0.6666666666666666,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 0.5,
+      "enriched_signal_precision_allowed": 0.5,
+      "rule_count": 7,
+      "dominant_regression_reason": "no_regression_or_improved",
+      "rules_used": [
+        "GDPR-ART30-2(d)-processor-record-security-measures",
+        "GDPR-ART30-2(c)-processor-record-transfers",
+        "GDPR-ART30-2(b)-processor-record-categories",
+        "GDPR-ART30-2(a)-processor-record-identity-contacts",
+        "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+        "GDPR-ART30-1(e)-ropa-transfers",
+        "POLICY_1_F"
+      ]
+    },
+    {
+      "model": "openai/gpt-5.3-chat",
+      "case_id": "cal_007_automated_decision",
+      "delta": -0.2499999999999999,
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.75,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "enriched_signals": [
+        "profiling_without_safeguards",
+        "unlawful_processing"
+      ],
+      "expected_required_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards"
+      ],
+      "expected_citations": [
+        "Art. 22"
+      ],
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 0.5,
+      "generic_signal_precision_allowed": 1.0,
+      "enriched_signal_precision_allowed": 0.5,
+      "rule_count": 7,
+      "dominant_regression_reason": "required_signal_miss",
+      "rules_used": [
+        "GDPR-ART15-1(h)-automated-decisionmaking-info",
+        "GDPR-ART22-3-safeguards-human-intervention",
+        "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+        "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+        "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+        "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+        "POLICY_1_L"
+      ]
+    },
+    {
+      "model": "anthropic/claude-opus-4.6",
+      "case_id": "cal_001_lack_of_consent",
+      "delta": -0.033333333333333326,
+      "generic_quality": 0.95,
+      "enriched_quality": 0.9166666666666666,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "enriched_signals": [
+        "inadequate_transparency",
+        "lack_of_consent",
+        "purpose_limitation_breach",
+        "unlawful_processing"
+      ],
+      "expected_required_signals": [
+        "lack_of_consent"
+      ],
+      "expected_citations": [
+        "Art. 5(1)(a)",
+        "Art. 6",
+        "Art. 13"
+      ],
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 0.6666666666666666,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 0.75,
+      "enriched_signal_precision_allowed": 0.75,
+      "rule_count": 8,
+      "dominant_regression_reason": "citation_recall_drop",
+      "rules_used": [
+        "GDPR-ART6-1-general-lawfulness-condition",
+        "GDPR-ART5-1(b)-purpose-limitation",
+        "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+        "GDPR-ART7-3-withdraw-consent",
+        "GDPR-ART6-1(a)-consent-basis",
+        "GDPR-ART14-4-further-processing-new-purpose",
+        "POLICY_1_D",
+        "POLICY_1_I"
+      ]
+    },
+    {
+      "model": "anthropic/claude-opus-4.6",
+      "case_id": "cal_006_cross_border_transfer",
+      "delta": -0.6666666666666665,
+      "generic_quality": 0.8666666666666666,
+      "enriched_quality": 0.2,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "UNDECIDED",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "international_transfer_violation",
+        "lack_of_consent",
+        "unlawful_processing"
+      ],
+      "enriched_signals": [],
+      "expected_required_signals": [
+        "international_transfer_violation"
+      ],
+      "expected_citations": [
+        "Art. 44",
+        "Art. 45",
+        "Art. 46"
+      ],
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 0.0,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 0.0,
+      "generic_signal_precision_allowed": 0.3333333333333333,
+      "enriched_signal_precision_allowed": 1.0,
+      "rule_count": 7,
+      "dominant_regression_reason": "verdict_regression",
+      "rules_used": [
+        "GDPR-ART30-2(d)-processor-record-security-measures",
+        "GDPR-ART30-2(c)-processor-record-transfers",
+        "GDPR-ART30-2(b)-processor-record-categories",
+        "GDPR-ART30-2(a)-processor-record-identity-contacts",
+        "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+        "GDPR-ART30-1(e)-ropa-transfers",
+        "POLICY_1_F"
+      ]
+    },
+    {
+      "model": "anthropic/claude-opus-4.6",
+      "case_id": "cal_007_automated_decision",
+      "delta": -0.07999999999999996,
+      "generic_quality": 0.9999999999999999,
+      "enriched_quality": 0.9199999999999999,
+      "generic_verdict": "INFRINGEMENT",
+      "enriched_verdict": "INFRINGEMENT",
+      "expected_verdict": "INFRINGEMENT",
+      "generic_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards",
+        "rights_violation"
+      ],
+      "enriched_signals": [
+        "inadequate_transparency",
+        "missing_dpia",
+        "profiling_without_safeguards",
+        "rights_violation",
+        "unlawful_processing"
+      ],
+      "expected_required_signals": [
+        "inadequate_transparency",
+        "profiling_without_safeguards"
+      ],
+      "expected_citations": [
+        "Art. 22"
+      ],
+      "generic_citation_recall": 1.0,
+      "enriched_citation_recall": 1.0,
+      "generic_required_recall": 1.0,
+      "enriched_required_recall": 1.0,
+      "generic_signal_precision_allowed": 1.0,
+      "enriched_signal_precision_allowed": 0.6,
+      "rule_count": 7,
+      "dominant_regression_reason": "signal_precision_drop",
+      "rules_used": [
+        "GDPR-ART15-1(h)-automated-decisionmaking-info",
+        "GDPR-ART22-3-safeguards-human-intervention",
+        "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+        "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+        "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+        "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+        "POLICY_1_L"
+      ]
+    }
+  ],
+  "by_model": {
+    "mistralai/mistral-large-2512": {
+      "avg_delta": -0.06666666666666661,
+      "rows": [
+        {
+          "model": "mistralai/mistral-large-2512",
+          "case_id": "cal_001_lack_of_consent",
+          "delta": -0.04999999999999993,
+          "generic_quality": 0.9666666666666666,
+          "enriched_quality": 0.9166666666666666,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "inadequate_transparency",
+            "lack_of_consent",
+            "purpose_limitation_breach"
+          ],
+          "enriched_signals": [
+            "inadequate_transparency",
+            "lack_of_consent",
+            "purpose_limitation_breach",
+            "unlawful_processing"
+          ],
+          "expected_required_signals": [
+            "lack_of_consent"
+          ],
+          "expected_citations": [
+            "Art. 5(1)(a)",
+            "Art. 6",
+            "Art. 13"
+          ],
+          "generic_citation_recall": 0.6666666666666666,
+          "enriched_citation_recall": 0.6666666666666666,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 1.0,
+          "enriched_signal_precision_allowed": 0.75,
+          "rule_count": 8,
+          "dominant_regression_reason": "signal_precision_drop",
+          "rules_used": [
+            "GDPR-ART6-1-general-lawfulness-condition",
+            "GDPR-ART5-1(b)-purpose-limitation",
+            "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+            "GDPR-ART7-3-withdraw-consent",
+            "GDPR-ART6-1(a)-consent-basis",
+            "GDPR-ART14-4-further-processing-new-purpose",
+            "POLICY_1_D",
+            "POLICY_1_I"
+          ]
+        },
+        {
+          "model": "mistralai/mistral-large-2512",
+          "case_id": "cal_006_cross_border_transfer",
+          "delta": 0.0,
+          "generic_quality": 0.9999999999999999,
+          "enriched_quality": 0.9999999999999999,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "international_transfer_violation"
+          ],
+          "enriched_signals": [
+            "international_transfer_violation"
+          ],
+          "expected_required_signals": [
+            "international_transfer_violation"
+          ],
+          "expected_citations": [
+            "Art. 44",
+            "Art. 45",
+            "Art. 46"
+          ],
+          "generic_citation_recall": 1.0,
+          "enriched_citation_recall": 1.0,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 1.0,
+          "enriched_signal_precision_allowed": 1.0,
+          "rule_count": 7,
+          "dominant_regression_reason": "no_regression_or_improved",
+          "rules_used": [
+            "GDPR-ART30-2(d)-processor-record-security-measures",
+            "GDPR-ART30-2(c)-processor-record-transfers",
+            "GDPR-ART30-2(b)-processor-record-categories",
+            "GDPR-ART30-2(a)-processor-record-identity-contacts",
+            "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+            "GDPR-ART30-1(e)-ropa-transfers",
+            "POLICY_1_F"
+          ]
+        },
+        {
+          "model": "mistralai/mistral-large-2512",
+          "case_id": "cal_007_automated_decision",
+          "delta": -0.1499999999999999,
+          "generic_quality": 0.9999999999999999,
+          "enriched_quality": 0.85,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards",
+            "rights_violation"
+          ],
+          "enriched_signals": [
+            "profiling_without_safeguards",
+            "rights_violation"
+          ],
+          "expected_required_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards"
+          ],
+          "expected_citations": [
+            "Art. 22"
+          ],
+          "generic_citation_recall": 1.0,
+          "enriched_citation_recall": 1.0,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 0.5,
+          "generic_signal_precision_allowed": 1.0,
+          "enriched_signal_precision_allowed": 1.0,
+          "rule_count": 7,
+          "dominant_regression_reason": "required_signal_miss",
+          "rules_used": [
+            "GDPR-ART15-1(h)-automated-decisionmaking-info",
+            "GDPR-ART22-3-safeguards-human-intervention",
+            "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+            "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+            "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+            "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+            "POLICY_1_L"
+          ]
+        }
+      ],
+      "reason_counts": {
+        "signal_precision_drop": 1,
+        "no_regression_or_improved": 1,
+        "required_signal_miss": 1
+      }
+    },
+    "qwen/qwen3.5-plus-02-15": {
+      "avg_delta": -0.033333333333333326,
+      "rows": [
+        {
+          "model": "qwen/qwen3.5-plus-02-15",
+          "case_id": "cal_001_lack_of_consent",
+          "delta": 0.0,
+          "generic_quality": 0.9666666666666666,
+          "enriched_quality": 0.9666666666666666,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "inadequate_transparency",
+            "lack_of_consent",
+            "purpose_limitation_breach"
+          ],
+          "enriched_signals": [
+            "inadequate_transparency",
+            "lack_of_consent",
+            "purpose_limitation_breach"
+          ],
+          "expected_required_signals": [
+            "lack_of_consent"
+          ],
+          "expected_citations": [
+            "Art. 5(1)(a)",
+            "Art. 6",
+            "Art. 13"
+          ],
+          "generic_citation_recall": 0.6666666666666666,
+          "enriched_citation_recall": 0.6666666666666666,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 1.0,
+          "enriched_signal_precision_allowed": 1.0,
+          "rule_count": 8,
+          "dominant_regression_reason": "no_regression_or_improved",
+          "rules_used": [
+            "GDPR-ART6-1-general-lawfulness-condition",
+            "GDPR-ART5-1(b)-purpose-limitation",
+            "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+            "GDPR-ART7-3-withdraw-consent",
+            "GDPR-ART6-1(a)-consent-basis",
+            "GDPR-ART14-4-further-processing-new-purpose",
+            "POLICY_1_D",
+            "POLICY_1_I"
+          ]
+        },
+        {
+          "model": "qwen/qwen3.5-plus-02-15",
+          "case_id": "cal_006_cross_border_transfer",
+          "delta": -0.033333333333333326,
+          "generic_quality": 0.9666666666666666,
+          "enriched_quality": 0.9333333333333332,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "international_transfer_violation"
+          ],
+          "enriched_signals": [
+            "international_transfer_violation"
+          ],
+          "expected_required_signals": [
+            "international_transfer_violation"
+          ],
+          "expected_citations": [
+            "Art. 44",
+            "Art. 45",
+            "Art. 46"
+          ],
+          "generic_citation_recall": 0.6666666666666666,
+          "enriched_citation_recall": 0.3333333333333333,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 1.0,
+          "enriched_signal_precision_allowed": 1.0,
+          "rule_count": 7,
+          "dominant_regression_reason": "citation_recall_drop",
+          "rules_used": [
+            "GDPR-ART30-2(d)-processor-record-security-measures",
+            "GDPR-ART30-2(c)-processor-record-transfers",
+            "GDPR-ART30-2(b)-processor-record-categories",
+            "GDPR-ART30-2(a)-processor-record-identity-contacts",
+            "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+            "GDPR-ART30-1(e)-ropa-transfers",
+            "POLICY_1_F"
+          ]
+        },
+        {
+          "model": "qwen/qwen3.5-plus-02-15",
+          "case_id": "cal_007_automated_decision",
+          "delta": -0.06666666666666665,
+          "generic_quality": 0.9999999999999999,
+          "enriched_quality": 0.9333333333333332,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards",
+            "rights_violation"
+          ],
+          "enriched_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards",
+            "unlawful_processing"
+          ],
+          "expected_required_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards"
+          ],
+          "expected_citations": [
+            "Art. 22"
+          ],
+          "generic_citation_recall": 1.0,
+          "enriched_citation_recall": 1.0,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 1.0,
+          "enriched_signal_precision_allowed": 0.6666666666666666,
+          "rule_count": 7,
+          "dominant_regression_reason": "signal_precision_drop",
+          "rules_used": [
+            "GDPR-ART15-1(h)-automated-decisionmaking-info",
+            "GDPR-ART22-3-safeguards-human-intervention",
+            "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+            "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+            "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+            "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+            "POLICY_1_L"
+          ]
+        }
+      ],
+      "reason_counts": {
+        "no_regression_or_improved": 1,
+        "citation_recall_drop": 1,
+        "signal_precision_drop": 1
+      }
+    },
+    "openai/gpt-5.3-chat": {
+      "avg_delta": -0.0944444444444444,
+      "rows": [
+        {
+          "model": "openai/gpt-5.3-chat",
+          "case_id": "cal_001_lack_of_consent",
+          "delta": -0.033333333333333326,
+          "generic_quality": 0.95,
+          "enriched_quality": 0.9166666666666666,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "inadequate_transparency",
+            "lack_of_consent",
+            "purpose_limitation_breach",
+            "unlawful_processing"
+          ],
+          "enriched_signals": [
+            "inadequate_transparency",
+            "lack_of_consent",
+            "purpose_limitation_breach",
+            "unlawful_processing"
+          ],
+          "expected_required_signals": [
+            "lack_of_consent"
+          ],
+          "expected_citations": [
+            "Art. 5(1)(a)",
+            "Art. 6",
+            "Art. 13"
+          ],
+          "generic_citation_recall": 1.0,
+          "enriched_citation_recall": 0.6666666666666666,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 0.75,
+          "enriched_signal_precision_allowed": 0.75,
+          "rule_count": 8,
+          "dominant_regression_reason": "citation_recall_drop",
+          "rules_used": [
+            "GDPR-ART6-1-general-lawfulness-condition",
+            "GDPR-ART5-1(b)-purpose-limitation",
+            "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+            "GDPR-ART7-3-withdraw-consent",
+            "GDPR-ART6-1(a)-consent-basis",
+            "GDPR-ART14-4-further-processing-new-purpose",
+            "POLICY_1_D",
+            "POLICY_1_I"
+          ]
+        },
+        {
+          "model": "openai/gpt-5.3-chat",
+          "case_id": "cal_006_cross_border_transfer",
+          "delta": 0.0,
+          "generic_quality": 0.8666666666666666,
+          "enriched_quality": 0.8666666666666666,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "international_transfer_violation",
+            "unlawful_processing"
+          ],
+          "enriched_signals": [
+            "international_transfer_violation",
+            "unlawful_processing"
+          ],
+          "expected_required_signals": [
+            "international_transfer_violation"
+          ],
+          "expected_citations": [
+            "Art. 44",
+            "Art. 45",
+            "Art. 46"
+          ],
+          "generic_citation_recall": 0.6666666666666666,
+          "enriched_citation_recall": 0.6666666666666666,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 0.5,
+          "enriched_signal_precision_allowed": 0.5,
+          "rule_count": 7,
+          "dominant_regression_reason": "no_regression_or_improved",
+          "rules_used": [
+            "GDPR-ART30-2(d)-processor-record-security-measures",
+            "GDPR-ART30-2(c)-processor-record-transfers",
+            "GDPR-ART30-2(b)-processor-record-categories",
+            "GDPR-ART30-2(a)-processor-record-identity-contacts",
+            "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+            "GDPR-ART30-1(e)-ropa-transfers",
+            "POLICY_1_F"
+          ]
+        },
+        {
+          "model": "openai/gpt-5.3-chat",
+          "case_id": "cal_007_automated_decision",
+          "delta": -0.2499999999999999,
+          "generic_quality": 0.9999999999999999,
+          "enriched_quality": 0.75,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards",
+            "rights_violation"
+          ],
+          "enriched_signals": [
+            "profiling_without_safeguards",
+            "unlawful_processing"
+          ],
+          "expected_required_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards"
+          ],
+          "expected_citations": [
+            "Art. 22"
+          ],
+          "generic_citation_recall": 1.0,
+          "enriched_citation_recall": 1.0,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 0.5,
+          "generic_signal_precision_allowed": 1.0,
+          "enriched_signal_precision_allowed": 0.5,
+          "rule_count": 7,
+          "dominant_regression_reason": "required_signal_miss",
+          "rules_used": [
+            "GDPR-ART15-1(h)-automated-decisionmaking-info",
+            "GDPR-ART22-3-safeguards-human-intervention",
+            "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+            "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+            "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+            "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+            "POLICY_1_L"
+          ]
+        }
+      ],
+      "reason_counts": {
+        "citation_recall_drop": 1,
+        "no_regression_or_improved": 1,
+        "required_signal_miss": 1
+      }
+    },
+    "anthropic/claude-opus-4.6": {
+      "avg_delta": -0.25999999999999995,
+      "rows": [
+        {
+          "model": "anthropic/claude-opus-4.6",
+          "case_id": "cal_001_lack_of_consent",
+          "delta": -0.033333333333333326,
+          "generic_quality": 0.95,
+          "enriched_quality": 0.9166666666666666,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "inadequate_transparency",
+            "lack_of_consent",
+            "purpose_limitation_breach",
+            "unlawful_processing"
+          ],
+          "enriched_signals": [
+            "inadequate_transparency",
+            "lack_of_consent",
+            "purpose_limitation_breach",
+            "unlawful_processing"
+          ],
+          "expected_required_signals": [
+            "lack_of_consent"
+          ],
+          "expected_citations": [
+            "Art. 5(1)(a)",
+            "Art. 6",
+            "Art. 13"
+          ],
+          "generic_citation_recall": 1.0,
+          "enriched_citation_recall": 0.6666666666666666,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 0.75,
+          "enriched_signal_precision_allowed": 0.75,
+          "rule_count": 8,
+          "dominant_regression_reason": "citation_recall_drop",
+          "rules_used": [
+            "GDPR-ART6-1-general-lawfulness-condition",
+            "GDPR-ART5-1(b)-purpose-limitation",
+            "GDPR-ART5-1(a)-lawfulness-fairness-transparency",
+            "GDPR-ART7-3-withdraw-consent",
+            "GDPR-ART6-1(a)-consent-basis",
+            "GDPR-ART14-4-further-processing-new-purpose",
+            "POLICY_1_D",
+            "POLICY_1_I"
+          ]
+        },
+        {
+          "model": "anthropic/claude-opus-4.6",
+          "case_id": "cal_006_cross_border_transfer",
+          "delta": -0.6666666666666665,
+          "generic_quality": 0.8666666666666666,
+          "enriched_quality": 0.2,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "UNDECIDED",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "international_transfer_violation",
+            "lack_of_consent",
+            "unlawful_processing"
+          ],
+          "enriched_signals": [],
+          "expected_required_signals": [
+            "international_transfer_violation"
+          ],
+          "expected_citations": [
+            "Art. 44",
+            "Art. 45",
+            "Art. 46"
+          ],
+          "generic_citation_recall": 1.0,
+          "enriched_citation_recall": 0.0,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 0.0,
+          "generic_signal_precision_allowed": 0.3333333333333333,
+          "enriched_signal_precision_allowed": 1.0,
+          "rule_count": 7,
+          "dominant_regression_reason": "verdict_regression",
+          "rules_used": [
+            "GDPR-ART30-2(d)-processor-record-security-measures",
+            "GDPR-ART30-2(c)-processor-record-transfers",
+            "GDPR-ART30-2(b)-processor-record-categories",
+            "GDPR-ART30-2(a)-processor-record-identity-contacts",
+            "GDPR-ART30-1(f)-ropa-erasure-time-limits",
+            "GDPR-ART30-1(e)-ropa-transfers",
+            "POLICY_1_F"
+          ]
+        },
+        {
+          "model": "anthropic/claude-opus-4.6",
+          "case_id": "cal_007_automated_decision",
+          "delta": -0.07999999999999996,
+          "generic_quality": 0.9999999999999999,
+          "enriched_quality": 0.9199999999999999,
+          "generic_verdict": "INFRINGEMENT",
+          "enriched_verdict": "INFRINGEMENT",
+          "expected_verdict": "INFRINGEMENT",
+          "generic_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards",
+            "rights_violation"
+          ],
+          "enriched_signals": [
+            "inadequate_transparency",
+            "missing_dpia",
+            "profiling_without_safeguards",
+            "rights_violation",
+            "unlawful_processing"
+          ],
+          "expected_required_signals": [
+            "inadequate_transparency",
+            "profiling_without_safeguards"
+          ],
+          "expected_citations": [
+            "Art. 22"
+          ],
+          "generic_citation_recall": 1.0,
+          "enriched_citation_recall": 1.0,
+          "generic_required_recall": 1.0,
+          "enriched_required_recall": 1.0,
+          "generic_signal_precision_allowed": 1.0,
+          "enriched_signal_precision_allowed": 0.6,
+          "rule_count": 7,
+          "dominant_regression_reason": "signal_precision_drop",
+          "rules_used": [
+            "GDPR-ART15-1(h)-automated-decisionmaking-info",
+            "GDPR-ART22-3-safeguards-human-intervention",
+            "GDPR-ART22-1-right-not-subject-to-solely-automated-decision",
+            "GDPR-ART35-3(c)-dpa-required-case-large-scale-public-monitoring",
+            "GDPR-ART35-3(b)-dpa-required-case-large-scale-sensitive-or-criminal",
+            "GDPR-ART35-3(a)-dpa-required-case-systematic-evaluation-profiling",
+            "POLICY_1_L"
+          ]
+        }
+      ],
+      "reason_counts": {
+        "citation_recall_drop": 1,
+        "verdict_regression": 1,
+        "signal_precision_drop": 1
+      }
+    }
+  }
+}
