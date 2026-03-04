@@ -36,6 +36,7 @@ CALIBRATION_DIR = REPO_ROOT / "packages" / "pe" / "cases" / "calibration"
 TASK_A_MAPPING_PATH = REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "calibration_to_edpb_rules.json"
 MASTER_RULES_PATH = REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "master_audit_rules.json"
 MASTER_GDPR_RULES_PATH = REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "master_audit_rules_gdpr_v1.json"
+RULE_SIGNAL_CROSSWALK_PATH = REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "gdpr_rule_signal_crosswalk_v1.json"
 CRITERIA_PATH = REPO_ROOT / "packages" / "specs" / "schemas" / "evaluation_criteria" / "gdpr-evaluation-criteria-v1.0.yaml"
 LOCALE_PATH = REPO_ROOT / "packages" / "specs" / "docs" / "artifacts" / "2026-03-02__nl-uavg-ap__chatbot-testing-mapping_v1.md"
 
@@ -172,6 +173,8 @@ def _build_rules_context(
     mapping_path: Path,
     legal_rules_path: Path,
     procedural_rules_path: Path,
+    crosswalk_path: Path,
+    expected_signals: set[str],
 ) -> tuple[list[str], str]:
     mapping_raw = _parse_json_file(mapping_path)
     # Support wrapped mapping payload: {"cases": {...}}
@@ -189,13 +192,40 @@ def _build_rules_context(
         procedural_master = _parse_json_file(procedural_rules_path)
         procedural_by_id = _rule_index(procedural_master)
 
+    crosswalk_signals: dict[str, set[str]] = {}
+    if crosswalk_path.exists():
+        xw = _parse_json_file(crosswalk_path)
+        for row in xw.get("rows", []):
+            rid = str(row.get("rule_id", "")).strip()
+            sigs = set([str(s) for s in (row.get("signal_ids", []) or [])])
+            if rid:
+                crosswalk_signals[rid] = sigs
+
+    # Signal-aware selection of legal context to reduce prompt overload.
+    ranked_legal: list[tuple[str, int, float]] = []
+    for rid in legal_ids:
+        sigs = crosswalk_signals.get(rid, set())
+        overlap = len(sigs.intersection(expected_signals)) if expected_signals else 0
+        conf = float((legal_by_id.get(rid, {}) or {}).get("confidence", 0.0) or 0.0)
+        ranked_legal.append((rid, overlap, conf))
+
+    ranked_legal.sort(key=lambda x: (x[1], x[2], x[0]), reverse=True)
+
+    selected_legal: list[str] = []
+    if expected_signals:
+        matched = [rid for rid, ov, _ in ranked_legal if ov > 0]
+        unmatched = [rid for rid, ov, _ in ranked_legal if ov == 0]
+        selected_legal = (matched + unmatched)[:6]
+    else:
+        # Compliant/control cases: keep context smaller to avoid over-biasing.
+        selected_legal = [rid for rid, _, _ in ranked_legal[:3]]
+
+    # Keep procedure context lean and optional on control-like scenarios.
+    selected_procedural = procedural_ids[:2] if expected_signals else []
+
     rows: list[str] = []
 
-    # Keep context compact to reduce prompt overload.
-    legal_ids = legal_ids[:6]
-    procedural_ids = procedural_ids[:3]
-
-    for rid in legal_ids:
+    for rid in selected_legal:
         rule = legal_by_id.get(rid)
         if not rule:
             continue
@@ -211,7 +241,7 @@ def _build_rules_context(
             f"  finding_criteria={finding_text}"
         )
 
-    for rid in procedural_ids:
+    for rid in selected_procedural:
         rule = procedural_by_id.get(rid)
         if not rule:
             continue
@@ -223,9 +253,11 @@ def _build_rules_context(
             f"  audit_procedure={proc_text}"
         )
 
+    selected_combined = list(dict.fromkeys(selected_legal + selected_procedural))
+
     if not rows:
-        return combined_ids, "No mapped rules found for this case."
-    return combined_ids, "\n".join(rows)
+        return selected_combined, "No mapped rules found for this case."
+    return selected_combined, "\n".join(rows)
 
 
 def _build_criteria_context(criteria_path: Path) -> str:
@@ -491,6 +523,11 @@ def main() -> None:
         help="Path to procedural rules JSON file.",
     )
     parser.add_argument(
+        "--crosswalk-path",
+        default=str(RULE_SIGNAL_CROSSWALK_PATH),
+        help="Path to rule->signal crosswalk JSON.",
+    )
+    parser.add_argument(
         "--criteria-path",
         default=str(CRITERIA_PATH),
         help="Path to evaluation criteria YAML.",
@@ -523,14 +560,18 @@ def main() -> None:
     mapping_path = Path(args.mapping_path)
     legal_rules_path = Path(args.legal_rules_path)
     procedural_rules_path = Path(args.procedural_rules_path)
+    crosswalk_path = Path(args.crosswalk_path)
     criteria_path = Path(args.criteria_path)
     locale_path = Path(args.locale_path)
+    expected_signals = set(expected.get("required_signals", [])) | set(expected.get("allowed_extra_signals", []))
 
     edpb_rule_ids, edpb_context = _build_rules_context(
         case_id=case_id,
         mapping_path=mapping_path,
         legal_rules_path=legal_rules_path,
         procedural_rules_path=procedural_rules_path,
+        crosswalk_path=crosswalk_path,
+        expected_signals=expected_signals,
     )
     criteria_context = _build_criteria_context(criteria_path)
     locale_context = _build_locale_context(locale_path)

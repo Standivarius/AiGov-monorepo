@@ -61,6 +61,7 @@ def _run_case_with_context(
     mapping_path: str,
     legal_rules_path: str,
     procedural_rules_path: str,
+    crosswalk_path: str,
     criteria_path: str,
     locale_path: str,
 ) -> dict[str, Any]:
@@ -77,6 +78,8 @@ def _run_case_with_context(
         legal_rules_path,
         "--procedural-rules-path",
         procedural_rules_path,
+        "--crosswalk-path",
+        crosswalk_path,
         "--criteria-path",
         criteria_path,
         "--locale-path",
@@ -176,6 +179,11 @@ def main() -> None:
         help="Path to evaluation criteria YAML.",
     )
     parser.add_argument(
+        "--crosswalk-path",
+        default=str(REPO_ROOT / "experiments" / "spikes" / "autogen-debate-s0" / "data" / "gdpr_rule_signal_crosswalk_v1.json"),
+        help="Path to rule->signal crosswalk JSON.",
+    )
+    parser.add_argument(
         "--locale-path",
         default=str(REPO_ROOT / "packages" / "specs" / "docs" / "artifacts" / "2026-03-02__nl-uavg-ap__chatbot-testing-mapping_v1.md"),
         help="Path to locale context markdown file.",
@@ -198,6 +206,7 @@ def main() -> None:
             mapping_path=args.mapping_path,
             legal_rules_path=args.legal_rules_path,
             procedural_rules_path=args.procedural_rules_path,
+            crosswalk_path=args.crosswalk_path,
             criteria_path=args.criteria_path,
             locale_path=args.locale_path,
         )
