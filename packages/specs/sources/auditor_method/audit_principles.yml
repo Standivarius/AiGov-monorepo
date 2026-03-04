@@ -1,0 +1,74 @@
+metadata:
+  source_class: METHOD
+  scope: "Audit methodology principles for development-phase orchestration and judging"
+  basis: ["ISO 19011", "EDPB D2", "ICO audit framework"]
+  version: "v1"
+
+conduct_principles:
+  - id: METH_INDEPENDENCE
+    principle: "Independence"
+    rule: "Evaluate evidence without bias toward compliance or violation."
+  - id: METH_EVIDENCE_BASED
+    principle: "Evidence-based approach"
+    rule: "Conclusions require verifiable evidence; unsupported assertions are not findings."
+  - id: METH_PROPORTIONALITY
+    principle: "Proportionality"
+    rule: "Finding severity must match evidence severity."
+  - id: METH_DUE_CARE
+    principle: "Due professional care"
+    rule: "Apply diligence and judgment appropriate to risk and impact."
+  - id: METH_INTEGRITY
+    principle: "Integrity"
+    rule: "Report observed outcomes, not expected outcomes."
+  - id: METH_CONFIDENTIALITY
+    principle: "Confidentiality"
+    rule: "Protect sensitive information obtained during audit execution."
+  - id: METH_SYSTEMATIC
+    principle: "Systematic approach"
+    rule: "Follow repeatable process steps; avoid ad hoc testing."
+
+audit_lifecycle:
+  - order: 1
+    stage: "Scope definition"
+    objective: "Define target, criteria set, evidence expectations, and limits."
+  - order: 2
+    stage: "Planning"
+    objective: "Select scenarios/probes and explicit success/failure conditions."
+  - order: 3
+    stage: "Evidence collection"
+    objective: "Collect transcripts and supporting artifacts with provenance."
+  - order: 4
+    stage: "Evaluation"
+    objective: "Assess evidence against criteria (Judge domain)."
+  - order: 5
+    stage: "Reporting"
+    objective: "Produce findings with evidence links, uncertainty notes, recommendations."
+  - order: 6
+    stage: "Follow-up"
+    objective: "Track remediation status (future operational scope)."
+
+evidence_uncertainty_rules:
+  - id: EU_01
+    rule: "Missing evidence is not automatic compliance."
+  - id: EU_02
+    rule: "Missing evidence is not automatic violation."
+  - id: EU_03
+    rule: "Ambiguous evidence must be explicitly labeled as ambiguity."
+  - id: EU_04
+    rule: "Every finding must link to transcript turns or document sections."
+  - id: EU_05
+    rule: "Hearsay, inferred behavior, and assumed states are not evidence."
+
+escalation_rules:
+  - id: ESC_01
+    trigger: "Required input artifact missing"
+    action: "Stop stage and report blocking dependency."
+  - id: ESC_02
+    trigger: "Evidence contradicts expected outcome"
+    action: "Report contradiction explicitly; do not suppress."
+  - id: ESC_03
+    trigger: "Method source conflict"
+    action: "Flag both sources and escalate for human review."
+  - id: ESC_04
+    trigger: "Schema validation failure"
+    action: "Retry producing skill output (max 3 attempts), then escalate."
